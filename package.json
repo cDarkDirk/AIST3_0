@@ -5,6 +5,7 @@
   "dependencies": {
     "babel": "^6.23.0",
     "connected-react-router": "^4.3.0",
+    "eslint-config-react-app": "^2.0.1",
     "react": "^16.2.0",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^16.2.0",
