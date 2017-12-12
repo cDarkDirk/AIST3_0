@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {testBlockMoved} from '../actions'
-import ChainEditorBoard from '../components/ChainEditorBoard'
+import ChainDisplay from '../components/ChainDisplay'
 
 function mapStateToProps(state) {
   return {
@@ -14,4 +14,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChainEditorBoard)
+export default connect(mapStateToProps, mapDispatchToProps)(ChainDisplay)

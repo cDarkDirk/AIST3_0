@@ -5,7 +5,16 @@ import {
 const initialState = {
   tests: [
     {
-      position: {x: 0, y: 0}
+      name: 'First test'
+    },
+    {
+      name: 'Second test'
+    },
+    {
+      name: 'Third test'
+    },
+    {
+      name: 'Fourth test'
     }
   ],
 }
@@ -13,9 +22,12 @@ const initialState = {
 const chain = (state = initialState, action) => {
   switch (action.type) {
     case TEST_BLOCK_MOVED: {
+      const {oldIndex, newIndex} = action.payload
+      let tests = [...state.tests]
+      tests.splice(newIndex, 0, tests.splice(oldIndex, 1)[0]);
       return {
         ...state,
-        counter: state.counter + 1,
+        tests
       }
     }
     default:
