@@ -2,8 +2,8 @@
 .test-block-container {
   border: 1px solid #222;
   display: block;
-  width: 130px;
-  height: 130px;
+  width: 70%;
+  height: 80px;
 }
 
 .test-block-container > .heading {

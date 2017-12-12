@@ -1,14 +1,14 @@
 import React from 'react'
 import TestBlock from '../TestBlock'
-import ChainEditorBoard from '../../containers/ChainEditorBoard'
+import ChainDisplay from '../../containers/ChainDisplay'
 
 export default () => {
   return (
     <div className='container'>
       <h1>Chain Editor</h1>
-      <ChainEditorBoard>
+      <ChainDisplay>
         <TestBlock name='Create User' description='This is the first block'/>
-      </ChainEditorBoard>
+      </ChainDisplay>
     </div>
   )
 }
