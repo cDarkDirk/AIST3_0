@@ -6,6 +6,8 @@
     "babel": "^6.23.0",
     "connected-react-router": "^4.3.0",
     "eslint-config-react-app": "^2.0.1",
+    "mockserver": "^1.6.2",
+    "nodemon": "^1.12.5",
     "react": "^16.2.0",
     "react-bootstrap": "^0.31.5",
     "react-dnd": "^2.5.4",
@@ -17,6 +19,7 @@
     "redux-thunk": "^2.2.0"
   },
   "scripts": {
+    "start-mocks": "nodemon mockserver.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
