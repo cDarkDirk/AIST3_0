@@ -9,12 +9,8 @@ import {Route, Switch} from 'react-router'
 import rootReducer from './reducers'
 import HomePage from './containers/HomePage'
 import ChainEditorPage from './components/ChainEditorPage'
+import Form from './components/Form'
 
-import './styles/main.css'
-
-// import registerServiceWorker from './registerServiceWorker'
-//
-// registerServiceWorker()
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const history = createBrowserHistory()
@@ -30,14 +26,15 @@ const store = createStore(
 ReactDOM.render((
   <Provider store={store}>
     <div>
-      {
+
         <ConnectedRouter history={history}>
           <Switch>
             <Route path="/chaineditor" component={ChainEditorPage}/>}
-            <Route path="/" component={HomePage}/>
+            <Route  exact path="/form" component={Form}/>
+            <Route exact path="/" component={HomePage}/>
           </Switch>
         </ConnectedRouter>
-      }
+
     </div>
 
   </Provider>
