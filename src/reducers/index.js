@@ -4,8 +4,8 @@ import ui from './ui'
 import chain from './chain'
 
 const rootReducer = combineReducers({
-  ui,
-  chain,
+  ui: ui,
+  chain: chain,
 })
 
 export default rootReducer
