@@ -1,0 +1,113 @@
+[
+  {
+    "name": "DebitCard",
+    "test": [
+      [
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        }
+      ]
+    ]
+  },
+  {
+    "name": "FSClient",
+    "test": [
+      [
+        {
+          "id": 2
+        }
+      ]
+    ]
+  },
+  {
+    "name": "SPOOBKCreditCard",
+    "test": [
+      [
+        {
+          "id": 11
+        },
+        {
+          "id": 12
+        },
+        {
+          "id": 13
+        },
+        {
+          "id": 4
+        }
+      ]
+    ]
+  },
+  {
+    "name": "SPOOBKCreditCardWithSum",
+    "test": [
+      [
+        {
+          "id": 11
+        },
+        {
+          "id": 12
+        },
+        {
+          "id": 13
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 1
+        }
+      ]
+    ]
+  },
+  {
+    "name": "UFS",
+    "test": [
+      [
+        {
+          "id": 201707191401206171
+        },
+        {
+          "id": 201707191401206173
+        }
+      ]
+    ]
+  },
+  {
+    "name": "WAY4CardAccrual",
+    "test": [
+      [
+        {
+          "id": 1
+        }
+      ]
+    ]
+  },
+  {
+    "name": "WAY4CardAccrual",
+    "test": [
+      [
+        {
+          "id": 1
+        }
+      ]
+    ]
+  },
+  {
+    "name": "WAY4Ipass",
+    "test": [
+      [
+        {
+          "id": 10
+        }
+      ]
+    ]
+  }
+]
+
