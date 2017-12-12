@@ -14,7 +14,7 @@ var json = {
         {
             "humanReadableName": "Options",
             "type": "dropDown",
-            "dropDownOptions" : [
+            "dropDownOptions": [
                 "first", "second", "last"
             ],
             "keyName": "GENDER"
@@ -23,13 +23,15 @@ var json = {
 }
 
 
-class Input extends React.Component{
+class Input extends React.Component {
     render() {
-        return(
+        return (
             <div>
-            <p>{this.props.label}</p>
-            <input />
-        </div>)
+                <p>{this.props.label}</p>
+                <input onChange={(event) => {
+                    this.props.onFormInputChange(event.target.value)
+                }}/>
+            </div>)
 
     }
 }
@@ -39,7 +41,9 @@ class DropDown extends React.Component {
         return (
             <div>
                 <p>{this.props.label}</p>
-                <select>
+                <select onChange={(event) => {
+                    this.props.onFormInputChange(event.target.value)
+                }}>
                     {this.props.dropDownOptions.map(function (op) {
                         return <option value={op}>{op}</option>
                     })}
@@ -56,12 +60,19 @@ class Form extends React.Component {
             <div className='container'>
                 <Jumbotron>
                     <h1>Form</h1>
-                    {json.fields.map(function(some){
-                        if (some.type == "text"){
-                            return <Input label = {json.fields[0].humanReadableName}/>
+                    {this.props.formData.fields.map((field) => {
+                        if (field.type == "text") {
+                            return <Input
+                                onFormInputChange={(value) => this.props.onFormInputChange(value, field.keyName, this.props.formName)}
+                                label={field.humanReadableName}/>
                         }
-                        if(some.type == "dropDown") {
-                            return <DropDown label={json.fields[1].humanReadableName} dropDownOptions={json.fields[1].dropDownOptions}/>
+                        if (field.type == "dropDown") {
+                            return <DropDown
+                                onFormInputChange={(value) => this.props.onFormInputChange(value,
+                                    field.keyName,
+                                    this.props.formName)}
+                                label={field.humanReadableName}
+                                dropDownOptions={field.dropDownOptions}/>
                         }
                     })}
                 </Jumbotron>
