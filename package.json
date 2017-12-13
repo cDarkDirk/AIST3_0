@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "babel": "^6.23.0",
+    "cors": "^2.8.4",
     "eslint-config-react-app": "^2.0.1",
+    "express": "^4.16.2",
     "mockserver": "^1.6.2",
     "nodemon": "^1.12.5",
     "react": "^16.2.0",
