@@ -12,9 +12,7 @@ export default () => {
             <h1>Chain Editor</h1>
             <Row>
                 <Col md={3}>
-
                     <SideBar><ChainList chains={Data}></ChainList></SideBar>
-
                 </Col>
                 <Col md ={8}>
                     <ChainDisplay>

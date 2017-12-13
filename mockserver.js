@@ -1,4 +1,6 @@
-var http    =  require('http');
-var mockserver  =  require('mockserver');
+const PORT = 3001
+const http    =  require('http');
+const mockserver  =  require('mockserver');
 
-http.createServer(mockserver('mocks')).listen(3001);
+console.log(`Mock server listening on port ${PORT}`)
+http.createServer(mockserver('mocks')).listen(PORT);
