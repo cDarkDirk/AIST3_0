@@ -10,7 +10,7 @@ export default ({addCounter, counter, goToChainEditor}) => {
         <h1>Home</h1>
         <p>Counter: {counter}</p>
         <p><Button onClick={addCounter} bsStyle='primary' bsSize="large">Add to counter</Button></p>
-        <p><Button onClick={goToChainEditor} bsSize="large">To Editor</Button></p>
+        <p><Link to={'/chaineditor'}><Button bsSize="large">To Editor</Button></Link></p>
           <Link to={'/form/connectServices'}>My super link</Link>
       </Jumbotron>
     </div>
