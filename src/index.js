@@ -9,7 +9,7 @@ import {Route, Switch} from 'react-router'
 import rootReducer from './reducers'
 import HomePage from './containers/HomePage'
 import ChainEditorPage from './components/ChainEditorPage'
-import Form from './components/Form'
+import FormPage from './containers/FormPage'
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -30,7 +30,7 @@ ReactDOM.render((
         <ConnectedRouter history={history}>
           <Switch>
             <Route path="/chaineditor" component={ChainEditorPage}/>}
-            <Route  exact path="/form" component={Form}/>
+            <Route  path="/form/:formName" component={FormPage}/>
             <Route exact path="/" component={HomePage}/>
           </Switch>
         </ConnectedRouter>
