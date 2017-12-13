@@ -5,7 +5,7 @@ import {fetchFormTemplate} from '../api'
 
 function mapStateToProps(state) {
     return {
-        formTemplate: state.formTemplate,
+        formTemplate: state.formTemplate
     }
 }
 
