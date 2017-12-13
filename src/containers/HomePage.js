@@ -1,6 +1,5 @@
 import {connect} from 'react-redux'
 import {addCounter} from '../actions'
-import { push } from 'connected-react-router'
 
 import HomePage from '../components/HomePage'
 
@@ -13,7 +12,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addCounter: () => dispatch(addCounter()),
-    goToChainEditor: () => dispatch(push('/chaineditor'))
   }
 }
 
