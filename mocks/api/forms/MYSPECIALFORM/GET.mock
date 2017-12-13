@@ -54,13 +54,13 @@ Content-Type: application/json; charset=utf-8
 			"label": "Серия паспорта",
 			"paramName": "SERIE",
 			"type": "text",
-			"regExp": "\d{4}"
+			"regExp": "\\d{4}"
 		},
 		{
 			"label": "Номер паспорта",
 			"paramName": "NUMBER",
 			"type": "text",
-			"regExp": "\d{6}"
+			"regExp": "\\d{6}"
 		},
 		{
 			"label": "Регион",
