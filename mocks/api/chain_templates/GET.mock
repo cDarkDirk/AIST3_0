@@ -93,16 +93,6 @@ Content-Type: application/json; charset=utf-8
     ]
   },
   {
-    "name": "WAY4CardAccrual",
-    "test": [
-      [
-        {
-          "id": 1
-        }
-      ]
-    ]
-  },
-  {
     "name": "WAY4Ipass",
     "test": [
       [
