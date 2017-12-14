@@ -1,13 +1,17 @@
 import {connect} from 'react-redux'
-
-import HomePage from '../components/HomePage'
+import {fetchChainTemplate} from '../api'
+import ChainEditorPage from '../components/ChainEditorPage'
 
 function mapStateToProps(state) {
-  return {}
+  return {
+      chainTemplates: state.chainTemplates
+  }
 }
 
 function mapDispatchToProps(dispatch) {
-  return {}
+  return {
+      fetchChainTemplate: () => dispatch(fetchChainTemplate())
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage)
+export default connect(mapStateToProps, mapDispatchToProps)(ChainEditorPage)

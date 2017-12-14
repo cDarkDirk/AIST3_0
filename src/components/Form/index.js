@@ -1,39 +1,16 @@
 import React from 'react'
 import {Button, Jumbotron} from 'react-bootstrap'
-
-var json = {
-    "id": 123,
-    "restAPIEndpoint": "/services/setChain",
-    "fields": [
-        {
-            "humanReadableName": "Отложенный запуск",
-            "keyName": "NAME",
-            "type": "text",
-            "regex": "/{}/"
-        },
-        {
-            "humanReadableName": "Options",
-            "type": "dropDown",
-            "dropDownOptions": [
-                "first", "second", "last"
-            ],
-            "keyName": "GENDER"
-        }
-    ]
-}
+import Calendar from "react-calendar";
 
 
-class Input extends React.Component {
-    render() {
-        return (
-            <div>
-                <p>{this.props.label}</p>
-                <input onChange={(event) => {
-                    this.props.onFormInputChange(event.target.value)
-                }}/>
-            </div>)
-
-    }
+const Input = ({label, onFormInputChange}) => {
+    return (
+        <div>
+            <p>{label}</p>
+            <input onChange={(event) => {
+                onFormInputChange(event.target.value)
+            }}/>
+        </div>)
 }
 
 class DropDown extends React.Component {
@@ -55,26 +32,35 @@ class DropDown extends React.Component {
 
 class Form extends React.Component {
 
+    componentDidMount() {
+        this.props.fetchFormTemplate(this.props.formName)
+    }
+
     render() {
         return (
             <div className='container'>
                 <Jumbotron>
                     <h1>Form</h1>
-                    {this.props.formData.fields.map((field) => {
-                        if (field.type == "text") {
-                            return <Input
-                                onFormInputChange={(value) => this.props.onFormInputChange(value, field.keyName, this.props.formName)}
-                                label={field.humanReadableName}/>
+                    {
+                        this.props.formData ? (<div>{this.props.formData.fields.map((field,index) => {
+                        if (field.type === "text") {
+                            return <Input key={index}
+                                onFormInputChange={(value) => this.props.onFormInputChange(value, field.paramName, this.props.formName)}
+                                label={field.label}/>
                         }
-                        if (field.type == "dropDown") {
-                            return <DropDown
+                        if (field.type === "dropDown") {
+                            return <DropDown key={index}
                                 onFormInputChange={(value) => this.props.onFormInputChange(value,
-                                    field.keyName,
+                                    field.paramName,
                                     this.props.formName)}
-                                label={field.humanReadableName}
+                                label={field.label}
                                 dropDownOptions={field.dropDownOptions}/>
                         }
-                    })}
+                        if (field.type === "calendar") {
+                            return <Calendar key={index}/>
+                        }
+                    })}</div>) : (<div> NO DATA SPECIFIED </div>)
+                    }
                 </Jumbotron>
             </div>
         )
