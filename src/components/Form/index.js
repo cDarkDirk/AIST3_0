@@ -1,34 +1,27 @@
 import React from 'react'
-import {Button, Jumbotron} from 'react-bootstrap'
+import {Jumbotron} from 'react-bootstrap'
 import Calendar from "react-calendar";
 
 
-const Input = ({label, onFormInputChange}) => {
+const Input = ({label, value, onChange}) => {
     return (
         <div>
             <p>{label}</p>
-            <input onChange={(event) => {
-                onFormInputChange(event.target.value)
-            }}/>
+            <input value={value || ''} onChange={(event) => {onChange(event.target.value)}}/>
         </div>)
 }
 
-class DropDown extends React.Component {
-    render() {
-        return (
-            <div>
-                <p>{this.props.label}</p>
-                <select onChange={(event) => {
-                    this.props.onFormInputChange(event.target.value)
-                }}>
-                    {this.props.dropDownOptions.map(function (op) {
-                        return <option value={op}>{op}</option>
-                    })}
-                </select>
-            </div>
-        )
-    }
-}
+const DropDown = ({label, value, onChange, dropDownOptions}) => {
+      return (
+          <div>
+              <p>{label}</p>
+              <select value={value} onChange={(event) => {onChange(event.target.value)}}>
+                  <option key={-1} value=''></option>
+                  {dropDownOptions.map((op, idx) => (<option key={idx} value={op}>{op}</option>))}
+              </select>
+          </div>
+      )
+  }
 
 class Form extends React.Component {
 
@@ -37,29 +30,30 @@ class Form extends React.Component {
     }
 
     render() {
+        const {formName, formTemplate, formValues, onFormInputChange} = this.props
         return (
             <div className='container'>
                 <Jumbotron>
                     <h1>Form</h1>
                     {
-                        this.props.formData ? (<div>{this.props.formData.fields.map((field,index) => {
+                        formTemplate ? (<div>{formTemplate.fields.map((field,index) => {
                         if (field.type === "text") {
                             return <Input key={index}
-                                onFormInputChange={(value) => this.props.onFormInputChange(value, field.paramName, this.props.formName)}
-                                label={field.label}/>
+                                onChange={(value) => onFormInputChange(value, field.paramName, this.props.formName)}
+                                label={field.label}
+                                value={formValues[field.paramName]}/>
                         }
                         if (field.type === "dropDown") {
                             return <DropDown key={index}
-                                onFormInputChange={(value) => this.props.onFormInputChange(value,
-                                    field.paramName,
-                                    this.props.formName)}
+                                onChange={(value) => onFormInputChange(value, field.paramName, formName)}
                                 label={field.label}
-                                dropDownOptions={field.dropDownOptions}/>
+                                dropDownOptions={field.dropDownOptions}
+                                value={formValues[field.paramName]}/>
                         }
                         if (field.type === "calendar") {
                             return <Calendar key={index}/>
                         }
-                    })}</div>) : (<div> NO DATA SPECIFIED </div>)
+                    })}</div>) : (<div> NO FORM TEMPLATE SPECIFIED </div>)
                     }
                 </Jumbotron>
             </div>
