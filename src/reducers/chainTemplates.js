@@ -1,13 +1,13 @@
 import {
-    CHAIN_EDITOR_TEMPLATE_FETCH_SUCSEED,
+    CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
     CHAIN_EDITOR_TEMPLATE_FETCH_FAIL
 } from '../constants'
 
 const initialState = null
 
-const chainTemplatesTemplateReducer = (state = initialState, action) => {
+const chainTemplateReducer = (state = initialState, action) => {
     switch (action.type) {
-        case CHAIN_EDITOR_TEMPLATE_FETCH_SUCSEED: {
+        case CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED: {
             return action.payload
         }
 
@@ -16,4 +16,4 @@ const chainTemplatesTemplateReducer = (state = initialState, action) => {
     }
 }
 
-export default chainTemplatesTemplateReducer
+export default chainTemplateReducer

@@ -1,7 +1,7 @@
 //import {} from '@/actions'
 import {formTemplateFetchSuccseed,
     formTemplateFetchFail,
-    chainEditorTemplateFetchSucseed,
+    chainEditorTemplateFetchSucceed,
     chainEditorTemplateFetchFail} from './actions'
 const BACKEND_URL = "http://localhost:3001/api";
 
@@ -32,7 +32,7 @@ export const fetchFormTemplate = (formName) => (dispatch, getState) => {
   })
 }
 
-export const fetchChainEditorTemplate = () => (dispatch, getState) => {
+export const fetchChainTemplate = () => (dispatch, getState) => {
     const url = `${BACKEND_URL}/chain_templates`
     const options = {
         method: 'GET',
@@ -45,9 +45,9 @@ export const fetchChainEditorTemplate = () => (dispatch, getState) => {
             console.log(response)
             throw new Error(response.statusText)
         }
-    }).then(chainTemplatesTemplate => {
-        if (chainTemplatesTemplate) {
-            dispatch(chainEditorTemplateFetchSucseed(chainTemplatesTemplate))
+    }).then(chainTemplate => {
+        if (chainTemplate) {
+            dispatch(chainEditorTemplateFetchSucceed(chainTemplate))
         } else {
             dispatch(chainEditorTemplateFetchFail())
         }

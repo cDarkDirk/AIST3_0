@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import {fetchChainEditorTemplate} from '../api'
+import {fetchChainTemplate} from '../api'
 import ChainEditorPage from '../components/ChainEditorPage'
 
 function mapStateToProps(state) {
@@ -10,7 +10,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-      fetchChainEditorTemplate: () => dispatch(fetchChainEditorTemplate())
+      fetchChainTemplate: () => dispatch(fetchChainTemplate())
   }
 }
 

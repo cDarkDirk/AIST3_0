@@ -5,7 +5,7 @@ import SideBar from "../SideBar"
 import ChainList from "../../containers/ChainList"
 import {Row, Col} from "react-bootstrap"
 
-export default ({chainTemplates, fetchChainEditorTemplate}) => {
+export default ({chainTemplates, fetchChainTemplate}) => {
     return (
         <div className='container'>
             <h1>Chain Editor</h1>
@@ -21,7 +21,7 @@ export default ({chainTemplates, fetchChainEditorTemplate}) => {
                 </Col>
 
             </Row>
-            <button onClick={fetchChainEditorTemplate}>this is button</button>
+            <button onClick={fetchChainTemplate}>this is button</button>
 
         </div>
     )
