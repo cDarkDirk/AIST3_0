@@ -7,12 +7,11 @@ const initialState = {}
 const ui = (state = initialState, action) => {
     switch (action.type) {
         case FORM_INPUT_CHANGE: {
-
            return {
                 ...state,
                 [action.payload.formName]: {
                     ...state[action.payload.formName],
-                    [action.payload.keyName]: action.payload.value
+                    [action.payload.paramName]: action.payload.value
                 }
             }
         }

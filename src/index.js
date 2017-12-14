@@ -7,7 +7,7 @@ import {createBrowserHistory} from 'history'
 import {Router, Route, Switch} from 'react-router'
 import rootReducer from './reducers'
 import HomePage from './containers/HomePage'
-import ChainEditorPage from './components/ChainEditorPage'
+import ChainEditorPage from './containers/ChainEditorPage'
 import FormPage from './containers/FormPage'
 
 
