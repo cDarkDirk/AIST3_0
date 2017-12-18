@@ -18,7 +18,6 @@ const TestList = SortableContainer(({tests}) => {
 })
 
 export default ({chainTemplate, testBlockMoved}) => {
-    console.log(chainTemplate)
     const tests = (chainTemplate && chainTemplate.tests) || []
     return (
       <ul>
