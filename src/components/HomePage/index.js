@@ -12,6 +12,7 @@ export default ({addCounter, counter, goToChainEditor}) => {
         <p><Button onClick={addCounter} bsStyle='primary' bsSize="large">Add to counter</Button></p>
         <p><Link to={'/chaineditor'}><Button bsSize="large">To Editor</Button></Link></p>
           <Link to={'/form/connectServices'}>My super link</Link>
+          <Link to={'/launcher'}>My launcher link</Link>
       </Jumbotron>
     </div>
   )
