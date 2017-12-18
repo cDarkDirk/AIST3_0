@@ -5,7 +5,10 @@ import {chainSelected} from "../actions";
 
 function mapStateToProps(state) {
 
-    return {selectedChain: state.ui.selectedChain}
+    return {
+      chainTemplates: state.chainTemplates.chainTemplates,
+      selectedChainTemplate: state.chainTemplates.selectedChainTemplate
+    }
 }
 
 function mapDispatchToProps(dispatch) {

@@ -4,7 +4,6 @@ import ChainEditorPage from '../components/ChainEditorPage'
 
 function mapStateToProps(state) {
   return {
-      chainTemplates: state.chainTemplates
   }
 }
 

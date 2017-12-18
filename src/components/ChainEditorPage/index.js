@@ -11,7 +11,7 @@ export default ({chainTemplates, fetchChainTemplate}) => {
             <h1>Chain Editor</h1>
             <Row>
                 <Col md={3}>
-                    <SideBar><ChainList chains={chainTemplates}></ChainList></SideBar>
+                    <SideBar><ChainList/></SideBar>
                 </Col>
                 <Col md ={8}>
                     <ChainDisplay>
@@ -19,10 +19,8 @@ export default ({chainTemplates, fetchChainTemplate}) => {
                 </Col>
                 <Col md = {1}>
                 </Col>
-
             </Row>
             <button onClick={fetchChainTemplate}>this is button</button>
-
         </div>
     )
 }
