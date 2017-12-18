@@ -7,7 +7,7 @@ import {Row, Col} from "react-bootstrap"
 class ChainEditorPage extends React.Component {
 
     componentDidMount(){
-        this.props.fetchChainTemplate();
+        this.props.fetchChainTemplates();
     }
 
     render() {

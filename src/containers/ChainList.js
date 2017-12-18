@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 
 import ChainList from '../components/ChainList'
-import {chainSelected} from "../actions";
+import {selectChainTemplate} from "../actions";
 
 function mapStateToProps(state) {
 
@@ -13,7 +13,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        chainSelected: selectedChain => dispatch(chainSelected(selectedChain))
+        selectChainTemplate: selectedChainTemplate => dispatch(selectChainTemplate(selectedChainTemplate))
     }
 }
 

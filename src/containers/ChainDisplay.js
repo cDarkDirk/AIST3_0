@@ -4,7 +4,7 @@ import ChainDisplay from '../components/ChainDisplay'
 
 function mapStateToProps(state) {
   return {
-    chain: state.chain
+    chainTemplate: state.chainTemplates.chainTemplates[state.chainTemplates.selectedChainTemplate]
   }
 }
 

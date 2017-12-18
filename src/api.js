@@ -32,7 +32,7 @@ export const fetchFormTemplate = (formName) => (dispatch, getState) => {
   })
 }
 
-export const fetchChainTemplate = () => (dispatch, getState) => {
+export const fetchChainTemplates = () => (dispatch, getState) => {
     const url = `${BACKEND_URL}/chain_templates`
     const options = {
         method: 'GET',
