@@ -5,6 +5,7 @@ import chain from './chain'
 import form from './form'
 import formTemplate from './formTemplate'
 import chainTemplates from './chainTemplates'
+import test from './test'
 
 
 const rootReducer = combineReducers({
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     chain: chain,
     form: form,
     formTemplate,
-    chainTemplates
+    chainTemplates,
+    test
 })
 
 export default rootReducer

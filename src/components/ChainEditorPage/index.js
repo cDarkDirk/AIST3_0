@@ -3,6 +3,7 @@ import ChainDisplay from '../../containers/ChainDisplay'
 import SideBar from "../SideBar"
 import ChainList from "../../containers/ChainList"
 import {Row, Col} from "react-bootstrap"
+import TestsList from "../../containers/TestsList"
 
 class ChainEditorPage extends React.Component {
 
@@ -22,6 +23,7 @@ class ChainEditorPage extends React.Component {
                     </ChainDisplay>
                 </Col>
                 <Col md={1}>
+                    <TestsList/>
                 </Col>
 
             </Row>
