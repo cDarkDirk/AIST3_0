@@ -1,16 +1,19 @@
 import {connect} from 'react-redux'
 
 import ChainList from '../components/ChainList'
-import {chainSelected} from "../actions";
+import {selectChainTemplate} from "../actions";
 
 function mapStateToProps(state) {
 
-    return {selectedChain: state.ui.selectedChain}
+    return {
+      chainTemplates: state.chainTemplates.chainTemplates,
+      selectedChainTemplate: state.chainTemplates.selectedChainTemplate
+    }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        chainSelected: selectedChain => dispatch(chainSelected(selectedChain))
+        selectChainTemplate: selectedChainTemplate => dispatch(selectChainTemplate(selectedChainTemplate))
     }
 }
 
