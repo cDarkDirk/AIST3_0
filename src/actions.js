@@ -37,4 +37,4 @@ export const chainEditorTemplateFetchFail = (payload) => ({
     payload: payload
 })
 
-export const chainSelected = (selectedChain) => ({type: CHAIN_SELECTED, selectedChain})
+export const selectChainTemplate = (selectedChain) => ({type: CHAIN_SELECTED, selectedChain})

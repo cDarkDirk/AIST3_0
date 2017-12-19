@@ -1,16 +1,15 @@
 import {connect} from 'react-redux'
-import {fetchChainTemplate} from '../api'
+import {fetchChainTemplates} from '../api'
 import ChainEditorPage from '../components/ChainEditorPage'
 
 function mapStateToProps(state) {
   return {
-      chainTemplates: state.chainTemplates
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-      fetchChainTemplate: () => dispatch(fetchChainTemplate())
+      fetchChainTemplates: () => dispatch(fetchChainTemplates())
   }
 }
 
