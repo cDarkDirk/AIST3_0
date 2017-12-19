@@ -3,8 +3,11 @@ import {testBlockMoved} from '../actions'
 import ChainDisplay from '../components/ChainDisplay'
 
 function mapStateToProps(state) {
+  const chainTemplate = state.chainTemplates.chainTemplates[state.chainTemplates.selectedChainTemplate] || {tests: []}
+
   return {
-    chainTemplate: state.chainTemplates.chainTemplates[state.chainTemplates.selectedChainTemplate]
+    chainTemplate: chainTemplate,
+    tests: chainTemplate.tests.map(ct => state.test.find(test => test.test_id == ct.id))
   }
 }
 

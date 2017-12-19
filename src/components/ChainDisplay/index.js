@@ -4,7 +4,7 @@ import {SortableContainer, SortableElement} from 'react-sortable-hoc'
 
 
 const SortableTestBlock = SortableElement(({index, test}) =>
-  <TestBlock index={index} name={test.name} id={test.id} />
+  <TestBlock index={index} name={test.test_name} description={`id: ${test.test_id}`} />
 )
 
 const TestList = SortableContainer(({tests}) => {
@@ -17,8 +17,7 @@ const TestList = SortableContainer(({tests}) => {
   )
 })
 
-export default ({chainTemplate, testBlockMoved}) => {
-    const tests = (chainTemplate && chainTemplate.tests) || []
+export default ({chainTemplate, tests=[], testBlockMoved}) => {
     return (
       <ul>
         <TestList tests={tests} onSortEnd={testBlockMoved}/>
