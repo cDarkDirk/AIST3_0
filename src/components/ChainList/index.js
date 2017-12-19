@@ -1,18 +1,12 @@
 import React from "react";
 import ChainListItem from "../ChainListItem";
 
-const ChainList = function (props) {
-    const chains = props.chains || [];
-    const selectedChain = props.selectedChain;
-    const chainSelected = props.chainSelected;
-
+const ChainList = ({chainTemplates, selectedChainTemplate, selectChainTemplate}) => {
     return (<ul>
         {
-            chains.map((chain, index) => {
-
-                return <ChainListItem onClick = {()=>chainSelected(index)} chain={chain} selected = {index == selectedChain}></ChainListItem>
+            chainTemplates.map((chain, index) => {
+                return <ChainListItem onClick = {()=>selectChainTemplate(index)} chain={chain} selected = {index == selectedChainTemplate}></ChainListItem>
             })
-
         }
     </ul>);
 

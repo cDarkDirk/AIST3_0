@@ -8,7 +8,7 @@ import TestsList from "../../containers/TestsList"
 class ChainEditorPage extends React.Component {
 
     componentDidMount(){
-        this.props.fetchChainTemplate();
+        this.props.fetchChainTemplates();
     }
 
     render() {
@@ -16,7 +16,7 @@ class ChainEditorPage extends React.Component {
             <h1>Chain Editor</h1>
             <Row>
                 <Col md={3}>
-                    <SideBar><ChainList chains={this.props.chainTemplates}>{this.props.chainTemplates}</ChainList></SideBar>
+                    <SideBar><ChainList/></SideBar>
                 </Col>
                 <Col md={8}>
                     <ChainDisplay>
@@ -25,7 +25,6 @@ class ChainEditorPage extends React.Component {
                 <Col md={1}>
                     <TestsList/>
                 </Col>
-
             </Row>
 
         </div>

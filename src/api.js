@@ -36,7 +36,7 @@ export const fetchFormTemplate = (formName) => (dispatch, getState) => {
   })
 }
 
-export const fetchChainTemplate = () => (dispatch, getState) => {
+export const fetchChainTemplates = () => (dispatch, getState) => {
   const url = `${BACKEND_URL}/chain_templates`
   const options = {
     method: 'GET',
@@ -49,9 +49,9 @@ export const fetchChainTemplate = () => (dispatch, getState) => {
       console.log(response)
       throw new Error(response.statusText)
     }
-  }).then(chainTemplate => {
-    if (chainTemplate) {
-      dispatch(chainEditorTemplateFetchSucceed(chainTemplate))
+  }).then(chainTemplates => {
+    if (chainTemplates) {
+      dispatch(chainEditorTemplateFetchSucceed(chainTemplates))
     } else {
       dispatch(chainEditorTemplateFetchFail())
     }

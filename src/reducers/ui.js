@@ -1,6 +1,5 @@
 import {
     ADD_COUNTER,
-    CHAIN_SELECTED
 } from '../constants'
 
 const initialState = {
@@ -10,13 +9,6 @@ const initialState = {
 
 const ui = (state = initialState, action) => {
     switch (action.type) {
-        case CHAIN_SELECTED: {
-            return {
-                ...state,
-                selectedChain: action.selectedChain
-            }
-
-        }
         case ADD_COUNTER: {
             return {
                 ...state,
