@@ -42,7 +42,4 @@ export const chainEditorTemplateFetchFail = (payload) => ({
      type: SCHEDULE_DATE_CHANGED,
      payload: payload
  })
-
-
-
 export const chainSelected = (selectedChain) => ({type: CHAIN_SELECTED, selectedChain})
