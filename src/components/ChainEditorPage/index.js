@@ -18,11 +18,11 @@ class ChainEditorPage extends React.Component {
                 <Col md={3}>
                     <SideBar><ChainList/></SideBar>
                 </Col>
-                <Col md={8}>
+                <Col md={6}>
                     <ChainDisplay>
                     </ChainDisplay>
                 </Col>
-                <Col md={1}>
+                <Col md={3}>
                     <TestsList/>
                 </Col>
             </Row>
