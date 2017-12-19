@@ -5,7 +5,9 @@ import {ADD_COUNTER,
     FORM_TEMPLATE_FETCH_SUCCSEED,
     FORM_TEMPLATE_FETCH_FAIL,
     CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
-    CHAIN_EDITOR_TEMPLATE_FETCH_FAIL} from './constants'
+    CHAIN_EDITOR_TEMPLATE_FETCH_FAIL,
+    TEST_FETCH_SUCCEED,
+    TEST_FETCH_FAIL} from './constants'
 
 export const addCounter = () => ({type: ADD_COUNTER})
 
@@ -34,6 +36,14 @@ export const chainEditorTemplateFetchSucceed = (payload) => ({
 })
 export const chainEditorTemplateFetchFail = (payload) => ({
     type: CHAIN_EDITOR_TEMPLATE_FETCH_FAIL,
+    payload: payload
+})
+export const testsListTemplateFetchSucceed = (payload) => ({
+    type: TEST_FETCH_SUCCEED,
+    payload: payload
+})
+export const testsListTemplateFetchFail = (payload) => ({
+    type: TEST_FETCH_FAIL,
     payload: payload
 })
 
