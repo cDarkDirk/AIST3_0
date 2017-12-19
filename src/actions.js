@@ -1,4 +1,5 @@
-import {ADD_COUNTER,
+import {
+    ADD_COUNTER,
     TEST_BLOCK_MOVED,
     FORM_INPUT_CHANGE,
     CHAIN_SELECTED,
@@ -6,7 +7,8 @@ import {ADD_COUNTER,
     FORM_TEMPLATE_FETCH_FAIL,
     CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
     SCHEDULE_DATE_CHANGED,
-    CHAIN_EDITOR_TEMPLATE_FETCH_FAIL} from './constants'
+    CHAIN_EDITOR_TEMPLATE_FETCH_FAIL, SCHEDULE_TIME_CHANGED
+} from './constants'
 
 export const addCounter = () => ({type: ADD_COUNTER})
 
@@ -42,6 +44,10 @@ export const chainEditorTemplateFetchFail = (payload) => ({
      type: SCHEDULE_DATE_CHANGED,
      payload: payload
  })
+export const changeTime = (payload) => ({
+    type: SCHEDULE_TIME_CHANGED,
+    payload: payload
+})
 
 
 

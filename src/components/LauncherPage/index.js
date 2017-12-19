@@ -1,6 +1,6 @@
 import React from "react";
 import {Row, Col} from "react-bootstrap"
-import ScheduleForm from "../ScheduleForm";
+import ScheduleForm from "../../containers/ScheduleForm";
 
 
 const LauncherPage = function (props) {

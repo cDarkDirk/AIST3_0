@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 
+
 const ScheduleForm = function (props) {
     return (
         <div>
@@ -22,13 +23,13 @@ const ScheduleForm = function (props) {
                     <div>Date</div>
                 </Col>
                 <Col>
-                    <DatePicker></DatePicker>
+                    <DatePicker selected={props.date} onChange={props.changeDate}></DatePicker>
                 </Col>
                 <Col>
                     <div> Time</div>
                 </Col>
                 <Col>
-                    <TimePicker></TimePicker>
+                    <TimePicker value={props.time} onChange={props.changeTime}></TimePicker>
                 </Col>
                 <Col>
                     <div> Periodic</div>
