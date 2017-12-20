@@ -1,14 +1,21 @@
-import React from "react";
-import ChainListItem from "../ChainListItem";
+import React from "react"
+import {ListGroup, ListGroupItem} from 'react-bootstrap'
+
+import './style.css'
 
 const ChainList = ({chainTemplates, selectedChainTemplate, selectChainTemplate}) => {
-    return (<ul>
+    return (<ListGroup>
         {
             chainTemplates.map((chain, index) => {
-                return <ChainListItem onClick = {()=>selectChainTemplate(index)} chain={chain} selected = {index == selectedChainTemplate}></ChainListItem>
+                return <ListGroupItem
+                          className='chain-list-item'
+                          href="#" active={index===selectedChainTemplate}
+                          onClick={() => selectChainTemplate(index)}>
+                          {chain.name}
+                          </ListGroupItem>
             })
         }
-    </ul>);
+    </ListGroup>);
 
 }
 export default ChainList;

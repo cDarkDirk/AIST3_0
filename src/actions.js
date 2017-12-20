@@ -7,7 +7,10 @@ import {ADD_COUNTER,
     CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
     CHAIN_EDITOR_TEMPLATE_FETCH_FAIL,
     TEST_FETCH_SUCCEED,
-    TEST_FETCH_FAIL} from './constants'
+    TEST_FETCH_FAIL,
+    CHAIN_TEMPLATE_DELETED,
+    CHAIN_TEMPLATE_ADDED,
+    CHAIN_TEMPLATE_NAME_CHANGED} from './constants'
 
 export const addCounter = () => ({type: ADD_COUNTER})
 
@@ -24,6 +27,20 @@ export const testBlockMoved = (payload) => ({
 export const formTemplateFetchSuccseed = (payload) => ({
     type: FORM_TEMPLATE_FETCH_SUCCSEED,
     payload: payload
+})
+
+export const chainTemplateNameChanged = (payload) => ({
+  type: CHAIN_TEMPLATE_NAME_CHANGED,
+  payload: payload
+})
+
+export const deleteChainTemplate = (payload) => ({
+  type: CHAIN_TEMPLATE_DELETED,
+  payload: payload
+})
+
+export const addChainTemplate = () => ({
+  type: CHAIN_TEMPLATE_ADDED
 })
 
 export const formTemplateFetchFail = (payload) => ({
