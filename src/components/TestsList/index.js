@@ -1,20 +1,25 @@
 import React from 'react'
+import TestBlock from '../TestBlock'
 
 class TestsList extends React.Component {
     componentDidMount() {
         this.props.fetchTests();
     }
+
     render() {
         const tests = this.props.tests || []
-        return(
+        return (
             <ol>
                 {tests.map(test => {
                     return (
-                        <li type="circle">{test.test_name}</li>
+                        <div onClick={() => {this.props.testBlockClicked(test)}}>
+                            <TestBlock id={test.test_id} name={test.test_name} description=""/>
+                        </div>
                     )
                 })}
             </ol>
         )
     }
 }
+
 export default TestsList
