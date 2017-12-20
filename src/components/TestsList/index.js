@@ -13,7 +13,7 @@ class TestsList extends React.Component {
                 {tests.map(test => {
                     return (
                         <div onClick={() => {this.props.testBlockClicked(test)}}>
-                            <TestBlock id={test.id} name={test.name} description=""/>
+                            <TestBlock id={test.test_id} name={test.test_name} description=""/>
                         </div>
                     )
                 })}

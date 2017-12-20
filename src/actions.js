@@ -8,7 +8,8 @@ import {ADD_COUNTER,
     CHAIN_EDITOR_TEMPLATE_FETCH_FAIL,
     TEST_FETCH_SUCCEED,
     TEST_FETCH_FAIL,
-    TEST_BLOCK_CLICKED} from './constants'
+    TEST_BLOCK_CLICKED,
+    CLOSE_BUTTON_CLICKED} from './constants'
 
 export const addCounter = () => ({type: ADD_COUNTER})
 
@@ -51,5 +52,10 @@ export const testBlockClicked = (payload) => ({
     type: TEST_BLOCK_CLICKED,
     payload: payload
 })
+export const closeButtonClicked = (payload) => ({
+    type: CLOSE_BUTTON_CLICKED,
+    payload: payload
+})
+
 
 export const selectChainTemplate = (selectedChain) => ({type: CHAIN_SELECTED, selectedChain})
