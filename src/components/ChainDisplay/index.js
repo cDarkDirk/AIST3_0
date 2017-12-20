@@ -3,9 +3,16 @@ import TestBlock from '../TestBlock'
 import {SortableContainer, SortableElement} from 'react-sortable-hoc'
 
 
-const SortableTestBlock = SortableElement(({idx, test, closeButtonClicked}) =>
-  <TestBlock closeButtonClicked={closeButtonClicked} canClose={true} idx={idx} name={test.test_name} description={`id: ${test.test_id}`} />
-)
+const SortableTestBlock = SortableElement(({index, idx, test, closeButtonClicked}) => {
+    return (
+        <TestBlock key={index}
+                   closeButtonClicked={closeButtonClicked}
+                   canClose={true}
+                   idx={idx}
+                   name={test.test_name}
+                   description={`id: ${test.test_id}`}
+        />)
+})
 
 const TestList = SortableContainer(({tests,closeButtonClicked}) => {
   return (
@@ -17,13 +24,13 @@ const TestList = SortableContainer(({tests,closeButtonClicked}) => {
   )
 })
 
-export default ({chainTemplate, tests=[], testBlockMoved, closeButtonClicked}) => {
+export default ({chainTemplate, tests = [], testBlockMoved, closeButtonClicked}) => {
     return (
-      <ul>
-        <TestList distance={1}
-                  closeButtonClicked={closeButtonClicked}
-                  tests={tests}
-                  onSortEnd={testBlockMoved}/>
-      </ul>
+        <ul>
+            <TestList distance={1}
+                      closeButtonClicked={closeButtonClicked}
+                      tests={tests}
+                      onSortEnd={testBlockMoved}/>
+        </ul>
     )
-  }
+}

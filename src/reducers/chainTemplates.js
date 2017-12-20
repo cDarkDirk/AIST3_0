@@ -57,7 +57,6 @@ const chainTemplateReducer = (state = initialState, action) => {
             const selectedTemplateIndex = state.selectedChainTemplate;
             const chainTemplates = [...state.chainTemplates]
             const tests = [...state.chainTemplates[selectedTemplateIndex].tests]
-            console.log(action.payload)
             tests.splice(action.payload,1)
             chainTemplates[selectedTemplateIndex].tests = tests
             return {
