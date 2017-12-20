@@ -5,7 +5,6 @@ import './style.css'
 
 
  export default ({idx, name, description, connectDragSource, isDragging, canClose, closeButtonClicked}) => {
-
     return (
             <li className='test-block-container'>
                 <div className='test-block-content'>
