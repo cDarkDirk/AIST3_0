@@ -1,6 +1,7 @@
 import {connect} from 'react-redux'
 import {fetchTests} from '../api'
 import TestsList from '../components/TestsList'
+import {testBlockClicked} from'../actions'
 
 function mapStateToProps(state) {
     return {
@@ -10,7 +11,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchTests: () => dispatch(fetchTests())
+        fetchTests: () => dispatch(fetchTests()),
+        testBlockClicked: (test) => dispatch(testBlockClicked(test))
     }
 }
 

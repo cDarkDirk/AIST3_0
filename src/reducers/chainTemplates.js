@@ -1,6 +1,6 @@
 import {
     CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
-    CHAIN_EDITOR_TEMPLATE_FETCH_FAIL,
+    TEST_BLOCK_CLICKED,
     CHAIN_SELECTED,
     TEST_BLOCK_MOVED
 } from '../constants'
@@ -11,6 +11,7 @@ const initialState = {
 }
 
 const chainTemplateReducer = (state = initialState, action) => {
+    console.log(state)
     switch (action.type) {
         case CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED: {
             return {
@@ -37,6 +38,12 @@ const chainTemplateReducer = (state = initialState, action) => {
                 ...state.chainTemplates.slice(sel+1, state.chainTemplates.length)
               ]
             }
+        }
+        case TEST_BLOCK_CLICKED: {
+            const selectedTemplateIndex = state.selectedChainTemplate;
+            const allChainTemplates = state.chainTemplates;
+            allChainTemplates[selectedTemplateIndex].tests.push(state.payload);
+            debugger
         }
 
         default:

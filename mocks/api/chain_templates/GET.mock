@@ -7,13 +7,16 @@ Access-Control-Allow-Origin: *
     "name": "DebitCard",
     "tests": [
         {
-          "id": 3
+          "id": 3,
+          "name": "Create Client FS"
         },
         {
-          "id": 4
+          "id": 4,
+          "name": "Create Request Debit Card FS"
         },
         {
-          "id": 5
+          "id": 5,
+          "name": "Release Debit Card"
         }
       ]
   },

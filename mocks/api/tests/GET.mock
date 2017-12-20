@@ -3,47 +3,48 @@ Content-Type: application/json; charset=utf-8
 
 [
   {
-    "test_id": 3,
-    "test_name": "Create Client FS"
+    "id": 3,
+    "name": "Create Client FS"
+
   },
   {
-    "test_id": 4,
-    "test_name": "Create Request Debit Card FS"
+    "id": 4,
+    "name": "Create Request Debit Card FS"
   },
   {
-    "test_id": 5,
-    "test_name": "Release Debit Card"
+    "id": 5,
+    "name": "Release Debit Card"
   },
   {
-    "test_id": 2,
-    "test_name": "Create Client with Account"
+    "id": 2,
+    "name": "Create Client with Account"
   },
   {
-    "test_id": 11,
-    "test_name": "Create Request for Credit Card"
+    "id": 11,
+    "name": "Create Request for Credit Card"
   },
   {
-    "test_id": 12,
-    "test_name": "Check Application Credit Card"
+    "id": 12,
+    "name": "Check Application Credit Card"
   },
   {
-    "test_id": 13,
-    "test_name": "Review Application Credit Card"
+    "id": 13,
+    "name": "Review Application Credit Card"
   },
   {
-    "test_id": 1,
-    "test_name": "Way for Card Accrual"
+    "id": 1,
+    "name": "Way for Card Accrual"
   },
   {
-    "test_id": 201707191401206171,
-    "test_name": "Create Mortage Loan"
+    "id": 201707191401206171,
+    "name": "Create Mortage Loan"
   },
   {
-    "test_id": 201707191401206173,
-    "test_name": "Apply for Mortage Loan"
+    "id": 201707191401206173,
+    "name": "Apply for Mortage Loan"
   },
   {
-    "test_id": 10,
-    "test_name": "WAY4Ipass"
+    "id": 10,
+    "name": "WAY4Ipass"
   }
 ]
