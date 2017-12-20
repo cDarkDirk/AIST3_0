@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import {testBlockMoved} from '../actions'
+import {closeButtonClicked, testBlockMoved} from '../actions'
 import ChainDisplay from '../components/ChainDisplay'
 
 function mapStateToProps(state, ownProps) {
@@ -9,9 +9,10 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    testBlockMoved: (payload) => dispatch(testBlockMoved(payload))
-  }
+    return {
+        testBlockMoved: (payload) => dispatch(testBlockMoved(payload)),
+        closeButtonClicked: (payload) => dispatch(closeButtonClicked(payload))
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChainDisplay)

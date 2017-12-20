@@ -10,7 +10,9 @@ import {ADD_COUNTER,
     TEST_FETCH_FAIL,
     CHAIN_TEMPLATE_DELETED,
     CHAIN_TEMPLATE_ADDED,
-    CHAIN_TEMPLATE_NAME_CHANGED} from './constants'
+    CHAIN_TEMPLATE_NAME_CHANGED,
+    TEST_BLOCK_CLICKED,
+    CLOSE_BUTTON_CLICKED} from './constants'
 
 export const addCounter = () => ({type: ADD_COUNTER})
 
@@ -63,5 +65,14 @@ export const testsListTemplateFetchFail = (payload) => ({
     type: TEST_FETCH_FAIL,
     payload: payload
 })
+export const testBlockClicked = (payload) => ({
+    type: TEST_BLOCK_CLICKED,
+    payload: payload
+})
+export const closeButtonClicked = (payload) => ({
+    type: CLOSE_BUTTON_CLICKED,
+    payload: payload
+})
+
 
 export const selectChainTemplate = (selectedChain) => ({type: CHAIN_SELECTED, selectedChain})

@@ -6,11 +6,12 @@ import './style.css'
 const ChainList = ({chainTemplates, selectedChainTemplate, selectChainTemplate}) => {
     return (<ListGroup>
         {
-            chainTemplates.map((chain, index) => {
+            chainTemplates.map((chain, idx) => {
                 return <ListGroupItem
+                          key={idx}
                           className='chain-list-item'
-                          href="#" active={index===selectedChainTemplate}
-                          onClick={() => selectChainTemplate(index)}>
+                          href="#" active={idx===selectedChainTemplate}
+                          onClick={() => selectChainTemplate(idx)}>
                           {chain.name}
                           </ListGroupItem>
             })

@@ -9,11 +9,18 @@
   text-align: center;
 }
 
+.test-block-close {
+  position: absolute;
+  right: 7px;
+  top: 3px;
+}
+
 .test-block-content {
   border: 1px solid #444;
   background: #FFF;
   border-radius: 2px;
   padding: 12px;
+  position: relative;
 }
 
 .test-block-content > .heading {
