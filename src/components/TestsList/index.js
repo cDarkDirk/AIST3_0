@@ -12,7 +12,7 @@ class TestsList extends React.Component {
             <ol>
                 {tests.map(test => {
                     return (
-                        <div onClick={() => {this.props.testBlockClicked(test)}}>
+                        <div key={test.test_id} onClick={() => {this.props.testBlockClicked(test)}}>
                             <TestBlock id={test.test_id} name={test.test_name} description=""/>
                         </div>
                     )
