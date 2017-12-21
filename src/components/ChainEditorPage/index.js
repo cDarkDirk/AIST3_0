@@ -24,7 +24,7 @@ class ChainEditorPage extends React.Component {
                 <Col md={3}>
                     <SideBar>
                       <ChainList/>
-                      <div className='spacer'></div>
+                      <div className='spacer'/>
                       <Button
                         bsStyle='primary'
                         className='chain-editor-add-chain-btn'
@@ -38,8 +38,7 @@ class ChainEditorPage extends React.Component {
                       chainTemplate={chainTemplate}
                       onNameChange={chainTemplateNameChanged}
                       deleteChainTemplate={deleteChainTemplate}/>
-                    <ChainDisplay chainTemplate={chainTemplate}>
-                    </ChainDisplay>
+                    <ChainDisplay chainTemplate={chainTemplate}/>
                 </Col>
                 <Col md={3}>
                     <TestsList/>
