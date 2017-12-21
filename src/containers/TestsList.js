@@ -1,11 +1,15 @@
+import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTests} from '../api'
 import TestsList from '../components/TestsList'
-import {testBlockClicked} from'../actions'
+import {testBlockClicked} from '../actions'
 
 function mapStateToProps(state) {
     return {
-        tests: state.test
+        tests: state.test,
+        selectedChainTemplate: state.chainTemplates.chainTemplates[state.chainTemplates.selectedChainTemplate] || {
+            tests: []
+        }
     }
 }
 

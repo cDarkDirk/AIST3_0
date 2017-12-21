@@ -45,20 +45,26 @@ const chainTemplateReducer = (state = initialState, action) => {
         case TEST_BLOCK_CLICKED: {
             const selectedTemplateIndex = state.selectedChainTemplate;
             const allChainTemplates = [...state.chainTemplates];
-            allChainTemplates[selectedTemplateIndex].tests.push({
-                id: action.payload.test_id
-            });
+            allChainTemplates[selectedTemplateIndex] = {
+                ...allChainTemplates[selectedTemplateIndex],
+                tests:[...allChainTemplates[selectedTemplateIndex].tests,
+                    {
+                        id: action.payload.test_id
+                    }]};
             return {
                 ...state,
                 chainTemplates: allChainTemplates
             }
         }
+
         case CLOSE_BUTTON_CLICKED: {
             const selectedTemplateIndex = state.selectedChainTemplate;
             const chainTemplates = [...state.chainTemplates]
             const tests = [...state.chainTemplates[selectedTemplateIndex].tests]
-            tests.splice(action.payload,1)
-            chainTemplates[selectedTemplateIndex].tests = tests
+            tests.splice(action.payload, 1)
+            chainTemplates[selectedTemplateIndex] = {
+                ...chainTemplates[selectedTemplateIndex],
+                tests: tests}
             return {
                 ...state,
                 chainTemplates
@@ -66,32 +72,32 @@ const chainTemplateReducer = (state = initialState, action) => {
         }
 
         case CHAIN_TEMPLATE_NAME_CHANGED: {
-          const sel = state.selectedChainTemplate
-          const chainTemplates = [...state.chainTemplates]
-          chainTemplates[sel] = {
-            ...chainTemplates[sel],
-            name: action.payload
-          }
-          return {
-            ...state,
-            chainTemplates
-          }
+            const sel = state.selectedChainTemplate
+            const chainTemplates = [...state.chainTemplates]
+            chainTemplates[sel] = {
+                ...chainTemplates[sel],
+                name: action.payload
+            }
+            return {
+                ...state,
+                chainTemplates
+            }
         }
 
         case CHAIN_TEMPLATE_DELETED: {
-          return {
-            ...state,
-            selectedChainTemplate: 0,
-            chainTemplates: state.chainTemplates.filter(t => t.name !== action.payload.name)
-          }
+            return {
+                ...state,
+                selectedChainTemplate: 0,
+                chainTemplates: state.chainTemplates.filter(t => t.name !== action.payload.name)
+            }
         }
 
         case CHAIN_TEMPLATE_ADDED: {
-          return {
-            ...state,
-            selectedChainTemplate: state.chainTemplates.length,
-            chainTemplates: [...state.chainTemplates, {name: 'New Template', tests: []}]
-          }
+            return {
+                ...state,
+                selectedChainTemplate: state.chainTemplates.length,
+                chainTemplates: [...state.chainTemplates, {name: 'New Template', tests: []}]
+            }
         }
         default:
             return state
