@@ -1,6 +1,8 @@
 import React from 'react'
 import TestBlock from '../TestBlock'
 
+import './style.css'
+
 class TestsList extends React.Component {
     componentDidMount() {
         this.props.fetchTests();
@@ -10,10 +12,10 @@ class TestsList extends React.Component {
         const tests = this.props.tests || []
         return (
             <ol>
-                {tests.map(test => {
+                {tests.map((test, idx) => {
                     return (
-                        <div key={test.test_id} onClick={() => {this.props.testBlockClicked(test)}}>
-                            <TestBlock id={test.test_id} name={test.test_name} description=""/>
+                        <div className='use-test-button' onClick={() => {this.props.testBlockClicked(test)}} key={idx}>
+                            <TestBlock id={test.test_id} name={test.test_name} description="" showArrow={false}/>
                         </div>
                     )
                 })}

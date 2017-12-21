@@ -10,6 +10,8 @@ import HomePage from './containers/HomePage'
 import ChainEditorPage from './containers/ChainEditorPage'
 import FormPage from './containers/FormPage'
 
+import 'font-awesome/css/font-awesome.min.css'
+import './styles/main.css'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const history = createBrowserHistory()
