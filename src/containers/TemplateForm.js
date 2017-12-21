@@ -12,7 +12,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
        // onFormInputChange: (value, paramName, formName) => dispatch(onFormInputChange(value, paramName, formName)),
-        fetchDataTemplatesList: (templateName) => dispatch(fetchDataTemplatesList(templateName))
+        fetchDataTemplatesList: () => dispatch(fetchDataTemplatesList())
     }
 }
 
