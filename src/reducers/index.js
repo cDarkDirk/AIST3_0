@@ -6,6 +6,7 @@ import scheduleForm from  './scheduleForm'
 import formTemplate from './formTemplate'
 import chainTemplates from './chainTemplates'
 import test from './test'
+import dataTemplate from './dataTemplate'
 
 
 const rootReducer = combineReducers({
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     scheduleForm: scheduleForm,
     formTemplate,
     chainTemplates,
-    test
+    test,
+    dataTemplate
 })
 
 export default rootReducer

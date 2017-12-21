@@ -7,10 +7,11 @@ import {
     FORM_TEMPLATE_FETCH_FAIL,
     CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
     SCHEDULE_DATE_CHANGED,
-    CHAIN_EDITOR_TEMPLATE_FETCH_FAIL,
-    SCHEDULE_TIME_CHANGED,
+    CHAIN_EDITOR_TEMPLATE_FETCH_FAIL, SCHEDULE_TIME_CHANGED,
     TEST_FETCH_SUCCEED,
-    TEST_FETCH_FAIL
+    TEST_FETCH_FAIL,
+    DATA_TEMPLATE_LIST_SUCCEED,
+    DATA_TEMPLATE_LIST_FAIL
 } from './constants'
 
 export const addCounter = () => ({type: ADD_COUNTER})
@@ -57,6 +58,15 @@ export const testsListTemplateFetchFail = (payload) => ({
  })
 export const changeTime = (payload) => ({
     type: SCHEDULE_TIME_CHANGED,
+    payload: payload
+})
+
+export const dataTemplateFetchFail = (payload) => ({
+    type: DATA_TEMPLATE_LIST_FAIL,
+    payload: payload
+})
+export const dataTemplateFetchSucceed = (payload) => ({
+    type: DATA_TEMPLATE_LIST_SUCCEED,
     payload: payload
 })
 

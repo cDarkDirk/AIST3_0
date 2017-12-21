@@ -10,6 +10,7 @@ import HomePage from './containers/HomePage'
 import ChainEditorPage from './containers/ChainEditorPage'
 import FormPage from './containers/FormPage'
 import LauncherPage from "./components/LauncherPage";
+import TemplateFrom from "./components/TemplateForm"
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

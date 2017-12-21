@@ -4,7 +4,9 @@ import {
   chainEditorTemplateFetchSucceed,
   chainEditorTemplateFetchFail,
   testsListTemplateFetchSucceed,
-  testsListTemplateFetchFail
+  testsListTemplateFetchFail,
+    dataTemplateFetchSucceed,
+    dataTemplateFetchFail
 }
 from './actions'
 const BACKEND_URL = "http://localhost:3001/api";
@@ -81,4 +83,29 @@ export const fetchTests = () => (dispatch, getState) => {
   }).catch(error => {
     throw error
   })
+}
+export const fetchDataTemplatesList = () => {
+    return (dispatch, getState) => {
+        const url = `${BACKEND_URL}/data_templates`
+        const options = {
+            method: 'GET',
+            headers: {},
+        }
+        fetch(url, options).then(response => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                throw new Error(response.statusText)
+            }
+        }).then(templateDataList => {
+            if (templateDataList) {
+                dispatch(dataTemplateFetchSucceed(templateDataList))
+            } else {
+                dispatch(dataTemplateFetchFail())
+            }
+        }).catch(error => {
+            throw error
+        })
+    };
+
 }
