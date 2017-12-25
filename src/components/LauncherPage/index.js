@@ -17,10 +17,7 @@ const LauncherPage = function (props) {
                 </Col>
                 <Col>
                     <div> Time</div>
-                </Col>
-                <Col>
-                    <div> Periodic Dropdown</div>
-                </Col>
+                </Col>              
             </Row>
             <Row>
                 <h2>FORM</h2>
