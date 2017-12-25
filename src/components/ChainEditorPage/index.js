@@ -6,6 +6,7 @@ import ChainList from "../../containers/ChainList"
 import {Row, Col} from "react-bootstrap"
 import TestsList from "../../containers/TestsList"
 import {Button} from 'react-bootstrap'
+import Notifications from 'react-notification-system-redux'
 import FontAwesome from 'react-fontawesome'
 
 import './style.css'
@@ -17,7 +18,8 @@ class ChainEditorPage extends React.Component {
     }
 
     render() {
-        const {chainTemplate, chainTemplateNameChanged, deleteChainTemplate, addChainTemplate} = this.props
+        const {chainTemplate, chainTemplateNameChanged, deleteChainTemplate,
+            addChainTemplate, submitChainTemplate, notifications} = this.props
         return (<div className='container'>
             <h1>Chain Editor</h1>
             <Row>
@@ -37,14 +39,17 @@ class ChainEditorPage extends React.Component {
                     <ChainTemplatePropertyEditor
                       chainTemplate={chainTemplate}
                       onNameChange={chainTemplateNameChanged}
-                      deleteChainTemplate={deleteChainTemplate}/>
+                      deleteChainTemplate={deleteChainTemplate}
+                      submitChainTemplate={submitChainTemplate}
+                    />
+
                     <ChainDisplay chainTemplate={chainTemplate}/>
                 </Col>
                 <Col md={3}>
                     <TestsList/>
                 </Col>
             </Row>
-
+                <Notifications notifications={notifications}></Notifications>
         </div>
         )
     }

@@ -1,12 +1,13 @@
 import {
-  formTemplateFetchSuccseed,
-  formTemplateFetchFail,
-  chainEditorTemplateFetchSucceed,
-  chainEditorTemplateFetchFail,
-  testsListTemplateFetchSucceed,
-  testsListTemplateFetchFail
+    formTemplateFetchSuccseed,
+    formTemplateFetchFail,
+    chainEditorTemplateFetchSucceed,
+    chainEditorTemplateFetchFail,
+    testsListTemplateFetchSucceed,
+    testsListTemplateFetchFail, submitChainTemplateFail, submitChainTemplateSucceed
 }
-from './actions'
+    from './actions'
+import {error, success} from "react-notification-system-redux"
 const BACKEND_URL = "http://localhost:3001/api";
 
 export const fetchFormTemplate = (formName) => (dispatch, getState) => {
@@ -81,4 +82,32 @@ export const fetchTests = () => (dispatch, getState) => {
   }).catch(error => {
     throw error
   })
+}
+
+export const submitChainTemplate = (chainTemplate) => (dispatch, getState) => {
+    const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`
+    const options = {
+        method: 'POST',
+        headers: {},
+        body: chainTemplate
+    }
+    fetch(url, options).then(response => {
+        if (response.ok) {
+            return response.json()
+        } else {
+            throw new Error(response.statusText)
+        }
+    }).then(updateChainTemplateResult => {
+        if (updateChainTemplateResult) {
+            dispatch (success({message: "Submit succeeded"}))
+            dispatch(submitChainTemplateSucceed(updateChainTemplateResult))
+            console.log({chainTemplate});
+        } else {
+            dispatch (error({message: "Submit failed with error:"}))
+            //TODO return an error
+            dispatch(submitChainTemplateFail())
+        }
+    }).catch(error => {
+        throw error
+    })
 }
