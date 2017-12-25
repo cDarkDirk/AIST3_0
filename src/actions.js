@@ -16,7 +16,12 @@ import {
     CHAIN_TEMPLATE_ADDED,
     CHAIN_TEMPLATE_NAME_CHANGED,
     TEST_BLOCK_CLICKED,
-    CLOSE_BUTTON_CLICKED} from './constants'
+    SUBMIT_BUTTON_CLICKED,
+    CLOSE_BUTTON_CLICKED,
+    SUBMIT_CHAIN_TEMPLATE_FAIL,
+    SUBMIT_CHAIN_TEMPLATE_SUCCEED,
+
+} from './constants'
 
 export const addCounter = () => ({type: ADD_COUNTER})
 
@@ -77,6 +82,16 @@ export const closeButtonClicked = (payload) => ({
     type: CLOSE_BUTTON_CLICKED,
     payload: payload
 })
+
+export const submitChainTemplateFail = (payload) => ({
+    type: SUBMIT_CHAIN_TEMPLATE_FAIL,
+    payload: payload
+})
+export const submitChainTemplateSucceed = (payload) => ({
+    type: SUBMIT_CHAIN_TEMPLATE_SUCCEED,
+    payload: payload
+})
+
 
 
  export const changeDate = (payload) => ({
