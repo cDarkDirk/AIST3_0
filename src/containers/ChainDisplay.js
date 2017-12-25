@@ -1,20 +1,19 @@
 import {connect} from 'react-redux'
-import {testBlockMoved} from '../actions'
+import {closeButtonClicked, testBlockMoved} from '../actions'
 import ChainDisplay from '../components/ChainDisplay'
 
-function mapStateToProps(state) {
-  const chainTemplate = state.chainTemplates.chainTemplates[state.chainTemplates.selectedChainTemplate] || {tests: []}
-
+function mapStateToProps(state, ownProps) {
+    const test = state.test || []
   return {
-    chainTemplate: chainTemplate,
-    tests: chainTemplate.tests.map(ct => state.test.find(test => test.test_id == ct.id))
+    tests: ownProps.chainTemplate.tests.map(ct => test.find(test => test.test_id == ct.id))
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    testBlockMoved: (payload) => dispatch(testBlockMoved(payload))
-  }
+    return {
+        testBlockMoved: (payload) => dispatch(testBlockMoved(payload)),
+        closeButtonClicked: (payload) => dispatch(closeButtonClicked(payload))
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChainDisplay)

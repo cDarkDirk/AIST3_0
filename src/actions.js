@@ -11,8 +11,12 @@ import {
     TEST_FETCH_SUCCEED,
     TEST_FETCH_FAIL,
     DATA_TEMPLATE_LIST_SUCCEED,
-    DATA_TEMPLATE_LIST_FAIL
-} from './constants'
+    DATA_TEMPLATE_LIST_FAIL,
+    CHAIN_TEMPLATE_DELETED,
+    CHAIN_TEMPLATE_ADDED,
+    CHAIN_TEMPLATE_NAME_CHANGED,
+    TEST_BLOCK_CLICKED,
+    CLOSE_BUTTON_CLICKED} from './constants'
 
 export const addCounter = () => ({type: ADD_COUNTER})
 
@@ -29,6 +33,20 @@ export const testBlockMoved = (payload) => ({
 export const formTemplateFetchSuccseed = (payload) => ({
     type: FORM_TEMPLATE_FETCH_SUCCSEED,
     payload: payload
+})
+
+export const chainTemplateNameChanged = (payload) => ({
+  type: CHAIN_TEMPLATE_NAME_CHANGED,
+  payload: payload
+})
+
+export const deleteChainTemplate = (payload) => ({
+  type: CHAIN_TEMPLATE_DELETED,
+  payload: payload
+})
+
+export const addChainTemplate = () => ({
+  type: CHAIN_TEMPLATE_ADDED
 })
 
 export const formTemplateFetchFail = (payload) => ({
@@ -51,6 +69,15 @@ export const testsListTemplateFetchFail = (payload) => ({
     type: TEST_FETCH_FAIL,
     payload: payload
 })
+export const testBlockClicked = (payload) => ({
+    type: TEST_BLOCK_CLICKED,
+    payload: payload
+})
+export const closeButtonClicked = (payload) => ({
+    type: CLOSE_BUTTON_CLICKED,
+    payload: payload
+})
+
 
  export const changeDate = (payload) => ({
      type: SCHEDULE_DATE_CHANGED,

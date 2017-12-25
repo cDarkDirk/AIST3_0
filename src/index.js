@@ -12,6 +12,8 @@ import FormPage from './containers/FormPage'
 import LauncherPage from "./components/LauncherPage";
 import TemplateFrom from "./components/TemplateForm"
 
+import 'font-awesome/css/font-awesome.min.css'
+import './styles/main.css'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const history = createBrowserHistory()
