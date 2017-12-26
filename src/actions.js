@@ -1,13 +1,17 @@
-import {ADD_COUNTER,
+import {
+    ADD_COUNTER,
     TEST_BLOCK_MOVED,
     FORM_INPUT_CHANGE,
     CHAIN_SELECTED,
     FORM_TEMPLATE_FETCH_SUCCSEED,
     FORM_TEMPLATE_FETCH_FAIL,
     CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
-    CHAIN_EDITOR_TEMPLATE_FETCH_FAIL,
+    SCHEDULE_DATE_CHANGED,
+    CHAIN_EDITOR_TEMPLATE_FETCH_FAIL, SCHEDULE_TIME_CHANGED,
     TEST_FETCH_SUCCEED,
     TEST_FETCH_FAIL,
+    DATA_TEMPLATE_LIST_SUCCEED,
+    DATA_TEMPLATE_LIST_FAIL,
     CHAIN_TEMPLATE_DELETED,
     CHAIN_TEMPLATE_ADDED,
     CHAIN_TEMPLATE_NAME_CHANGED,
@@ -90,4 +94,24 @@ export const submitChainTemplateSucceed = (payload) => ({
 
 
 
-export const selectChainTemplate = (selectedChain) => ({type: CHAIN_SELECTED, selectedChain})
+ export const changeDate = (payload) => ({
+     type: SCHEDULE_DATE_CHANGED,
+     payload: payload
+ })
+export const changeTime = (payload) => ({
+    type: SCHEDULE_TIME_CHANGED,
+    payload: payload
+})
+
+export const dataTemplateFetchFail = (payload) => ({
+    type: DATA_TEMPLATE_LIST_FAIL,
+    payload: payload
+})
+export const dataTemplateFetchSucceed = (payload) => ({
+    type: DATA_TEMPLATE_LIST_SUCCEED,
+    payload: payload
+})
+
+
+
+export const chainSelected = (selectedChain) => ({type: CHAIN_SELECTED, selectedChain})

@@ -2,7 +2,6 @@ import React from "react"
 import {ListGroup, ListGroupItem, Badge} from 'react-bootstrap'
 
 import './style.css'
-
 const ChainList = ({chainTemplates, selectedChainTemplate, selectChainTemplate, dirtyChainTemplateIndicies}) => {
     return (<ListGroup>
         {

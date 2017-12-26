@@ -1,0 +1,17 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+[
+  {
+    "field_name": "Name",
+    "field_type": "input_field",
+    "field_default_value": "auto_gen",
+    "field_mask": "****************"
+  },
+  {
+      "field_name": "LastName",
+      "field_type": "input_field",
+      "field_default_value": "auto_gen",
+      "field_mask": "****************"
+    }
+]
