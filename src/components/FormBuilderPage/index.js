@@ -79,6 +79,15 @@ class FormBuilderPage extends React.Component {
     }
   };
 
+  onFieldRemove = (idx) => {
+    const indx = this.state.chainIndex;
+    const result = {
+      fieldIdx: idx,
+      chainIdx: indx,
+    };
+    this.props.removeField(result);
+  };
+
   onFieldsUpdate = (fields) => {
     const updFields = {
       fields,
@@ -99,6 +108,7 @@ class FormBuilderPage extends React.Component {
               onChange={this.onFieldsUpdate}
               fields={formBuilderChains[chainIndex].fields}
               odx={0}
+              onFieldRemove={this.onFieldRemove}
             />
           </ListGroup>
         </Form>

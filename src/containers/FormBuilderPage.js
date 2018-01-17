@@ -1,7 +1,11 @@
 import {connect} from 'react-redux'
 import FormBuilderPage from '../components/FormBuilderPage'
 import {fetchBuilderChains, updateChainForm} from "../api";
-import {newFieldAdded, onFieldsValuesUpdate} from "../actions";
+import {
+  newFieldAdded,
+  onFieldsValuesUpdate,
+  fieldWasRemoved,
+} from "../actions";
 
 function mapStateToProps(state) {
   return {
@@ -16,6 +20,7 @@ function mapDispatchToProps(dispatch) {
     addField: (field) => dispatch(newFieldAdded(field)),
     updateFieldsValues: (some) => dispatch(onFieldsValuesUpdate(some)),
     submit: (name, fields, idx) => dispatch(updateChainForm(name, fields, idx)),
+    removeField: (result) => dispatch(fieldWasRemoved(result)),
   }
 }
 

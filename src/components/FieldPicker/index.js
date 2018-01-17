@@ -5,7 +5,9 @@ import {
   FormGroup,
   Col,
   InputGroup,
-  FormControl
+  FormControl,
+  Button,
+  Glyphicon,
 } from "react-bootstrap";
 import DropdownRow from "./DropdownRow";
 
@@ -20,6 +22,16 @@ class FieldPicker extends React.Component {
     }
   }
 
+  getHandlerOnFieldRemove = (index) => {
+    return () => {
+      this.props.onFieldRemove(index);
+    }
+  };
+
+  test =(ind)=> {
+    this.props.onFieldRemove(ind);
+};
+
   getHandlerDropdownChange(index) {
     return (field) => {
       const {onChange, fields} = this.props;
@@ -31,29 +43,33 @@ class FieldPicker extends React.Component {
 
   renderInput(field, index) {
     const {paramName, label, regEx} = field;
-
     return (
       <ListGroupItem key={index} bsStyle="success">
         <FormGroup>
           <Row>
             <Col md={1}><b>{index + 1}</b></Col>
-            <Col md={3}>
+            <Col md={4}>
               <InputGroup>
                 <InputGroup.Addon>Label</InputGroup.Addon>
                 <FormControl value={label} onChange={this.getHandlerInputChange('label', index)} type="text"/>
               </InputGroup>
             </Col>
-            <Col md={4}>
+            <Col md={3}>
               <InputGroup>
                 <InputGroup.Addon>RegEx</InputGroup.Addon>
                 <FormControl value={regEx} onChange={this.getHandlerInputChange('regEx', index)} type="text"/>
               </InputGroup>
             </Col>
-            <Col md={4}>
+            <Col md={3}>
               <InputGroup>
                 <InputGroup.Addon>Parameter name</InputGroup.Addon>
                 <FormControl value={paramName} onChange={this.getHandlerInputChange('paramName', index)} type="text"/>
               </InputGroup>
+            </Col>
+            <Col md={1}>
+              <Button onClick={this.getHandlerOnFieldRemove(index)}>
+                <Glyphicon glyph='glyphicon glyphicon-remove'/>
+              </Button>
             </Col>
           </Row>
         </FormGroup>
@@ -62,7 +78,12 @@ class FieldPicker extends React.Component {
   }
 
   renderDropdown(field, index) {
-    return <DropdownRow key={index} onChange={this.getHandlerDropdownChange(index)} field={field} index={index}/>;
+    return <DropdownRow key={index}
+                        onChange={this.getHandlerDropdownChange(index)}
+                        field={field}
+                        index={index}
+                        onDelete={this.test}
+    />;
   };
 
   renderDatePicker(field, index) {
@@ -79,11 +100,16 @@ class FieldPicker extends React.Component {
                 <FormControl value={label} onChange={this.getHandlerInputChange('label', index)} type="text"/>
               </InputGroup>
             </Col>
-            <Col md={4}>
+            <Col md={3}>
               <InputGroup>
                 <InputGroup.Addon>Parameter name</InputGroup.Addon>
                 <FormControl value={paramName} onChange={this.getHandlerInputChange('paramName', index)} type="text"/>
               </InputGroup>
+            </Col>
+            <Col md={1}>
+              <Button onClick={this.getHandlerOnFieldRemove(index)}>
+                <Glyphicon glyph='glyphicon glyphicon-remove'/>
+              </Button>
             </Col>
           </FormGroup>
         </Row>

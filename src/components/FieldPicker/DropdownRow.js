@@ -6,6 +6,8 @@ import {
   Col,
   InputGroup,
   FormControl,
+  Button,
+  Glyphicon,
 } from "react-bootstrap";
 import 'react-select/dist/react-select.css';
 import Select from 'react-select';
@@ -31,6 +33,13 @@ class DropdownRow extends React.Component {
     const updatedDDOptions = {...field};
     updatedDDOptions.dropDownOptions = options.map((option) => option.value);
     onChange(updatedDDOptions);
+  };
+
+  testOne = (index) => {
+    return () => {
+      const {onDelete} = this.props;
+      onDelete(index);
+    }
   };
 
   render() {
@@ -66,11 +75,16 @@ class DropdownRow extends React.Component {
                 />
               </InputGroup>
             </Col>
-            <Col md={4}>
+            <Col md={3}>
               <InputGroup>
                 <InputGroup.Addon>Parameter name</InputGroup.Addon>
                 <FormControl value={paramName} onChange={this.handleInputChange('paramName')} type="text"/>
               </InputGroup>
+            </Col>
+            <Col md={1}>
+              <Button onClick={this.testOne(index)}>
+                <Glyphicon glyph='glyphicon glyphicon-remove'/>
+              </Button>
             </Col>
           </Row>
         </FormGroup>

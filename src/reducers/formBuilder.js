@@ -3,6 +3,7 @@ import {
   UPDATE_CHAIN_FORM_SUCCEED,
   NEW_FIELD_ADDED,
   ON_FIELDS_VALUES_UPDATE,
+  FIELD_WAS_REMOVED,
 } from '../constants'
 
 const initialState = {
@@ -43,6 +44,15 @@ const formBuilderReducer = (state = initialState, action) => {
       return {
         ...state,
         formBuilderChains
+      }
+    }
+    case FIELD_WAS_REMOVED: {
+      const formBuilderChains = [...state.formBuilderChains];
+      formBuilderChains[action.payload.chainIdx].fields.splice(action.payload.fieldIdx,1);
+      formBuilderChains[action.payload.chainIdx].modified = true;
+      return{
+        ...state,
+        formBuilderChains,
       }
     }
     default:

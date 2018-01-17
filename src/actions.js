@@ -24,6 +24,7 @@ import {
   UPDATE_CHAIN_FORM_FAIL,
   NEW_FIELD_ADDED,
   ON_FIELDS_VALUES_UPDATE,
+  FIELD_WAS_REMOVED,
 } from './constants'
 
 export const updateChainFormSucceed = (payload) => ({
@@ -133,6 +134,10 @@ export const newFieldAdded = (payload) => ({
 });
 export const onFieldsValuesUpdate = (payload) => ({
   type: ON_FIELDS_VALUES_UPDATE,
+  payload: payload
+});
+export const fieldWasRemoved = (payload) => ({
+  type: FIELD_WAS_REMOVED,
   payload: payload
 });
 
