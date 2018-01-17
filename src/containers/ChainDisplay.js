@@ -3,9 +3,9 @@ import {closeButtonClicked, testBlockMoved} from '../actions'
 import ChainDisplay from '../components/ChainDisplay'
 
 function mapStateToProps(state, ownProps) {
-    const test = state.test || []
+    const test = state.test || [];
   return {
-    tests: ownProps.chainTemplate.tests.map(ct => test.find(test => test.test_id == ct.id))
+    tests: ownProps.chainTemplate.tests.map(ct => test.find(test => test.test_id === ct.id))
   }
 }
 

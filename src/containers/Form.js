@@ -4,7 +4,6 @@ import Form from '../components/Form'
 import {fetchFormTemplate} from '../api'
 
 function mapStateToProps(state, ownProps) {
-  console.log()
     return {
         formTemplate: state.formTemplate,
         formValues: state.form[ownProps.formName] || {}
