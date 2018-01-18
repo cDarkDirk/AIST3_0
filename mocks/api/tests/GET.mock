@@ -4,7 +4,7 @@ Content-Type: application/json; charset=utf-8
 [
   {
     "test_id": 3,
-    "test_name": "Create Client FS"
+    "test_name": "Create Client FS",
     "job_trigger":
           {
             "uri": "someURL",
@@ -13,7 +13,7 @@ Content-Type: application/json; charset=utf-8
             "job_name": "DEBIT_CARD",
             "passOrToken": "MS_UFS"
           },
-          "tag_names": ""
+     "tag_names": []
   },
   {
     "test_id": 4,
@@ -26,7 +26,7 @@ Content-Type: application/json; charset=utf-8
         "job_name": "DEBIT_CARD",
         "passOrToken": "MS_UFS"
       },
-      "tag_names": ""
+      "tag_names": []
   },
   {
     "test_id": 5,
@@ -39,7 +39,7 @@ Content-Type: application/json; charset=utf-8
             "job_name": "DEBIT_CARD",
             "passOrToken": "MS_UFS"
           },
-          "tag_names": ""
+          "tag_names": []
   },
   {
     "test_id": 2,
@@ -52,7 +52,7 @@ Content-Type: application/json; charset=utf-8
             "job_name": "DEBIT_CARD",
             "passOrToken": "MS_UFS"
           },
-          "tag_names": ""
+          "tag_names": []
   },
   {
     "test_id": 11,
@@ -65,7 +65,7 @@ Content-Type: application/json; charset=utf-8
             "job_name": "DEBIT_CARD",
             "passOrToken": "MS_UFS"
           },
-          "tag_names": ""
+          "tag_names": []
   },
   {
     "test_id": 12,
@@ -78,7 +78,7 @@ Content-Type: application/json; charset=utf-8
             "job_name": "DEBIT_CARD",
             "passOrToken": "MS_UFS"
           },
-          "tag_names": ""
+          "tag_names": []
   },
   {
     "test_id": 13,
@@ -91,7 +91,7 @@ Content-Type: application/json; charset=utf-8
             "job_name": "DEBIT_CARD",
             "passOrToken": "MS_UFS"
           },
-          "tag_names": ""
+          "tag_names": []
   },
   {
     "test_id": 1,
@@ -104,7 +104,7 @@ Content-Type: application/json; charset=utf-8
             "job_name": "DEBIT_CARD",
             "passOrToken": "MS_UFS"
           },
-          "tag_names": ""
+          "tag_names": []
   },
   {
     "test_id": 201704191401206171,
@@ -117,7 +117,7 @@ Content-Type: application/json; charset=utf-8
             "job_name": "DEBIT_CARD",
             "passOrToken": "MS_UFS"
           },
-          "tag_names": ""
+          "tag_names": []
   },
   {
     "test_id": 201707191401206173,
@@ -130,7 +130,7 @@ Content-Type: application/json; charset=utf-8
             "job_name": "DEBIT_CARD",
             "passOrToken": "MS_UFS"
           },
-          "tag_names": ""
+          "tag_names": []
   },
   {
     "test_id": 10,
@@ -143,6 +143,6 @@ Content-Type: application/json; charset=utf-8
             "job_name": "DEBIT_CARD",
             "passOrToken": "MS_UFS"
           },
-          "tag_names": ""
+          "tag_names": []
   }
 ]

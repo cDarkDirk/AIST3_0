@@ -1,17 +1,9 @@
 import React from 'react'
-import {fetchDataTemplatesList} from "../../api";
 import {
-    Jumbotron,
-    Row,
     Col,
-    Grid,
     FormControl,
     FormGroup,
     ControlLabel,
-    Form,
-    Checkbox,
-    Button,
-    Dropdown
 } from "react-bootstrap"
 
 

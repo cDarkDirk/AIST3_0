@@ -19,12 +19,12 @@ const ChainTemplatePropertyEditor = ({chainTemplate, onNameChange, deleteChainTe
       })
   };
 
-  const SubmitChain = () => {
+  /*const SubmitChain = () => {
     confirm({confirmation: `Do you really want to submit ${chainTemplate.name}?`}).then(
       () => updateChainTemplate(chainTemplate),
       () => {
       })
-  };
+  };*/
 
   return (
     <div>

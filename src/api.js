@@ -1,5 +1,4 @@
 import {error, success} from "react-notification-system-redux"
-import axios from 'axios';
 import {
   formTemplateFetchSuccseed,
   chainEditorTemplateFetchSucceed,
@@ -15,6 +14,8 @@ import {
   formBuilderChainsFetchFail,
   updateChainFormSucceed,
   updateChainFormFail,
+  testBuilderTestsFetchFail,
+  testBuilderTestsFetchSucceed,
 } from './actions'
 
 const BACKEND_URL = "http://localhost:3001/api";
@@ -72,14 +73,6 @@ export const updateChainForm = (chain,form,idx) => (dispatch) => {
   }).catch(error => {
     throw error
   })
-
-  /*axios.post(url, form)
-    .then(function () {
-      console.log(form);
-    })
-    .catch(function () {
-      console.log('fuck');
-    });*/
 };
 
 export const fetchChainTemplates = () => (dispatch, getState) => {
@@ -106,7 +99,7 @@ export const fetchChainTemplates = () => (dispatch, getState) => {
   })
 };
 
-export const fetchTests = () => (dispatch, getState) => {
+export const fetchTests = () => (dispatch) => {
   const url = `${BACKEND_URL}/tests`;
   const options = {
     method: 'GET',
@@ -123,6 +116,29 @@ export const fetchTests = () => (dispatch, getState) => {
       dispatch(testsListTemplateFetchSucceed(testsListTemplate))
     } else {
       dispatch(testsListTemplateFetchFail())
+    }
+  }).catch(error => {
+    throw error
+  })
+};
+
+export const testBuilderDataFetch = () => (dispatch) => {
+  const url = `${BACKEND_URL}/tests`;
+  const options = {
+    method: 'GET',
+    headers: {},
+  };
+  fetch(url, options).then(response => {
+    if (response.ok) {
+      return response.json()
+    } else {
+      throw new Error(response.statusText)
+    }
+  }).then(testBuilderTests => {
+    if (testBuilderTests) {
+      dispatch(testBuilderTestsFetchSucceed(testBuilderTests))
+    } else {
+      dispatch(testBuilderTestsFetchFail())
     }
   }).catch(error => {
     throw error
@@ -202,10 +218,8 @@ export const insertChainTemplate = (chainTemplate) => (dispatch, getState) => {
     if (updateChainTemplateResult) {
       dispatch(success({message: "Submit succeeded"}));
       dispatch(submitChainTemplateSucceed(updateChainTemplateResult));
-      console.log({chainTemplate});
     } else {
       dispatch(error({message: "Submit failed with error:"}));
-      //TODO return an error
       dispatch(submitChainTemplateFail())
     }
   }).catch(error => {

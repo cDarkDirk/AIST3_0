@@ -12,6 +12,7 @@ export default () => {
         <p><Link to={'/form/connectServices'}><Button bsSize="large">Form</Button></Link></p>
         <p><Link to={'/launcher'}><Button bsSize="large">Launcher</Button></Link></p>
         <p><Link to={'/formbuilder'}><Button bsSize="large">Form builder</Button></Link></p>
+        <p><Link to={'/testbuilder'}><Button bsSize="large">Test builder</Button></Link></p>
       </Jumbotron>
     </div>
   )

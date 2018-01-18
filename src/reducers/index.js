@@ -8,6 +8,7 @@ import chainTemplates from './chainTemplates'
 import test from './test'
 import dataTemplate from './dataTemplate'
 import formBuilder from './formBuilder'
+import testBuilder from "./TestBuilder";
 
 
 const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   test,
   dataTemplate,
   formBuilder,
+  testBuilder,
   notifications,
 });
 

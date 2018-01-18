@@ -25,6 +25,10 @@ import {
   NEW_FIELD_ADDED,
   ON_FIELDS_VALUES_UPDATE,
   FIELD_WAS_REMOVED,
+  TEST_BUILDER_TESTS_FETCH_SUCCEED,
+  TEST_BUILDER_TESTS_FETCH_FAIL,
+  TEST_SELECTED,
+  TEST_BUILDER_FORM_INPUT_CHANGED,
 } from './constants'
 
 export const updateChainFormSucceed = (payload) => ({
@@ -138,6 +142,22 @@ export const onFieldsValuesUpdate = (payload) => ({
 });
 export const fieldWasRemoved = (payload) => ({
   type: FIELD_WAS_REMOVED,
+  payload: payload
+});
+export const testBuilderTestsFetchSucceed = (payload) => ({
+  type: TEST_BUILDER_TESTS_FETCH_SUCCEED,
+  payload: payload
+});
+export const testBuilderTestsFetchFail = (payload) => ({
+  type: TEST_BUILDER_TESTS_FETCH_FAIL,
+  payload: payload
+});
+export const testSelected = (payload) => ({
+  type: TEST_SELECTED,
+  payload: payload
+});
+export const testBuilderFormInputChanged = (payload) => ({
+  type: TEST_BUILDER_FORM_INPUT_CHANGED,
   payload: payload
 });
 
