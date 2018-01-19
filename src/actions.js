@@ -162,4 +162,4 @@ export const testBuilderFormInputChanged = (payload) => ({
 });
 
 
-export const chainSelected = (selectedChain) => ({type: CHAIN_SELECTED, selectedChain})
+export const chainSelected = (selectedChain) => ({type: CHAIN_SELECTED, selectedChain});

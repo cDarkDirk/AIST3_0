@@ -7,14 +7,19 @@ import {
 const initialState = {
   testBuilderTests: [],
   selectedTestIndex: null,
+  testNamesForDropdown: [],
 };
 
 const testBuilder = (state = initialState, action) => {
   switch (action.type) {
     case TEST_BUILDER_TESTS_FETCH_SUCCEED: {
+      const testNamesForDropdown = action.payload.map((test)=>{
+        return test.test_name
+      });
       return {
         ...state,
         testBuilderTests: action.payload,
+        testNamesForDropdown: testNamesForDropdown,
       }
     }
     case TEST_SELECTED: {
@@ -69,8 +74,7 @@ const testBuilder = (state = initialState, action) => {
           }
         }
         case 'tag_names': {
-          const newItems = action.payload.paramValue.map((value)=>value.value);
-          testBuilderTests[state.selectedTestIndex].tag_names = newItems;
+          testBuilderTests[state.selectedTestIndex].tag_names = action.payload.paramValue.map((parVal)=>parVal.value);
           return {
             ...state,
             testBuilderTests,

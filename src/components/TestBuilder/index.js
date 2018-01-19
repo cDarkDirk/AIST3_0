@@ -6,7 +6,6 @@ import {
   MenuItem,
   Button,
   Form,
-  Jumbotron,
   ListGroupItem,
   FormGroup,
   InputGroup,
@@ -124,19 +123,18 @@ class TestBuilderPage extends React.Component {
   };
 
   render() {
-    const {notifications, testBuilderTests, selectedTestIndex, setSelectedTestIndex} = this.props;
-
+    const {notifications, selectedTestIndex, setSelectedTestIndex, testNamesForDropdown} = this.props;
     const testsDropdown = [
       <DropdownButton
         id='testSelector'
         onSelect={(testIndex) => setSelectedTestIndex(testIndex)}
-        title={selectedTestIndex !== null ? testBuilderTests[selectedTestIndex].test_name : 'Select one...'}
+        title={selectedTestIndex !== null ? testNamesForDropdown[selectedTestIndex] : 'Select one...'}
         bsStyle="success"
       >
-        {testBuilderTests.map((test, index) => {
+        {testNamesForDropdown.map((test, index) => {
           return (
             <MenuItem active={index === selectedTestIndex} key={index} eventKey={index}>
-              {test.test_name}
+              {test}
             </MenuItem>
           )
         })}
