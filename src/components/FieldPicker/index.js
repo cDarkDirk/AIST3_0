@@ -28,7 +28,7 @@ class FieldPicker extends React.Component {
     }
   };
 
-  test =(ind)=> {
+  onFieldRemoveHandler =(ind)=> {
     this.props.onFieldRemove(ind);
 };
 
@@ -82,7 +82,7 @@ class FieldPicker extends React.Component {
                         onChange={this.getHandlerDropdownChange(index)}
                         field={field}
                         index={index}
-                        onDelete={this.test}
+                        onDelete={this.onFieldRemoveHandler}
     />;
   };
 

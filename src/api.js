@@ -1,5 +1,5 @@
 import {error, success} from "react-notification-system-redux"
-import axios from 'axios';
+//import axios from 'axios';
 import {
   formTemplateFetchSuccseed,
   chainEditorTemplateFetchSucceed,
@@ -92,7 +92,6 @@ export const fetchChainTemplates = () => (dispatch, getState) => {
     if (response.ok) {
       return response.json()
     } else {
-      console.log(response);
       throw new Error(response.statusText)
     }
   }).then(chainTemplates => {
