@@ -7,11 +7,13 @@ import {
   Button,
   Form,
   ListGroupItem,
+  ListGroup,
   FormGroup,
   InputGroup,
   FormControl,
   Row,
   Col,
+  Label,
 } from 'react-bootstrap';
 import 'react-select/dist/react-select.css';
 import Select from 'react-select';
@@ -123,7 +125,7 @@ class TestBuilderPage extends React.Component {
   };
 
   render() {
-    const {notifications, selectedTestIndex, setSelectedTestIndex, testNamesForDropdown} = this.props;
+    const {notifications, testBuilderTests, selectedTestIndex, setSelectedTestIndex, testNamesForDropdown} = this.props;
     const testsDropdown = [
       <DropdownButton
         id='testSelector'
@@ -135,10 +137,15 @@ class TestBuilderPage extends React.Component {
           return (
             <MenuItem active={index === selectedTestIndex} key={index} eventKey={index}>
               {test}
+              &nbsp;
+              {testBuilderTests[index].modified && <Label bsStyle="warning">Modified</Label>}
             </MenuItem>
           )
         })}
-      </DropdownButton>
+      </DropdownButton>,
+      <span style={{marginLeft: '20px'}}>
+      {selectedTestIndex !== null && testBuilderTests[selectedTestIndex].modified && <Label bsStyle="warning">Modified</Label>}
+      </span>
     ];
 
     const submitButton = [<Button bsStyle="success" bsSize="large" className="pull-right">SUBMIT DUMMY</Button>,

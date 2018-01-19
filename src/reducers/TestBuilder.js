@@ -16,9 +16,15 @@ const testBuilder = (state = initialState, action) => {
       const testNamesForDropdown = action.payload.map((test)=>{
         return test.test_name
       });
+      const tests = [...action.payload];
+      const adaptedTests = tests.map((current) => {
+        current.modified = false;
+        current.new = false;
+        return current;
+      });
       return {
         ...state,
-        testBuilderTests: action.payload,
+        testBuilderTests: adaptedTests,
         testNamesForDropdown: testNamesForDropdown,
       }
     }
@@ -33,6 +39,8 @@ const testBuilder = (state = initialState, action) => {
       switch (action.payload.paramName) {
         case 'test_name': {
           testBuilderTests[state.selectedTestIndex].test_name = action.payload.paramValue;
+          const newTest = testBuilderTests[state.selectedTestIndex].new;
+          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
           return {
             ...state,
             testBuilderTests
@@ -40,6 +48,8 @@ const testBuilder = (state = initialState, action) => {
         }
         case 'test_id': {
           testBuilderTests[state.selectedTestIndex].test_id = action.payload.paramValue;
+          const newTest = testBuilderTests[state.selectedTestIndex].new;
+          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
           return {
             ...state,
             testBuilderTests
@@ -47,6 +57,8 @@ const testBuilder = (state = initialState, action) => {
         }
         case 'uri': {
           testBuilderTests[state.selectedTestIndex].job_trigger.uri = action.payload.paramValue;
+          const newTest = testBuilderTests[state.selectedTestIndex].new;
+          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
           return {
             ...state,
             testBuilderTests
@@ -54,6 +66,8 @@ const testBuilder = (state = initialState, action) => {
         }
         case 'login': {
           testBuilderTests[state.selectedTestIndex].job_trigger.login = action.payload.paramValue;
+          const newTest = testBuilderTests[state.selectedTestIndex].new;
+          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
           return {
             ...state,
             testBuilderTests
@@ -61,6 +75,8 @@ const testBuilder = (state = initialState, action) => {
         }
         case 'job_name': {
           testBuilderTests[state.selectedTestIndex].job_trigger.job_name = action.payload.paramValue;
+          const newTest = testBuilderTests[state.selectedTestIndex].new;
+          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
           return {
             ...state,
             testBuilderTests
@@ -68,6 +84,8 @@ const testBuilder = (state = initialState, action) => {
         }
         case 'passOrToken': {
           testBuilderTests[state.selectedTestIndex].job_trigger.passOrToken = action.payload.paramValue;
+          const newTest = testBuilderTests[state.selectedTestIndex].new;
+          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
           return {
             ...state,
             testBuilderTests
@@ -75,6 +93,8 @@ const testBuilder = (state = initialState, action) => {
         }
         case 'tag_names': {
           testBuilderTests[state.selectedTestIndex].tag_names = action.payload.paramValue.map((parVal)=>parVal.value);
+          const newTest = testBuilderTests[state.selectedTestIndex].new;
+          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
           return {
             ...state,
             testBuilderTests,
