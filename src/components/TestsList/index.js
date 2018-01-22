@@ -2,8 +2,6 @@ import React from 'react'
 import TestBlock from '../TestBlock'
 
 import './style.css'
-import {selectChainTemplate} from "../../actions";
-import chainTemplateReducer from "../../reducers/chainTemplates";
 
 class TestsList extends React.Component {
     componentDidMount() {
@@ -19,7 +17,6 @@ class TestsList extends React.Component {
             })
             return !testInChain
         } )
-        /// filter this.props.tests to only have the tests that are not in this.props.selectedChainTemplate.tests
         return (
             <ol>
                 {filteredTests.map((test, idx) => {

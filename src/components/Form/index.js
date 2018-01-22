@@ -1,10 +1,7 @@
 import React from 'react'
 import {Jumbotron} from 'react-bootstrap'
-import {Row, Col, Grid, FormControl, FormGroup, ControlLabel, Form, Checkbox, Button, Dropdown} from "react-bootstrap"
+import {Row, Col, Grid, FormControl, FormGroup, ControlLabel, Form} from "react-bootstrap"
 import "./style.css"
-
-
-import Calendar from "react-calendar";
 import DatePicker from "react-datepicker"
 
 class MyForm extends React.Component {

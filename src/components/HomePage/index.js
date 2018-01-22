@@ -3,16 +3,15 @@ import {Button, Jumbotron} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 
 
-export default ({addCounter, counter, goToChainEditor}) => {
+export default () => {
   return (
     <div className='container'>
       <Jumbotron>
         <h1>Home</h1>
-        <p>Counter: {counter}</p>
-        <p><Button onClick={addCounter} bsStyle='primary' bsSize="large">Add to counter</Button></p>
-        <p><Link to={'/chaineditor'}><Button bsSize="large">To Editor</Button></Link></p>
-          <Link to={'/form/connectServices'}>My super link</Link>
-          <Link to={'/launcher'}>My launcher link</Link>
+        <p><Link to={'/chaineditor'}><Button bsSize="large">Chain editor</Button></Link></p>
+        <p><Link to={'/form/connectServices'}><Button bsSize="large">Form</Button></Link></p>
+        <p><Link to={'/launcher'}><Button bsSize="large">Launcher</Button></Link></p>
+        <p><Link to={'/formbuilder'}><Button bsSize="large">Form builder</Button></Link></p>
       </Jumbotron>
     </div>
   )

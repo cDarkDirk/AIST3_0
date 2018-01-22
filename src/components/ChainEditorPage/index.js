@@ -19,7 +19,7 @@ class ChainEditorPage extends React.Component {
 
     render() {
         const {chainTemplate, chainTemplateNameChanged, deleteChainTemplate,
-            addChainTemplate, submitChainTemplate, notifications} = this.props
+            addChainTemplate, updateChainTemplate, notifications} = this.props;
         return (<div className='container'>
             <h1>Chain Editor</h1>
             <Row>
@@ -40,7 +40,7 @@ class ChainEditorPage extends React.Component {
                       chainTemplate={chainTemplate}
                       onNameChange={chainTemplateNameChanged}
                       deleteChainTemplate={deleteChainTemplate}
-                      submitChainTemplate={submitChainTemplate}
+                      updateChainTemplate={updateChainTemplate}
                     />
 
                     <ChainDisplay chainTemplate={chainTemplate}/>
@@ -49,7 +49,7 @@ class ChainEditorPage extends React.Component {
                     <TestsList/>
                 </Col>
             </Row>
-                <Notifications notifications={notifications}></Notifications>
+                <Notifications notifications={notifications}/>
         </div>
         )
     }
