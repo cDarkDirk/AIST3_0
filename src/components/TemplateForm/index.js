@@ -23,6 +23,7 @@ class TemplateForm extends React.Component {
 
     render() {
         return (
+          <Jumbotron>
             <FormGroup controlId="formHorizontalDropDown">
                 <Col componentClass={ControlLabel} sm={2}>
                     Template:
@@ -37,6 +38,7 @@ class TemplateForm extends React.Component {
                     </FormControl>
                 </Col>
             </FormGroup>
+          </Jumbotron>
         )
     }
 }

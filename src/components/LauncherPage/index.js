@@ -6,34 +6,17 @@ import TemplateForm from "../../containers/TemplateForm";
 
 
 const LauncherPage = function (props) {
-    return (
-        <div className="container">
-            <ScheduleForm></ScheduleForm>
-
+  return (
+    <div className="container">
+      <Row>
+        <ScheduleForm></ScheduleForm>
+      </Row>
+      <Row>
         <TemplateForm/>
-            <Row>
-                <Col>
-                    <div> Date</div>
-                </Col>
-                <Col>
-                    <div> Time</div>
-                </Col>
-                <Col>
-                    <div> Periodic Dropdown</div>
-                </Col>
-            </Row>
-            <Row>
-                <h2>FORM</h2>
-            </Row>
-
-            <Row><Form formName="connectServices"></Form></Row>
-
-
-
-        </div>
-
-
-    )
+      </Row>
+      <Row><Form formName="connectServices"></Form></Row>
+    </div>
+  )
 }
 
 export default LauncherPage;

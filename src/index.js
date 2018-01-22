@@ -4,7 +4,8 @@ import {createStore, applyMiddleware, compose} from 'redux'
 import {Provider} from 'react-redux'
 import thunk from 'redux-thunk'
 import {createBrowserHistory} from 'history'
-import {Router, Route, Switch} from 'react-router'
+import {Route, Switch} from 'react-router'
+import {HashRouter} from 'react-router-dom'
 import rootReducer from './reducers'
 import HomePage from './containers/HomePage'
 import ChainEditorPage from './containers/ChainEditorPage'
@@ -27,14 +28,14 @@ ReactDOM.render((
         <Provider store={store}>
             <div>
 
-                <Router history={history}>
+                <HashRouter history={history}>
                     <Switch>
                         <Route path="/chaineditor" component={ChainEditorPage}/>}
                         <Route path="/form/:formName" component={FormPage}/>
                         <Route path="/launcher" component={LauncherPage}/>
                         <Route exact path="/" component={HomePage}/>
                     </Switch>
-                </Router>
+                </HashRouter>
 
             </div>
 
