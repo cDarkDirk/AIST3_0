@@ -16,16 +16,28 @@ import {
   updateChainFormSucceed,
   updateChainFormFail,
 } from './actions'
+import {BACKEND_URL} from "./constants/endpoints";
 
-const BACKEND_URL = "http://localhost:3001/api";
+
+const fetchUtil = (url, method = 'GET', data = {}) => {
+  const options = {
+    method: method,
+    headers: {},
+  };
+  if (method === 'POST') {
+    let header = new Headers();
+    header.append('Content-Type','application/json');
+    options.headers = header;
+    options.body = data;
+  }
+  return fetch(url, options);
+};
+
 
 export const fetchFormTemplate = (formName) => (dispatch) => {
   const url = `${BACKEND_URL}/forms/${formName}`;
-  const options = {
-    method: 'GET',
-    headers: {},
-  };
-  fetch(url, options).then(response => {
+
+  fetchUtil(url).then(response => {
     if (response.ok) {
       return response.json()
     } else {
@@ -48,14 +60,8 @@ export const fetchFormTemplate = (formName) => (dispatch) => {
 
 export const updateChainForm = (chain,form,idx) => (dispatch) => {
   const url = `${BACKEND_URL}/`+chain+'/form';
-  let header = new Headers();
-  header.append('Content-Type','application/json');
-  const options = {
-    method: 'POST',
-    headers: header,
-    body: [form],
-  };
-  fetch(url, options).then(response => {
+
+  fetchUtil(url, 'POST', [form]).then(response => {
     if (response.ok) {
       return response.json()
     } else {
@@ -84,11 +90,8 @@ export const updateChainForm = (chain,form,idx) => (dispatch) => {
 
 export const fetchChainTemplates = () => (dispatch, getState) => {
   const url = `${BACKEND_URL}/chain_templates`;
-  const options = {
-    method: 'GET',
-    headers: {},
-  };
-  fetch(url, options).then(response => {
+
+  fetchUtil(url).then(response => {
     if (response.ok) {
       return response.json()
     } else {
