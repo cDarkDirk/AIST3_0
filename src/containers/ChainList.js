@@ -7,7 +7,8 @@ function mapStateToProps(state) {
 
     return {
       chainTemplates: state.chainTemplates.chainTemplates,
-      selectedChainTemplate: state.chainTemplates.selectedChainTemplate
+      selectedChainTemplate: state.chainTemplates.selectedChainTemplate,
+      dirtyChainTemplateIndicies: state.chainTemplates.dirtyChainTemplateIndicies
     }
 }
 

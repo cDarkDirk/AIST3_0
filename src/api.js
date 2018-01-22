@@ -1,14 +1,17 @@
+import {error, success} from "react-notification-system-redux"
 import {
   formTemplateFetchSuccseed,
-  formTemplateFetchFail,
   chainEditorTemplateFetchSucceed,
   chainEditorTemplateFetchFail,
   testsListTemplateFetchSucceed,
   testsListTemplateFetchFail,
-    dataTemplateFetchSucceed,
-    dataTemplateFetchFail
-}
-from './actions'
+  dataTemplateFetchSucceed,
+  dataTemplateFetchFail,
+  formTemplateFetchFail,
+  submitChainTemplateFail,
+  submitChainTemplateSucceed
+} from './actions'
+
 const BACKEND_URL = "http://localhost:3001/api";
 
 export const fetchFormTemplate = (formName) => (dispatch, getState) => {
@@ -85,27 +88,56 @@ export const fetchTests = () => (dispatch, getState) => {
   })
 }
 export const fetchDataTemplatesList = () => {
-    return (dispatch, getState) => {
-        const url = `${BACKEND_URL}/data_templates`
-        const options = {
-            method: 'GET',
-            headers: {},
-        }
-        fetch(url, options).then(response => {
-            if (response.ok) {
-                return response.json()
-            } else {
-                throw new Error(response.statusText)
-            }
-        }).then(templateDataList => {
-            if (templateDataList) {
-                dispatch(dataTemplateFetchSucceed(templateDataList))
-            } else {
-                dispatch(dataTemplateFetchFail())
-            }
-        }).catch(error => {
-            throw error
-        })
-    };
-
+  return (dispatch, getState) => {
+    const url = `${BACKEND_URL}/data_templates`
+    const options = {
+      method: 'GET',
+      headers: {},
+    }
+    fetch(url, options).then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.statusText)
+      }
+    }).then(templateDataList => {
+      if (templateDataList) {
+        dispatch(dataTemplateFetchSucceed(templateDataList))
+      } else {
+        dispatch(dataTemplateFetchFail())
+      }
+    }).catch(error => {
+      throw error
+    })
+  }
 }
+
+
+  export const submitChainTemplate = (chainTemplate) => (dispatch, getState) => {
+    const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`
+    const options = {
+      method: 'POST',
+      headers: {},
+      body: chainTemplate
+    }
+    fetch(url, options).then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.statusText)
+      }
+    }).then(updateChainTemplateResult => {
+      if (updateChainTemplateResult) {
+        dispatch(success({message: "Submit succeeded"}))
+        dispatch(submitChainTemplateSucceed(updateChainTemplateResult))
+        console.log({chainTemplate});
+      } else {
+        dispatch(error({message: "Submit failed with error:"}))
+        //TODO return an error
+        dispatch(submitChainTemplateFail())
+      }
+    }).catch(error => {
+      throw error
+    })
+  }
+
