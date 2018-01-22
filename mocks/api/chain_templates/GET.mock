@@ -15,6 +15,20 @@ Access-Control-Allow-Origin: *
         {
           "id": 5
         }
+      ],
+      "fields": [
+        {
+          "label": "default",
+          "paramName": "default",
+          "regEx": "/test/",
+          "type": "Input"
+        },
+        {
+          "label": "default",
+          "paramName": "default",
+          "type": "DropDown",
+          "dropDownOptions": ["1", "2", "3"]
+        }
       ]
   },
   {
@@ -23,7 +37,21 @@ Access-Control-Allow-Origin: *
         {
           "id": 2
         }
-    ]
+    ],
+           "fields": [
+             {
+               "label": "default",
+               "paramName": "default",
+               "regEx": "/test/i",
+               "type": "Input"
+             },
+             {
+               "label": "default",
+               "paramName": "default",
+               "type": "DropDown",
+               "dropDownOptions": ["1", "2", "3"]
+             }
+           ]
   },
   {
     "name": "SPOOBKCreditCard",
@@ -40,7 +68,21 @@ Access-Control-Allow-Origin: *
         {
           "id": 4
         }
-    ]
+    ],
+           "fields": [
+             {
+               "label": "default",
+               "paramName": "default",
+               "regEx": "/test/i",
+               "type": "Input"
+             },
+             {
+               "label": "default",
+               "paramName": "default",
+               "type": "DropDown",
+               "dropDownOptions": ["1", "2", "3"]
+             }
+           ]
   },
   {
     "name": "SPOOBKCreditCardWithSum",
@@ -60,7 +102,21 @@ Access-Control-Allow-Origin: *
         {
           "id": 1
         }
-    ]
+    ],
+           "fields": [
+             {
+               "label": "default",
+               "paramName": "default",
+               "regEx": "/test/i",
+               "type": "Input"
+             },
+             {
+               "label": "default",
+               "paramName": "default",
+               "type": "DropDown",
+               "dropDownOptions": ["1", "2", "3"]
+             }
+           ]
   },
   {
     "name": "UFS",
@@ -71,7 +127,21 @@ Access-Control-Allow-Origin: *
         {
           "id": 201707191401206173
         }
-    ]
+    ],
+           "fields": [
+             {
+               "label": "default",
+               "paramName": "default",
+               "regEx": "/test/i",
+               "type": "Input"
+             },
+             {
+               "label": "default",
+               "paramName": "default",
+               "type": "DropDown",
+               "dropDownOptions": ["1", "2", "3"]
+             }
+           ]
   },
   {
     "name": "WAY4CardAccrual",
@@ -79,7 +149,21 @@ Access-Control-Allow-Origin: *
         {
           "id": 1
         }
-    ]
+    ],
+           "fields": [
+             {
+               "label": "default",
+               "paramName": "default",
+               "regEx": "/test/i",
+               "type": "Input"
+             },
+             {
+               "label": "default",
+               "paramName": "default",
+               "type": "DropDown",
+               "dropDownOptions": ["1", "2", "3"]
+             }
+           ]
   },
   {
     "name": "WAY4Ipass",
@@ -87,6 +171,20 @@ Access-Control-Allow-Origin: *
         {
           "id": 10
         }
-    ]
+    ],
+           "fields": [
+             {
+               "label": "default",
+               "paramName": "default",
+               "regEx": "/test/i",
+               "type": "Input"
+             },
+             {
+               "label": "default",
+               "paramName": "default",
+               "type": "DropDown",
+               "dropDownOptions": ["1", "2", "3"]
+             }
+           ]
   }
 ]

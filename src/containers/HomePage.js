@@ -1,5 +1,4 @@
 import {connect} from 'react-redux'
-import {addCounter} from '../actions'
 
 import HomePage from '../components/HomePage'
 
@@ -11,7 +10,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addCounter: () => dispatch(addCounter()),
   }
 }
 
