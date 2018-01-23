@@ -30,7 +30,7 @@ ReactDOM.render((
     <Provider store={store}>
       <div>
 
-        <Router history={history}>
+        <HashRouter history={history}>
           <Switch>
             <Route path="/chaineditor" component={ChainEditorPage}/>}
             <Route path="/form/:formName" component={FormPage}/>
@@ -38,7 +38,7 @@ ReactDOM.render((
             <Route path="/formbuilder" component={FormBuilderPage}/>
             <Route exact path="/" component={HomePage}/>
           </Switch>
-        </Router>
+        </HashRouter>
 
       </div>
     </Provider>

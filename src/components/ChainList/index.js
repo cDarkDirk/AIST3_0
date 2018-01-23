@@ -10,7 +10,7 @@ const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, dirtyC
         return <ListGroupItem
           key={idx}
           className='chain-list-item'
-          href="#" active={idx === selectedChainTemplate}
+          active={idx === selectedChainTemplate}
           onClick={() => chainSelected(idx)}>
           {chain.name}
           {dirtyChainTemplateIndicies[idx] && <Badge pullRight={true} bsStyle='success'>modified</Badge>}
