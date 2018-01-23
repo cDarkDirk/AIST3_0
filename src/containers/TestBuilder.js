@@ -1,9 +1,10 @@
 import {connect} from 'react-redux'
 import TestBuilderPage from '../components/TestBuilder'
-import {testBuilderDataFetch} from "../api";
+import {testBuilderDataFetch, submitTest} from "../api";
 import {
   testSelected,
   testBuilderFormInputChanged,
+  newTestAdded,
 } from "../actions";
 
 function mapStateToProps(state) {
@@ -20,6 +21,8 @@ function mapDispatchToProps(dispatch) {
     getTests: () => dispatch(testBuilderDataFetch()),
     setSelectedTestIndex: (index) => dispatch(testSelected(index)),
     testBuilderFormInputChanged: (newValue) => dispatch(testBuilderFormInputChanged(newValue)),
+    addNewTest: () => dispatch(newTestAdded()),
+    submitCurrentTest: (testObject) => dispatch(submitTest(testObject)),
   }
 }
 

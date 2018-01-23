@@ -2,8 +2,6 @@ import React from "react";
 import {
   Panel,
   Grid,
-  DropdownButton,
-  MenuItem,
   Button,
   Form,
   ListGroupItem,
@@ -14,6 +12,7 @@ import {
   Row,
   Col,
   Label,
+  Glyphicon,
 } from 'react-bootstrap';
 import 'react-select/dist/react-select.css';
 import Select from 'react-select';
@@ -125,37 +124,58 @@ class TestBuilderPage extends React.Component {
   };
 
   render() {
-    const {notifications, testBuilderTests, selectedTestIndex, setSelectedTestIndex, testNamesForDropdown} = this.props;
-    const testsDropdown = [
-      <DropdownButton
-        id='testSelector'
-        onSelect={(testIndex) => setSelectedTestIndex(testIndex)}
-        title={selectedTestIndex !== null ? testNamesForDropdown[selectedTestIndex] : 'Select one...'}
-        bsStyle="success"
+    const {
+      notifications,
+      testBuilderTests,
+      selectedTestIndex,
+      setSelectedTestIndex,
+      testNamesForDropdown,
+      addNewTest,
+      submitCurrentTest
+    } = this.props;
+    const testsList = () => (testNamesForDropdown.map((test, index) =>
+      <ListGroupItem
+        onClick={() => setSelectedTestIndex(index)}
+        active={index === selectedTestIndex}
+        key={index}
       >
-        {testNamesForDropdown.map((test, index) => {
-          return (
-            <MenuItem active={index === selectedTestIndex} key={index} eventKey={index}>
-              {test}
-              &nbsp;
-              {testBuilderTests[index].modified && <Label bsStyle="warning">Modified</Label>}
-            </MenuItem>
-          )
-        })}
-      </DropdownButton>,
-      <span style={{marginLeft: '20px'}}>
-      {selectedTestIndex !== null && testBuilderTests[selectedTestIndex].modified && <Label bsStyle="warning">Modified</Label>}
-      </span>
-    ];
+        {test}
+        &nbsp;
+        &nbsp;
+        {testBuilderTests[index].modified && <Label bsStyle="warning">Modified</Label>}
+        {testBuilderTests[index].new && <Label bsStyle="primary">New</Label>}
+      </ListGroupItem>));
 
-    const submitButton = [<Button bsStyle="success" bsSize="large" className="pull-right">SUBMIT DUMMY</Button>,
+    const submitButton = [
+      <Button
+        bsStyle="success"
+        bsSize="large"
+        className="pull-right"
+        onClick={()=> submitCurrentTest(testBuilderTests[selectedTestIndex])}
+      >SUBMIT</Button>,
       <div className="clearfix"/>];
 
     return (
       <div>
-        <Panel header={testsDropdown} footer={submitButton} bsStyle="primary">
+        <Panel header={<h1>Select test to edit</h1>} footer={submitButton} bsStyle="primary">
           <Grid fluid={true}>
-            {selectedTestIndex !== null && this.renderTestParamsForm()}
+            <Row>
+              <Col md={3}>
+                <Button
+                  bsStyle="primary"
+                  className='btn-block'
+                  onClick={() => addNewTest()}
+                >
+                  <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new test...
+                </Button>
+                <ListGroup>
+                  {testsList()}
+                </ListGroup>
+              </Col>
+              <Col md={9}>
+                {selectedTestIndex !== null && this.renderTestParamsForm()}
+              </Col>
+            </Row>
           </Grid>
         </Panel>
         <Notifications notifications={notifications}/>

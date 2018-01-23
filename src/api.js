@@ -16,6 +16,7 @@ import {
   updateChainFormFail,
   testBuilderTestsFetchFail,
   testBuilderTestsFetchSucceed,
+  resetModificationMarkers,
 } from './actions'
 
 const BACKEND_URL = "http://localhost:3001/api";
@@ -236,7 +237,6 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
     if (response.ok) {
       return response.json()
     } else {
-      console.log(response);
       throw new Error(response.statusText)
     }
   }).then(fetchBuilderChains => {
@@ -250,3 +250,68 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
   })
 };
 
+export const submitTest = (testObject) => (dispatch, getState)=> {
+  const updateTestUrl = `${BACKEND_URL}/tests/`+testObject.test_id;
+  const addTestUrl = `${BACKEND_URL}/tests`;
+
+  const result = [{
+    test_id: testObject.test_id,
+    test_name: testObject.test_name,
+    job_trigger: testObject.job_trigger,
+    tag_names: testObject.tag_names,
+  }];
+
+  if (testObject.modified) {
+
+    let header = new Headers();
+    header.append('Content-Type','application/json');
+    const options = {
+      method: 'POST',
+      headers: header,
+      body: result
+    };
+
+    fetch(updateTestUrl, options).then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.statusText)
+      }
+    }).then(answer => {
+      if (answer) {
+        dispatch(success({message: "Submit succeeded!"}));
+        dispatch(resetModificationMarkers());
+      } else {
+        dispatch(error({message: "Submit failed with error!"}));
+      }
+    }).catch(error => {
+      throw error
+    })
+  }
+  if (testObject.new) {
+    let header = new Headers();
+    header.append('Content-Type','application/json');
+    const options = {
+      method: 'PUT',
+      headers: header,
+      body: result
+    };
+
+    fetch(addTestUrl, options).then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw new Error(response.statusText)
+      }
+    }).then(answer => {
+      if (answer) {
+        dispatch(success({message: "Submit succeeded!"}));
+        dispatch(resetModificationMarkers());
+      } else {
+        dispatch(error({message: "Submit failed with error!"}));
+      }
+    }).catch(error => {
+      throw error
+    })
+  }
+};

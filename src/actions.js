@@ -29,6 +29,8 @@ import {
   TEST_BUILDER_TESTS_FETCH_FAIL,
   TEST_SELECTED,
   TEST_BUILDER_FORM_INPUT_CHANGED,
+  ADD_NEW_TEST,
+  RESET_MODIFICATION_MARKERS,
 } from './constants'
 
 export const updateChainFormSucceed = (payload) => ({
@@ -160,6 +162,11 @@ export const testBuilderFormInputChanged = (payload) => ({
   type: TEST_BUILDER_FORM_INPUT_CHANGED,
   payload: payload
 });
-
+export const newTestAdded = () => ({
+  type: ADD_NEW_TEST,
+});
+export const resetModificationMarkers = () => ({
+  type: RESET_MODIFICATION_MARKERS,
+});
 
 export const chainSelected = (selectedChain) => ({type: CHAIN_SELECTED, selectedChain});

@@ -2,6 +2,8 @@ import {
   TEST_BUILDER_TESTS_FETCH_SUCCEED,
   TEST_SELECTED,
   TEST_BUILDER_FORM_INPUT_CHANGED,
+  ADD_NEW_TEST,
+  RESET_MODIFICATION_MARKERS,
 } from '../constants'
 
 const initialState = {
@@ -32,6 +34,41 @@ const testBuilder = (state = initialState, action) => {
       return {
         ...state,
         selectedTestIndex: action.payload,
+      }
+    }
+    case ADD_NEW_TEST: {
+      const testBuilderTests = [...state.testBuilderTests];
+      const newTestEntry = {
+        "test_id": 'Enter test id number here...',
+        "test_name": "Brand new test",
+        "job_trigger":
+        {
+          "uri": "Enter Jenkins URL here...",
+          "login": "Enter Jenkins URL here...",
+          "params": {},
+          "job_name": "Enter job name here...",
+          "passOrToken": "Job pass or token..."
+        },
+        "tag_names": [],
+        'new': true
+      };
+      testBuilderTests.push(newTestEntry);
+      const testNamesForDropdown = testBuilderTests.map(test => test.test_name);
+      return{
+        ...state,
+        testBuilderTests,
+        testNamesForDropdown,
+      }
+    }
+    case RESET_MODIFICATION_MARKERS: {
+      const testBuilderTests = [...state.testBuilderTests];
+      testBuilderTests[state.selectedTestIndex].modified = false;
+      testBuilderTests[state.selectedTestIndex].new = false;
+      const testNamesForDropdown = testBuilderTests.map(test => test.test_name);
+      return {
+        ...state,
+        testBuilderTests,
+        testNamesForDropdown,
       }
     }
     case TEST_BUILDER_FORM_INPUT_CHANGED: {
