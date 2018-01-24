@@ -143,6 +143,7 @@ class FormBuilderPage extends React.Component {
   render() {
     const {formBuilderChains,notifications} = this.props;
     const {chainIndex} = this.state;
+    //TODO replace on dropdownSelector
     const chainDropDown = [
       <DropdownButton
         id='chainSelector'

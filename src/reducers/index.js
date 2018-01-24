@@ -8,10 +8,12 @@ import chainTemplates from './chainTemplates'
 import test from './test'
 import dataTemplate from './dataTemplate'
 import formBuilder from './formBuilder'
+import launcher from "./launcher";
 
 
 const rootReducer = combineReducers({
   ui: ui,
+  launcher: launcher,
   form: form,
   scheduleForm: scheduleForm,
   formTemplate,

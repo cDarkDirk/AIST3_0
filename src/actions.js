@@ -26,8 +26,14 @@ import {
   ON_FIELDS_VALUES_UPDATE,
   FIELD_WAS_REMOVED,
   SCHEDULE_AMOUNT_OF_TIMES_CHANGED,
-  SUBMIT_BUTTON_CLICKED, TEMPLATE_FORM_INPUT_CHANGE,
+  SUBMIT_BUTTON_CLICKED,
+  TEMPLATE_FORM_INPUT_CHANGE,
 } from './constants'
+
+export const selectChainForm =(payload)=> ({
+  type: CHAIN_SELECTED,
+  payload: payload
+});
 
 export const updateChainFormSucceed = (payload) => ({
   type: UPDATE_CHAIN_FORM_SUCCEED,
