@@ -26,7 +26,7 @@ import {
   ON_FIELDS_VALUES_UPDATE,
   FIELD_WAS_REMOVED,
   SCHEDULE_AMOUNT_OF_TIMES_CHANGED,
-  SUBMIT_BUTTON_CLICKED,
+  SUBMIT_BUTTON_CLICKED, TEMPLATE_FORM_INPUT_CHANGE,
 } from './constants'
 
 export const updateChainFormSucceed = (payload) => ({
@@ -40,6 +40,11 @@ export const updateChainFormFail = () => ({
 
 export const onFormInputChange = (value, paramName, formName) => ({
   type: FORM_INPUT_CHANGE,
+  payload: {value, paramName, formName}
+});
+
+export const onTemplateFormInputChange = (value, paramName, formName) => ({
+  type: TEMPLATE_FORM_INPUT_CHANGE,
   payload: {value, paramName, formName}
 });
 

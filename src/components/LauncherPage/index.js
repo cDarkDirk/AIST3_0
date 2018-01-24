@@ -11,9 +11,7 @@ const LauncherPage = function (props) {
       <Row>
         <ScheduleForm></ScheduleForm>
       </Row>
-      <Row>
-        <TemplateForm/>
-      </Row>
+        <TemplateForm></TemplateForm>
       <Row><Form formName="connectServices"></Form></Row>
     </div>
   )

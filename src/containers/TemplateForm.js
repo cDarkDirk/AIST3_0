@@ -1,17 +1,18 @@
 import {connect} from 'react-redux'
-import {onFormInputChange} from '../actions'
+import {onTemplateFormInputChange} from '../actions'
 import TemplateForm from '../components/TemplateForm'
 import {fetchDataTemplatesList} from '../api'
 
 function mapStateToProps(state, ownProps) {
     return {
-        dataTemplates: state.dataTemplate.dataTemplates
+        dataTemplates: state.dataTemplate.dataTemplates,
+        choosenDataTemplates: state.dataTemplate.choosenDataTemplates
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-       // onFormInputChange: (value, paramName, formName) => dispatch(onFormInputChange(value, paramName, formName)),
+        onTemplateFormInputChange: (value, paramName, formName) => dispatch(onTemplateFormInputChange(value, paramName, formName)),
         fetchDataTemplatesList: () => dispatch(fetchDataTemplatesList())
     }
 }
