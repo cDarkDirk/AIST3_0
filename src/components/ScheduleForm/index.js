@@ -1,5 +1,5 @@
 import React from "react";
-import {Row, Col, ControlLabel} from "react-bootstrap"
+import {Row, Col} from "react-bootstrap"
 import DatePicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css';
 import TimePicker from 'rc-time-picker';

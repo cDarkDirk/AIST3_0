@@ -11,7 +11,7 @@ class MyForm extends React.Component {
     }
 
     render() {
-        const {formName, formTemplate, formValues, onFormInputChange} = this.props
+        const {formTemplate, formValues, onFormInputChange} = this.props;
 
         const form = formTemplate ? (formTemplate.fields.map((field, index) => {
             if (field.type === "text") {
@@ -27,7 +27,7 @@ class MyForm extends React.Component {
                     </FormGroup>
                 )
             }
-            if (field.type === "dropDown") {
+            else if (field.type === "dropDown") {
                 return (
                     <FormGroup controlId="formHorizontalDropDown">
                         <Col componentClass={ControlLabel} sm={2}>
@@ -44,7 +44,7 @@ class MyForm extends React.Component {
                     </FormGroup>
                 )
             }
-            if (field.type === "calendar") {
+            else if (field.type === "calendar") {
                 return (
                     <FormGroup controlId="calendar">
                         <Col componentClass={ControlLabel} sm={2}>
@@ -61,12 +61,13 @@ class MyForm extends React.Component {
                         </Col>
                     </FormGroup>)
             }
+            else return (<div>NO SUCH FIELD!</div>)
         }).map((field, index) => {
 
             return (<Col md={6}>{field}</Col>)
         })) : (
             <div> NO FORM TEMPLATE SPECIFIED</div>
-        )
+        );
 
         return (
             <div className='container'>
