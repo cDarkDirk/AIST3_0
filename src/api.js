@@ -1,5 +1,4 @@
 import {error, success} from "react-notification-system-redux"
-//import axios from 'axios';
 import {
   formTemplateFetchSuccseed,
   chainEditorTemplateFetchSucceed,
@@ -255,7 +254,7 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
 };
 
 export const submitTest = (testObject) => (dispatch, getState)=> {
-  const updateTestUrl = `${BACKEND_URL}/tests/`+testObject.test_id;
+  const updateTestUrl = `${BACKEND_URL}/tests/${testObject.test_id}`;
   const addTestUrl = `${BACKEND_URL}/tests`;
 
   const result = [{
