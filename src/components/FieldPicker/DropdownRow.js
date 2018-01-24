@@ -35,7 +35,7 @@ class DropdownRow extends React.Component {
     onChange(updatedDDOptions);
   };
 
-  testOne = (index) => {
+  handleRemoveField = (index) => {
     return () => {
       const {onDelete} = this.props;
       onDelete(index);
@@ -82,7 +82,7 @@ class DropdownRow extends React.Component {
               </InputGroup>
             </Col>
             <Col md={1}>
-              <Button onClick={this.testOne(index)}>
+              <Button onClick={this.handleRemoveField(index)}>
                 <Glyphicon glyph='glyphicon glyphicon-remove'/>
               </Button>
             </Col>

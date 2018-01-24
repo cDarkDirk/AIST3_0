@@ -18,6 +18,5 @@ const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, dirtyC
       })
     }
   </ListGroup>);
-
 }
 export default ChainList;
