@@ -5,10 +5,12 @@
   "dependencies": {
     "axios": "^0.17.1",
     "babel": "^6.23.0",
+    "bootstrap": "^4.0.0",
     "cors": "^2.8.4",
     "eslint-config-react-app": "^2.0.1",
     "express": "^4.16.2",
     "font-awesome": "^4.7.0",
+    "history": "latest",
     "lodash": "^4.17.4",
     "mockserver": "^1.6.2",
     "nodemon": "^1.12.5",
@@ -30,7 +32,7 @@
     "react-sortable-hoc": "^0.6.8",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "history": "latest"
+    "tomcat-deploy": "^1.0.2"
   },
   "scripts": {
     "start-mocks": "nodemon mockserver.js",

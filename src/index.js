@@ -13,6 +13,8 @@ import FormPage from './containers/FormPage'
 import LauncherPage from "./containers/LauncherPage";
 import FormBuilderPage from "./containers/FormBuilderPage";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import 'font-awesome/css/font-awesome.min.css'
 import './styles/main.css'
 
