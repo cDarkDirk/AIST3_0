@@ -8,11 +8,11 @@ Access-Control-Allow-Origin: *
 			"template_id": "1"
 		},
 		{
-            "template_name": "visa_gold",
-       		"template_id": "2"
-       	},
-      	{
-      		"template_name": "master_card",
-      		"template_id": "3"
-      	}
+      "template_name": "visa_gold",
+      "template_id": "2"
+    },
+    {
+      "template_name": "master_card",
+      "template_id": "3"
+    }
 	]
