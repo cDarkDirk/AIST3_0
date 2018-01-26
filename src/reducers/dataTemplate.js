@@ -12,6 +12,8 @@ const dataTemplate = (state = initialState, action) => {
         }
         default: return state
     }
-}
+};
+
+//TODO delete this if is not used!
 
 export default dataTemplate

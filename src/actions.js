@@ -31,6 +31,9 @@ import {
   TEST_BUILDER_FORM_INPUT_CHANGED,
   ADD_NEW_TEST,
   RESET_MODIFICATION_MARKERS,
+  DATA_TEMPLATES_FETCH_FAIL,
+  DATA_TEMPLATES_FETCH_SUCCESS,
+  DATA_TEMPLATE_SELECTED
 } from './constants'
 
 export const updateChainFormSucceed = (payload) => ({
@@ -167,6 +170,18 @@ export const newTestAdded = () => ({
 });
 export const resetModificationMarkers = () => ({
   type: RESET_MODIFICATION_MARKERS,
+});
+export const dataTemplatesFetchSuccess = (payload) => ({
+  type: DATA_TEMPLATES_FETCH_SUCCESS,
+  payload: payload
+});
+export const dataTemplatesFetchFail = (payload) => ({
+  type: DATA_TEMPLATES_FETCH_FAIL,
+  payload: payload
+});
+export const setSelectedDataTemplateIndex = (payload) => ({
+  type: DATA_TEMPLATE_SELECTED,
+  payload: payload
 });
 
 export const chainSelected = (selectedChain) => ({type: CHAIN_SELECTED, selectedChain});

@@ -11,6 +11,7 @@ import ChainEditorPage from './containers/ChainEditorPage'
 import LauncherPage from "./components/LauncherPage";
 import FormBuilderPage from "./containers/FormBuilderPage";
 import TestBuilder from "./containers/TestBuilder";
+import DataTemplatesBuilderPage from "./containers/DataTemplates";
 
 import 'font-awesome/css/font-awesome.min.css'
 import './styles/main.css'
@@ -35,6 +36,7 @@ ReactDOM.render((
             <Route path="/chaineditor" component={ChainEditorPage}/>}
             <Route path="/launcher" component={LauncherPage}/>
             <Route path="/formbuilder" component={FormBuilderPage}/>
+            <Route path="/datatemplates" component={DataTemplatesBuilderPage}/>
             <Route exact path="/" component={HomePage}/>
           </Switch>
         </Router>

@@ -17,6 +17,8 @@ import {
   testBuilderTestsFetchFail,
   testBuilderTestsFetchSucceed,
   resetModificationMarkers,
+  dataTemplatesFetchSuccess,
+  dataTemplatesFetchFail,
 } from './actions'
 import {BACKEND_URL} from "./constants/endpoints";
 
@@ -35,6 +37,26 @@ const fetchUtil = (url, method = 'GET', data = {}) => {
   return fetch(url, options);
 };
 
+export const fetchDataTemplates = () => (dispatch) => {
+
+  const url = `${BACKEND_URL}/templates`;
+
+  fetchUtil(url).then(response => {
+    if (response.ok) {
+      return response.json()
+    } else {
+      throw new Error(response.statusText)
+    }
+  }).then(dataTemplates => {
+    if (dataTemplates) {
+      dispatch(dataTemplatesFetchSuccess(dataTemplates))
+    } else {
+      dispatch(dataTemplatesFetchFail())
+    }
+  }).catch(error => {
+    throw error
+  })
+};
 
 export const fetchFormTemplate = (formName) => (dispatch) => {
   const url = `${BACKEND_URL}/forms/${formName}`;
