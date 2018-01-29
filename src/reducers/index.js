@@ -9,6 +9,7 @@ import test from './test'
 import dataTemplate from './dataTemplate'
 import formBuilder from './formBuilder'
 import launcher from "./launcher";
+import testBuilder from "./TestBuilder";
 
 
 const rootReducer = combineReducers({
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   test,
   dataTemplate,
   formBuilder,
+  testBuilder,
   notifications,
 });
 

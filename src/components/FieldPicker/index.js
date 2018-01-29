@@ -130,7 +130,9 @@ class FieldPicker extends React.Component {
         case 'DatePicker': {
           return this.renderDatePicker(field, index);
         }
+        default: return null;
       }
+
     })
   }
 }

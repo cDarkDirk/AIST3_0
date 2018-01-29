@@ -12,6 +12,7 @@ import ChainEditorPage from './containers/ChainEditorPage'
 import FormPage from './containers/FormPage'
 import LauncherPage from "./containers/LauncherPage";
 import FormBuilderPage from "./containers/FormBuilderPage";
+import TestBuilder from "./containers/TestBuilder";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -34,6 +35,7 @@ ReactDOM.render((
 
         <HashRouter history={history}>
           <Switch>
+            <Route path="/testbuilder" component={TestBuilder}/>
             <Route path="/chaineditor" component={ChainEditorPage}/>}
             <Route path="/form/:formName" component={FormPage}/>
             <Route path="/launcher" component={LauncherPage}/>

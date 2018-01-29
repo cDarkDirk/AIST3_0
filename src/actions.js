@@ -28,6 +28,12 @@ import {
   SCHEDULE_AMOUNT_OF_TIMES_CHANGED,
   SUBMIT_BUTTON_CLICKED,
   TEMPLATE_FORM_INPUT_CHANGE,
+  TEST_BUILDER_TESTS_FETCH_SUCCEED,
+  TEST_BUILDER_TESTS_FETCH_FAIL,
+  TEST_SELECTED,
+  TEST_BUILDER_FORM_INPUT_CHANGED,
+  ADD_NEW_TEST,
+  RESET_MODIFICATION_MARKERS,
 } from './constants'
 
 export const selectChainForm =(payload)=> ({
@@ -156,6 +162,28 @@ export const onFieldsValuesUpdate = (payload) => ({
 export const fieldWasRemoved = (payload) => ({
   type: FIELD_WAS_REMOVED,
   payload: payload
+});
+export const testBuilderTestsFetchSucceed = (payload) => ({
+  type: TEST_BUILDER_TESTS_FETCH_SUCCEED,
+  payload: payload
+});
+export const testBuilderTestsFetchFail = (payload) => ({
+  type: TEST_BUILDER_TESTS_FETCH_FAIL,
+  payload: payload
+});
+export const testSelected = (payload) => ({
+  type: TEST_SELECTED,
+  payload: payload
+});
+export const testBuilderFormInputChanged = (payload) => ({
+  type: TEST_BUILDER_FORM_INPUT_CHANGED,
+  payload: payload
+});
+export const newTestAdded = () => ({
+  type: ADD_NEW_TEST,
+});
+export const resetModificationMarkers = () => ({
+  type: RESET_MODIFICATION_MARKERS,
 });
 
 

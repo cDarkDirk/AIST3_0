@@ -1,6 +1,5 @@
 import {
     FORM_TEMPLATE_FETCH_SUCCSEED,
-    FORM_TEMPLATE_FETCH_FAIL
 } from '../constants'
 
 const initialState = null

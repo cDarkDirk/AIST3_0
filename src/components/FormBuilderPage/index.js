@@ -9,7 +9,7 @@ import {
   Grid,
   ButtonGroup,
   Glyphicon,
-  Label
+  Label,
 } from 'react-bootstrap';
 import Notifications from 'react-notification-system-redux'
 import FieldPicker from "../FieldPicker";
@@ -76,6 +76,7 @@ class FormBuilderPage extends React.Component {
           });
         break;
       }
+      default: console.log('UNEXPECTED FIELD TYPE!');
     }
   };
 
