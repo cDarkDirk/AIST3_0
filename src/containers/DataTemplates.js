@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {fetchDataTemplates} from "../api";
 import DataTemplatesBuilderPage from "../components/DataTemplatesBuilderPage";
-import {setSelectedDataTemplateIndex} from "../actions";
+import {setSelectedDataTemplateIndex, dataTemplatesInputChange} from "../actions";
 
 function mapStateToProps(state) {
   return {
@@ -15,6 +15,7 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchDataTemplates: () => dispatch(fetchDataTemplates()),
     onTemplateSelected: (index)=> dispatch(setSelectedDataTemplateIndex(index)),
+    onDataTemplatesInputChange: (newValue, index) => dispatch(dataTemplatesInputChange(newValue, index)),
   }
 }
 

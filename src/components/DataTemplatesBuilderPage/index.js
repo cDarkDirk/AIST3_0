@@ -19,44 +19,42 @@ class DataTemplatesBuilderPage extends React.Component {
   }
 
   renderTemplateBulder = () => {
-    const {dataTemplates, selectedTemplateIndex} = this.props;
+    const {dataTemplates, selectedTemplateIndex, onDataTemplatesInputChange} = this.props;
 
-    const keys = Object.keys(dataTemplates[selectedTemplateIndex].data);
-    const values = Object.values(dataTemplates[selectedTemplateIndex].data);
-    const formData = keys.map((key, idx) => {
-      let curVal = {};
-      curVal[key] = values[idx];
-      return curVal;
-    });
-    //TODO create onUpdate action
     return (
       <Form>
         <ListGroupItem bsStyle="success" style={{maxHeight: '550px', overflow: 'auto'}}>
           <FormGroup>
             <Panel header={'Template values:'}>
+              <Row>
+                <InputGroup>
+                  <InputGroup.Addon>Template name</InputGroup.Addon>
+                  <FormControl value={'bla'}
+                               onChange={() => console.log('bla')}
+                               type="text"/>
+                </InputGroup>
+              </Row>
               {
-                formData.map((value, index) => {
-                  return (
-                    <Row>
+                dataTemplates[selectedTemplateIndex].data.map((entry, index) => (
+                    <Row key={index}>
                       <Col md={6}>
                         <InputGroup>
                           <InputGroup.Addon>Parameter key</InputGroup.Addon>
-                          <FormControl value={keys[index]}
-                                       onChange={() => console.log('onChange')}
+                          <FormControl value={entry.key}
+                                       onChange={(val) => onDataTemplatesInputChange({name:'key',value: val.target.value,index})}
                                        type="text"/>
                         </InputGroup>
                       </Col>
                       <Col md={6}>
                         <InputGroup>
                           <InputGroup.Addon>Parameter value</InputGroup.Addon>
-                          <FormControl value={values[index]}
-                                       onChange={() => console.log('bla')}
+                          <FormControl value={entry.value}
+                                       onChange={(val) => onDataTemplatesInputChange({name:'value',value: val.target.value,index})}
                                        type="text"/>
                         </InputGroup>
                       </Col>
                     </Row>
-                  )
-                })
+                ))
               }
             </Panel>
           </FormGroup>

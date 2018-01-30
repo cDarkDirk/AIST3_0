@@ -33,7 +33,8 @@ import {
   RESET_MODIFICATION_MARKERS,
   DATA_TEMPLATES_FETCH_FAIL,
   DATA_TEMPLATES_FETCH_SUCCESS,
-  DATA_TEMPLATE_SELECTED
+  DATA_TEMPLATE_SELECTED,
+  DATA_TEMPLATES_INPUT_CHANGE,
 } from './constants'
 
 export const updateChainFormSucceed = (payload) => ({
@@ -181,6 +182,10 @@ export const dataTemplatesFetchFail = (payload) => ({
 });
 export const setSelectedDataTemplateIndex = (payload) => ({
   type: DATA_TEMPLATE_SELECTED,
+  payload: payload
+});
+export const dataTemplatesInputChange = (payload) => ({
+  type: DATA_TEMPLATES_INPUT_CHANGE,
   payload: payload
 });
 
