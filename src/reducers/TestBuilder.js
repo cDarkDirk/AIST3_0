@@ -16,7 +16,10 @@ const testBuilder = (state = initialState, action) => {
   switch (action.type) {
     case TEST_BUILDER_TESTS_FETCH_SUCCEED: {
       const testNamesForDropdown = action.payload.map((test)=>{
-        return test.test_name
+        return {
+          test_name: test.test_name,
+          test_id: test.test_id,
+        }
       });
       const tests = [...action.payload];
       const adaptedTests = tests.map((current) => {
@@ -42,18 +45,22 @@ const testBuilder = (state = initialState, action) => {
         "test_id": 'Enter test id number here...',
         "test_name": "Brand new test",
         "job_trigger":
-        {
-          "uri": "Enter Jenkins URL here...",
-          "login": "Enter Jenkins URL here...",
-          "params": {},
-          "job_name": "Enter job name here...",
-          "passOrToken": "Job pass or token..."
-        },
+          {
+            "uri": "Enter Jenkins URL here...",
+            "login": "Enter Jenkins URL here...",
+            "params": {},
+            "job_name": "Enter job name here...",
+            "passOrToken": "Job pass or token..."
+          },
         "tag_names": [],
         'new': true
       };
       testBuilderTests.push(newTestEntry);
-      const testNamesForDropdown = testBuilderTests.map(test => test.test_name);
+      const testNamesForDropdown = [...state.testNamesForDropdown];
+      testNamesForDropdown.push({
+        test_name: newTestEntry.test_name,
+        test_id: newTestEntry.test_id,
+      });
       return{
         ...state,
         testBuilderTests,
@@ -64,7 +71,10 @@ const testBuilder = (state = initialState, action) => {
       const testBuilderTests = [...state.testBuilderTests];
       testBuilderTests[state.selectedTestIndex].modified = false;
       testBuilderTests[state.selectedTestIndex].new = false;
-      const testNamesForDropdown = testBuilderTests.map(test => test.test_name);
+      const testNamesForDropdown = testBuilderTests.map(test => ({
+        test_name: test.test_name,
+        test_id: test.test_id,
+      }));
       return {
         ...state,
         testBuilderTests,
