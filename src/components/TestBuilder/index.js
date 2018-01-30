@@ -139,7 +139,7 @@ class TestBuilderPage extends React.Component {
         active={index === selectedTestIndex}
         key={index}
       >
-        {test}
+        {test.test_name}
         &nbsp;
         &nbsp;
         {testBuilderTests[index].modified && <Label bsStyle="warning">Modified</Label>}
@@ -151,7 +151,10 @@ class TestBuilderPage extends React.Component {
         bsStyle="success"
         bsSize="large"
         className="pull-right"
-        onClick={()=> submitCurrentTest(testBuilderTests[selectedTestIndex])}
+        onClick={()=> submitCurrentTest({
+          test: testBuilderTests[selectedTestIndex],
+          id: testNamesForDropdown[selectedTestIndex].test_id
+        })}
       >SUBMIT</Button>,
       <div className="clearfix"/>];
 

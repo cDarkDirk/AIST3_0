@@ -276,18 +276,17 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
 };
 
 export const submitTest = (testObject) => (dispatch, getState)=> {
-  const updateTestUrl = `${BACKEND_URL}/tests/${testObject.test_id}`;
   const addTestUrl = `${BACKEND_URL}/tests`;
-
   const result = [{
-    test_id: testObject.test_id,
-    test_name: testObject.test_name,
-    job_trigger: testObject.job_trigger,
-    tag_names: testObject.tag_names,
+    test_id: testObject.test.test_id,
+    test_name: testObject.test.test_name,
+    job_trigger: testObject.test.job_trigger,
+    tag_names: testObject.test.tag_names,
   }];
 
-  if (testObject.modified) {
+  if (testObject.test.modified) {
 
+    const updateTestUrl = `${BACKEND_URL}/tests/${testObject.id}`;
     let header = new Headers();
     header.append('Content-Type','application/json');
     const options = {
@@ -295,7 +294,6 @@ export const submitTest = (testObject) => (dispatch, getState)=> {
       headers: header,
       body: result
     };
-
     fetch(updateTestUrl, options).then(response => {
       if (response.ok) {
         return response.json()
@@ -313,7 +311,7 @@ export const submitTest = (testObject) => (dispatch, getState)=> {
       throw error
     })
   }
-  if (testObject.new) {
+  if (testObject.test.new) {
     let header = new Headers();
     header.append('Content-Type','application/json');
     const options = {
