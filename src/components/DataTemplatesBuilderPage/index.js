@@ -3,7 +3,7 @@ import {
   Button,
   Col,
   Form, FormControl,
-  FormGroup,
+  FormGroup, Glyphicon,
   Grid, InputGroup,
   Label,
   ListGroupItem,
@@ -19,7 +19,13 @@ class DataTemplatesBuilderPage extends React.Component {
   }
 
   renderTemplateBulder = () => {
-    const {dataTemplates, selectedTemplateIndex, onDataTemplatesInputChange} = this.props;
+    const {
+      dataTemplates,
+      selectedTemplateIndex,
+      onDataTemplatesInputChange,
+      templateNameChanged,
+      addNewParam,
+    } = this.props;
 
     return (
       <Form>
@@ -27,35 +33,51 @@ class DataTemplatesBuilderPage extends React.Component {
           <FormGroup>
             <Panel header={'Template values:'}>
               <Row>
-                <InputGroup>
-                  <InputGroup.Addon>Template name</InputGroup.Addon>
-                  <FormControl value={'bla'}
-                               onChange={() => console.log('bla')}
-                               type="text"/>
-                </InputGroup>
+                <Col md={12}>
+                  <InputGroup>
+                    <InputGroup.Addon>Template name</InputGroup.Addon>
+                    <FormControl value={dataTemplates[selectedTemplateIndex].name}
+                                 onChange={(event) => templateNameChanged(event.target.value)}
+                                 type="text"/>
+                  </InputGroup>
+                </Col>
               </Row>
               {
                 dataTemplates[selectedTemplateIndex].data.map((entry, index) => (
-                    <Row key={index}>
-                      <Col md={6}>
-                        <InputGroup>
-                          <InputGroup.Addon>Parameter key</InputGroup.Addon>
-                          <FormControl value={entry.key}
-                                       onChange={(val) => onDataTemplatesInputChange({name:'key',value: val.target.value,index})}
-                                       type="text"/>
-                        </InputGroup>
-                      </Col>
-                      <Col md={6}>
-                        <InputGroup>
-                          <InputGroup.Addon>Parameter value</InputGroup.Addon>
-                          <FormControl value={entry.value}
-                                       onChange={(val) => onDataTemplatesInputChange({name:'value',value: val.target.value,index})}
-                                       type="text"/>
-                        </InputGroup>
-                      </Col>
-                    </Row>
+                  <Row key={index}>
+                    <Col md={6}>
+                      <InputGroup>
+                        <InputGroup.Addon>Parameter key</InputGroup.Addon>
+                        <FormControl value={entry.key}
+                                     onChange={(val) => onDataTemplatesInputChange({
+                                       name: 'key',
+                                       value: val.target.value,
+                                       index
+                                     })}
+                                     type="text"/>
+                      </InputGroup>
+                    </Col>
+                    <Col md={6}>
+                      <InputGroup>
+                        <InputGroup.Addon>Parameter value</InputGroup.Addon>
+                        <FormControl value={entry.value}
+                                     onChange={(val) => onDataTemplatesInputChange({
+                                       name: 'value',
+                                       value: val.target.value,
+                                       index
+                                     })}
+                                     type="text"/>
+                      </InputGroup>
+                    </Col>
+                  </Row>
                 ))
               }
+              <Button
+                bsStyle="primary"
+                onClick={() => addNewParam()}
+              >
+                <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new parameter...
+              </Button>
             </Panel>
           </FormGroup>
         </ListGroupItem>
@@ -64,14 +86,14 @@ class DataTemplatesBuilderPage extends React.Component {
   };
 
   renderTemplatesList() {
-    const {dataTemplates, selectedTemplateIndex, onTemplateSelected} = this.props;
-    return (dataTemplates.map((template, index) =>
+    const {dataTemplatesNames, dataTemplates, selectedTemplateIndex, onTemplateSelected, addNewTemplate} = this.props;
+    return (dataTemplatesNames.map((template, index) =>
       <ListGroupItem
         onClick={() => onTemplateSelected(index)}
         active={index === selectedTemplateIndex}
         key={index}
       >
-        {template.name}
+        {template}
         &nbsp;
         &nbsp;
         {dataTemplates[index].modified && <Label bsStyle="warning">Modified</Label>}
@@ -81,12 +103,20 @@ class DataTemplatesBuilderPage extends React.Component {
   }
 
   render() {
+    const {addNewTemplate} = this.props;
     return (
       <div>
         <Panel bsStyle='primary' header='Select template or create new'>
-          <Grid>
+          <Grid fluid={true}>
             <Row>
               <Col md={3}>
+                <Button
+                  bsStyle="primary"
+                  className='btn-block'
+                  onClick={() => addNewTemplate()}
+                >
+                  <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new test...
+                </Button>
                 {this.renderTemplatesList()}
               </Col>
               <Col md={9}>

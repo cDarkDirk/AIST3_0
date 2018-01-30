@@ -35,6 +35,9 @@ import {
   DATA_TEMPLATES_FETCH_SUCCESS,
   DATA_TEMPLATE_SELECTED,
   DATA_TEMPLATES_INPUT_CHANGE,
+  DATA_TEMPLATE_NAME_CHANGED,
+  NEW_DATA_TEMPLATE_ADDED,
+  NEW_DATA_TEMPLATE_PARAM_ADDED,
 } from './constants'
 
 export const updateChainFormSucceed = (payload) => ({
@@ -187,6 +190,16 @@ export const setSelectedDataTemplateIndex = (payload) => ({
 export const dataTemplatesInputChange = (payload) => ({
   type: DATA_TEMPLATES_INPUT_CHANGE,
   payload: payload
+});
+export const dataTemplateNameChanged = (payload) => ({
+  type: DATA_TEMPLATE_NAME_CHANGED,
+  payload: payload
+});
+export const newDataTemplateAdded = () => ({
+  type: NEW_DATA_TEMPLATE_ADDED,
+});
+export const newDataTemplateParamAdded = () => ({
+  type: NEW_DATA_TEMPLATE_PARAM_ADDED,
 });
 
 export const chainSelected = (selectedChain) => ({type: CHAIN_SELECTED, selectedChain});
