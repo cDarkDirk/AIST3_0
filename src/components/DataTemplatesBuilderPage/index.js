@@ -42,8 +42,9 @@ class DataTemplatesBuilderPage extends React.Component {
                   </InputGroup>
                 </Col>
               </Row>
+              <div className='spacer'/>
               {
-                dataTemplates[selectedTemplateIndex].data.map((entry, index) => (
+                dataTemplates[selectedTemplateIndex].data.map((entry, index) => [
                   <Row key={index}>
                     <Col md={6}>
                       <InputGroup>
@@ -69,8 +70,9 @@ class DataTemplatesBuilderPage extends React.Component {
                                      type="text"/>
                       </InputGroup>
                     </Col>
-                  </Row>
-                ))
+                  </Row>,
+                  <div className='spacer-xs'/>
+                ])
               }
               <Button
                 bsStyle="primary"
@@ -102,11 +104,21 @@ class DataTemplatesBuilderPage extends React.Component {
     ));
   }
 
+  renderSubmitButton() {
+    const {dataTemplates, selectedTemplateIndex} = this.props;
+    return (
+      selectedTemplateIndex !== null && (dataTemplates[selectedTemplateIndex].modified || dataTemplates[selectedTemplateIndex].new )?
+        [<Button bsStyle="success" bsSize="large" className="pull-right" onClick={() => console.log('bla')}>Submit</Button>,<div className="clearfix"/>]
+
+  : null
+    )
+  }
+
   render() {
     const {addNewTemplate} = this.props;
     return (
       <div>
-        <Panel bsStyle='primary' header='Select template or create new'>
+        <Panel bsStyle='primary' footer={this.renderSubmitButton()} header='Select template or create new'>
           <Grid fluid={true}>
             <Row>
               <Col md={3}>
