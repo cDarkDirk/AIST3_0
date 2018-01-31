@@ -19,9 +19,14 @@ const initialState = {
 const chainTemplateReducer = (state = initialState, action) => {
   switch (action.type) {
     case CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED: {
+      const chainTemplates = (action.payload.map((chain, index) => {
+        chain.modified = false;
+        chain.new = false;
+        return chain;
+      }));
       return {
         ...state,
-        chainTemplates: action.payload
+        chainTemplates,
       }
     }
     case CHAIN_SELECTED: {
@@ -35,17 +40,15 @@ const chainTemplateReducer = (state = initialState, action) => {
       const sel = state.selectedChainTemplate;
       let tests = [...state.chainTemplates[sel].tests];
       tests.splice(newIndex, 0, tests.splice(oldIndex, 1)[0]);
+      const modified = !state.chainTemplates[sel].new;
       return {
         ...state,
         chainTemplates: [
           ...state.chainTemplates.slice(0, sel),
-          {...state.chainTemplates[sel], tests},
+          {...state.chainTemplates[sel], tests, modified},
           ...state.chainTemplates.slice(sel + 1, state.chainTemplates.length)
         ],
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [sel]: true
-        }
+
       }
     }
     case TEST_BLOCK_CLICKED: {
@@ -58,13 +61,11 @@ const chainTemplateReducer = (state = initialState, action) => {
             id: action.payload.test_id
           }]
       };
+      if (!allChainTemplates[selectedTemplateIndex].new)
+        allChainTemplates[selectedTemplateIndex].modified = true;
       return {
         ...state,
         chainTemplates: allChainTemplates,
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [selectedTemplateIndex]: true
-        }
       }
     }
 
@@ -77,13 +78,11 @@ const chainTemplateReducer = (state = initialState, action) => {
         ...chainTemplates[selectedTemplateIndex],
         tests: tests
       };
+      if (!chainTemplates[selectedTemplateIndex].new)
+        chainTemplates[selectedTemplateIndex].modified = true;
       return {
         ...state,
         chainTemplates,
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [selectedTemplateIndex]: true
-        }
       }
     }
 
@@ -94,13 +93,11 @@ const chainTemplateReducer = (state = initialState, action) => {
         ...chainTemplates[sel],
         name: action.payload
       };
+      if (!chainTemplates[sel].new)
+        chainTemplates[sel].modified = true;
       return {
         ...state,
         chainTemplates,
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [sel]: true
-        }
       }
     }
 
@@ -109,10 +106,6 @@ const chainTemplateReducer = (state = initialState, action) => {
         ...state,
         selectedChainTemplate: 0,
         chainTemplates: state.chainTemplates.filter(t => t.name !== action.payload.name),
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [state.selectedChainTemplate]: false
-        }
       }
     }
 
@@ -120,21 +113,17 @@ const chainTemplateReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedChainTemplate: state.chainTemplates.length,
-        chainTemplates: [...state.chainTemplates, {name: 'New Template', tests: []}],
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [state.chainTemplates.length]: true
-        }
+        chainTemplates: [...state.chainTemplates, {name: 'New Template', tests: [], modified: false, new: true}],
       }
     }
 
     case SUBMIT_CHAIN_TEMPLATE_SUCCEED: {
+      const chainTemplates = [...state.chainTemplates];
+      chainTemplates[state.selectedChainTemplate].modified = false;
+      chainTemplates[state.selectedChainTemplate].new = false;
       return {
         ...state,
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [state.selectedChainTemplate]: false
-        }
+        chainTemplates,
       }
     }
 

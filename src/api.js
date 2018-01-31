@@ -28,7 +28,7 @@ const fetchUtil = (url, method = 'GET', data = {}) => {
   };
   if (method === 'POST') {
     let header = new Headers();
-    header.append('Content-Type','application/json');
+    header.append('Content-Type', 'application/json');
     options.headers = header;
     options.body = data;
   }
@@ -60,8 +60,8 @@ export const fetchFormTemplate = (formName) => (dispatch) => {
   })
 };
 
-export const updateChainForm = (chain,form,idx) => (dispatch) => {
-  const url = `${BACKEND_URL}/`+chain+'/form';
+export const updateChainForm = (chain, form, idx) => (dispatch) => {
+  const url = `${BACKEND_URL}/` + chain + '/form';
 
   fetchUtil(url, 'POST', [form]).then(response => {
     if (response.ok) {
@@ -174,37 +174,72 @@ export const fetchDataTemplatesList = () => {
 
 
 export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
-  const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
-  let header = new Headers();
-  header.append('Content-Type','application/json');
-  const options = {
-    method: 'POST',
-    headers: header,
-    body: chainTemplate
-  };
-  fetch(url, options).then(response => {
-    if (response.ok) {
-      return response.json()
-    } else {
-      throw new Error(response.statusText)
+    //TODO апдейтить или штсертить в зависимости от modified и new
+    const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
+
+    const result = {
+      name: chainTemplate.name,
+      tests: chainTemplate.tests,
+      fields: chainTemplate.fields,
+    };
+
+    let header = new Headers();
+    if (chainTemplate.modified) {
+      header.append('Content-Type', 'application/json');
+      const options = {
+        method: 'POST',
+        headers: header,
+        body: [result]
+      };
+      fetch(`${BACKEND_URL}/chain_templates/${chainTemplate.name}`, options).then(response => {
+        if (response.ok) {
+          return response.json()
+        } else {
+          throw new Error(response.statusText)
+        }
+      }).then(updateChainTemplateResult => {
+        if (updateChainTemplateResult) {
+          dispatch(success({message: "Submit succeeded"}));
+          dispatch(submitChainTemplateSucceed(updateChainTemplateResult));
+        } else {
+          dispatch(error({message: "Submit failed with error:"}));
+          dispatch(submitChainTemplateFail())
+        }
+      }).catch(error => {
+        throw error
+      })
+    } else if(chainTemplate.new){
+      header.append('Content-Type', 'application/json');
+      const options = {
+        method: 'PUT',
+        headers: header,
+        body: [result]
+      };
+      fetch(`${BACKEND_URL}/chain_templates`, options).then(response => {
+        if (response.ok) {
+          return response.json()
+        } else {
+          throw new Error(response.statusText)
+        }
+      }).then(updateChainTemplateResult => {
+        if (updateChainTemplateResult) {
+          dispatch(success({message: "Submit succeeded"}));
+          dispatch(submitChainTemplateSucceed(updateChainTemplateResult));
+        } else {
+          dispatch(error({message: "Submit failed with error:"}));
+          dispatch(submitChainTemplateFail())
+        }
+      }).catch(error => {
+        throw error
+      })
     }
-  }).then(updateChainTemplateResult => {
-    if (updateChainTemplateResult) {
-      dispatch(success({message: "Submit succeeded"}));
-      dispatch(submitChainTemplateSucceed(updateChainTemplateResult));
-    } else {
-      dispatch(error({message: "Submit failed with error:"}));
-      dispatch(submitChainTemplateFail())
-    }
-  }).catch(error => {
-    throw error
-  })
-};
+  }
+;
 
 export const insertChainTemplate = (chainTemplate) => (dispatch, getState) => {
   const url = `${BACKEND_URL}/chain_templates`;
   let header = new Headers();
-  header.append('Content-Type','application/json');
+  header.append('Content-Type', 'application/json');
   const options = {
     method: 'PUT',
     headers: header,
@@ -252,7 +287,7 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
   })
 };
 
-export const submitTest = (testObject) => (dispatch, getState)=> {
+export const submitTest = (testObject) => (dispatch, getState) => {
   const addTestUrl = `${BACKEND_URL}/tests`;
   const result = [{
     test_id: testObject.test.test_id,
@@ -265,7 +300,7 @@ export const submitTest = (testObject) => (dispatch, getState)=> {
 
     const updateTestUrl = `${BACKEND_URL}/tests/${testObject.id}`;
     let header = new Headers();
-    header.append('Content-Type','application/json');
+    header.append('Content-Type', 'application/json');
     const options = {
       method: 'POST',
       headers: header,
@@ -290,7 +325,7 @@ export const submitTest = (testObject) => (dispatch, getState)=> {
   }
   if (testObject.test.new) {
     let header = new Headers();
-    header.append('Content-Type','application/json');
+    header.append('Content-Type', 'application/json');
     const options = {
       method: 'PUT',
       headers: header,
