@@ -18,6 +18,7 @@ import {
   testBuilderTestsFetchSucceed,
   resetModificationMarkers,
 } from './actions'
+import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
 
 
@@ -61,31 +62,33 @@ export const fetchFormTemplate = (formName) => (dispatch) => {
 };
 
 export const updateChainForm = (chain, form, idx) => (dispatch) => {
-  const url = `${BACKEND_URL}/` + chain + '/form';
+  const url = `${BACKEND_URL}/chain_templates/` + chain + '/form';
 
-  fetchUtil(url, 'POST', [form]).then(response => {
-    if (response.ok) {
-      return response.json()
-    } else {
-      throw new Error(response.statusText)
-    }
-  }).then(updateChainTemplateResult => {
-    if (updateChainTemplateResult) {
-      dispatch(success({message: "Submit succeeded"}));
-      dispatch(updateChainFormSucceed(idx));
-    } else {
-      dispatch(error({message: "Submit failed with error:"}));
-      dispatch(updateChainFormFail())
-    }
-  }).catch(error => {
-    throw error
-  })
+  const options = {
+    headers: {"Content-Type": "application/json; charset=utf-8"}
+  };
+  console.log(form);
+
+  axios.put(url, form, options).then(function () {
+    dispatch(success({message: "Submit succeeded"}));
+    dispatch(updateChainFormSucceed(idx));
+  }).catch(function () {
+    dispatch(error({message: "Submit failed with error!"}));
+    dispatch(updateChainFormFail());
+  });
 };
 
 export const fetchChainTemplates = () => (dispatch, getState) => {
   const url = `${BACKEND_URL}/chain_templates`;
 
-  fetchUtil(url).then(response => {
+  axios.get(url).then(function (response) {
+    dispatch(chainEditorTemplateFetchSucceed(response.data));
+  }).catch(function () {
+    dispatch(error({message: "Submit failed with error!"}));
+    dispatch(chainEditorTemplateFetchFail());
+  });
+
+  /*fetchUtil(url).then(response => {
     if (response.ok) {
       return response.json()
     } else {
@@ -99,7 +102,7 @@ export const fetchChainTemplates = () => (dispatch, getState) => {
     }
   }).catch(error => {
     throw error
-  })
+  })*/
 };
 
 export const fetchTests = () => (dispatch) => {
@@ -178,60 +181,42 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
     const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
 
     const result = {
-      name: chainTemplate.name,
-      tests: chainTemplate.tests,
-      fields: chainTemplate.fields,
+      "name": chainTemplate.name,
+      "tests": chainTemplate.tests,
+      "fields": chainTemplate.fields,
+      "marker": chainTemplate.marker,
     };
+    console.log(chainTemplate);
 
-    let header = new Headers();
     if (chainTemplate.modified) {
-      header.append('Content-Type', 'application/json');
+      const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
+
       const options = {
-        method: 'POST',
-        headers: header,
-        body: [result]
+        headers: {"Content-Type": "application/json; charset=utf-8"}
       };
-      fetch(`${BACKEND_URL}/chain_templates/${chainTemplate.name}`, options).then(response => {
-        if (response.ok) {
-          return response.json()
-        } else {
-          throw new Error(response.statusText)
-        }
-      }).then(updateChainTemplateResult => {
-        if (updateChainTemplateResult) {
-          dispatch(success({message: "Submit succeeded"}));
-          dispatch(submitChainTemplateSucceed(updateChainTemplateResult));
-        } else {
-          dispatch(error({message: "Submit failed with error:"}));
-          dispatch(submitChainTemplateFail())
-        }
-      }).catch(error => {
-        throw error
-      })
-    } else if(chainTemplate.new){
-      header.append('Content-Type', 'application/json');
+
+      axios.post(url, [result], options).then(function () {
+        dispatch(success({message: "Submit succeeded"}));
+        dispatch(submitChainTemplateSucceed());
+      }).catch(function () {
+        dispatch(error({message: "Submit failed with error!"}));
+        dispatch(submitChainTemplateFail())
+      });
+
+    } else if (chainTemplate.new) {
       const options = {
-        method: 'PUT',
-        headers: header,
-        body: [result]
+        headers: {"Content-Type": "application/json; charset=utf-8"},
       };
-      fetch(`${BACKEND_URL}/chain_templates`, options).then(response => {
-        if (response.ok) {
-          return response.json()
-        } else {
-          throw new Error(response.statusText)
-        }
-      }).then(updateChainTemplateResult => {
-        if (updateChainTemplateResult) {
-          dispatch(success({message: "Submit succeeded"}));
-          dispatch(submitChainTemplateSucceed(updateChainTemplateResult));
-        } else {
-          dispatch(error({message: "Submit failed with error:"}));
-          dispatch(submitChainTemplateFail())
-        }
-      }).catch(error => {
-        throw error
-      })
+
+      const url = `${BACKEND_URL}/chain_templates`;
+
+      axios.put(url, [result], options).then(function () {
+        dispatch(success({message: "Submit succeeded"}));
+        dispatch(submitChainTemplateSucceed());
+      }).catch(function () {
+        dispatch(error({message: "Submit failed with error!"}));
+        dispatch(submitChainTemplateFail())
+      });
     }
   }
 ;
@@ -256,7 +241,7 @@ export const insertChainTemplate = (chainTemplate) => (dispatch, getState) => {
       dispatch(success({message: "Submit succeeded"}));
       dispatch(submitChainTemplateSucceed(updateChainTemplateResult));
     } else {
-      dispatch(error({message: "Submit failed with error:"}));
+      dispatch(error({message: "Submit failed with error!"}));
       dispatch(submitChainTemplateFail())
     }
   }).catch(error => {
@@ -266,7 +251,14 @@ export const insertChainTemplate = (chainTemplate) => (dispatch, getState) => {
 
 export const fetchBuilderChains = () => (dispatch, getState) => {
   const url = `${BACKEND_URL}/chain_templates`;
-  const options = {
+
+  axios.get(url).then(function (response) {
+    dispatch(formBuilderChainsFetchSucceed(response.data))
+  }).catch(function () {
+    dispatch(formBuilderChainsFetchFail())
+  });
+
+  /*const options = {
     method: 'GET',
     headers: {},
   };
@@ -284,11 +276,11 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
     }
   }).catch(error => {
     throw error
-  })
+  })*/
 };
 
 export const submitTest = (testObject) => (dispatch, getState) => {
-  const addTestUrl = `${BACKEND_URL}/tests`;
+
   const result = [{
     test_id: testObject.test.test_id,
     test_name: testObject.test.test_name,
@@ -297,56 +289,31 @@ export const submitTest = (testObject) => (dispatch, getState) => {
   }];
 
   if (testObject.test.modified) {
-
     const updateTestUrl = `${BACKEND_URL}/tests/${testObject.id}`;
-    let header = new Headers();
-    header.append('Content-Type', 'application/json');
+
     const options = {
-      method: 'POST',
-      headers: header,
-      body: result
+      headers: {"Content-Type": "application/json; charset=utf-8"}
     };
-    fetch(updateTestUrl, options).then(response => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.statusText)
-      }
-    }).then(answer => {
-      if (answer) {
-        dispatch(success({message: "Submit succeeded!"}));
-        dispatch(resetModificationMarkers());
-      } else {
-        dispatch(error({message: "Submit failed with error!"}));
-      }
-    }).catch(error => {
-      throw error
-    })
+
+    axios.post(updateTestUrl, result, options).then(function () {
+      dispatch(success({message: "Submit succeeded"}));
+      dispatch(resetModificationMarkers());
+    }).catch(function () {
+      dispatch(error({message: "Submit failed with error!"}));
+    });
   }
   if (testObject.test.new) {
-    let header = new Headers();
-    header.append('Content-Type', 'application/json');
+    const addTestUrl = `${BACKEND_URL}/tests`;
+
     const options = {
-      method: 'PUT',
-      headers: header,
-      body: result
+      headers: {"Content-Type": "application/json; charset=utf-8"}
     };
 
-    fetch(addTestUrl, options).then(response => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.statusText)
-      }
-    }).then(answer => {
-      if (answer) {
-        dispatch(success({message: "Submit succeeded!"}));
-        dispatch(resetModificationMarkers());
-      } else {
-        dispatch(error({message: "Submit failed with error!"}));
-      }
-    }).catch(error => {
-      throw error
-    })
+    axios.put(addTestUrl, result, options).then(function () {
+      dispatch(success({message: "Submit succeeded"}));
+      dispatch(resetModificationMarkers());
+    }).catch(function () {
+      dispatch(error({message: "Submit failed with error!"}));
+    });
   }
 };

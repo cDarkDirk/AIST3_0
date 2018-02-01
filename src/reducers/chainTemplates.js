@@ -113,7 +113,7 @@ const chainTemplateReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedChainTemplate: state.chainTemplates.length,
-        chainTemplates: [...state.chainTemplates, {name: 'New Template', tests: [], modified: false, new: true}],
+        chainTemplates: [...state.chainTemplates, {name: 'New Template', tests: [], marker: "new", fields: [], modified: false, new: true}],
       }
     }
 
