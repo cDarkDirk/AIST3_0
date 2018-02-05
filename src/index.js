@@ -12,6 +12,8 @@ import FormPage from './containers/FormPage'
 import LauncherPage from "./components/LauncherPage";
 import FormBuilderPage from "./containers/FormBuilderPage";
 import TestBuilder from "./containers/TestBuilder";
+import AuthorizationPage from  "./containers/AuthorizationPage"
+import RegistrationPage from "./containers/RegistrationPage"
 
 import 'font-awesome/css/font-awesome.min.css'
 import './styles/main.css'
@@ -37,7 +39,9 @@ ReactDOM.render((
             <Route path="/form/:formName" component={FormPage}/>
             <Route path="/launcher" component={LauncherPage}/>
             <Route path="/formbuilder" component={FormBuilderPage}/>
-            <Route exact path="/" component={HomePage}/>
+            <Route path="/homepage" component={HomePage}/>
+            <Route path="/registration" component={RegistrationPage}/>
+            <Route exact path="/" component={AuthorizationPage}/>
           </Switch>
         </Router>
 

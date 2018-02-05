@@ -13,6 +13,7 @@ export default () => {
         <p><Link to={'/launcher'}><Button bsSize="large">Launcher</Button></Link></p>
         <p><Link to={'/formbuilder'}><Button bsSize="large">Form builder</Button></Link></p>
         <p><Link to={'/testbuilder'}><Button bsSize="large">Test builder</Button></Link></p>
+        <p><Link to={'/'}><Button bsSize="large">Exit</Button></Link></p>
       </Jumbotron>
     </div>
   )
