@@ -21,15 +21,6 @@ export default () => {
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" name="not_attach_ip"/> Не прикреплять к IP (не безопасно)
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
               <Link to = {'/homepage'}><button type="submit" class="btn btn-default btn-sm">Войти</button></Link>
               <Link to = {'/registration'}><button type="submit" class="btn btn-default btn-sm">Зарегистраироваться</button></Link>
             </div>
