@@ -45,7 +45,7 @@ class DataTemplatesBuilderPage extends React.Component {
               <div className='spacer'/>
               {
                 dataTemplates[selectedTemplateIndex].data.map((entry, index) => [
-                  <Row key={index}>
+                  <Row key={index+entry.key}>
                     <Col md={6}>
                       <InputGroup>
                         <InputGroup.Addon>Parameter key</InputGroup.Addon>
@@ -71,7 +71,7 @@ class DataTemplatesBuilderPage extends React.Component {
                       </InputGroup>
                     </Col>
                   </Row>,
-                  <div className='spacer-xs'/>
+                  <div key={index} className='spacer-xs'/>
                 ])
               }
               <Button
@@ -88,7 +88,7 @@ class DataTemplatesBuilderPage extends React.Component {
   };
 
   renderTemplatesList() {
-    const {dataTemplatesNames, dataTemplates, selectedTemplateIndex, onTemplateSelected, addNewTemplate} = this.props;
+    const {dataTemplatesNames, dataTemplates, selectedTemplateIndex, onTemplateSelected} = this.props;
     return (dataTemplatesNames.map((template, index) =>
       <ListGroupItem
         onClick={() => onTemplateSelected(index)}
@@ -105,10 +105,24 @@ class DataTemplatesBuilderPage extends React.Component {
   }
 
   renderSubmitButton() {
-    const {dataTemplates, selectedTemplateIndex} = this.props;
+    const {dataTemplates, selectedTemplateIndex, sumbitTemplate, dataTemplatesNames} = this.props;
     return (
-      selectedTemplateIndex !== null && (dataTemplates[selectedTemplateIndex].modified || dataTemplates[selectedTemplateIndex].new )?
-        [<Button bsStyle="success" bsSize="large" className="pull-right" onClick={() => console.log('bla')}>Submit</Button>,<div className="clearfix"/>]
+      selectedTemplateIndex !== null
+        && (dataTemplates[selectedTemplateIndex].modified
+        || dataTemplates[selectedTemplateIndex].new)?
+        [<Button
+          bsStyle="success"
+          bsSize="large"
+          className="pull-right"
+          onClick={() => {this.props.sumbitTemplate({
+            value: dataTemplates[selectedTemplateIndex],
+            name: dataTemplatesNames[selectedTemplateIndex],
+          })}}
+        >
+          Submit
+        </Button>,
+          <div className="clearfix"/>
+        ]
 
   : null
     )
@@ -120,12 +134,13 @@ class DataTemplatesBuilderPage extends React.Component {
       <div>
         <Panel bsStyle='primary' footer={this.renderSubmitButton()} header='Select template or create new'>
           <Grid fluid={true}>
-            <Row>
+            <Row key={'bla'}>
               <Col md={3}>
                 <Button
                   bsStyle="primary"
                   className='btn-block'
                   onClick={() => addNewTemplate()}
+                  key={'addNewTemplate'}
                 >
                   <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new test...
                 </Button>

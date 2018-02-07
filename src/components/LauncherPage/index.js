@@ -1,7 +1,7 @@
 import React from "react";
 import {Row, Col} from "react-bootstrap"
 import ScheduleForm from "../../containers/ScheduleForm";
-import TemplateForm from "../../containers/TemplateForm";
+import TemplateForm from "../../containers/TemplateForm"; //todo use another fetch method
 
 
 const LauncherPage = function (props) {

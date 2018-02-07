@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import {fetchDataTemplates} from "../api";
+import {fetchDataTemplates, validateDTBSubmitValue} from "../api";
 import DataTemplatesBuilderPage from "../components/DataTemplatesBuilderPage";
 import {
   setSelectedDataTemplateIndex,
@@ -26,6 +26,7 @@ function mapDispatchToProps(dispatch) {
     templateNameChanged: (newName) => dispatch(dataTemplateNameChanged(newName)),
     addNewTemplate: () => dispatch(newDataTemplateAdded()),
     addNewParam: () => dispatch(newDataTemplateParamAdded()),
+    sumbitTemplate: (data) => dispatch(validateDTBSubmitValue(data)),
   }
 }
 
