@@ -12,7 +12,7 @@ import FormPage from './containers/FormPage'
 import LauncherPage from "./components/LauncherPage";
 import FormBuilderPage from "./containers/FormBuilderPage";
 import TestBuilder from "./containers/TestBuilder";
-import AuthorizationPage from  "./containers/AuthorizationPage"
+import AuthorizationPage from "./containers/AuthorizationPage"
 import RegistrationPage from "./containers/RegistrationPage"
 
 import 'font-awesome/css/font-awesome.min.css'

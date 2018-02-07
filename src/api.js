@@ -60,6 +60,33 @@ export const fetchFormTemplate = (formName) => (dispatch) => {
   })
 };
 
+export const updateLoginSucceed = () =>() => {
+  console.log("ЕЕЕ  РОК");
+}
+
+export const updateLoginForm = (payload) => (dispatch) => {
+  const url = `${BACKEND_URL}/login`;
+  console.log(payload);
+  fetchUtil(url, 'POST', payload).then(response => {
+    if (response.ok) {
+      return response.json()
+    } else {
+      throw new Error(response.statusText)
+    }
+  }).then(updateChainTemplateResult => {
+    if (updateChainTemplateResult) {
+      dispatch(success({message: "Submit succeeded"}));
+
+      dispatch(updateLoginSucceed(payload));
+    } else {
+      dispatch(error({message: "Submit failed with error:"}));
+      dispatch(updateChainFormFail())
+    }
+  }).catch(error => {
+    throw error
+  })
+};
+
 export const updateChainForm = (chain,form,idx) => (dispatch) => {
   const url = `${BACKEND_URL}/`+chain+'/form';
 
@@ -75,7 +102,6 @@ export const updateChainForm = (chain,form,idx) => (dispatch) => {
       dispatch(updateChainFormSucceed(idx));
     } else {
       dispatch(error({message: "Submit failed with error:"}));
-      dispatch(updateChainFormFail())
     }
   }).catch(error => {
     throw error

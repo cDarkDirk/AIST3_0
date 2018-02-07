@@ -31,7 +31,20 @@ import {
   TEST_BUILDER_FORM_INPUT_CHANGED,
   ADD_NEW_TEST,
   RESET_MODIFICATION_MARKERS,
+  LOGIN_BUTTON_CLICKED,
+  LOGIN_PASSWORD_CHANGE,
 } from './constants'
+
+
+export const loginButtonClicked = (payload) => ({
+  type: LOGIN_BUTTON_CLICKED,
+  payload: {payload}
+});
+
+export const loginPasswordChange = (payload) => ({
+  type: LOGIN_PASSWORD_CHANGE,
+  payload: {payload}
+});
 
 export const updateChainFormSucceed = (payload) => ({
   type: UPDATE_CHAIN_FORM_SUCCEED,
