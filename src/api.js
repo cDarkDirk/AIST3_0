@@ -37,6 +37,34 @@ const fetchUtil = (url, method = 'GET', data = {}) => {
 };
 
 
+export const submitFormTemplate = (formName, formTemplate, sheduleList, templates) => (dispatch) => {
+
+  /**
+   * TODO запрос как в остальных
+   */
+  //
+  // Host: localhost:8080
+  // Content-Length: 11
+  // test_id: 14
+  // template: TSMMortgage
+  // marker: TSMMortgageDebug
+  // start_time: 2018.02.05
+  //
+  // body - data
+  // http://localhost:8080/chains
+
+  //   const dataToSend = {
+  //   "name": formName,
+  //   ...
+  // };
+
+  console.log(formName, formTemplate, sheduleList, templates);
+  dispatch(formTemplateFetchSuccseed({
+    formName: formName,
+    formTemplate: formTemplate
+  }))
+};
+
 export const fetchFormTemplate = (formName) => (dispatch) => {
   const url = `${BACKEND_URL}/forms/${formName}`;
 
@@ -45,7 +73,7 @@ export const fetchFormTemplate = (formName) => (dispatch) => {
       return response.json()
     } else {
       console.log(response);
-      throw new Error(response.statusText)
+      //throw new Error(response.statusText)
     }
   }).then(formTemplate => {
     if (formTemplate) {

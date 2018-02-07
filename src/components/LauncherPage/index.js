@@ -13,9 +13,8 @@ class LauncherPage extends React.Component {
   }
 
   render() {
-    const {formBuilderChains, selectChainForm, launcher} = this.props;
+    const {formBuilderChains, selectChainForm, launcher: {selectedForm}} = this.props;
     //const form = formBuilderChains[launcher.selectedForm];
-
     return (
       <div>
         {/*<DropDownSelector id onSelect dropOptions selectedValue/>*/}
@@ -24,16 +23,17 @@ class LauncherPage extends React.Component {
                           dropOptions={formBuilderChains.map((option, index) => {
                             return {value: option.name, label: option.name}
                           })}
-                          selectedIndex={launcher.selectedForm}
+                          selectedIndex={selectedForm}
         />
-
-        <div className="container">
-          <Row>
-            <ScheduleForm></ScheduleForm>
-          </Row>
-          <TemplateForm></TemplateForm>
-          <Row><Form formName="connectServices"></Form></Row>
-        </div>
+        {formBuilderChains.length &&
+          <div className="container">
+            <Row>
+              <ScheduleForm></ScheduleForm>
+            </Row>
+            <TemplateForm></TemplateForm>
+            <Row><Form formName={selectedForm !== null ? formBuilderChains[selectedForm].name : null}></Form></Row>
+          </div>
+        }
       </div>
     )
   }

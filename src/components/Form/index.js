@@ -4,12 +4,18 @@ import {Row, Col, Grid, FormControl, FormGroup, ControlLabel, Form, Checkbox, Bu
 import "./style.css"
 import Calendar from "react-calendar";
 import DatePicker from "react-datepicker"
+import {submitFormTemplate} from "../../api";
 
 class MyForm extends React.Component {
 
   componentDidMount() {
     this.props.fetchFormTemplate(this.props.formName)
   }
+
+  submitTemplateForm = () => {
+    const {formName, formTemplate, scheduler, submit, choosenDataTemplates} = this.props;
+    submit(formName, formTemplate, scheduler, choosenDataTemplates);
+  };
 
   render() {
     const {formName, formTemplate, formValues, onFormInputChange} = this.props
@@ -69,6 +75,7 @@ class MyForm extends React.Component {
           <Grid>
             <Form horizontal>
               <Row>{form}</Row>
+              <Row><Button onClick={() => this.submitTemplateForm()}>Сохранить</Button></Row>
             </Form>
           </Grid>
 
