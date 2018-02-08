@@ -9,10 +9,10 @@ export default () => {
       <Jumbotron>
         <h1>Home</h1>
         <p><Link to={'/chaineditor'}><Button bsSize="large">Chain editor</Button></Link></p>
-        <p><Link to={'/form/connectServices'}><Button bsSize="large">Form</Button></Link></p>
         <p><Link to={'/launcher'}><Button bsSize="large">Launcher</Button></Link></p>
         <p><Link to={'/formbuilder'}><Button bsSize="large">Form builder</Button></Link></p>
         <p><Link to={'/testbuilder'}><Button bsSize="large">Test builder</Button></Link></p>
+        <p><Link to={'/dataTemplates'}><Button bsSize="large">Data Templates builder</Button></Link></p>
       </Jumbotron>
     </div>
   )

@@ -45,19 +45,19 @@ const testBuilder = (state = initialState, action) => {
         "test_id": 'Enter test id number here...',
         "test_name": "Brand new test",
         "job_trigger":
-          {
-            "uri": "Enter Jenkins URL here...",
-            "login": "Enter Jenkins URL here...",
-            "params": {},
-            "job_name": "Enter job name here...",
-            "passOrToken": "Job pass or token..."
-          },
+        {
+          "uri": "Enter Jenkins URL here...",
+          "login": "Enter Jenkins URL here...",
+          "params": {},
+          "job_name": "Enter job name here...",
+          "passOrToken": "Job pass or token..."
+        },
         "tag_names": [],
         'new': true
       };
       testBuilderTests.push(newTestEntry);
       const testNamesForDropdown = [...state.testNamesForDropdown];
-      testNamesForDropdown.push({
+        testNamesForDropdown.push({
         test_name: newTestEntry.test_name,
         test_id: newTestEntry.test_id,
       });

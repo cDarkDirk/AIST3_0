@@ -13,6 +13,7 @@ import FormPage from './containers/FormPage'
 import LauncherPage from "./containers/LauncherPage";
 import FormBuilderPage from "./containers/FormBuilderPage";
 import TestBuilder from "./containers/TestBuilder";
+import DataTemplatesBuilderPage from "./containers/DataTemplates";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -20,7 +21,7 @@ import 'font-awesome/css/font-awesome.min.css'
 import './styles/main.css'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const history = createBrowserHistory()
+const history = createBrowserHistory();
 
 const store = createStore(
   rootReducer,
@@ -37,9 +38,9 @@ ReactDOM.render((
           <Switch>
             <Route path="/testbuilder" component={TestBuilder}/>
             <Route path="/chaineditor" component={ChainEditorPage}/>}
-            <Route path="/form/:formName" component={FormPage}/>
             <Route path="/launcher" component={LauncherPage}/>
             <Route path="/formbuilder" component={FormBuilderPage}/>
+            <Route path="/datatemplates" component={DataTemplatesBuilderPage}/>
             <Route exact path="/" component={HomePage}/>
           </Switch>
         </HashRouter>

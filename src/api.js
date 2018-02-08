@@ -2,27 +2,49 @@ import {error, success} from "react-notification-system-redux"
 import {
   formTemplateFetchSuccseed,
   chainEditorTemplateFetchSucceed,
-  chainEditorTemplateFetchFail,
   testsListTemplateFetchSucceed,
-  testsListTemplateFetchFail,
   dataTemplateFetchSucceed,
   dataTemplateFetchFail,
   formTemplateFetchFail,
   submitChainTemplateFail,
   submitChainTemplateSucceed,
   formBuilderChainsFetchSucceed,
-  formBuilderChainsFetchFail,
   updateChainFormSucceed,
-  updateChainFormFail,
   testBuilderTestsFetchFail,
   testBuilderTestsFetchSucceed,
   resetModificationMarkers,
+  dataTemplatesFetchSuccess,
 } from './actions'
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
 
+/** GET request example
+  axios.get(url).then(function (response) {
+    dispatch(fetchSuccessFunction(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+*/
+
+/** POST request example
+  axios.post(url, requestBody).then(function () {
+    dispatch(success({message: "Submit succeeded!"}));
+  }).catch(function (response) {
+    dispatch(error({message: "Submit failed with error!" + response}));
+  });
+*/
+
+/** PUT request example
+  axios.put(url, requestBody).then(function () {
+    dispatch(success({message: "Submit succeeded!"}));
+  }).catch(function (response) {
+    dispatch(error({message: "Submit failed with error!" + response}));
+  });
+*/
 
 const fetchUtil = (url, method = 'GET', data = {}) => {
+  //TODO remove this when everything will be working on axios
+
   const options = {
     method: method,
     headers: {},
@@ -36,150 +58,9 @@ const fetchUtil = (url, method = 'GET', data = {}) => {
   return fetch(url, options);
 };
 
-
-export const submitFormTemplate = (formName, formTemplate, sheduleList, templates) => (dispatch) => {
-
-  /**
-   * TODO запрос как в остальных
-   */
-  //
-  // Host: localhost:8080
-  // Content-Length: 11
-  // test_id: 14
-  // template: TSMMortgage
-  // marker: TSMMortgageDebug
-  // start_time: 2018.02.05
-  //
-  // body - data
-  // http://localhost:8080/chains
-
-  //   const dataToSend = {
-  //   "name": formName,
-  //   ...
-  // };
-
-  console.log(formName, formTemplate, sheduleList, templates);
-  dispatch(formTemplateFetchSuccseed({
-    formName: formName,
-    formTemplate: formTemplate
-  }))
-};
-
-export const fetchFormTemplate = (formName) => (dispatch) => {
-  const url = `${BACKEND_URL}/forms/${formName}`;
-
-  fetchUtil(url).then(response => {
-    if (response.ok) {
-      return response.json()
-    } else {
-      console.log(response);
-      //throw new Error(response.statusText)
-    }
-  }).then(formTemplate => {
-    if (formTemplate) {
-      dispatch(formTemplateFetchSuccseed({
-        formName: formName,
-        formTemplate: formTemplate
-      }))
-    } else {
-      dispatch(formTemplateFetchFail())
-    }
-  }).catch(error => {
-    throw error
-  })
-};
-
-export const updateChainForm = (chain, form, idx) => (dispatch) => {
-  const url = `${BACKEND_URL}/chain_templates/` + chain + '/form';
-
-  const options = {
-    headers: {"Content-Type": "application/json; charset=utf-8"}
-  };
-  console.log(form);
-
-  axios.put(url, form, options).then(function () {
-    dispatch(success({message: "Submit succeeded"}));
-    dispatch(updateChainFormSucceed(idx));
-  }).catch(function () {
-    dispatch(error({message: "Submit failed with error!"}));
-    dispatch(updateChainFormFail());
-  });
-};
-
-export const fetchChainTemplates = () => (dispatch, getState) => {
-  const url = `${BACKEND_URL}/chain_templates`;
-
-  axios.get(url).then(function (response) {
-    dispatch(chainEditorTemplateFetchSucceed(response.data));
-  }).catch(function () {
-    dispatch(error({message: "Submit failed with error!"}));
-    dispatch(chainEditorTemplateFetchFail());
-  });
-
-  /*fetchUtil(url).then(response => {
-    if (response.ok) {
-      return response.json()
-    } else {
-      throw new Error(response.statusText)
-    }
-  }).then(chainTemplates => {
-    if (chainTemplates) {
-      dispatch(chainEditorTemplateFetchSucceed(chainTemplates))
-    } else {
-      dispatch(chainEditorTemplateFetchFail())
-    }
-  }).catch(error => {
-    throw error
-  })*/
-};
-
-export const fetchTests = () => (dispatch) => {
-  const url = `${BACKEND_URL}/tests`;
-  const options = {
-    method: 'GET',
-    headers: {},
-  };
-  fetch(url, options).then(response => {
-    if (response.ok) {
-      return response.json()
-    } else {
-      throw new Error(response.statusText)
-    }
-  }).then(testsListTemplate => {
-    if (testsListTemplate) {
-      dispatch(testsListTemplateFetchSucceed(testsListTemplate))
-    } else {
-      dispatch(testsListTemplateFetchFail())
-    }
-  }).catch(error => {
-    throw error
-  })
-};
-
-export const testBuilderDataFetch = () => (dispatch) => {
-  const url = `${BACKEND_URL}/tests`;
-  const options = {
-    method: 'GET',
-    headers: {},
-  };
-  fetch(url, options).then(response => {
-    if (response.ok) {
-      return response.json()
-    } else {
-      throw new Error(response.statusText)
-    }
-  }).then(testBuilderTests => {
-    if (testBuilderTests) {
-      dispatch(testBuilderTestsFetchSucceed(testBuilderTests))
-    } else {
-      dispatch(testBuilderTestsFetchFail())
-    }
-  }).catch(error => {
-    throw error
-  })
-};
 export const fetchDataTemplatesList = () => {
   return (dispatch, getState) => {
+    //TODO remove this if not needed
     const url = `${BACKEND_URL}/data_templates`;
     const options = {
       method: 'GET',
@@ -203,60 +84,15 @@ export const fetchDataTemplatesList = () => {
   }
 };
 
-
 export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
-    //TODO апдейтить или штсертить в зависимости от modified и new
-    const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
-
-    const result = {
-      "name": chainTemplate.name,
-      "tests": chainTemplate.tests,
-      "fields": chainTemplate.fields,
-      "marker": chainTemplate.marker,
-    };
-    console.log(chainTemplate);
-
-    if (chainTemplate.modified) {
-      const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
-
-      const options = {
-        headers: {"Content-Type": "application/json; charset=utf-8"}
-      };
-
-      axios.post(url, [result], options).then(function () {
-        dispatch(success({message: "Submit succeeded"}));
-        dispatch(submitChainTemplateSucceed());
-      }).catch(function () {
-        dispatch(error({message: "Submit failed with error!"}));
-        dispatch(submitChainTemplateFail())
-      });
-
-    } else if (chainTemplate.new) {
-      const options = {
-        headers: {"Content-Type": "application/json; charset=utf-8"},
-      };
-
-      const url = `${BACKEND_URL}/chain_templates`;
-
-      axios.put(url, [result], options).then(function () {
-        dispatch(success({message: "Submit succeeded"}));
-        dispatch(submitChainTemplateSucceed());
-      }).catch(function () {
-        dispatch(error({message: "Submit failed with error!"}));
-        dispatch(submitChainTemplateFail())
-      });
-    }
-  }
-;
-
-export const insertChainTemplate = (chainTemplate) => (dispatch, getState) => {
-  const url = `${BACKEND_URL}/chain_templates`;
+  const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
+  //todo do not use this realization on merge with /launcherPage
   let header = new Headers();
   header.append('Content-Type', 'application/json');
   const options = {
-    method: 'PUT',
+    method: 'POST',
     headers: header,
-    body: chainTemplate
+    body: JSON.stringify(chainTemplate)
   };
   fetch(url, options).then(response => {
     if (response.ok) {
@@ -269,7 +105,8 @@ export const insertChainTemplate = (chainTemplate) => (dispatch, getState) => {
       dispatch(success({message: "Submit succeeded"}));
       dispatch(submitChainTemplateSucceed(updateChainTemplateResult));
     } else {
-      dispatch(error({message: "Submit failed with error!"}));
+      dispatch(error({message: "Submit failed with error:"}));
+      //TODO return an error
       dispatch(submitChainTemplateFail())
     }
   }).catch(error => {
@@ -277,16 +114,96 @@ export const insertChainTemplate = (chainTemplate) => (dispatch, getState) => {
   })
 };
 
+export const fetchFormTemplate = (formName) => (dispatch) => {
+  const url = `${BACKEND_URL}/forms/${formName}`;
+
+  //TODO delete this if not used
+
+  fetchUtil(url).then(response => {
+    if (response.ok) {
+      return response.json()
+    } else {
+      console.log(response);
+      throw new Error(response.statusText)
+    }
+  }).then(formTemplate => {
+    if (formTemplate) {
+      dispatch(formTemplateFetchSuccseed({
+        formName: formName,
+        formTemplate: formTemplate
+      }))
+    } else {
+      dispatch(formTemplateFetchFail())
+    }
+  }).catch(error => {
+    throw error
+  })
+};
+
+/**
+ * Tests list element
+ * fetching data from database
+ */
+export const fetchTests = () => (dispatch) => {
+  const url = `${BACKEND_URL}/tests`;
+
+  axios.get(url).then(function (response) {
+    dispatch(testsListTemplateFetchSucceed(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+
+/**
+ * Chain builder page
+ * fetching data from database
+ */
+export const fetchChainTemplates = () => (dispatch, getState) => {
+  const url = `${BACKEND_URL}/chain_templates`;
+
+  axios.get(url).then(function (response) {
+    dispatch(chainEditorTemplateFetchSucceed(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+
+/**
+ * Form builder
+ * fetching data from database
+ */
 export const fetchBuilderChains = () => (dispatch, getState) => {
   const url = `${BACKEND_URL}/chain_templates`;
 
   axios.get(url).then(function (response) {
     dispatch(formBuilderChainsFetchSucceed(response.data))
-  }).catch(function () {
-    dispatch(formBuilderChainsFetchFail())
+  }).catch(function (response) {
+    dispatch(error({message: "fetch failed with error!" + response}));
   });
+};
 
-  /*const options = {
+/**
+ * Form builder
+ * submit data to database
+ */
+export const updateChainForm = (chain, form, idx) => (dispatch) => {
+  const url = `${BACKEND_URL}/${chain}/form`;
+
+  axios.post(url, [form]).then(function () {
+    dispatch(success({message: "Submit succeeded!"}));
+    dispatch(updateChainFormSucceed(idx));
+  }).catch(function (response) {
+    dispatch(error({message: "Submit failed with error!" + response}));
+  });
+};
+
+/**
+ * Test Builder
+ * fetching data from database
+ */
+export const testBuilderDataFetch = () => (dispatch) => {
+  const url = `${BACKEND_URL}/tests`;
+  const options = {
     method: 'GET',
     headers: {},
   };
@@ -296,19 +213,22 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
     } else {
       throw new Error(response.statusText)
     }
-  }).then(fetchBuilderChains => {
-    if (fetchBuilderChains) {
-      dispatch(formBuilderChainsFetchSucceed(fetchBuilderChains))
+  }).then(testBuilderTests => {
+    if (testBuilderTests) {
+      dispatch(testBuilderTestsFetchSucceed(testBuilderTests))
     } else {
-      dispatch(formBuilderChainsFetchFail())
+      dispatch(testBuilderTestsFetchFail())
     }
   }).catch(error => {
     throw error
-  })*/
+  })
 };
 
+/**
+ * Test Builder
+ * Submit data to database
+ */
 export const submitTest = (testObject) => (dispatch, getState) => {
-
   const result = [{
     test_id: testObject.test.test_id,
     test_name: testObject.test.test_name,
@@ -319,29 +239,91 @@ export const submitTest = (testObject) => (dispatch, getState) => {
   if (testObject.test.modified) {
     const updateTestUrl = `${BACKEND_URL}/tests/${testObject.id}`;
 
-    const options = {
-      headers: {"Content-Type": "application/json; charset=utf-8"}
-    };
-
-    axios.post(updateTestUrl, result, options).then(function () {
-      dispatch(success({message: "Submit succeeded"}));
+    axios.post(updateTestUrl, result).then(function () {
+      dispatch(success({message: "Submit succeeded!"}));
       dispatch(resetModificationMarkers());
-    }).catch(function () {
-      dispatch(error({message: "Submit failed with error!"}));
+    }).catch(function (response) {
+      dispatch(error({message: "Submit failed with error!" + response}));
     });
   }
   if (testObject.test.new) {
     const addTestUrl = `${BACKEND_URL}/tests`;
 
-    const options = {
-      headers: {"Content-Type": "application/json; charset=utf-8"}
-    };
-
-    axios.put(addTestUrl, result, options).then(function () {
-      dispatch(success({message: "Submit succeeded"}));
+    axios.put(addTestUrl, result).then(function () {
+      dispatch(success({message: "Submit succeeded!"}));
       dispatch(resetModificationMarkers());
-    }).catch(function () {
-      dispatch(error({message: "Submit failed with error!"}));
+    }).catch(function (response) {
+      dispatch(error({message: "Submit failed with error!" + response}));
     });
   }
+};
+
+/**
+ *  Data Templates Builder
+ *  fetching data from database
+ */
+export const fetchDataTemplates = () => (dispatch) => {
+  const url = `${BACKEND_URL}/templates`;
+
+  axios.get(url).then(function (response) {
+    dispatch(dataTemplatesFetchSuccess(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+
+/**
+ * Data Templates Builder
+ * validate values before submit
+ */
+
+export const validateDTBSubmitValue = (submitData) => (dispatch) => {
+  const data = submitData.value.data;
+  const checkArray= [];
+  for (let entry of data){
+    if (checkArray.indexOf(entry.key) === -1) {
+      checkArray.push(entry.key);
+    } else {
+      dispatch(error({message: "Keys are duplicated! Duplicated key: "+entry.key}));
+      return;
+    }
+  }
+  dispatch(submitDataTemplates(submitData));
+};
+
+/**
+ * Data Templates Builder
+ * submit data to database
+ */
+export const submitDataTemplates = (submitData) => (dispatch) => {
+  const data = submitData.value.data.reduce((acc, current) => {
+    acc[current.key] = current.value;
+    return acc;
+  }, {});
+  console.log(submitData.value.data, data);
+
+  const requestBody = {
+    name: submitData.value.name,
+    data: data
+  };
+
+  if (submitData.value.modified){
+    const url = `${BACKEND_URL}/templates/${submitData.name}`;
+
+    axios.post(url, requestBody).then(function () {
+      dispatch(success({message: "Submit succeeded!"}));
+    }).catch(function (response) {
+      dispatch(error({message: "Submit failed with error!" + response}));
+    });
+  }
+  if (submitData.value.new){
+    const url = `${BACKEND_URL}/templates`;
+
+    axios.put(url, requestBody).then(function () {
+      dispatch(success({message: "Submit succeeded!"}));
+    }).catch(function (response) {
+      dispatch(error({message: "Submit failed with error!" + response}));
+    });
+  }
+
 };

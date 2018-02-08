@@ -1,0 +1,34 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+
+	[
+		{
+			"name": "7_IFT",
+			"data": {
+			  "AUTHIP": "225.225.225.0"
+			}
+		},
+		{
+      "name": "9_IFT",
+      "data": {
+        "ODDOURL": "//some/URL/again"
+      }
+    },
+    {
+      "name": "2_STAGE",
+      "data": {
+        "fsurl": "//some/URL",
+        "oper": "operName",
+        "operPass": "pass"
+        }
+    },
+    {
+      "name": "SPOOBKCreditCard",
+      "data": {
+        "INN": "generate:INN:12",
+        "EMAIL": "mail@mail.ru",
+        "SNILSNUMBER": "generate:SNILS"
+      }
+    }
+	]
