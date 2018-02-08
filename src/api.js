@@ -19,6 +19,8 @@ import {
   resetModificationMarkers,
 } from './actions'
 import {BACKEND_URL} from "./constants/endpoints";
+import validateInput from "./components/AuthorizationPage/validator";
+import isEmpty from "lodash/isEmpty";
 
 
 const fetchUtil = (url, method = 'GET', data = {}) => {
@@ -62,29 +64,33 @@ export const fetchFormTemplate = (formName) => (dispatch) => {
 
 export const updateLoginSucceed = () =>() => {
   console.log("ЕЕЕ  РОК");
-}
+};
 
 export const updateLoginForm = (payload) => (dispatch) => {
+  if (payload.name == null || payload.password == null) {
+     dispatch(error({message: "Submit failed with error:"}));
+     return;
+  }
   const url = `${BACKEND_URL}/login`;
   console.log(payload);
-  fetchUtil(url, 'POST', payload).then(response => {
-    if (response.ok) {
-      return response.json()
-    } else {
-      throw new Error(response.statusText)
-    }
-  }).then(updateChainTemplateResult => {
-    if (updateChainTemplateResult) {
-      dispatch(success({message: "Submit succeeded"}));
-
-      dispatch(updateLoginSucceed(payload));
-    } else {
-      dispatch(error({message: "Submit failed with error:"}));
-      dispatch(updateChainFormFail())
-    }
-  }).catch(error => {
-    throw error
-  })
+  // fetchUtil(url, 'POST', payload).then(response => {
+  //   if (response.ok) {
+  //     return response.json()
+  //   } else {
+  //     throw new Error(response.statusText)
+  //   }
+  // }).then(updateChainTemplateResult => {
+  //   if (updateChainTemplateResult) {
+  //     dispatch(success({message: "Submit succeeded"}));
+  //
+  //     dispatch(updateLoginSucceed(payload));
+  //   } else {
+  //     dispatch(error({message: "Submit failed with error:"}));
+  //     dispatch(updateChainFormFail())
+  //   }
+  // }).catch(error => {
+  //   throw error
+  // })
 };
 
 export const updateChainForm = (chain,form,idx) => (dispatch) => {

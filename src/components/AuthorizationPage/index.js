@@ -1,15 +1,35 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {Row, Col, Button, FormGroup, FormControl, InputGroup} from 'react-bootstrap'
+import validateInput from "./validator";
+import Notifications from 'react-notification-system-redux';
+
 
 class AuthorizationPage extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      errors: {}
+    };
+  }
+
+  isValid() {
+    const { errors, isValid } = validateInput(this.state);
+
+    if (!isValid) {
+      this.setState({ errors });
+    }
+
+    return isValid;
+  }
 
   render() {
     const  {paramNames, loginButtonClicked, loginPasswordChange} = this.props;
     console.log(paramNames);
     return (
       <div class="form">
-        <form class="form-horizontal" role="form" method="POST">
+        <form class="form-horizontal" role="form">
           <div class="form-group">
             <div class="form-group">
               {/*<label for="inputEmail3" class="col-sm-2 control-label">Логин</label>*/}
@@ -20,8 +40,8 @@ class AuthorizationPage extends React.Component {
                     type="text"
                     value={paramNames.name}
                     placeholder="login"
-                    onChange={e => loginPasswordChange(e.target.value)}/>
-              </InputGroup>
+                    onChange={e =>  loginPasswordChange(e.target.value)}/>
+                </InputGroup>
                 {/*<input type="text" class="form-control" placeholder="Логин" name="login"/>*/}
               </div>
             </div>
@@ -35,17 +55,16 @@ class AuthorizationPage extends React.Component {
                     type="password"
                     value={paramNames.password}
                     placeholder="password"
-                    onChange={e => loginPasswordChange(e.target.value)}/>
+                    onChange={e =>  loginPasswordChange(e.target.value)}/>
                 </InputGroup>
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                  <button
-                    type="submit"
-                    class="btn btn-default btn-sm"
-                    onClick={() => loginButtonClicked(paramNames)}
-                  >Log in</button>
+                <Button
+                  class="btn btn-default btn-sm"
+                  onClick={() => loginButtonClicked(paramNames)}
+                >Log in</Button>
                 <Link to={'/registration'}>
                   <Button type="submit" class="btn btn-default btn-sm">Registration</Button>
                 </Link>
@@ -53,39 +72,12 @@ class AuthorizationPage extends React.Component {
             </div>
           </div>
         </form>
+        <Notifications notifications={this.props.notifications}/>
       </div>
     )
   }
-
-// export default () => {
-//   return (
-//     <div class="form">
-//       <form class="form-horizontal" role="form" method="POST">
-//         <div class="form-group">
-//           <div class="form-group">
-//             <label for="inputEmail3" class="col-sm-2 control-label">Логин</label>
-//             <div class="col-sm-10">
-//               <input type="text" class="form-control" placeholder="Логин" name="login"/>
-//             </div>
-//           </div>
-//           <div class="form-group">
-//             <label for="inputPassword3" class="col-sm-2 control-label">Пароль</label>
-//             <div class="col-sm-10">
-//               <input type="password" class="form-control" placeholder="Пароль" name="password"/>
-//             </div>
-//           </div>
-//           <div class="form-group">
-//             <div class="col-sm-offset-2 col-sm-10">
-//               <Link to = {'/homepage'}><button type="submit" class="btn btn-default btn-sm">Войти</button></Link>
-//               <Link to = {'/registration'}><button type="submit" class="btn btn-default btn-sm">Зарегистраироваться</button></Link>
-//             </div>
-//           </div>
-//         </div>
-//       </form>
-//     </div>
-//   )
-// }
 }
+
 
 export default AuthorizationPage;
 

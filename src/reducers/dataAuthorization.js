@@ -10,10 +10,12 @@ const dataAuthorization = (state = initialState, action) => {
   switch (action.type){
     case LOGIN_BUTTON_CLICKED:
     {
+
       return{...state}
     }
     case LOGIN_PASSWORD_CHANGE:
     {
+      console.log(action.payload)
       return {...state, paramNames: action.payload}
     }
     default: return state

@@ -7,6 +7,7 @@ function mapStateToProps(state) {
   return {
     counter: state.ui.counter,
     paramNames: state.dataAuthorization.paramNames,
+    notifications: state.notifications,
   }
 }
 

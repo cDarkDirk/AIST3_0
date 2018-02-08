@@ -43,7 +43,7 @@ export const loginButtonClicked = (payload) => ({
 
 export const loginPasswordChange = (payload) => ({
   type: LOGIN_PASSWORD_CHANGE,
-  payload: {payload}
+  payload
 });
 
 export const updateChainFormSucceed = (payload) => ({
