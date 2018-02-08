@@ -9,7 +9,6 @@ import {HashRouter} from 'react-router-dom'
 import rootReducer from './reducers'
 import HomePage from './containers/HomePage'
 import ChainEditorPage from './containers/ChainEditorPage'
-import FormPage from './containers/FormPage'
 import LauncherPage from "./containers/LauncherPage";
 import FormBuilderPage from "./containers/FormBuilderPage";
 import TestBuilder from "./containers/TestBuilder";

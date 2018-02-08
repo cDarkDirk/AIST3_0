@@ -18,6 +18,36 @@ import {
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
 
+export const submitFormTemplate = (formName, formTemplate, sheduleList, templates) => (dispatch) => {
+
+  /**
+   * TODO запрос как в остальных
+   */
+  //
+  // Host: localhost:8080
+  // Content-Length: 11
+  // test_id: 14
+  // template: TSMMortgage
+  // marker: TSMMortgageDebug
+  // start_time: 2018.02.05
+  //
+  // body - data
+  // http://localhost:8080/chains
+
+  //   const dataToSend = {
+  //   "name": formName,
+  //   ...
+  // };
+
+  console.log(formName, formTemplate, sheduleList, templates);
+  dispatch(formTemplateFetchSuccseed({
+    formName: formName,
+    formTemplate: formTemplate
+  }))
+};
+
+
+
 /** GET request example
   axios.get(url).then(function (response) {
     dispatch(fetchSuccessFunction(response.data))

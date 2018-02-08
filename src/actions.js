@@ -48,6 +48,11 @@ export const selectChainForm =(payload)=> ({
   payload: payload
 });
 
+export const onFormInputChange = (value, paramName, formName) => ({
+  type: FORM_INPUT_CHANGE,
+  payload: {value, paramName, formName}
+});
+
 export const updateChainFormSucceed = (payload) => ({
   type: UPDATE_CHAIN_FORM_SUCCEED,
   payload: payload
