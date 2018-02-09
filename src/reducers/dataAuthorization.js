@@ -3,7 +3,10 @@ import dataTemplate from "./dataTemplate";
 
 
 const initialState = {
-  paramNames: {},
+  paramNames: {
+    name :"",
+    password : "",
+  },
 };
 
 const dataAuthorization = (state = initialState, action) => {
@@ -15,8 +18,14 @@ const dataAuthorization = (state = initialState, action) => {
     }
     case LOGIN_PASSWORD_CHANGE:
     {
-      console.log(action.payload)
-      return {...state, paramNames: action.payload}
+      const paramNames = {...state.paramNames};
+      if (action.payload.key === "name"){
+        paramNames.name = action.payload.value;
+      }
+      else {
+        paramNames.password = action.payload.value;
+      }
+      return {state, paramNames }
     }
     default: return state
   }

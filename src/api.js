@@ -67,12 +67,13 @@ export const updateLoginSucceed = () =>() => {
 };
 
 export const updateLoginForm = (payload) => (dispatch) => {
-  if (payload.name == null || payload.password == null) {
+  console.log(payload);
+  if (payload.name === "" || payload.password === "") {
      dispatch(error({message: "Submit failed with error:"}));
      return;
   }
   const url = `${BACKEND_URL}/login`;
-  console.log(payload);
+  updateLoginSucceed(payload);
   // fetchUtil(url, 'POST', payload).then(response => {
   //   if (response.ok) {
   //     return response.json()

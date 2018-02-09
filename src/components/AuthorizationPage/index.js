@@ -26,7 +26,7 @@ class AuthorizationPage extends React.Component {
 
   render() {
     const  {paramNames, loginButtonClicked, loginPasswordChange} = this.props;
-    console.log(paramNames);
+    // console.log(paramNames);
     return (
       <div class="form">
         <form class="form-horizontal" role="form">
@@ -40,7 +40,7 @@ class AuthorizationPage extends React.Component {
                     type="text"
                     value={paramNames.name}
                     placeholder="login"
-                    onChange={e =>  loginPasswordChange(e.target.value)}/>
+                    onChange={e =>  loginPasswordChange({value : e.target.value, key: "name"})}/>
                 </InputGroup>
                 {/*<input type="text" class="form-control" placeholder="Логин" name="login"/>*/}
               </div>
@@ -55,7 +55,7 @@ class AuthorizationPage extends React.Component {
                     type="password"
                     value={paramNames.password}
                     placeholder="password"
-                    onChange={e =>  loginPasswordChange(e.target.value)}/>
+                    onChange={e =>  loginPasswordChange({value : e.target.value, key: "password"})}/>
                 </InputGroup>
               </div>
             </div>
