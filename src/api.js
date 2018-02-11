@@ -19,8 +19,11 @@ import {
   resetModificationMarkers,
 } from './actions'
 import {BACKEND_URL} from "./constants/endpoints";
+import sjcl from 'sjcl';
 import validateInput from "./components/AuthorizationPage/validator";
 import isEmpty from "lodash/isEmpty";
+import HomePage from "./containers/HomePage";
+import history from './history';
 
 
 const fetchUtil = (url, method = 'GET', data = {}) => {
@@ -62,18 +65,26 @@ export const fetchFormTemplate = (formName) => (dispatch) => {
   })
 };
 
-export const updateLoginSucceed = () =>() => {
+export const updateLoginSucceed = (history) =>() => {
   console.log("ЕЕЕ  РОК");
+  history.push('/homepage');
 };
 
-export const updateLoginForm = (payload) => (dispatch) => {
-  console.log(payload);
+export const updateLoginForm = (payload, history) => (dispatch) => {
+  // console.log(payload.password);
+
+  console.log(payload.password.toString());
   if (payload.name === "" || payload.password === "") {
-     dispatch(error({message: "Submit failed with error:"}));
+     dispatch(error({message: "Error: Not all fields was filled"}));
      return;
   }
-  const url = `${BACKEND_URL}/login`;
-  updateLoginSucceed(payload);
+  payload.password = sjcl.encrypt('AIST',payload.password);
+  payload.password = sjcl.decrypt('AIST', payload.password);
+    // const url = `${BACKEND_URL}/login`;
+    dispatch(updateLoginSucceed(history));
+    // console.log(payload);
+
+
   // fetchUtil(url, 'POST', payload).then(response => {
   //   if (response.ok) {
   //     return response.json()

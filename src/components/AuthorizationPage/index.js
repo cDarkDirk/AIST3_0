@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {Row, Col, Button, FormGroup, FormControl, InputGroup} from 'react-bootstrap'
+import {Button, Modal } from 'react-bootstrap'
 import validateInput from "./validator";
 import Notifications from 'react-notification-system-redux';
 
@@ -29,48 +29,91 @@ class AuthorizationPage extends React.Component {
     // console.log(paramNames);
     return (
       <div class="form">
-        <form class="form-horizontal" role="form">
-          <div class="form-group">
-            <div class="form-group">
-              {/*<label for="inputEmail3" class="col-sm-2 control-label">Логин</label>*/}
-              <div class="col-sm-10">
-                <InputGroup>
-                  <InputGroup.Addon>Login</InputGroup.Addon>
-                  <FormControl
-                    type="text"
-                    value={paramNames.name}
-                    placeholder="login"
-                    onChange={e =>  loginPasswordChange({value : e.target.value, key: "name"})}/>
-                </InputGroup>
-                {/*<input type="text" class="form-control" placeholder="Логин" name="login"/>*/}
-              </div>
+        {/*<form class="form-horizontal" role="form">*/}
+          {/*<div class="form-group">*/}
+            {/*<div class="form-group">*/}
+              {/*/!*<label for="inputEmail3" class="col-sm-2 control-label">Логин</label>*!/*/}
+              {/*<div class="col-sm-10">*/}
+                {/*<InputGroup>*/}
+                  {/*<InputGroup.Addon>Login</InputGroup.Addon>*/}
+                  {/*<FormControl*/}
+                    {/*type="text"*/}
+                    {/*value={paramNames.name}*/}
+                    {/*placeholder="login"*/}
+                    {/*onChange={e =>  loginPasswordChange({value : e.target.value, key: "name"})}/>*/}
+                {/*</InputGroup>*/}
+                {/*/!*<input type="text" class="form-control" placeholder="Логин" name="login"/>*!/*/}
+              {/*</div>*/}
+            {/*</div>*/}
+            {/*<div class="form-group">*/}
+              {/*/!*<label for="inputPassword3" class="col-sm-2 control-label">Пароль</label>*!/*/}
+              {/*<div class="col-sm-10">*/}
+                {/*/!*<input type="password" class="form-control" placeholder="Пароль" name="password"/>*!/*/}
+                {/*<InputGroup>*/}
+                  {/*<InputGroup.Addon>Passwod</InputGroup.Addon>*/}
+                  {/*<FormControl*/}
+                    {/*type="password"*/}
+                    {/*value={paramNames.password}*/}
+                    {/*placeholder="password"*/}
+                    {/*onChange={e =>  loginPasswordChange({value : e.target.value, key: "password"})}/>*/}
+                {/*</InputGroup>*/}
+              {/*</div>*/}
+            {/*</div>*/}
+            {/*<div class="form-group">*/}
+              {/*<div class="col-sm-offset-2 col-sm-10">*/}
+                {/*<Button*/}
+                  {/*class="btn btn-default btn-sm"*/}
+                  {/*onClick={() => loginButtonClicked(paramNames)}*/}
+                {/*>Log in</Button>*/}
+                {/*<Link to={'/registration'}>*/}
+                  {/*<Button type="submit" class="btn btn-default btn-sm">Registration</Button>*/}
+                {/*</Link>*/}
+              {/*</div>*/}
+            {/*</div>*/}
+          {/*</div>*/}
+        {/*</form>*/}
+        <form>
+        <Modal.Dialog>
+          <Modal.Header>
+            <Modal.Title>
+              Authorization
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <label for="inputEmail3" class="col-sm-2 control-label">Login</label>
+               <div className="form-group">
+                 <input
+                   className="form-control"
+                   type="text"
+                 value={paramNames.name}
+                 placeholder="login"
+                 onChange={e =>  loginPasswordChange({value : e.target.value, key: "name"})}
+                 label="Login"
+                 placeholder="Enter login"/></div>
+            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+            <div className="form-group">
+              <input
+                className="form-control"
+                type="password"
+                value={paramNames.password}
+                placeholder="password"
+                onChange={e =>  loginPasswordChange({value : e.target.value, key: "password"})}
+                label="Password" placeholder="Enter password"/>
             </div>
-            <div class="form-group">
-              {/*<label for="inputPassword3" class="col-sm-2 control-label">Пароль</label>*/}
-              <div class="col-sm-10">
-                {/*<input type="password" class="form-control" placeholder="Пароль" name="password"/>*/}
-                <InputGroup>
-                  <InputGroup.Addon>Passwod</InputGroup.Addon>
-                  <FormControl
-                    type="password"
-                    value={paramNames.password}
-                    placeholder="password"
-                    onChange={e =>  loginPasswordChange({value : e.target.value, key: "password"})}/>
-                </InputGroup>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <Button
-                  class="btn btn-default btn-sm"
-                  onClick={() => loginButtonClicked(paramNames)}
-                >Log in</Button>
-                <Link to={'/registration'}>
-                  <Button type="submit" class="btn btn-default btn-sm">Registration</Button>
-                </Link>
-              </div>
-            </div>
-          </div>
+
+
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              class="btn btn-default btn-sm"
+              onClick={() => loginButtonClicked(paramNames)}
+            >Log in</Button>
+            <Link to={'/registration'}>
+              <Button type="submit" class="btn btn-default btn-sm">Registration</Button>
+            </Link>
+          </Modal.Footer>
+
+        </Modal.Dialog>
         </form>
         <Notifications notifications={this.props.notifications}/>
       </div>

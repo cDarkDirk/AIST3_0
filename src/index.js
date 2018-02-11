@@ -14,12 +14,13 @@ import FormBuilderPage from "./containers/FormBuilderPage";
 import TestBuilder from "./containers/TestBuilder";
 import AuthorizationPage from "./containers/AuthorizationPage"
 import RegistrationPage from "./containers/RegistrationPage"
+import history from './history';
 
 import 'font-awesome/css/font-awesome.min.css'
 import './styles/main.css'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const history = createBrowserHistory()
+// export const history = createBrowserHistory()
 
 const store = createStore(
   rootReducer,
