@@ -31,7 +31,7 @@ class LauncherPage extends React.Component {
               <ScheduleForm></ScheduleForm>
             </Row>
             <TemplateForm></TemplateForm>
-            <Row><Form formName={selectedForm !== null ? formBuilderChains[selectedForm].name : null}></Form></Row>
+            <Row><Form formName={selectedForm}></Form></Row>
           </div>
         }
       </div>

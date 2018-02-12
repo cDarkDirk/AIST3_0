@@ -9,19 +9,22 @@ import {submitFormTemplate} from "../../api";
 class MyForm extends React.Component {
 
   componentDidMount() {
-    this.props.fetchFormTemplate(this.props.formName)
+    this.props.fetchBuilderChains()
+    // this.props.fetchFormTemplate(this.props.formName)
   }
 
   submitTemplateForm = () => {
-    const {formName, formTemplate, scheduler, submit, choosenDataTemplates} = this.props;
-    submit(formName, formTemplate, scheduler, choosenDataTemplates);
+    const {formName, formValues, scheduler, submit, choosenDataTemplates} = this.props;
+    submit(formName, formValues, scheduler, choosenDataTemplates);
   };
 
   render() {
-    const {formName, formTemplate, formValues, onFormInputChange} = this.props
+    const {formName, formValues, onFormInputChange} = this.props
+    const formTemplate = this.props.formBuilderChains[formName]
+    console.log(formTemplate)
 
     const form = formTemplate ? (formTemplate.fields.map((field, index) => {
-      if (field.type === "text") {
+      if (field.type === "Input") {
         return (
           <FormGroup controlId="formHorizontalInput">
             <InputGroup>
@@ -32,7 +35,7 @@ class MyForm extends React.Component {
           </FormGroup>
         )
       }
-      if (field.type === "dropDown") {
+      if (field.type === "DropDown") {
         return (
           <FormGroup controlId="formHorizontalDropDown">
             <InputGroup>
@@ -48,7 +51,7 @@ class MyForm extends React.Component {
 
         )
       }
-      if (field.type === "calendar") {
+      if (field.type === "DatePicker") {
         return (
           <FormGroup controlId="calendar">
             <InputGroup>

@@ -27,6 +27,7 @@ export const submitFormTemplate = (formName, formTemplate, sheduleList, template
   // Host: localhost:8080
   // Content-Length: 11
   // test_id: 14
+
   // template: TSMMortgage
   // marker: TSMMortgageDebug
   // start_time: 2018.02.05
@@ -34,17 +35,32 @@ export const submitFormTemplate = (formName, formTemplate, sheduleList, template
   // body - data
   // http://localhost:8080/chains
 
-  //   const dataToSend = {
-  //   "name": formName,
-  //   ...
-  // };
+    const dataToSendLauncherPage = {
+      formName: formName,
+      template: templates,
+      paramData: formTemplate,
+      start_time: sheduleList
+   };
 
   console.log(formName, formTemplate, sheduleList, templates);
-  dispatch(formTemplateFetchSuccseed({
-    formName: formName,
-    formTemplate: formTemplate
-  }))
+
+
+  const url = `${BACKEND_URL}/chains`;
+
+  axios.put(url, dataToSendLauncherPage).then(function () {
+    dispatch(success({message: "Submit succeeded!"}));
+  }).catch(function (response) {
+    dispatch(error({message: "Submit failed with error!" + response}));
+  });
 };
+
+
+
+
+
+
+
+
 
 
 

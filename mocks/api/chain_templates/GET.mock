@@ -19,16 +19,21 @@ Access-Control-Allow-Origin: *
       ],
       "fields": [
         {
-          "label": "default",
-          "paramName": "default",
+          "label": "one",
+          "paramName": "one",
           "regEx": "/test/",
           "type": "Input"
         },
         {
-          "label": "default",
-          "paramName": "default",
+          "label": "two",
+          "paramName": "two",
           "type": "DropDown",
           "dropDownOptions": ["1", "2", "3"]
+        },
+        {
+          "label": "default",
+          "paramName": "default",
+          "type": "DatePicker"
         }
       ]
   },
