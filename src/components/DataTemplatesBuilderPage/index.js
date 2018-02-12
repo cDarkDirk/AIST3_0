@@ -45,7 +45,7 @@ class DataTemplatesBuilderPage extends React.Component {
               <div className='spacer'/>
               {
                 dataTemplates[selectedTemplateIndex].data.map((entry, index) => [
-                  <Row key={index+entry.key}>
+                  <Row>
                     <Col md={6}>
                       <InputGroup>
                         <InputGroup.Addon>Parameter key</InputGroup.Addon>
