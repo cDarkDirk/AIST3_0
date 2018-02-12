@@ -22,7 +22,7 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchDataTemplates: () => dispatch(fetchDataTemplates()),
     onTemplateSelected: (index) => dispatch(setSelectedDataTemplateIndex(index)),
-    onDataTemplatesInputChange: (newValue, index) => dispatch(dataTemplatesInputChange(newValue, index)),
+    onDataTemplatesInputChange: (newValue) => dispatch(dataTemplatesInputChange(newValue)),
     templateNameChanged: (newName) => dispatch(dataTemplateNameChanged(newName)),
     addNewTemplate: () => dispatch(newDataTemplateAdded()),
     addNewParam: () => dispatch(newDataTemplateParamAdded()),

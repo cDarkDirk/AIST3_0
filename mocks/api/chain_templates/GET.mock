@@ -6,6 +6,7 @@ Access-Control-Allow-Origin: *
   {
     "marker": "DebitCard",
     "name": "DebitCard",
+    "marker": "DebitCard",
     "tests": [
         {
           "id": 3
@@ -40,6 +41,7 @@ Access-Control-Allow-Origin: *
   {
     "marker": "FSClient",
     "name": "FSClient",
+    "marker": "FSClient",
     "tests": [
         {
           "id": 2

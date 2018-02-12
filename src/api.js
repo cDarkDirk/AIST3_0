@@ -232,10 +232,14 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
  * Form builder
  * submit data to database
  */
-export const updateChainForm = (chain, form, idx) => (dispatch) => {
-  const url = `${BACKEND_URL}/${chain}/form`;
+export const updateChainForm = (chainName, chain, idx) => (dispatch) => {
+  //TODO fix endpoint
+  //const url = `${BACKEND_URL}/${chain}/form`;
+  const url = `${BACKEND_URL}/chain_templates/${chainName}`;
 
-  axios.post(url, [form]).then(function () {
+  console.log([chain]);
+
+  axios.post(url, [chain]).then(function () {
     dispatch(success({message: "Submit succeeded!"}));
     dispatch(updateChainFormSucceed(idx));
   }).catch(function (response) {
@@ -346,7 +350,6 @@ export const submitDataTemplates = (submitData) => (dispatch) => {
     acc[current.key] = current.value;
     return acc;
   }, {});
-  console.log(submitData.value.data, data);
 
   const requestBody = {
     name: submitData.value.name,

@@ -136,7 +136,7 @@ class FormBuilderPage extends React.Component {
 
   submitChanges = () => {
     const chainName = this.props.formBuilderChains[this.state.chainIndex].name;
-    const fields = {fields: this.props.formBuilderChains[this.state.chainIndex].fields};
+    const fields = this.props.formBuilderChains[this.state.chainIndex];
     const chainIndex = this.state.chainIndex;
     this.props.submit(chainName, fields, chainIndex);
   };
@@ -144,7 +144,6 @@ class FormBuilderPage extends React.Component {
   render() {
     const {formBuilderChains,notifications} = this.props;
     const {chainIndex} = this.state;
-    //TODO replace on dropdownSelector
     const chainDropDown = [
       <DropdownButton
         id='chainSelector'
