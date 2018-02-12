@@ -5,6 +5,7 @@ Access-Control-Allow-Origin: *
 [
   {
     "name": "DebitCard",
+    "marker": "DebitCard",
     "tests": [
         {
           "id": 3
@@ -33,6 +34,7 @@ Access-Control-Allow-Origin: *
   },
   {
     "name": "FSClient",
+    "marker": "FSClient",
     "tests": [
         {
           "id": 2
@@ -55,6 +57,7 @@ Access-Control-Allow-Origin: *
   },
   {
     "name": "SPOOBKCreditCard",
+    "marker": "SPOOBKCreditCard",
     "tests": [
         {
           "id": 11
@@ -86,6 +89,7 @@ Access-Control-Allow-Origin: *
   },
   {
     "name": "SPOOBKCreditCardWithSum",
+    "marker": "SPOOBKCreditCardWithSum",
     "tests": [
         {
           "id": 11
@@ -120,6 +124,7 @@ Access-Control-Allow-Origin: *
   },
   {
     "name": "UFS",
+    "marker": "UFS",
     "tests": [
         {
           "id": 201707191401206171
@@ -145,6 +150,7 @@ Access-Control-Allow-Origin: *
   },
   {
     "name": "WAY4CardAccrual",
+    "marker": "WAY4CardAccrual",
     "tests": [
         {
           "id": 1
@@ -167,6 +173,7 @@ Access-Control-Allow-Origin: *
   },
   {
     "name": "WAY4Ipass",
+    "marker": "WAY4Ipass",
     "tests": [
         {
           "id": 10
