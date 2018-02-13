@@ -7,7 +7,8 @@ import {
   CHAIN_TEMPLATE_DELETED,
   CHAIN_TEMPLATE_ADDED,
   CLOSE_BUTTON_CLICKED,
-  SUBMIT_CHAIN_TEMPLATE_SUCCEED
+  SUBMIT_CHAIN_TEMPLATE_SUCCEED,
+  CHAIN_TEMPLATE_MARKER_CHANGED,
 } from '../constants'
 
 const initialState = {
@@ -24,12 +25,14 @@ const chainTemplateReducer = (state = initialState, action) => {
         chainTemplates: action.payload
       }
     }
+
     case CHAIN_SELECTED: {
       return {
         ...state,
         selectedChainTemplate: action.selectedChain
       }
     }
+
     case TEST_BLOCK_MOVED: {
       const {oldIndex, newIndex} = action.payload;
       const sel = state.selectedChainTemplate;
@@ -48,6 +51,7 @@ const chainTemplateReducer = (state = initialState, action) => {
         }
       }
     }
+
     case TEST_BLOCK_CLICKED: {
       const selectedTemplateIndex = state.selectedChainTemplate;
       const allChainTemplates = [...state.chainTemplates];
@@ -119,12 +123,13 @@ const chainTemplateReducer = (state = initialState, action) => {
     case CHAIN_TEMPLATE_ADDED: {
       return {
         ...state,
-        selectedChainTemplate: state.chainTemplates.length,
-        chainTemplates: [...state.chainTemplates, {name: 'New Template', tests: []}],
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [state.chainTemplates.length]: true
-        }
+        selectedChainTemplate: 0,
+        chainTemplates: [{
+          name: 'New Template',
+          tests: [],
+          fields:[],
+          marker:'',
+        },...state.chainTemplates]
       }
     }
 
@@ -135,6 +140,19 @@ const chainTemplateReducer = (state = initialState, action) => {
           ...state.dirtyChainTemplateIndicies,
           [state.selectedChainTemplate]: false
         }
+      }
+    }
+
+    case CHAIN_TEMPLATE_MARKER_CHANGED: {
+      const sel = state.selectedChainTemplate;
+      const chainTemplates = [...state.chainTemplates];
+      chainTemplates[sel] = {
+        ...chainTemplates[sel],
+        marker: action.payload
+      };
+      return {
+        ...state,
+        chainTemplates,
       }
     }
 

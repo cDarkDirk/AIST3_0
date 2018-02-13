@@ -3,14 +3,12 @@ import {Row, Col, Button, FormGroup, FormControl, InputGroup} from 'react-bootst
 import FontAwesome from 'react-fontawesome'
 import ConfirmationDialog from '../ConfirmationDialog'
 import {createConfirmation} from 'react-confirm';
-
-
 import './style.css'
 
 const confirm = createConfirmation(ConfirmationDialog, 0);
 
 
-const ChainTemplatePropertyEditor = ({chainTemplate, onNameChange, deleteChainTemplate, updateChainTemplate}) => {
+const ChainTemplatePropertyEditor = ({chainTemplate, chainTemplateMarkerChanged, onNameChange, deleteChainTemplate, updateChainTemplate}) => {
 
   const deleteChain = () => {
     confirm({confirmation: `Do you really want to delete ${chainTemplate.name}?`}).then(
@@ -53,6 +51,20 @@ const ChainTemplatePropertyEditor = ({chainTemplate, onNameChange, deleteChainTe
             bsStyle='primary'
             onClick={() => updateChainTemplate(chainTemplate)}>
             <FontAwesome name='floppy-o'/> SUBMIT</Button> : null}</Col>
+      </Row>
+      <Row>
+        <Col md={12}>
+          <FormGroup bsSize="large">
+            <InputGroup>
+              <InputGroup.Addon>Marker</InputGroup.Addon>
+              <FormControl
+                type="text"
+                value={chainTemplate.marker}
+                placeholder="Marker"
+                onChange={e => chainTemplateMarkerChanged(e.target.value)}/>
+            </InputGroup>
+          </FormGroup>
+        </Col>
       </Row>
     </div>
   )

@@ -33,6 +33,7 @@ import {
   DATA_TEMPLATE_NAME_CHANGED,
   NEW_DATA_TEMPLATE_ADDED,
   NEW_DATA_TEMPLATE_PARAM_ADDED,
+  CHAIN_TEMPLATE_MARKER_CHANGED,
 } from './constants'
 
 export const updateChainFormSucceed = (payload) => ({
@@ -198,4 +199,9 @@ export const newDataTemplateParamAdded = () => ({
 export const chainSelected = (selectedChain) => ({
   type: CHAIN_SELECTED,
   selectedChain,
+});
+
+export const chainTemplateMarkerChanged = (payload) => ({
+  type: CHAIN_TEMPLATE_MARKER_CHANGED,
+  payload,
 });
