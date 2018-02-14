@@ -26,7 +26,7 @@ function mapDispatchToProps(dispatch) {
     templateNameChanged: (newName) => dispatch(dataTemplateNameChanged(newName)),
     addNewTemplate: () => dispatch(newDataTemplateAdded()),
     addNewParam: () => dispatch(newDataTemplateParamAdded()),
-    sumbitTemplate: (data) => dispatch(validateDTBSubmitValue(data)),
+    submitTemplate: (data) => dispatch(validateDTBSubmitValue(data)),
   }
 }
 

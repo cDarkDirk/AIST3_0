@@ -4,7 +4,7 @@ import {
   DATA_TEMPLATES_INPUT_CHANGE,
   DATA_TEMPLATE_NAME_CHANGED,
   NEW_DATA_TEMPLATE_ADDED,
-  NEW_DATA_TEMPLATE_PARAM_ADDED,
+  NEW_DATA_TEMPLATE_PARAM_ADDED, UPDATE_DATA_TEMPLATE_SUCCESS,
 } from '../constants'
 
 const initialState = {
@@ -77,14 +77,11 @@ const dataTemplatesBuilderReducer = (state = initialState, action) => {
         modified: false,
         new: true,
       };
-      const dataTemplates = [...state.dataTemplates];
-      const dataTemplatesNames = [...state.dataTemplatesNames];
-      dataTemplates.push(newEntry);
-      dataTemplatesNames.push(newEntry.name);
       return {
         ...state,
-        dataTemplates,
-        dataTemplatesNames,
+        selectedTemplateIndex: 0,
+        dataTemplates: [newEntry, ...state.dataTemplates],
+        dataTemplatesNames: [newEntry.name, ...state.dataTemplatesNames],
       }
     }
     case NEW_DATA_TEMPLATE_PARAM_ADDED: {
@@ -99,6 +96,17 @@ const dataTemplatesBuilderReducer = (state = initialState, action) => {
         dataTemplates,
       }
     }
+
+    case UPDATE_DATA_TEMPLATE_SUCCESS: {
+      const dataTemplates = [...state.dataTemplates];
+      dataTemplates[state.selectedTemplateIndex].modified = false;
+      dataTemplates[state.selectedTemplateIndex].new = false;
+      return{
+        ...state,
+        dataTemplates,
+      }
+    }
+
     default:
       return state
   }
