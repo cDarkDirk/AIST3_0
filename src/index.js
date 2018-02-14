@@ -12,6 +12,8 @@ import ChainEditorPage from './containers/ChainEditorPage'
 import LauncherPage from "./containers/LauncherPage";
 import FormBuilderPage from "./containers/FormBuilderPage";
 import TestBuilder from "./containers/TestBuilder";
+import DataDirectoryPage from "./containers/DataDirectoryPage";
+
 import DataTemplatesBuilderPage from "./containers/DataTemplates";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -39,6 +41,7 @@ ReactDOM.render((
             <Route path="/chaineditor" component={ChainEditorPage}/>}
             <Route path="/launcher" component={LauncherPage}/>
             <Route path="/formbuilder" component={FormBuilderPage}/>
+            <Route path="/datadirectory" component={DataDirectoryPage}/>
             <Route path="/datatemplates" component={DataTemplatesBuilderPage}/>
             <Route exact path="/" component={HomePage}/>
           </Switch>
