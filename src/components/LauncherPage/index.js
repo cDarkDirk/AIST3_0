@@ -1,8 +1,7 @@
 import React from "react";
 import {Row, Col} from "react-bootstrap"
 import ScheduleForm from "../../containers/ScheduleForm";
-import Form from "../../containers/Form";
-import TemplateForm from "../../containers/TemplateForm";
+import TemplateForm from "../../containers/TemplateForm"; //todo use another fetch method
 
 
 const LauncherPage = function (props) {
@@ -17,13 +16,13 @@ const LauncherPage = function (props) {
                 </Col>
                 <Col>
                     <div> Time</div>
-                </Col>              
+                </Col>
             </Row>
             <Row>
                 <h2>FORM</h2>
             </Row>
 
-            <Row><Form formName="connectServices"></Form></Row>
+            <Row></Row>
 
 
 

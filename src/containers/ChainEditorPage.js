@@ -1,6 +1,11 @@
 import {connect} from 'react-redux'
 import {fetchChainTemplates, updateChainTemplate} from '../api'
-import {chainTemplateNameChanged, deleteChainTemplate, addChainTemplate} from '../actions'
+import {
+  chainTemplateNameChanged,
+  deleteChainTemplate,
+  addChainTemplate,
+  chainTemplateMarkerChanged,
+} from '../actions'
 import ChainEditorPage from '../components/ChainEditorPage'
 
 function mapStateToProps(state) {
@@ -18,6 +23,7 @@ function mapDispatchToProps(dispatch) {
     deleteChainTemplate: (chainTemplate) => dispatch(deleteChainTemplate(chainTemplate)),
     addChainTemplate: (payload) => dispatch(addChainTemplate(payload)),
     updateChainTemplate: (chainTemplate) => dispatch(updateChainTemplate(chainTemplate)),
+    chainTemplateMarkerChanged: (marker) => dispatch(chainTemplateMarkerChanged(marker)),
   }
 }
 

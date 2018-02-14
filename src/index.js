@@ -8,10 +8,10 @@ import {Router, Route, Switch} from 'react-router'
 import rootReducer from './reducers'
 import HomePage from './containers/HomePage'
 import ChainEditorPage from './containers/ChainEditorPage'
-import FormPage from './containers/FormPage'
 import LauncherPage from "./components/LauncherPage";
 import FormBuilderPage from "./containers/FormBuilderPage";
 import TestBuilder from "./containers/TestBuilder";
+import DataTemplatesBuilderPage from "./containers/DataTemplates";
 import AuthorizationPage from "./containers/AuthorizationPage"
 import RegistrationPage from "./containers/RegistrationPage"
 import history from './history';
@@ -36,9 +36,9 @@ ReactDOM.render((
           <Switch>
             <Route path="/testbuilder" component={TestBuilder}/>
             <Route path="/chaineditor" component={ChainEditorPage}/>}
-            <Route path="/form/:formName" component={FormPage}/>
             <Route path="/launcher" component={LauncherPage}/>
             <Route path="/formbuilder" component={FormBuilderPage}/>
+            <Route path="/datatemplates" component={DataTemplatesBuilderPage}/>
             <Route path="/homepage" component={HomePage}/>
             <Route path="/registration" component={RegistrationPage}/>
             <Route exact path="/" component={AuthorizationPage}/>

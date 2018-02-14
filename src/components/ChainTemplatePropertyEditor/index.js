@@ -7,8 +7,8 @@ import './style.css'
 
 const confirm = createConfirmation(ConfirmationDialog, 0);
 
-const ChainTemplatePropertyEditor = ({chainTemplate, onNameChange, deleteChainTemplate, updateChainTemplate, owner}) => {
 
+const ChainTemplatePropertyEditor = ({chainTemplate, chainTemplateMarkerChanged, onNameChange, deleteChainTemplate, updateChainTemplate, owner}) => {
 
   const deleteChain = () => {
     if (chainTemplate.owner  === owner) {
@@ -53,6 +53,20 @@ const ChainTemplatePropertyEditor = ({chainTemplate, onNameChange, deleteChainTe
             bsStyle='primary'
             onClick={() => updateChainTemplate(chainTemplate)}>
             <FontAwesome name='floppy-o'/> SUBMIT</Button> : null}</Col>
+      </Row>
+      <Row>
+        <Col md={12}>
+          <FormGroup bsSize="large">
+            <InputGroup>
+              <InputGroup.Addon>Marker</InputGroup.Addon>
+              <FormControl
+                type="text"
+                value={chainTemplate.marker}
+                placeholder="Marker"
+                onChange={e => chainTemplateMarkerChanged(e.target.value)}/>
+            </InputGroup>
+          </FormGroup>
+        </Col>
       </Row>
     </div>
   )

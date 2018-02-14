@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button} from 'react-bootstrap';
 import {
+  Button,
   MenuItem,
   DropdownButton,
   Panel,
@@ -136,7 +136,7 @@ class FormBuilderPage extends React.Component {
 
   submitChanges = () => {
     const chainName = this.props.formBuilderChains[this.state.chainIndex].name;
-    const fields = this.props.formBuilderChains[this.state.chainIndex].fields;
+    const fields = this.props.formBuilderChains[this.state.chainIndex];
     const chainIndex = this.state.chainIndex;
     this.props.submit(chainName, fields, chainIndex);
   };
