@@ -13,7 +13,8 @@ import {
 const initialState = {
   chainTemplates: [],
   selectedChainTemplate: 0,
-  dirtyChainTemplateIndicies: {}
+  dirtyChainTemplateIndicies: {},
+  owner:'',
 };
 
 const chainTemplateReducer = (state = initialState, action) => {
@@ -21,7 +22,7 @@ const chainTemplateReducer = (state = initialState, action) => {
     case CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED: {
       return {
         ...state,
-        chainTemplates: action.payload
+        chainTemplates: action.payload,
       }
     }
     case CHAIN_SELECTED: {
@@ -105,6 +106,7 @@ const chainTemplateReducer = (state = initialState, action) => {
     }
 
     case CHAIN_TEMPLATE_DELETED: {
+      // console.log(state);
       return {
         ...state,
         selectedChainTemplate: 0,
@@ -117,11 +119,11 @@ const chainTemplateReducer = (state = initialState, action) => {
     }
 
     case CHAIN_TEMPLATE_ADDED: {
+      // console.log(action.payload);
       return {
         ...state,
         selectedChainTemplate: state.chainTemplates.length,
-        chainTemplates: [...state.chainTemplates, {name: 'New Template', tests: [], owner: this.state.paramNames.name}],
-        // , owner: state.paramNames.name
+        chainTemplates: [...state.chainTemplates, {name: 'New Template', tests: [], owner: action.payload}],
         dirtyChainTemplateIndicies: {
           ...state.dirtyChainTemplateIndicies,
           [state.chainTemplates.length]: true

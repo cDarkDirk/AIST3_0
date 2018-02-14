@@ -87,7 +87,7 @@ export const getPublicKey = (payload, history) =>(dispatch) =>{
   });
 };
 export const putToken = (tokener) => (dispatch) => {
-  console.log(tokener);
+  // console.log(tokener);
 
 
 }
@@ -95,7 +95,7 @@ export const updateLoginForm = (payload, history) => (dispatch) => {
 
   console.log("ЖАРА");
 
-  console.log(payload.password);
+  // console.log(payload.password);
   const url = `${BACKEND_URL}/login`;
 
   axios.post(url,payload).then(function (response) {

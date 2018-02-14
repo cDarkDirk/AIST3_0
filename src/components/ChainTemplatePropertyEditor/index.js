@@ -3,25 +3,19 @@ import {Row, Col, Button, FormGroup, FormControl, InputGroup} from 'react-bootst
 import FontAwesome from 'react-fontawesome'
 import ConfirmationDialog from '../ConfirmationDialog'
 import {createConfirmation} from 'react-confirm';
-
-
 import './style.css'
-import {error} from "react-notification-system-redux";
 
 const confirm = createConfirmation(ConfirmationDialog, 0);
 
-const ChainTemplatePropertyEditor = ({chainTemplate, onNameChange, deleteChainTemplate, updateChainTemplate, paramNames}) => {
+const ChainTemplatePropertyEditor = ({chainTemplate, onNameChange, deleteChainTemplate, updateChainTemplate, owner}) => {
 
 
   const deleteChain = () => {
-    if (chainTemplate.owner  === paramNames) {
+    if (chainTemplate.owner  === owner) {
       confirm({confirmation: `Do you really want to delete ${chainTemplate.name}?`}).then(
         () => deleteChainTemplate(chainTemplate),
         () => {
         })
-    }
-    else{
-      error({message: `You can't delete  ${chainTemplate.name}`});
     }
   };
 

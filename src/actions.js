@@ -80,8 +80,9 @@ export const deleteChainTemplate = (payload) => ({
   payload: payload
 });
 
-export const addChainTemplate = () => ({
-  type: CHAIN_TEMPLATE_ADDED
+export const addChainTemplate = (payload) => ({
+  type: CHAIN_TEMPLATE_ADDED,
+  payload: payload
 });
 
 export const formTemplateFetchFail = (payload) => ({

@@ -5,7 +5,6 @@ import ChainDisplay from '../components/ChainDisplay'
 function mapStateToProps(state, ownProps) {
 
   const test = state.test || [];
-  console.log(state);
   return {
     tests: ownProps.chainTemplate.tests.map(ct => test.find(test => test.test_id === ct.id))
   }

@@ -14,6 +14,7 @@ import './style.css'
 class ChainEditorPage extends React.Component {
 
     componentDidMount(){
+      console.log(this.props.owner);
         this.props.fetchChainTemplates();
     }
 
@@ -30,7 +31,7 @@ class ChainEditorPage extends React.Component {
                       <Button
                         bsStyle='primary'
                         className='chain-editor-add-chain-btn'
-                        onClick={addChainTemplate}>
+                        onClick={() => addChainTemplate(this.props.owner)}>
                         <FontAwesome name='plus'/> Add Chain Template
                       </Button>
                     </SideBar>
@@ -41,6 +42,7 @@ class ChainEditorPage extends React.Component {
                       onNameChange={chainTemplateNameChanged}
                       deleteChainTemplate={deleteChainTemplate}
                       updateChainTemplate={updateChainTemplate}
+                      owner={this.props.owner}
                     />
 
                     <ChainDisplay chainTemplate={chainTemplate}/>
