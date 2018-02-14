@@ -33,7 +33,8 @@ ReactDOM.render((
         <Router history={history}>
           <Switch>
             <Route path="/testbuilder" component={TestBuilder}/>
-            <Route path="/chaineditor" component={ChainEditorPage}/>}
+            <Route path="/chaineditor/:item" component={ChainEditorPage}/>
+            <Route path="/chaineditor" component={ChainEditorPage}/>
             <Route path="/launcher" component={LauncherPage}/>
             <Route path="/formbuilder" component={FormBuilderPage}/>
             <Route path="/datatemplates" component={DataTemplatesBuilderPage}/>
@@ -45,3 +46,8 @@ ReactDOM.render((
     </Provider>
   ),
   document.getElementById('root'));
+
+
+function ChainEditorItem ({ match }) {
+  return <h1>{match.params.jopa}</h1>
+}

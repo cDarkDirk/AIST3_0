@@ -25,7 +25,7 @@ class ChainEditorPage extends React.Component {
             <Row>
                 <Col md={3}>
                     <SideBar>
-                      <ChainList/>
+                      <ChainList name={this.props.match.params.item}/>
                       <div className='spacer'/>
                       <Button
                         bsStyle='primary'
