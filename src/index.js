@@ -32,7 +32,6 @@ const store = createStore(
 ReactDOM.render((
     <Provider store={store}>
       <div>
-
         <Router history={history}>
           <Switch>
             <Route path="/testbuilder" component={TestBuilder}/>

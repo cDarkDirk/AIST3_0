@@ -6,17 +6,23 @@ import {createConfirmation} from 'react-confirm';
 
 
 import './style.css'
+import {error} from "react-notification-system-redux";
 
 const confirm = createConfirmation(ConfirmationDialog, 0);
 
+const ChainTemplatePropertyEditor = ({chainTemplate, onNameChange, deleteChainTemplate, updateChainTemplate, paramNames}) => {
 
-const ChainTemplatePropertyEditor = ({chainTemplate, onNameChange, deleteChainTemplate, updateChainTemplate}) => {
 
   const deleteChain = () => {
-    confirm({confirmation: `Do you really want to delete ${chainTemplate.name}?`}).then(
-      () => deleteChainTemplate(chainTemplate),
-      () => {
-      })
+    if (chainTemplate.owner  === paramNames) {
+      confirm({confirmation: `Do you really want to delete ${chainTemplate.name}?`}).then(
+        () => deleteChainTemplate(chainTemplate),
+        () => {
+        })
+    }
+    else{
+      error({message: `You can't delete  ${chainTemplate.name}`});
+    }
   };
 
   /*const SubmitChain = () => {

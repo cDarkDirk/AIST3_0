@@ -1,4 +1,4 @@
-import {error, success} from "react-notification-system-redux"
+import {error, removeAll, success} from "react-notification-system-redux"
 import {
   formTemplateFetchSuccseed,
   chainEditorTemplateFetchSucceed,
@@ -19,12 +19,7 @@ import {
   resetModificationMarkers,
 } from './actions'
 import {BACKEND_URL} from "./constants/endpoints";
-import sjcl from 'sjcl';
-import validateInput from "./components/AuthorizationPage/validator";
-import isEmpty from "lodash/isEmpty";
-import HomePage from "./containers/HomePage";
-import history from './history';
-
+import axios from 'axios'
 
 const fetchUtil = (url, method = 'GET', data = {}) => {
   const options = {
@@ -70,38 +65,45 @@ export const updateLoginSucceed = (history) =>() => {
   history.push('/homepage');
 };
 
-export const updateLoginForm = (payload, history) => (dispatch) => {
-  // console.log(payload.password);
+export const logFunction = (payload,history,publicKey) => (dispatch) => {
+  var a = JSON.stringify(publicKey);
+  var RSAKey = require('react-native-rsa');
+  var rsa = new RSAKey();
+  rsa.setPublicString(a);
+  payload.password = rsa.encrypt(payload.password);
+  dispatch(updateLoginForm(payload, history))
+}
 
-  console.log(payload.password.toString());
+export const getPublicKey = (payload, history) =>(dispatch) =>{
   if (payload.name === "" || payload.password === "") {
-     dispatch(error({message: "Error: Not all fields was filled"}));
-     return;
+    dispatch(error({message: "Error: Not all fields was filled"}));
+    return;
   }
-  payload.password = sjcl.encrypt('AIST',payload.password);
-  payload.password = sjcl.decrypt('AIST', payload.password);
-    // const url = `${BACKEND_URL}/login`;
+  const url = `${BACKEND_URL}/login`;
+  axios.get(url).then(function (response) {
+    dispatch(logFunction(payload,history,response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+export const putToken = (tokener) => (dispatch) => {
+  console.log(tokener);
 
-    // console.log(payload);
-  fetchUtil(url, 'POST', payload).then(response => {
-    if (response.ok) {
-      console.log(response.json("token"));
-      return response.json()
-    } else {
-      throw new Error(response.statusText)
-    }
-  }).then(updateChainTemplateResult => {
-    if (updateChainTemplateResult) {
-      dispatch(success({message: "Authorization succeeded"}));
-      dispatch(updateLoginSucceed(payload));
 
-    } else {
-      dispatch(error({message: "Authorization failed with error:"}));
-      dispatch(updateChainFormFail())
-    }
-  }).catch(error => {
-    throw error
-  })
+}
+export const updateLoginForm = (payload, history) => (dispatch) => {
+
+  console.log("ЖАРА");
+
+  console.log(payload.password);
+  const url = `${BACKEND_URL}/login`;
+
+  axios.post(url,payload).then(function (response) {
+    dispatch(putToken(response.data.token))
+    history.push('/homepage');
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
 };
 
 export const updateChainForm = (chain,form,idx) => (dispatch) => {

@@ -1,5 +1,4 @@
 import { LOGIN_BUTTON_CLICKED, LOGIN_PASSWORD_CHANGE} from "../constants";
-import dataTemplate from "./dataTemplate";
 
 
 const initialState = {

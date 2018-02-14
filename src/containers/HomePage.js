@@ -1,10 +1,11 @@
 import {connect} from 'react-redux'
 
 import HomePage from '../components/HomePage'
+import {clearFields} from "../actions";
 
 function mapStateToProps(state) {
-  return {
-    counter: state.ui.counter,
+  return{
+    notifications: state.notifications,
   }
 }
 
