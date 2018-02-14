@@ -14,10 +14,8 @@ class LauncherPage extends React.Component {
 
   render() {
     const {formBuilderChains, selectChainForm, launcher: {selectedForm}} = this.props;
-    //const form = formBuilderChains[launcher.selectedForm];
     return (
       <div>
-        {/*<DropDownSelector id onSelect dropOptions selectedValue/>*/}
         <DropDownSelector id={12}
                           onSelect={selectChainForm}
                           dropOptions={formBuilderChains.map((option, index) => {

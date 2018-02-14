@@ -27,7 +27,7 @@ class DataDirectoryPage extends React.Component {
       filterDirectoryData(filterData);
     });
   };
-
+//TODO STAS
   componentDidMount() {
     this.props.fetchBuilderChains();
   }

@@ -381,8 +381,6 @@ export const filterDirectoryData = (filterData) => (dispatch) => {
 
   const url = `${BACKEND_URL}/filterDataDirectory`;
 
-  console.log(filterData);
-
   axios.post(url, filterData).then(function () {
     //  TODO обработка полученных данных тое диспач
   }).catch(function (response) {

@@ -27,21 +27,12 @@ const TemplateForm = function (props) {
           Template:
         </Col>
         <Col sm={10}>
-          {/*<FormControl componentClass="select"*/}
-
-          {/*type="input" placeholder="auto"*/}
-          {/*//                    onChange={(event) => onFormInputChange(event.target.value, field.paramName, this.props.formName)}*/}
-          {/*>*/}
-          {/*{this.props.dataTemplates.map((op, idx) => (<option key={idx} value={op}>{op.template_name}</option>))}*/}
-          {/*</FormControl>*/}
-
-
           <Select.Creatable
             multi={true}
             options={props.dataTemplates.map((option, idx) => ({
               label: option.template_name,
               value: option.template_id,
-            }))}
+            }))}S
             clearable={false}
             autosize={false}
             onChange={(value) => props.onTemplateFormInputChange(value, "choosenDataTemplates", props.formName)}

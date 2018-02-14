@@ -10,7 +10,6 @@ class MyForm extends React.Component {
 
   componentDidMount() {
     this.props.fetchBuilderChains()
-    // this.props.fetchFormTemplate(this.props.formName)
   }
 
   submitTemplateForm = () => {
