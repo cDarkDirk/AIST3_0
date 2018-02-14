@@ -81,28 +81,27 @@ export const updateLoginForm = (payload, history) => (dispatch) => {
   payload.password = sjcl.encrypt('AIST',payload.password);
   payload.password = sjcl.decrypt('AIST', payload.password);
     // const url = `${BACKEND_URL}/login`;
-    dispatch(updateLoginSucceed(history));
+
     // console.log(payload);
+  fetchUtil(url, 'POST', payload).then(response => {
+    if (response.ok) {
+      console.log(response.json("token"));
+      return response.json()
+    } else {
+      throw new Error(response.statusText)
+    }
+  }).then(updateChainTemplateResult => {
+    if (updateChainTemplateResult) {
+      dispatch(success({message: "Authorization succeeded"}));
+      dispatch(updateLoginSucceed(payload));
 
-
-  // fetchUtil(url, 'POST', payload).then(response => {
-  //   if (response.ok) {
-  //     return response.json()
-  //   } else {
-  //     throw new Error(response.statusText)
-  //   }
-  // }).then(updateChainTemplateResult => {
-  //   if (updateChainTemplateResult) {
-  //     dispatch(success({message: "Submit succeeded"}));
-  //
-  //     dispatch(updateLoginSucceed(payload));
-  //   } else {
-  //     dispatch(error({message: "Submit failed with error:"}));
-  //     dispatch(updateChainFormFail())
-  //   }
-  // }).catch(error => {
-  //   throw error
-  // })
+    } else {
+      dispatch(error({message: "Authorization failed with error:"}));
+      dispatch(updateChainFormFail())
+    }
+  }).catch(error => {
+    throw error
+  })
 };
 
 export const updateChainForm = (chain,form,idx) => (dispatch) => {
