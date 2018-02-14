@@ -46,8 +46,3 @@ ReactDOM.render((
     </Provider>
   ),
   document.getElementById('root'));
-
-
-function ChainEditorItem ({ match }) {
-  return <h1>{match.params.jopa}</h1>
-}
