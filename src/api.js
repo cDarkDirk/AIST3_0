@@ -91,6 +91,10 @@ export const putToken = (tokener) => (dispatch) => {
 
 }
 export const updateLoginForm = (payload, history) => (dispatch) => {
+    if (payload.name === "" || payload.password === "") {
+    dispatch(error({message: "Error: Not all fields was filled"}));
+    return;
+  }
 
   // console.log("ЖАРА");
 
