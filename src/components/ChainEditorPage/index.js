@@ -3,7 +3,7 @@ import ChainDisplay from '../../containers/ChainDisplay'
 import SideBar from "../SideBar"
 import ChainTemplatePropertyEditor from '../ChainTemplatePropertyEditor'
 import ChainList from "../../containers/ChainList"
-import {Row, Col} from "react-bootstrap"
+import {Row, Col, Glyphicon} from "react-bootstrap"
 import TestsList from "../../containers/TestsList"
 import {Button} from 'react-bootstrap'
 import Notifications from 'react-notification-system-redux'
@@ -19,9 +19,17 @@ class ChainEditorPage extends React.Component {
 
     render() {
         const {chainTemplate, chainTemplateNameChanged, deleteChainTemplate,
-            addChainTemplate, updateChainTemplate, notifications} = this.props;
+            addChainTemplate, updateChainTemplate, notifications, chainTemplateMarkerChanged} = this.props;
         return (<div className='container'>
-            <h1>Chain Editor</h1>
+            <Row>
+              <Col md={11}>
+                <h1>Chain Editor</h1>
+              </Col>
+              <Col md={1}>
+                <Button bsStyle="primary">Special for Lontiy<Glyphicon glyph="glyphicon glyphicon-arrow-right"/></Button>
+              </Col>
+            </Row>
+
             <Row>
                 <Col md={3}>
                     <SideBar>
@@ -41,6 +49,7 @@ class ChainEditorPage extends React.Component {
                       onNameChange={chainTemplateNameChanged}
                       deleteChainTemplate={deleteChainTemplate}
                       updateChainTemplate={updateChainTemplate}
+                      chainTemplateMarkerChanged={chainTemplateMarkerChanged}
                     />
 
                     <ChainDisplay chainTemplate={chainTemplate}/>

@@ -160,7 +160,7 @@ class TestBuilderPage extends React.Component {
 
     return (
       <div>
-        <Panel header={<h1>Select test to edit</h1>} footer={submitButton} bsStyle="primary">
+        <Panel header={submitButton} bsStyle="primary">
           <Grid fluid={true}>
             <Row>
               <Col md={3}>

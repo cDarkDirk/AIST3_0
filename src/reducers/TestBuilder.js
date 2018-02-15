@@ -40,7 +40,6 @@ const testBuilder = (state = initialState, action) => {
       }
     }
     case ADD_NEW_TEST: {
-      const testBuilderTests = [...state.testBuilderTests];
       const newTestEntry = {
         "test_id": 'Enter test id number here...',
         "test_name": "Brand new test",
@@ -53,17 +52,19 @@ const testBuilder = (state = initialState, action) => {
           "passOrToken": "Job pass or token..."
         },
         "tag_names": [],
-        'new': true
+        'new': true,
+        'modified': false
       };
-      testBuilderTests.push(newTestEntry);
-      const testNamesForDropdown = [...state.testNamesForDropdown];
-        testNamesForDropdown.push({
+      const testNamesForDropdown = [{
         test_name: newTestEntry.test_name,
         test_id: newTestEntry.test_id,
-      });
+      },
+        ...state.testNamesForDropdown,
+      ];
       return{
         ...state,
-        testBuilderTests,
+        selectedTestIndex: 0,
+        testBuilderTests: [newTestEntry,...state.testBuilderTests],
         testNamesForDropdown,
       }
     }

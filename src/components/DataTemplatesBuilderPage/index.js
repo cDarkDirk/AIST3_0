@@ -105,7 +105,7 @@ class DataTemplatesBuilderPage extends React.Component {
   }
 
   renderSubmitButton() {
-    const {dataTemplates, selectedTemplateIndex, sumbitTemplate, dataTemplatesNames} = this.props;
+    const {dataTemplates, selectedTemplateIndex, submitTemplate, dataTemplatesNames} = this.props;
     return (
       selectedTemplateIndex !== null
         && (dataTemplates[selectedTemplateIndex].modified
@@ -114,7 +114,7 @@ class DataTemplatesBuilderPage extends React.Component {
           bsStyle="success"
           bsSize="large"
           className="pull-right"
-          onClick={() => {this.props.sumbitTemplate({
+          onClick={() => {submitTemplate({
             value: dataTemplates[selectedTemplateIndex],
             name: dataTemplatesNames[selectedTemplateIndex],
           })}}
@@ -129,10 +129,28 @@ class DataTemplatesBuilderPage extends React.Component {
   }
 
   render() {
-    const {addNewTemplate} = this.props;
+    const {addNewTemplate, dataTemplates, selectedTemplateIndex, submitTemplate, dataTemplatesNames} = this.props;
+    const submit = (
+          [<Button
+            bsStyle="success"
+            bsSize="large"
+            className="pull-right"
+            disabled={!(selectedTemplateIndex !== null
+              && (dataTemplates[selectedTemplateIndex].modified
+                || dataTemplates[selectedTemplateIndex].new))}
+            onClick={() => {submitTemplate({
+              value: dataTemplates[selectedTemplateIndex],
+              name: dataTemplatesNames[selectedTemplateIndex],
+            })}}
+          >
+            Submit
+          </Button>,
+            <div className="clearfix"/>
+          ]
+    );
     return (
       <div>
-        <Panel bsStyle='primary' footer={this.renderSubmitButton()} header='Select template or create new'>
+        <Panel bsStyle='primary' header={submit}>
           <Grid fluid={true}>
             <Row key={'bla'}>
               <Col md={3}>

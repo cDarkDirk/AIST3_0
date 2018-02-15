@@ -13,7 +13,7 @@ import {
   testBuilderTestsFetchFail,
   testBuilderTestsFetchSucceed,
   resetModificationMarkers,
-  dataTemplatesFetchSuccess,
+  dataTemplatesFetchSuccess, updateDataTemplateSuccess,
 } from './actions'
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
@@ -337,6 +337,7 @@ export const submitDataTemplates = (submitData) => (dispatch) => {
 
     axios.post(url, requestBody).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
+      dispatch(updateDataTemplateSuccess());
     }).catch(function (response) {
       dispatch(error({message: "Submit failed with error!" + response}));
     });
@@ -346,6 +347,7 @@ export const submitDataTemplates = (submitData) => (dispatch) => {
 
     axios.put(url, requestBody).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
+      dispatch(updateDataTemplateSuccess());
     }).catch(function (response) {
       dispatch(error({message: "Submit failed with error!" + response}));
     });
