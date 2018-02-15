@@ -12,7 +12,7 @@ import ChainEditorPage from './containers/ChainEditorPage'
 import LauncherPage from "./containers/LauncherPage";
 import FormBuilderPage from "./containers/FormBuilderPage";
 import TestBuilder from "./containers/TestBuilder";
-import DataDirectoryPage from "./containers/DataDirectoryPage";
+import DataDirectoryPage from "./containers/TestBuilder";
 
 import DataTemplatesBuilderPage from "./containers/DataTemplates";
 

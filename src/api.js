@@ -20,49 +20,25 @@ import {BACKEND_URL} from "./constants/endpoints";
 
 export const submitFormTemplate = (formName, formTemplate, sheduleList, templates) => (dispatch) => {
 
-  /**
-   * TODO запрос как в остальных
-   */
-  //
-  // Host: localhost:8080
-  // Content-Length: 11
-  // test_id: 14
 
-  // template: TSMMortgage
-  // marker: TSMMortgageDebug
-  // start_time: 2018.02.05
-  //
-  // body - data
-  // http://localhost:8080/chains
-
-    const dataToSendLauncherPage = {
-      formName: formName,
-      template: templates,
-      paramData: formTemplate,
-      start_time: sheduleList
+    const dataToSendLauncherPageBody = {
+       paramData: formTemplate
    };
 
-  console.log(formName, formTemplate, sheduleList, templates);
-
+  const dataToSendLauncherPageHeaders = {headers: {
+    formName: formName,
+    template: templates,
+    start_time: sheduleList
+  }};
 
   const url = `${BACKEND_URL}/chains`;
 
-  axios.put(url, dataToSendLauncherPage).then(function () {
+  axios.put(url, dataToSendLauncherPageBody, dataToSendLauncherPageHeaders).then(function () {
     dispatch(success({message: "Submit succeeded!"}));
   }).catch(function (response) {
     dispatch(error({message: "Submit failed with error!" + response}));
   });
 };
-
-
-
-
-
-
-
-
-
-
 
 /** GET request example
   axios.get(url).then(function (response) {

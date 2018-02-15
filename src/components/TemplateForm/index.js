@@ -32,7 +32,7 @@ const TemplateForm = function (props) {
             options={props.dataTemplates.map((option, idx) => ({
               label: option.template_name,
               value: option.template_id,
-            }))}S
+            }))}
             clearable={false}
             autosize={false}
             onChange={(value) => props.onTemplateFormInputChange(value, "choosenDataTemplates", props.formName)}
