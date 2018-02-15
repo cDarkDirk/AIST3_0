@@ -1,0 +1,29 @@
+.flex-wrapper {
+    display: flex;
+}
+.container .react-datepicker-popper{
+  z-index: 10;
+}
+
+.form-date-picker{
+  display: table-cell;
+}
+.form-date-picker .react-datepicker-wrapper,
+.form-date-picker .react-datepicker__input-container,
+.form-date-picker input
+{
+  display: block;
+  width: 100%;
+}
+
+.form-date-picker input {
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 0 4px 4px 0;
+}

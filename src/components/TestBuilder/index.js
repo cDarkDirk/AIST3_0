@@ -13,12 +13,31 @@ import {
   Col,
   Label,
   Glyphicon,
+  Modal
 } from 'react-bootstrap';
 import 'react-select/dist/react-select.css';
 import Select from 'react-select';
 import Notifications from 'react-notification-system-redux';
 
 class TestBuilderPage extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
+    this.state = {
+      show: false
+    };
+  }
+
+  handleClose() {
+    this.setState({show: false});
+  }
+
+  handleShow() {
+    this.setState({show: true});
+  }
 
   componentDidMount() {
     this.props.getTests();
@@ -147,6 +166,27 @@ class TestBuilderPage extends React.Component {
       </ListGroupItem>));
 
     const submitButton = [
+      <Button className="pull-left" onClick={this.handleShow}>
+        <Glyphicon glyph='glyphicon glyphicon-question-sign'/>
+      </Button>,<Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title><strong>Конструктор тестов</strong></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Чтобы редактировать тест, необходимо:</p>
+          <li type="square">Выбрать тест из списка слева</li>
+          <li type="square">Заполнить необходимые параметры теста в форме справа</li>
+          <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Submit</li>
+          <br/>
+          <p>Чтобы создать тест, необходимо:</p>
+          <li type="square">Нажать кнопку Add new test</li>
+          <li type="square">Заполнить необходимые параметры теста в форме справа</li>
+          <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Submit</li>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.handleClose}>Закрыть</Button>
+        </Modal.Footer>
+      </Modal>,
       <Button
         bsStyle="success"
         bsSize="large"

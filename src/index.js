@@ -4,14 +4,19 @@ import {createStore, applyMiddleware, compose} from 'redux'
 import {Provider} from 'react-redux'
 import thunk from 'redux-thunk'
 import {createBrowserHistory} from 'history'
-import {Router, Route, Switch} from 'react-router'
+import {Route, Switch} from 'react-router'
+import {HashRouter} from 'react-router-dom'
 import rootReducer from './reducers'
 import HomePage from './containers/HomePage'
 import ChainEditorPage from './containers/ChainEditorPage'
-import LauncherPage from "./components/LauncherPage";
+import LauncherPage from "./containers/LauncherPage";
 import FormBuilderPage from "./containers/FormBuilderPage";
 import TestBuilder from "./containers/TestBuilder";
+import DataDirectoryPage from "./containers/TestBuilder";
+
 import DataTemplatesBuilderPage from "./containers/DataTemplates";
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import 'font-awesome/css/font-awesome.min.css'
 import './styles/main.css'
@@ -30,16 +35,17 @@ ReactDOM.render((
     <Provider store={store}>
       <div>
 
-        <Router history={history}>
+        <HashRouter history={history}>
           <Switch>
             <Route path="/testbuilder" component={TestBuilder}/>
             <Route path="/chaineditor" component={ChainEditorPage}/>}
             <Route path="/launcher" component={LauncherPage}/>
             <Route path="/formbuilder" component={FormBuilderPage}/>
+            <Route path="/datadirectory" component={DataDirectoryPage}/>
             <Route path="/datatemplates" component={DataTemplatesBuilderPage}/>
             <Route exact path="/" component={HomePage}/>
           </Switch>
-        </Router>
+        </HashRouter>
 
       </div>
     </Provider>

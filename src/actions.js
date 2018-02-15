@@ -1,12 +1,15 @@
 import {
   TEST_BLOCK_MOVED,
+  FORM_INPUT_CHANGE,
   CHAIN_SELECTED,
   FORM_TEMPLATE_FETCH_SUCCSEED,
   FORM_TEMPLATE_FETCH_FAIL,
   CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
   SCHEDULE_DATE_CHANGED,
+  CHAIN_EDITOR_TEMPLATE_FETCH_FAIL,
   SCHEDULE_TIME_CHANGED,
   TEST_FETCH_SUCCEED,
+  TEST_FETCH_FAIL,
   DATA_TEMPLATE_LIST_SUCCEED,
   DATA_TEMPLATE_LIST_FAIL,
   CHAIN_TEMPLATE_DELETED,
@@ -17,10 +20,15 @@ import {
   SUBMIT_CHAIN_TEMPLATE_FAIL,
   SUBMIT_CHAIN_TEMPLATE_SUCCEED,
   FORM_BUILDER_CHAINS_FETCH_SUCCEED,
+  FORM_BUILDER_CHAINS_FETCH_FAIL,
   UPDATE_CHAIN_FORM_SUCCEED,
+  UPDATE_CHAIN_FORM_FAIL,
   NEW_FIELD_ADDED,
   ON_FIELDS_VALUES_UPDATE,
   FIELD_WAS_REMOVED,
+  SCHEDULE_AMOUNT_OF_TIMES_CHANGED,
+  SUBMIT_BUTTON_CLICKED,
+  TEMPLATE_FORM_INPUT_CHANGE,
   TEST_BUILDER_TESTS_FETCH_SUCCEED,
   TEST_BUILDER_TESTS_FETCH_FAIL,
   TEST_SELECTED,
@@ -36,9 +44,24 @@ import {
   CHAIN_TEMPLATE_MARKER_CHANGED, UPDATE_DATA_TEMPLATE_SUCCESS,
 } from './constants'
 
+export const selectChainForm =(payload)=> ({
+  type: CHAIN_SELECTED,
+  payload: payload
+});
+
+export const onFormInputChange = (value, paramName, formName) => ({
+  type: FORM_INPUT_CHANGE,
+  payload: {value, paramName, formName}
+});
+
 export const updateChainFormSucceed = (payload) => ({
   type: UPDATE_CHAIN_FORM_SUCCEED,
   payload: payload
+});
+
+export const onTemplateFormInputChange = (value, paramName, formName) => ({
+  type: TEMPLATE_FORM_INPUT_CHANGE,
+  payload: {value, paramName, formName}
 });
 
 export const testBlockMoved = (payload) => ({
@@ -106,7 +129,11 @@ export const changeDate = (payload) => ({
 });
 
 export const changeTime = (payload) => ({
-  type: SCHEDULE_TIME_CHANGED,
+    type: SCHEDULE_TIME_CHANGED,
+    payload: payload
+})
+export const changeAmountOfTimes = (payload) => ({
+  type: SCHEDULE_AMOUNT_OF_TIMES_CHANGED,
   payload: payload
 });
 

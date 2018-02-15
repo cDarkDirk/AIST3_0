@@ -18,6 +18,28 @@ import {
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
 
+export const submitFormTemplate = (formName, formTemplate, sheduleList, templates) => (dispatch) => {
+
+
+    const dataToSendLauncherPageBody = {
+       paramData: formTemplate
+   };
+
+  const dataToSendLauncherPageHeaders = {headers: {
+    formName: formName,
+    template: templates,
+    start_time: sheduleList
+  }};
+
+  const url = `${BACKEND_URL}/chains`;
+
+  axios.put(url, dataToSendLauncherPageBody, dataToSendLauncherPageHeaders).then(function () {
+    dispatch(success({message: "Submit succeeded!"}));
+  }).catch(function (response) {
+    dispatch(error({message: "Submit failed with error!" + response}));
+  });
+};
+
 /** GET request example
   axios.get(url).then(function (response) {
     dispatch(fetchSuccessFunction(response.data))
@@ -331,4 +353,15 @@ export const submitDataTemplates = (submitData) => (dispatch) => {
     });
   }
 
+};
+
+export const filterDirectoryData = (filterData) => (dispatch) => {
+
+  const url = `${BACKEND_URL}/filterDataDirectory`;
+
+  axios.post(url, filterData).then(function () {
+    //  TODO обработка полученных данных тое диспач
+  }).catch(function (response) {
+    dispatch(error({message: "failed with error!" + response}));
+  });
 };

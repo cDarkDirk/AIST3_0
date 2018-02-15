@@ -5,17 +5,19 @@
   "dependencies": {
     "axios": "^0.17.1",
     "babel": "^6.23.0",
+    "bootstrap": "^3.3.7",
     "cors": "^2.8.4",
-    "eslint-config-react-app": "^2.0.1",
+    "eslint-config-react-app": "^2.1.0",
     "express": "^4.16.2",
     "font-awesome": "^4.7.0",
+    "history": "^4.7.2",
     "lodash": "^4.17.4",
     "mockserver": "^1.6.2",
-    "nodemon": "^1.12.5",
+    "nodemon": "^1.14.11",
     "rc-time-picker": "^3.2.1",
     "react": "^16.2.0",
     "react-bootstrap": "^0.31.5",
-    "react-calendar": "^2.7.0",
+    "react-calendar": "^2.11.2",
     "react-confirm": "^0.1.16",
     "react-datepicker": "^0.62.0",
     "react-dom": "^16.2.0",
@@ -30,7 +32,7 @@
     "react-sortable-hoc": "^0.6.8",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "history": "latest"
+    "tomcat-deploy": "^1.0.2"
   },
   "scripts": {
     "start-mocks": "nodemon mockserver.js",
