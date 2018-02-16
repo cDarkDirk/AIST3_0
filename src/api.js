@@ -20,7 +20,7 @@ import {BACKEND_URL} from "./constants/endpoints";
 
 export const submitFormTemplate = (formName, formTemplate, sheduleList, templates) => (dispatch) => {
 
-
+//TODO Дима, добавь коментарий с описанием и убери в конец списка
     const dataToSendLauncherPageBody = {
        paramData: formTemplate
    };
@@ -107,33 +107,32 @@ export const fetchDataTemplatesList = () => {
 };
 
 export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
-  const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
-  //todo do not use this realization on merge with /launcherPage
-  let header = new Headers();
-  header.append('Content-Type', 'application/json');
-  const options = {
-    method: 'POST',
-    headers: header,
-    body: JSON.stringify(chainTemplate)
+
+  const requestBody = {
+    name: chainTemplate.name,
+    marker: chainTemplate.marker,
+    fields: chainTemplate.fields,
+    tests: chainTemplate.tests,
   };
-  fetch(url, options).then(response => {
-    if (response.ok) {
-      return response.json()
-    } else {
-      throw new Error(response.statusText)
-    }
-  }).then(updateChainTemplateResult => {
-    if (updateChainTemplateResult) {
-      dispatch(success({message: "Submit succeeded"}));
-      dispatch(submitChainTemplateSucceed(updateChainTemplateResult));
-    } else {
-      dispatch(error({message: "Submit failed with error:"}));
-      //TODO return an error
-      dispatch(submitChainTemplateFail())
-    }
-  }).catch(error => {
-    throw error
-  })
+
+  if(chainTemplate.modified){
+    const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
+    axios.post(url, requestBody).then(function () {
+      dispatch(success({message: "Submit succeeded!"}));
+      dispatch(submitChainTemplateSucceed());
+    }).catch(function (response) {
+      dispatch(error({message: "Submit failed with error!" + response}));
+    });
+  }
+  if(chainTemplate.new){
+    const url = `${BACKEND_URL}/chain_templates`;
+    axios.put(url, requestBody).then(function () {
+      dispatch(success({message: "Submit succeeded!"}));
+      dispatch(submitChainTemplateSucceed());
+    }).catch(function (response) {
+      dispatch(error({message: "Submit failed with error!" + response}));
+    });
+  }
 };
 
 export const fetchFormTemplate = (formName) => (dispatch) => {

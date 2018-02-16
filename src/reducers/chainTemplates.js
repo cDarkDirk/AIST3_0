@@ -20,9 +20,14 @@ const initialState = {
 const chainTemplateReducer = (state = initialState, action) => {
   switch (action.type) {
     case CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED: {
+      const chainTemplates = action.payload.map((chain) => {
+        chain.modified = false;
+        chain.new = false;
+        return chain;
+      });
       return {
         ...state,
-        chainTemplates: action.payload
+        chainTemplates,
       }
     }
 
@@ -38,37 +43,32 @@ const chainTemplateReducer = (state = initialState, action) => {
       const sel = state.selectedChainTemplate;
       let tests = [...state.chainTemplates[sel].tests];
       tests.splice(newIndex, 0, tests.splice(oldIndex, 1)[0]);
+      const modified = !state.chainTemplates[sel].new;
       return {
         ...state,
         chainTemplates: [
           ...state.chainTemplates.slice(0, sel),
-          {...state.chainTemplates[sel], tests},
+          {...state.chainTemplates[sel],  tests, modified},
           ...state.chainTemplates.slice(sel + 1, state.chainTemplates.length)
-        ],
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [sel]: true
-        }
+        ]
       }
     }
 
     case TEST_BLOCK_CLICKED: {
       const selectedTemplateIndex = state.selectedChainTemplate;
       const allChainTemplates = [...state.chainTemplates];
+      const modified = !state.chainTemplates[selectedTemplateIndex].new;
       allChainTemplates[selectedTemplateIndex] = {
         ...allChainTemplates[selectedTemplateIndex],
         tests: [...allChainTemplates[selectedTemplateIndex].tests,
           {
             id: action.payload.test_id
-          }]
+          }],
+        modified,
       };
       return {
         ...state,
-        chainTemplates: allChainTemplates,
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [selectedTemplateIndex]: true
-        }
+        chainTemplates: allChainTemplates
       }
     }
 
@@ -76,35 +76,31 @@ const chainTemplateReducer = (state = initialState, action) => {
       const selectedTemplateIndex = state.selectedChainTemplate;
       const chainTemplates = [...state.chainTemplates];
       const tests = [...state.chainTemplates[selectedTemplateIndex].tests];
+      const modified = !state.chainTemplates[selectedTemplateIndex].new;
       tests.splice(action.payload, 1);
       chainTemplates[selectedTemplateIndex] = {
         ...chainTemplates[selectedTemplateIndex],
-        tests: tests
+        tests: tests,
+        modified,
       };
       return {
         ...state,
         chainTemplates,
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [selectedTemplateIndex]: true
-        }
       }
     }
 
     case CHAIN_TEMPLATE_NAME_CHANGED: {
       const sel = state.selectedChainTemplate;
       const chainTemplates = [...state.chainTemplates];
+      const modified = !state.chainTemplates[sel].new;
       chainTemplates[sel] = {
         ...chainTemplates[sel],
-        name: action.payload
+        name: action.payload,
+        modified,
       };
       return {
         ...state,
         chainTemplates,
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [sel]: true
-        }
       }
     }
 
@@ -113,10 +109,6 @@ const chainTemplateReducer = (state = initialState, action) => {
         ...state,
         selectedChainTemplate: 0,
         chainTemplates: state.chainTemplates.filter(t => t.name !== action.payload.name),
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [state.selectedChainTemplate]: false
-        }
       }
     }
 
@@ -129,26 +121,32 @@ const chainTemplateReducer = (state = initialState, action) => {
           tests: [],
           fields:[],
           marker:'',
+          modified: false,
+          new: true,
         },...state.chainTemplates]
       }
     }
 
     case SUBMIT_CHAIN_TEMPLATE_SUCCEED: {
+      const chainTemplates = [...state.chainTemplates];
+      console.log(chainTemplates);
+      console.log(state.selectedChainTemplate);
+      chainTemplates[state.selectedChainTemplate].modified = false;
+      chainTemplates[state.selectedChainTemplate].new = false;
       return {
         ...state,
-        dirtyChainTemplateIndicies: {
-          ...state.dirtyChainTemplateIndicies,
-          [state.selectedChainTemplate]: false
-        }
+        chainTemplates,
       }
     }
 
     case CHAIN_TEMPLATE_MARKER_CHANGED: {
       const sel = state.selectedChainTemplate;
       const chainTemplates = [...state.chainTemplates];
+      const modified = !state.chainTemplates[sel].new;
       chainTemplates[sel] = {
         ...chainTemplates[sel],
-        marker: action.payload
+        marker: action.payload,
+        modified,
       };
       return {
         ...state,

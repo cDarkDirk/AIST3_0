@@ -118,9 +118,8 @@ export const submitChainTemplateFail = (payload) => ({
   payload: payload
 });
 
-export const submitChainTemplateSucceed = (payload) => ({
+export const submitChainTemplateSucceed = () => ({
   type: SUBMIT_CHAIN_TEMPLATE_SUCCEED,
-  payload: payload
 });
 
 export const changeDate = (payload) => ({
