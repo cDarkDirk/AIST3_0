@@ -12,7 +12,7 @@ const SortableTestBlock = SortableElement(({index, idx, test, closeButtonClicked
                    name={test.test_name}
                    description={`id: ${test.test_id}`}
         />)
-})
+});
 
 const TestList = SortableContainer(({tests,closeButtonClicked}) => {
   return (
@@ -22,7 +22,7 @@ const TestList = SortableContainer(({tests,closeButtonClicked}) => {
       ))}
     </ul>
   )
-})
+});
 
 export default ({chainTemplate, tests = [], testBlockMoved, closeButtonClicked}) => {
     return (

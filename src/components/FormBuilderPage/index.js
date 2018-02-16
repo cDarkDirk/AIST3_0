@@ -10,22 +10,39 @@ import {
   ButtonGroup,
   Glyphicon,
   Label,
+  Modal,
 } from 'react-bootstrap';
 import Notifications from 'react-notification-system-redux'
 import FieldPicker from "../FieldPicker";
 
 
 class FormBuilderPage extends React.Component {
+  constructor(props, context) {
+    super(props, context);
 
-  state = {
-    chainIndex: null,
-    inputTypeIndex: 0,
-    inputTypes: [
-      'Input',
-      'DropDown',
-      'DatePicker',
-    ],
-  };
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
+    this.state = {
+      chainIndex: null,
+      show: false,
+      inputTypeIndex: 0,
+      inputTypes: [
+        'Input',
+        'DropDown',
+        'DatePicker',
+      ],
+    };
+  }
+
+  handleClose() {
+    this.setState({show: false});
+  }
+
+  handleShow() {
+    this.setState({show: true});
+  }
+
 
   componentDidMount() {
     this.props.fetchBuilderChains();
@@ -160,7 +177,25 @@ class FormBuilderPage extends React.Component {
             </MenuItem>
           )
         })}
-      </DropdownButton>,
+      </DropdownButton>,<Button className="pull-right" onClick={this.handleShow}>
+        <Glyphicon glyph='glyphicon glyphicon-question-sign'/>
+      </Button>,
+      <div className="clearfix"/>,
+      <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title><strong>Конструктор форм</strong></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Чтобы редактировать форму существующей цепочки, необходимо:</p>
+          <li type="square">Выбрать цепочку из выпающего списка вверху слева</li>
+          <li type="square">Выбрать тип поля в выпадающем списке снизу слева и нажать кнопку +</li>
+          <li type="square">Ввести необходимые для данного поля параметры</li>
+          <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Submit</li>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.handleClose}>Закрыть</Button>
+        </Modal.Footer>
+      </Modal>,
       <span style={{marginLeft: '20px'}}>
         {chainIndex !== null
         && formBuilderChains[chainIndex].modified

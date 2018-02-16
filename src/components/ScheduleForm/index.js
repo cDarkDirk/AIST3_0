@@ -1,60 +1,53 @@
 import React from "react";
-import {Row, Col} from "react-bootstrap"
+import {Row, Col, Grid, FormControl, FormGroup, ControlLabel, Form, Checkbox, Button, Dropdown} from "react-bootstrap"
 import DatePicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css';
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
+import {Jumbotron} from 'react-bootstrap'
 
 
 
 const ScheduleForm = function (props) {
-    return (
+  return (
+      <Jumbotron>
         <div>
-            <h2>
-                Schedule
-            </h2>
             <Row>
-                <Col>
-                    <div>Amount of times</div>
+              <FormGroup controlId="formHorizontalInput">
+                <Col componentClass={ControlLabel} sm={2}>
+                  <div>Amount of times: </div>
                 </Col>
-                <Col>
-                    <input></input>
+                <Col sm={1}>
+                  <FormControl value={props.amountOfTimes} type="input" onChange={(e) => props.changeAmountOfTimes(e.target.value)}/>
                 </Col>
-                <Col>
-                    <div>Date</div>
+
+
+                <Col componentClass={ControlLabel} sm={2}>
+                  Date
                 </Col>
-                <Col>
-                    <DatePicker selected={props.date} onChange={props.changeDate}></DatePicker>
+
+                <Col sm={3}>
+                  <div>
+                    <DatePicker onChange={props.changeDate}
+                                selected={props.date}></DatePicker>
+                  </div>
                 </Col>
-                <Col>
-                    <div> Time</div>
+
+
+                <Col componentClass={ControlLabel} sm={2}>
+                  Time
                 </Col>
-                <Col>
+
+                <Col sm={2}>
+                  <div>
                     <TimePicker value={props.time} onChange={props.changeTime}></TimePicker>
+                  </div>
                 </Col>
-                <Col>
-                    <div> Periodic</div>
-                </Col>
-                <Col> <select>
-                    <option>Once</option>
-                    <option>Daily</option>
-                    <option>Weekly</option>
-                </select></Col>
+
+              </FormGroup>
             </Row>
-
-            {/*<Row>*/}
-                {/*<FormGroup controlId="InputForm">*/}
-                {/*<Col componentClass={ControlLabel} sm={2}>*/}
-                    {/*{field.label}*/}
-                {/*</Col>*/}
-                {/*<Col sm={10}>*/}
-                    {/*<FormControl value={formValues[field.paramName]} type="input" placeholder="auto"*/}
-                                 {/*onChange={(event) => onFormInputChange(event.target.value, field.paramName, this.props.formName)}/>*/}
-                {/*</Col>*/}
-            {/*</FormGroup>*/}
-            {/*</Row>*/}
-
         </div>
+      </Jumbotron>
     )
 }
 
