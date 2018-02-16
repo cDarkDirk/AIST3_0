@@ -191,12 +191,16 @@ class TestBuilderPage extends React.Component {
         bsStyle="success"
         bsSize="large"
         className="pull-right"
+        disabled={!(selectedTestIndex !== null && (testBuilderTests[selectedTestIndex].modified || testBuilderTests[selectedTestIndex].new))}
         onClick={()=> submitCurrentTest({
           test: testBuilderTests[selectedTestIndex],
           id: testNamesForDropdown[selectedTestIndex].test_id
         })}
-      >SUBMIT</Button>,
-      <div className="clearfix"/>];
+      >
+        SUBMIT
+      </Button>,
+      <div className="clearfix"/>
+    ];
 
     return (
       <div>

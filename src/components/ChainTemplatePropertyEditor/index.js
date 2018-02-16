@@ -24,6 +24,8 @@ const ChainTemplatePropertyEditor = ({chainTemplate, chainTemplateMarkerChanged,
       })
   };*/
 
+  const disableSubmit = !(chainTemplate.modified || chainTemplate.new);
+
   return (
     <div>
       <Row>
@@ -49,6 +51,7 @@ const ChainTemplatePropertyEditor = ({chainTemplate, chainTemplateMarkerChanged,
           <Button
             className='chain-template-property-editor-button'
             bsStyle='primary'
+            disabled={disableSubmit}
             onClick={() => updateChainTemplate(chainTemplate)}>
             <FontAwesome name='floppy-o'/> SUBMIT</Button> : null}</Col>
       </Row>
