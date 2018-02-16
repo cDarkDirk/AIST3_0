@@ -1,4 +1,4 @@
-import {error, success} from "react-notification-system-redux"
+import {error, success} from "react-notification-system-redux";
 import {
   formTemplateFetchSuccseed,
   chainEditorTemplateFetchSucceed,
@@ -6,15 +6,14 @@ import {
   dataTemplateFetchSucceed,
   dataTemplateFetchFail,
   formTemplateFetchFail,
-  submitChainTemplateFail,
   submitChainTemplateSucceed,
   formBuilderChainsFetchSucceed,
   updateChainFormSucceed,
-  testBuilderTestsFetchFail,
   testBuilderTestsFetchSucceed,
   resetModificationMarkers,
-  dataTemplatesFetchSuccess, updateDataTemplateSuccess,
-} from './actions'
+  dataTemplatesFetchSuccess,
+  updateDataTemplateSuccess,
+} from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
 
@@ -64,46 +63,15 @@ export const submitFormTemplate = (formName, formTemplate, sheduleList, template
   });
 */
 
-const fetchUtil = (url, method = 'GET', data = {}) => {
-  //TODO remove this when everything will be working on axios
-
-  const options = {
-    method: method,
-    headers: {},
-  };
-  if (method === 'POST') {
-    let header = new Headers();
-    header.append('Content-Type', 'application/json');
-    options.headers = header;
-    options.body = data;
-  }
-  return fetch(url, options);
-};
-
-export const fetchDataTemplatesList = () => {
-  return (dispatch, getState) => {
-    //TODO remove this if not needed
+export const fetchDataTemplatesList = () => (dispatch, getState) => {
     const url = `${BACKEND_URL}/data_templates`;
-    const options = {
-      method: 'GET',
-      headers: {},
-    };
-    fetch(url, options).then(response => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        throw new Error(response.statusText)
-      }
-    }).then(templateDataList => {
-      if (templateDataList) {
-        dispatch(dataTemplateFetchSucceed(templateDataList))
-      } else {
-        dispatch(dataTemplateFetchFail())
-      }
-    }).catch(error => {
-      throw error
-    })
-  }
+
+    axios.get(url).then(function (response) {
+      dispatch(dataTemplateFetchSucceed(response.data));
+    }).catch(function (response) {
+      dispatch(dataTemplateFetchFail());
+      dispatch(error({message: "Fetch failed with error!" + response}));
+    });
 };
 
 export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
@@ -138,27 +106,15 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
 export const fetchFormTemplate = (formName) => (dispatch) => {
   const url = `${BACKEND_URL}/forms/${formName}`;
 
-  //TODO delete this if not used
-
-  fetchUtil(url).then(response => {
-    if (response.ok) {
-      return response.json()
-    } else {
-      console.log(response);
-      throw new Error(response.statusText)
-    }
-  }).then(formTemplate => {
-    if (formTemplate) {
-      dispatch(formTemplateFetchSuccseed({
-        formName: formName,
-        formTemplate: formTemplate
-      }))
-    } else {
-      dispatch(formTemplateFetchFail())
-    }
-  }).catch(error => {
-    throw error
-  })
+  axios.get(url).then(function (response) {
+    dispatch(formTemplateFetchSuccseed({
+      formName: formName,
+      formTemplate: response.data,
+    }));
+  }).catch(function (response) {
+    dispatch(formTemplateFetchFail());
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
 };
 
 /**
@@ -208,11 +164,7 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
  * submit data to database
  */
 export const updateChainForm = (chainName, chain, idx) => (dispatch) => {
-  //TODO fix endpoint
-  //const url = `${BACKEND_URL}/${chain}/form`;
   const url = `${BACKEND_URL}/chain_templates/${chainName}`;
-
-  console.log([chain]);
 
   axios.post(url, [chain]).then(function () {
     dispatch(success({message: "Submit succeeded!"}));
@@ -228,25 +180,12 @@ export const updateChainForm = (chainName, chain, idx) => (dispatch) => {
  */
 export const testBuilderDataFetch = () => (dispatch) => {
   const url = `${BACKEND_URL}/tests`;
-  const options = {
-    method: 'GET',
-    headers: {},
-  };
-  fetch(url, options).then(response => {
-    if (response.ok) {
-      return response.json()
-    } else {
-      throw new Error(response.statusText)
-    }
-  }).then(testBuilderTests => {
-    if (testBuilderTests) {
-      dispatch(testBuilderTestsFetchSucceed(testBuilderTests))
-    } else {
-      dispatch(testBuilderTestsFetchFail())
-    }
-  }).catch(error => {
-    throw error
-  })
+
+  axios.get(url).then(function (response) {
+    dispatch(testBuilderTestsFetchSucceed(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
 };
 
 /**
@@ -303,7 +242,7 @@ export const fetchDataTemplates = () => (dispatch) => {
  */
 
 export const validateDTBSubmitValue = (submitData) => (dispatch) => {
-  const data = submitData.value.data;
+  const data = [...submitData.value.data];
   const checkArray= [];
   for (let entry of data){
     if (checkArray.indexOf(entry.key) === -1) {
@@ -334,7 +273,7 @@ export const submitDataTemplates = (submitData) => (dispatch) => {
   if (submitData.value.modified){
     const url = `${BACKEND_URL}/templates/${submitData.name}`;
 
-    axios.post(url, requestBody).then(function () {
+    axios.post(url, [requestBody]).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
       dispatch(updateDataTemplateSuccess());
     }).catch(function (response) {

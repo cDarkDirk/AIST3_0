@@ -1,9 +1,9 @@
 import React from "react";
 import {Row, Col} from "react-bootstrap"
-import ScheduleForm from "../../containers/ScheduleForm";
-import Form from "../../containers/Form";
-import TemplateForm from "../../containers/TemplateForm";
-import DropDownSelector from "../DropDownSelector";
+import ScheduleForm from "../../containers/ScheduleForm"
+import Form from "../../containers/Form"
+import TemplateForm from "../../containers/TemplateForm"
+import DropDownSelector from "../DropDownSelector"
 
 
 class LauncherPage extends React.Component {
@@ -24,17 +24,17 @@ class LauncherPage extends React.Component {
                           selectedIndex={selectedForm}
         />
         {formBuilderChains.length &&
-          <div className="container">
-            <Row>
-              <ScheduleForm></ScheduleForm>
-            </Row>
-            <TemplateForm></TemplateForm>
-            <Row><Form formName={selectedForm}></Form></Row>
-          </div>
+        <div className="container">
+          <Row>
+            <ScheduleForm/>
+          </Row>
+          <TemplateForm/>
+          <Row><Form formName={selectedForm}/></Row>
+        </div>
         }
       </div>
     )
   }
 }
 
-export default LauncherPage;
+export default LauncherPage

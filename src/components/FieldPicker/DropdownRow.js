@@ -8,9 +8,9 @@ import {
   FormControl,
   Button,
   Glyphicon,
-} from "react-bootstrap";
-import 'react-select/dist/react-select.css';
-import Select from 'react-select';
+} from "react-bootstrap"
+import 'react-select/dist/react-select.css'
+import Select from 'react-select'
 
 class DropdownRow extends React.Component {
   componentWillMount() {
@@ -93,4 +93,4 @@ class DropdownRow extends React.Component {
   }
 }
 
-export default DropdownRow;
+export default DropdownRow

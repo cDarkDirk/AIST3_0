@@ -1,8 +1,15 @@
 import React from 'react'
-import {Row, Col, Button, FormGroup, FormControl, InputGroup} from 'react-bootstrap'
+import {
+  Row,
+  Col,
+  Button,
+  FormGroup,
+  FormControl,
+  InputGroup,
+} from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import ConfirmationDialog from '../ConfirmationDialog'
-import {createConfirmation} from 'react-confirm';
+import {createConfirmation} from 'react-confirm'
 import './style.css'
 
 const confirm = createConfirmation(ConfirmationDialog, 0);
@@ -16,13 +23,6 @@ const ChainTemplatePropertyEditor = ({chainTemplate, chainTemplateMarkerChanged,
       () => {
       })
   };
-
-  /*const SubmitChain = () => {
-    confirm({confirmation: `Do you really want to submit ${chainTemplate.name}?`}).then(
-      () => updateChainTemplate(chainTemplate),
-      () => {
-      })
-  };*/
 
   const disableSubmit = !(chainTemplate.modified || chainTemplate.new);
 

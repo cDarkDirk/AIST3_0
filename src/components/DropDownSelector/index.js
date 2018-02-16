@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 import {
   MenuItem,
   DropdownButton,
-  Label
-} from 'react-bootstrap';
+  Label,
+} from 'react-bootstrap'
 
 class DropDownSelector extends React.Component {
 

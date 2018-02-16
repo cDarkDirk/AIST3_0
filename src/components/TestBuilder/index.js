@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   Panel,
   Grid,
@@ -14,10 +14,10 @@ import {
   Label,
   Glyphicon,
   Modal
-} from 'react-bootstrap';
-import 'react-select/dist/react-select.css';
-import Select from 'react-select';
-import Notifications from 'react-notification-system-redux';
+} from 'react-bootstrap'
+import 'react-select/dist/react-select.css'
+import Select from 'react-select'
+import Notifications from 'react-notification-system-redux'
 
 class TestBuilderPage extends React.Component {
   constructor(props, context) {

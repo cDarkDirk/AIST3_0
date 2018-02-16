@@ -1,5 +1,5 @@
 import {
-  FILTER_DATA_DIRECTORY
+  FILTER_DATA_DIRECTORY,
 } from '../constants'
 
 const initialState = {
@@ -10,6 +10,9 @@ const dataDirectoryReducer = (state = initialState, action) => {
   switch (action.type) {
     case FILTER_DATA_DIRECTORY: {
       // TODO
+      return {
+        ...state,
+      }
     }
 
     default:

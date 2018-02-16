@@ -2,11 +2,8 @@ import React from 'react'
 import {Button, Jumbotron} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 
-
-
 export default () => {
   return (
-
     <div className='container'>
       <Jumbotron>
         <h1>Home</h1>
@@ -16,9 +13,6 @@ export default () => {
         <p><Link to={'/testbuilder'}><Button bsSize="large">Test builder</Button></Link></p>
         <p><Link to={'/dataTemplates'}><Button bsSize="large">Data Templates builder</Button></Link></p>
       </Jumbotron>
-
-
     </div>
   )
-
 }

@@ -1,6 +1,9 @@
 import React from 'react'
 import TestBlock from '../TestBlock'
-import {SortableContainer, SortableElement} from 'react-sortable-hoc'
+import {
+  SortableContainer,
+  SortableElement,
+} from 'react-sortable-hoc'
 
 
 const SortableTestBlock = SortableElement(({index, idx, test, closeButtonClicked}) => {

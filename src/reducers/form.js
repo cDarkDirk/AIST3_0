@@ -1,8 +1,8 @@
 import {
-    FORM_INPUT_CHANGE
+    FORM_INPUT_CHANGE,
 } from '../constants'
 
-const initialState = {}
+const initialState = {};
 
 const ui = (state = initialState, action) => {
     switch (action.type) {
@@ -19,6 +19,6 @@ const ui = (state = initialState, action) => {
         default:
             return state
     }
-}
+};
 
 export default ui

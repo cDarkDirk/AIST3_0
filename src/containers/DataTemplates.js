@@ -1,6 +1,9 @@
 import {connect} from 'react-redux'
-import {fetchDataTemplates, validateDTBSubmitValue} from "../api";
-import DataTemplatesBuilderPage from "../components/DataTemplatesBuilderPage";
+import {
+  fetchDataTemplates,
+  validateDTBSubmitValue,
+} from "../api"
+import DataTemplatesBuilderPage from "../components/DataTemplatesBuilderPage"
 import {
   setSelectedDataTemplateIndex,
   dataTemplatesInputChange,

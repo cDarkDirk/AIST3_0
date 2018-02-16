@@ -1,6 +1,9 @@
 import {connect} from 'react-redux'
 import DataDirectoryPage from '../components/DataDirectoryPage'
-import {fetchBuilderChains, filterDirectoryData} from "../api";
+import {
+  fetchBuilderChains,
+  filterDirectoryData,
+} from "../api"
 
 
 function mapStateToProps(state) {

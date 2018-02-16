@@ -8,9 +8,8 @@ import TestsList from "../../containers/TestsList"
 import {Button} from 'react-bootstrap'
 import Notifications from 'react-notification-system-redux'
 import FontAwesome from 'react-fontawesome'
-import {Link} from "react-router-dom";
-
-import './style.css';
+import {Link} from "react-router-dom"
+import './style.css'
 
 class ChainEditorPage extends React.Component {
   constructor(props, context) {

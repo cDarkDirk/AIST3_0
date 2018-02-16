@@ -218,7 +218,7 @@ class FormBuilderPage extends React.Component {
         bsSize="large"
         className="pull-right"
         disabled={
-          !(chainIndex !== null && (formBuilderChains[chainIndex].modified || formBuilderChains[chainIndex].new))
+          !(chainIndex !== null && formBuilderChains[chainIndex].modified)
         }
       >
         Submit

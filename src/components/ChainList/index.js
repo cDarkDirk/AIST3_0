@@ -1,6 +1,9 @@
 import React from "react"
-import {ListGroup, ListGroupItem, Label} from 'react-bootstrap'
-
+import {
+  ListGroup,
+  ListGroupItem,
+  Label,
+} from 'react-bootstrap'
 import './style.css'
 
 const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected}) => {
@@ -22,4 +25,4 @@ const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected}) => {
     }
   </ListGroup>);
 };
-export default ChainList;
+export default ChainList

@@ -1,5 +1,8 @@
 import {connect} from 'react-redux'
-import {fetchChainTemplates, updateChainTemplate} from '../api'
+import {
+  fetchChainTemplates,
+  updateChainTemplate,
+} from '../api'
 import {
   chainTemplateNameChanged,
   deleteChainTemplate,
