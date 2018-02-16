@@ -34,19 +34,17 @@ const store = createStore(
 ReactDOM.render((
     <Provider store={store}>
       <div>
-
         <HashRouter history={history}>
           <Switch>
             <Route path="/testbuilder" component={TestBuilder}/>
             <Route path="/chaineditor" component={ChainEditorPage}/>}
             <Route path="/launcher" component={LauncherPage}/>
-            <Route path="/formbuilder" component={FormBuilderPage}/>
+            <Route path="/formbuilder/:chainIndex" component={FormBuilderPage}/>
             <Route path="/datadirectory" component={DataDirectoryPage}/>
             <Route path="/datatemplates" component={DataTemplatesBuilderPage}/>
             <Route exact path="/" component={HomePage}/>
           </Switch>
         </HashRouter>
-
       </div>
     </Provider>
   ),

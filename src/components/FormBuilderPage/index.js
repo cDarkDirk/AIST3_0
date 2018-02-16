@@ -43,6 +43,14 @@ class FormBuilderPage extends React.Component {
     this.setState({show: true});
   }
 
+  componentWillUpdate(nextProps, prevProps) {
+    const {formBuilderChains, match:{params:{chainIndex}}} = nextProps;
+    if (chainIndex && formBuilderChains && chainIndex !== prevProps.chainIndex) {
+      this.setState({
+        chainIndex
+      });
+    }
+  }
 
   componentDidMount() {
     this.props.fetchBuilderChains();

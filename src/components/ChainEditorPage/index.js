@@ -8,8 +8,9 @@ import TestsList from "../../containers/TestsList"
 import {Button} from 'react-bootstrap'
 import Notifications from 'react-notification-system-redux'
 import FontAwesome from 'react-fontawesome'
+import {Link} from "react-router-dom";
 
-import './style.css'
+import './style.css';
 
 class ChainEditorPage extends React.Component {
   constructor(props, context) {
@@ -36,7 +37,7 @@ class ChainEditorPage extends React.Component {
 
     render() {
         const {chainTemplate, chainTemplateNameChanged, deleteChainTemplate,
-            addChainTemplate, updateChainTemplate, notifications, chainTemplateMarkerChanged} = this.props;
+            addChainTemplate, updateChainTemplate, notifications, chainTemplateMarkerChanged, chainSelected} = this.props;
         return (
           <div className='container'>
             <Row>
@@ -73,7 +74,7 @@ class ChainEditorPage extends React.Component {
                 </Modal>
               </Col>
               <Col md={1}>
-                <Button bsStyle="primary">Редактирование формы<Glyphicon glyph="glyphicon glyphicon-arrow-right"/></Button>
+                <Link to={'/formbuilder/' + chainSelected}>Редактирование формы<Glyphicon glyph="glyphicon glyphicon-arrow-right"/></Link>
               </Col>
             </Row>
             <div style={{height: '10px'}}/>

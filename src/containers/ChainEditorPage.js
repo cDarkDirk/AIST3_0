@@ -11,7 +11,9 @@ import ChainEditorPage from '../components/ChainEditorPage'
 function mapStateToProps(state) {
   return {
     chainTemplate: state.chainTemplates.chainTemplates[state.chainTemplates.selectedChainTemplate] || {tests: []},
+    chainSelected: state.chainTemplates.selectedChainTemplate,
     notifications: state.notifications,
+
   }
 }
 
