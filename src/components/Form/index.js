@@ -29,7 +29,6 @@ class MyForm extends React.Component {
   render() {
     const {formName, formValues, onFormInputChange} = this.props;
     const formTemplate = this.props.formBuilderChains[formName];
-    console.log(formTemplate);
 
     const form = formTemplate ? (formTemplate.fields.map((field, index) => {
       if (field.type === "Input") {
@@ -42,8 +41,7 @@ class MyForm extends React.Component {
             </InputGroup>
           </FormGroup>
         )
-      }
-      if (field.type === "DropDown") {
+      } else if (field.type === "DropDown") {
         return (
           <FormGroup controlId="formHorizontalDropDown">
             <InputGroup>
@@ -58,8 +56,7 @@ class MyForm extends React.Component {
           </FormGroup>
 
         )
-      }
-      if (field.type === "DatePicker") {
+      } else if (field.type === "DatePicker") {
         return (
           <FormGroup controlId="calendar">
             <InputGroup>
@@ -73,6 +70,7 @@ class MyForm extends React.Component {
             </InputGroup>
           </FormGroup>)
       }
+      else return null;
     }).map((field, index) => {
       return (<Col md={6}>{field}</Col>)
     })) : (

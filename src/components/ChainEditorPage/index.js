@@ -38,7 +38,8 @@ class ChainEditorPage extends React.Component {
   render() {
     const {
       chainTemplate, chainTemplateNameChanged, deleteChainTemplate,
-      addChainTemplate, updateChainTemplate, notifications, chainTemplateMarkerChanged, chainSelected
+      addChainTemplate, updateChainTemplate, notifications, chainTemplateMarkerChanged, chainSelected,
+      chainName
     } = this.props;
     return (
       <div className='container'>
@@ -78,7 +79,7 @@ class ChainEditorPage extends React.Component {
           <Col md={2}>
             <Link to={'/formbuilder/' + chainSelected}>
               <Button bsStyle='primary'>
-                Редактирование формы<Glyphicon glyph="glyphicon glyphicon-arrow-right"/>
+                Редактирование формы &nbsp; <Glyphicon glyph="glyphicon glyphicon-arrow-right"/>
               </Button>
             </Link>
           </Col>
@@ -103,6 +104,7 @@ class ChainEditorPage extends React.Component {
               deleteChainTemplate={deleteChainTemplate}
               updateChainTemplate={updateChainTemplate}
               chainTemplateMarkerChanged={chainTemplateMarkerChanged}
+              chainName={chainName}
             />
 
             <ChainDisplay chainTemplate={chainTemplate}/>

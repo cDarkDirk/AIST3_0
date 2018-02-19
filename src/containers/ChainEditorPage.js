@@ -15,8 +15,8 @@ function mapStateToProps(state) {
   return {
     chainTemplate: state.chainTemplates.chainTemplates[state.chainTemplates.selectedChainTemplate] || {tests: []},
     chainSelected: state.chainTemplates.selectedChainTemplate,
+    chainName: state.chainTemplates.chainNames[state.chainTemplates.selectedChainTemplate] || '',
     notifications: state.notifications,
-
   }
 }
 

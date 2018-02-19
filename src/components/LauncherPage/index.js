@@ -1,5 +1,5 @@
 import React from "react";
-import {Row, Col} from "react-bootstrap"
+import {Row} from "react-bootstrap"
 import ScheduleForm from "../../containers/ScheduleForm"
 import Form from "../../containers/Form"
 import TemplateForm from "../../containers/TemplateForm"

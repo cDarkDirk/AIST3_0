@@ -14,7 +14,7 @@ import {
 const initialState = {
   chainTemplates: [],
   selectedChainTemplate: 0,
-  dirtyChainTemplateIndicies: {}
+  chainNames: [],
 };
 
 const chainTemplateReducer = (state = initialState, action) => {
@@ -25,9 +25,11 @@ const chainTemplateReducer = (state = initialState, action) => {
         chain.new = false;
         return chain;
       });
+      const chainNames = action.payload.map((chain) => chain.name);
       return {
         ...state,
         chainTemplates,
+        chainNames,
       }
     }
 
@@ -113,29 +115,34 @@ const chainTemplateReducer = (state = initialState, action) => {
     }
 
     case CHAIN_TEMPLATE_ADDED: {
-      return {
-        ...state,
-        selectedChainTemplate: 0,
-        chainTemplates: [{
+      const chainTemplates = [
+        {
           name: 'New Template',
           tests: [],
           fields:[],
           marker:'',
           modified: false,
           new: true,
-        },...state.chainTemplates]
+        },
+        ...state.chainTemplates];
+      const chainNames = chainTemplates.map(chain => chain.name);
+      return {
+        ...state,
+        selectedChainTemplate: 0,
+        chainTemplates,
+        chainNames,
       }
     }
 
     case SUBMIT_CHAIN_TEMPLATE_SUCCEED: {
       const chainTemplates = [...state.chainTemplates];
-      console.log(chainTemplates);
-      console.log(state.selectedChainTemplate);
       chainTemplates[state.selectedChainTemplate].modified = false;
       chainTemplates[state.selectedChainTemplate].new = false;
+      const chainNames = chainTemplates.map(chain => chain.name);
       return {
         ...state,
         chainTemplates,
+        chainNames,
       }
     }
 

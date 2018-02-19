@@ -74,34 +74,6 @@ export const fetchDataTemplatesList = () => (dispatch, getState) => {
     });
 };
 
-export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
-
-  const requestBody = {
-    name: chainTemplate.name,
-    marker: chainTemplate.marker,
-    fields: chainTemplate.fields,
-    tests: chainTemplate.tests,
-  };
-
-  if(chainTemplate.modified){
-    const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
-    axios.post(url, requestBody).then(function () {
-      dispatch(success({message: "Submit succeeded!"}));
-      dispatch(submitChainTemplateSucceed());
-    }).catch(function (response) {
-      dispatch(error({message: "Submit failed with error!" + response}));
-    });
-  }
-  if(chainTemplate.new){
-    const url = `${BACKEND_URL}/chain_templates`;
-    axios.put(url, requestBody).then(function () {
-      dispatch(success({message: "Submit succeeded!"}));
-      dispatch(submitChainTemplateSucceed());
-    }).catch(function (response) {
-      dispatch(error({message: "Submit failed with error!" + response}));
-    });
-  }
-};
 
 export const fetchFormTemplate = (formName) => (dispatch) => {
   const url = `${BACKEND_URL}/forms/${formName}`;
@@ -143,6 +115,42 @@ export const fetchChainTemplates = () => (dispatch, getState) => {
   }).catch(function (response) {
     dispatch(error({message: "Fetch failed with error!" + response}));
   });
+};
+
+/**
+ * Chain builder page
+ * update chain if modified
+ * insert chain if new
+ */
+export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
+
+  const requestBody = {
+    name: chainTemplate.value.name,
+    marker: chainTemplate.value.marker,
+    fields: chainTemplate.value.fields,
+    tests: chainTemplate.value.tests,
+  };
+
+  console.log(chainTemplate);
+
+  if(chainTemplate.value.modified){
+    const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
+    axios.post(url, requestBody).then(function () {
+      dispatch(success({message: "Submit succeeded!"}));
+      dispatch(submitChainTemplateSucceed());
+    }).catch(function (response) {
+      dispatch(error({message: "Submit failed with error!" + response}));
+    });
+  }
+  if(chainTemplate.value.new){
+    const url = `${BACKEND_URL}/chain_templates`;
+    axios.put(url, requestBody).then(function () {
+      dispatch(success({message: "Submit succeeded!"}));
+      dispatch(submitChainTemplateSucceed());
+    }).catch(function (response) {
+      dispatch(error({message: "Submit failed with error!" + response}));
+    });
+  }
 };
 
 /**
@@ -294,6 +302,7 @@ export const submitDataTemplates = (submitData) => (dispatch) => {
 };
 
 export const filterDirectoryData = (filterData) => (dispatch) => {
+  //TODO Добавить коментарий с описанием метода
 
   const url = `${BACKEND_URL}/filterDataDirectory`;
 

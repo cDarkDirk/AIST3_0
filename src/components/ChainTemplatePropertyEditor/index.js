@@ -15,8 +15,15 @@ import './style.css'
 const confirm = createConfirmation(ConfirmationDialog, 0);
 
 
-const ChainTemplatePropertyEditor = ({chainTemplate, chainTemplateMarkerChanged, onNameChange, deleteChainTemplate, updateChainTemplate}) => {
-
+const ChainTemplatePropertyEditor = ({
+                                       chainTemplate,
+                                       chainTemplateMarkerChanged,
+                                       onNameChange,
+                                       deleteChainTemplate,
+                                       updateChainTemplate,
+                                       chainName,
+                                     }) => {
+  console.log(chainName);
   const deleteChain = () => {
     confirm({confirmation: `Do you really want to delete ${chainTemplate.name}?`}).then(
       () => deleteChainTemplate(chainTemplate),
@@ -35,6 +42,7 @@ const ChainTemplatePropertyEditor = ({chainTemplate, chainTemplateMarkerChanged,
               <InputGroup.Addon>Name</InputGroup.Addon>
               <FormControl
                 type="text"
+
                 value={chainTemplate.name}
                 placeholder="Chain Name"
                 onChange={e => onNameChange(e.target.value)}/>
@@ -52,7 +60,10 @@ const ChainTemplatePropertyEditor = ({chainTemplate, chainTemplateMarkerChanged,
             className='chain-template-property-editor-button'
             bsStyle='primary'
             disabled={disableSubmit}
-            onClick={() => updateChainTemplate(chainTemplate)}>
+            onClick={() => updateChainTemplate({
+              name: chainName,
+              value: chainTemplate,
+            })}>
             <FontAwesome name='floppy-o'/> SUBMIT</Button> : null}</Col>
       </Row>
       <Row>
