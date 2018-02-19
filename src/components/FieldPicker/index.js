@@ -8,8 +8,8 @@ import {
   FormControl,
   Button,
   Glyphicon,
-} from "react-bootstrap";
-import DropdownRow from "./DropdownRow";
+} from "react-bootstrap"
+import DropdownRow from "./DropdownRow"
 
 class FieldPicker extends React.Component {
 
@@ -28,9 +28,9 @@ class FieldPicker extends React.Component {
     }
   };
 
-  onFieldRemoveHandler =(ind)=> {
+  onFieldRemoveHandler = (ind) => {
     this.props.onFieldRemove(ind);
-};
+  };
 
   getHandlerDropdownChange(index) {
     return (field) => {
@@ -130,7 +130,8 @@ class FieldPicker extends React.Component {
         case 'DatePicker': {
           return this.renderDatePicker(field, index);
         }
-        default: return null;
+        default:
+          return null;
       }
 
     })

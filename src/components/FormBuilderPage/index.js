@@ -43,6 +43,14 @@ class FormBuilderPage extends React.Component {
     this.setState({show: true});
   }
 
+  componentWillUpdate(nextProps, prevProps) {
+    const {formBuilderChains, match:{params:{chainIndex}}} = nextProps;
+    if (chainIndex && formBuilderChains && chainIndex !== prevProps.chainIndex) {
+      this.setState({
+        chainIndex
+      });
+    }
+  }
 
   componentDidMount() {
     this.props.fetchBuilderChains();
@@ -177,7 +185,13 @@ class FormBuilderPage extends React.Component {
             </MenuItem>
           )
         })}
-      </DropdownButton>,<Button className="pull-right" onClick={this.handleShow}>
+      </DropdownButton>,
+      <span style={{marginLeft: '20px'}}>
+        {chainIndex !== null
+        && formBuilderChains[chainIndex].modified
+        && <Label bsStyle="warning">Modified</Label>}
+        </span>,
+      <Button className="pull-right" onClick={this.handleShow}>
         <Glyphicon glyph='glyphicon glyphicon-question-sign'/>
       </Button>,
       <div className="clearfix"/>,
@@ -195,15 +209,20 @@ class FormBuilderPage extends React.Component {
         <Modal.Footer>
           <Button onClick={this.handleClose}>Закрыть</Button>
         </Modal.Footer>
-      </Modal>,
-      <span style={{marginLeft: '20px'}}>
-        {chainIndex !== null
-        && formBuilderChains[chainIndex].modified
-        && <Label bsStyle="warning">Modified</Label>}
-        </span>
+      </Modal>
     ];
     const submitBtn = [
-      <Button onClick={this.submitChanges} bsStyle="success" bsSize="large" className="pull-right">Submit</Button>,
+      <Button
+        onClick={this.submitChanges}
+        bsStyle="success"
+        bsSize="large"
+        className="pull-right"
+        disabled={
+          !(chainIndex !== null && formBuilderChains[chainIndex].modified)
+        }
+      >
+        Submit
+      </Button>,
       <div className="clearfix"/>
     ];
     return (

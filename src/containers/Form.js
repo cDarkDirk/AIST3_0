@@ -1,7 +1,10 @@
 import {connect} from 'react-redux'
 import {onFormInputChange} from '../actions'
 import Form from '../components/Form'
-import {fetchBuilderChains, fetchFormTemplate, submitFormTemplate} from '../api'
+import {
+  fetchBuilderChains,
+  submitFormTemplate,
+} from '../api'
 
 function mapStateToProps(state, ownProps) {
   return {

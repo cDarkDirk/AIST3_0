@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   Panel,
   Grid,
@@ -14,10 +14,10 @@ import {
   Label,
   Glyphicon,
   Modal
-} from 'react-bootstrap';
-import 'react-select/dist/react-select.css';
-import Select from 'react-select';
-import Notifications from 'react-notification-system-redux';
+} from 'react-bootstrap'
+import 'react-select/dist/react-select.css'
+import Select from 'react-select'
+import Notifications from 'react-notification-system-redux'
 
 class TestBuilderPage extends React.Component {
   constructor(props, context) {
@@ -191,12 +191,16 @@ class TestBuilderPage extends React.Component {
         bsStyle="success"
         bsSize="large"
         className="pull-right"
+        disabled={!(selectedTestIndex !== null && (testBuilderTests[selectedTestIndex].modified || testBuilderTests[selectedTestIndex].new))}
         onClick={()=> submitCurrentTest({
           test: testBuilderTests[selectedTestIndex],
           id: testNamesForDropdown[selectedTestIndex].test_id
         })}
-      >SUBMIT</Button>,
-      <div className="clearfix"/>];
+      >
+        SUBMIT
+      </Button>,
+      <div className="clearfix"/>
+    ];
 
     return (
       <div>

@@ -4,7 +4,8 @@ import {
   DATA_TEMPLATES_INPUT_CHANGE,
   DATA_TEMPLATE_NAME_CHANGED,
   NEW_DATA_TEMPLATE_ADDED,
-  NEW_DATA_TEMPLATE_PARAM_ADDED, UPDATE_DATA_TEMPLATE_SUCCESS,
+  NEW_DATA_TEMPLATE_PARAM_ADDED,
+  UPDATE_DATA_TEMPLATE_SUCCESS,
 } from '../constants'
 
 const initialState = {
@@ -41,12 +42,14 @@ const dataTemplatesBuilderReducer = (state = initialState, action) => {
         dataTemplatesNames,
       }
     }
+
     case DATA_TEMPLATE_SELECTED: {
       return{
         ...state,
         selectedTemplateIndex: action.payload,
       }
     }
+
     case DATA_TEMPLATES_INPUT_CHANGE: {
       const dataTemplates = [...state.dataTemplates];
       const {name, value, index} = action.payload;
@@ -59,6 +62,7 @@ const dataTemplatesBuilderReducer = (state = initialState, action) => {
         dataTemplates,
       }
     }
+
     case DATA_TEMPLATE_NAME_CHANGED: {
       const dataTemplates = [...state.dataTemplates];
       dataTemplates[state.selectedTemplateIndex].name = action.payload;
@@ -70,6 +74,7 @@ const dataTemplatesBuilderReducer = (state = initialState, action) => {
         dataTemplates,
       }
     }
+
     case NEW_DATA_TEMPLATE_ADDED: {
       const newEntry = {
         name: 'new template',
@@ -84,6 +89,7 @@ const dataTemplatesBuilderReducer = (state = initialState, action) => {
         dataTemplatesNames: [newEntry.name, ...state.dataTemplatesNames],
       }
     }
+
     case NEW_DATA_TEMPLATE_PARAM_ADDED: {
       const dataTemplates = [...state.dataTemplates];
       const newEntry = {key: 'key', value: 'value'};

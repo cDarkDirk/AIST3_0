@@ -2,7 +2,7 @@ import {
     FORM_TEMPLATE_FETCH_SUCCSEED,
 } from '../constants'
 
-const initialState = null
+const initialState = null;
 
 const formTemplateReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -13,6 +13,6 @@ const formTemplateReducer = (state = initialState, action) => {
         default:
             return state
     }
-}
+};
 
 export default formTemplateReducer

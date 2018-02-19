@@ -1,11 +1,15 @@
 import {connect} from 'react-redux'
 import TestBuilderPage from '../components/TestBuilder'
-import {testBuilderDataFetch, submitTest} from "../api";
+import {
+  testBuilderDataFetch,
+  submitTest,
+} from "../api"
+
 import {
   testSelected,
   testBuilderFormInputChanged,
   newTestAdded,
-} from "../actions";
+} from "../actions"
 
 function mapStateToProps(state) {
   return {

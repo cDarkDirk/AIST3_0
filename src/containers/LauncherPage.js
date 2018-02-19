@@ -1,8 +1,7 @@
 import {connect} from 'react-redux'
-
 import LauncherPage from '../components/LauncherPage'
-import {selectChainForm} from "../actions";
-import {fetchBuilderChains} from "../api";
+import {selectChainForm} from "../actions"
+import {fetchBuilderChains} from "../api"
 
 function mapStateToProps(state) {
   return {

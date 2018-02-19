@@ -1,9 +1,15 @@
-import React from "react";
-import {Row, Col, Grid, FormControl, FormGroup, ControlLabel, Form, Checkbox, Button, Dropdown} from "react-bootstrap"
+import React from "react"
+import {
+  Row,
+  Col,
+  FormControl,
+  FormGroup,
+  ControlLabel,
+} from "react-bootstrap"
 import DatePicker from "react-datepicker"
-import 'react-datepicker/dist/react-datepicker.css';
-import TimePicker from 'rc-time-picker';
-import 'rc-time-picker/assets/index.css';
+import 'react-datepicker/dist/react-datepicker.css'
+import TimePicker from 'rc-time-picker'
+import 'rc-time-picker/assets/index.css'
 import {Jumbotron} from 'react-bootstrap'
 
 
@@ -29,7 +35,7 @@ const ScheduleForm = function (props) {
                 <Col sm={3}>
                   <div>
                     <DatePicker onChange={props.changeDate}
-                                selected={props.date}></DatePicker>
+                                selected={props.date}/>
                   </div>
                 </Col>
 
@@ -40,7 +46,7 @@ const ScheduleForm = function (props) {
 
                 <Col sm={2}>
                   <div>
-                    <TimePicker value={props.time} onChange={props.changeTime}></TimePicker>
+                    <TimePicker value={props.time} onChange={props.changeTime}/>
                   </div>
                 </Col>
 

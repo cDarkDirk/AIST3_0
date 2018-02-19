@@ -13,7 +13,6 @@ const initialState = {
 const formBuilderReducer = (state = initialState, action) => {
   switch (action.type) {
     case FORM_BUILDER_CHAINS_FETCH_SUCCEED: {
-      console.log(action.payload);
       return {
         ...state,
         formBuilderChains: action.payload
@@ -61,4 +60,5 @@ const formBuilderReducer = (state = initialState, action) => {
   }
 
 };
+
 export default formBuilderReducer

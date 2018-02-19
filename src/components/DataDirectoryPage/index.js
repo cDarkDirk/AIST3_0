@@ -1,14 +1,14 @@
-import React from 'react';
+import React from 'react'
 import {
   MenuItem,
   DropdownButton,
   Panel,
   Grid,
   Label,
-} from 'react-bootstrap';
+} from 'react-bootstrap'
 import Notifications from 'react-notification-system-redux'
 
-import {filterDirectoryData} from '../../api';
+import {filterDirectoryData} from '../../api'
 
 class DataDirectoryPage extends React.Component {
 

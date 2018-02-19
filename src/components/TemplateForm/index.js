@@ -1,19 +1,11 @@
 import React from 'react'
-import {fetchDataTemplatesList} from "../../api";
 import {
   Jumbotron,
-  Row,
   Col,
-  Grid,
-  FormControl,
   FormGroup,
   ControlLabel,
-  Form,
-  Checkbox,
-  Button,
-  Dropdown
 } from "react-bootstrap"
-import Select from 'react-select';
+import Select from 'react-select'
 
 
 const TemplateForm = function (props) {
@@ -44,6 +36,6 @@ const TemplateForm = function (props) {
       </FormGroup>
     </Jumbotron>
   )
-}
+};
 
 export default TemplateForm

@@ -1,11 +1,11 @@
 import {connect} from 'react-redux'
 import FormBuilderPage from '../components/FormBuilderPage'
-import {fetchBuilderChains, updateChainForm} from "../api";
+import {fetchBuilderChains, updateChainForm} from "../api"
 import {
   newFieldAdded,
   onFieldsValuesUpdate,
   fieldWasRemoved,
-} from "../actions";
+} from "../actions"
 
 function mapStateToProps(state) {
   return {
