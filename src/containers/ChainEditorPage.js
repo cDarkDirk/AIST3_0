@@ -1,5 +1,8 @@
 import {connect} from 'react-redux'
-import {fetchChainTemplates, updateChainTemplate} from '../api'
+import {
+  fetchChainTemplates,
+  updateChainTemplate,
+} from '../api'
 import {
   chainTemplateNameChanged,
   deleteChainTemplate,
@@ -11,6 +14,8 @@ import ChainEditorPage from '../components/ChainEditorPage'
 function mapStateToProps(state) {
   return {
     chainTemplate: state.chainTemplates.chainTemplates[state.chainTemplates.selectedChainTemplate] || {tests: []},
+    chainSelected: state.chainTemplates.selectedChainTemplate,
+    chainName: state.chainTemplates.chainNames[state.chainTemplates.selectedChainTemplate] || '',
     notifications: state.notifications,
     owner: state.dataAuthorization.paramNames.name
   }

@@ -1,10 +1,10 @@
 import React from 'react'
 import {Modal, Button} from 'react-bootstrap'
-import { confirmable } from 'react-confirm';
+import {confirmable} from 'react-confirm'
 
 
 
-const ConfirmationDialog = ({show, proceed, dismiss, cancel, confirmation, options}) => {
+const ConfirmationDialog = ({show, proceed, dismiss, cancel, confirmation}) => {
   return (
   <div className="static-modal">
     <Modal.Dialog>
@@ -22,6 +22,6 @@ const ConfirmationDialog = ({show, proceed, dismiss, cancel, confirmation, optio
       </Modal.Footer>
 
     </Modal.Dialog>
-  </div>)}
+  </div>)};
 
 export default confirmable(ConfirmationDialog)

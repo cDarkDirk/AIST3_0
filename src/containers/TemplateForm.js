@@ -6,14 +6,14 @@ import {fetchDataTemplatesList} from '../api'
 function mapStateToProps(state, ownProps) {
     return {
         dataTemplates: state.dataTemplate.dataTemplates,
-        choosenDataTemplates: state.dataTemplate.choosenDataTemplates
+        choosenDataTemplates: state.dataTemplate.choosenDataTemplates,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         onTemplateFormInputChange: (value, paramName, formName) => dispatch(onTemplateFormInputChange(value, paramName, formName)),
-        fetchDataTemplatesList: () => dispatch(fetchDataTemplatesList())
+        fetchDataTemplatesList: () => dispatch(fetchDataTemplatesList()),
     }
 }
 

@@ -8,7 +8,7 @@ function mapStateToProps(state) {
         tests: state.test,
         selectedChainTemplate: state.chainTemplates.chainTemplates[state.chainTemplates.selectedChainTemplate] || {
             tests: []
-        }
+        },
     }
 }
 

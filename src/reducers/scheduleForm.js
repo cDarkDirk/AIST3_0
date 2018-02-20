@@ -1,8 +1,10 @@
 import {
-  SCHEDULE_DATE_CHANGED, SCHEDULE_TIME_CHANGED, SCHEDULE_AMOUNT_OF_TIMES_CHANGED
+  SCHEDULE_DATE_CHANGED,
+  SCHEDULE_TIME_CHANGED,
+  SCHEDULE_AMOUNT_OF_TIMES_CHANGED,
 } from '../constants'
 
-const initialState = {scheduleDate: "", amountOfTimes: "1"}
+const initialState = {scheduleDate: "", amountOfTimes: "1"};
 
 const scheduleForm = (state = initialState, action) => {
   switch (action.type) {
@@ -21,6 +23,6 @@ const scheduleForm = (state = initialState, action) => {
 
   }
 
-}
+};
 
 export default scheduleForm

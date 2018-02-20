@@ -6,10 +6,8 @@ import {
   FORM_TEMPLATE_FETCH_FAIL,
   CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
   SCHEDULE_DATE_CHANGED,
-  CHAIN_EDITOR_TEMPLATE_FETCH_FAIL,
   SCHEDULE_TIME_CHANGED,
   TEST_FETCH_SUCCEED,
-  TEST_FETCH_FAIL,
   DATA_TEMPLATE_LIST_SUCCEED,
   DATA_TEMPLATE_LIST_FAIL,
   CHAIN_TEMPLATE_DELETED,
@@ -17,20 +15,15 @@ import {
   CHAIN_TEMPLATE_NAME_CHANGED,
   TEST_BLOCK_CLICKED,
   CLOSE_BUTTON_CLICKED,
-  SUBMIT_CHAIN_TEMPLATE_FAIL,
   SUBMIT_CHAIN_TEMPLATE_SUCCEED,
   FORM_BUILDER_CHAINS_FETCH_SUCCEED,
-  FORM_BUILDER_CHAINS_FETCH_FAIL,
   UPDATE_CHAIN_FORM_SUCCEED,
-  UPDATE_CHAIN_FORM_FAIL,
   NEW_FIELD_ADDED,
   ON_FIELDS_VALUES_UPDATE,
   FIELD_WAS_REMOVED,
   SCHEDULE_AMOUNT_OF_TIMES_CHANGED,
-  SUBMIT_BUTTON_CLICKED,
   TEMPLATE_FORM_INPUT_CHANGE,
   TEST_BUILDER_TESTS_FETCH_SUCCEED,
-  TEST_BUILDER_TESTS_FETCH_FAIL,
   TEST_SELECTED,
   TEST_BUILDER_FORM_INPUT_CHANGED,
   ADD_NEW_TEST,
@@ -41,7 +34,8 @@ import {
   DATA_TEMPLATE_NAME_CHANGED,
   NEW_DATA_TEMPLATE_ADDED,
   NEW_DATA_TEMPLATE_PARAM_ADDED,
-  CHAIN_TEMPLATE_MARKER_CHANGED, UPDATE_DATA_TEMPLATE_SUCCESS,
+  CHAIN_TEMPLATE_MARKER_CHANGED,
+  UPDATE_DATA_TEMPLATE_SUCCESS,
   LOGIN_BUTTON_CLICKED,
   LOGIN_PASSWORD_CHANGE,
 } from './constants'
@@ -127,14 +121,8 @@ export const closeButtonClicked = (payload) => ({
   payload: payload
 });
 
-export const submitChainTemplateFail = (payload) => ({
-  type: SUBMIT_CHAIN_TEMPLATE_FAIL,
-  payload: payload
-});
-
-export const submitChainTemplateSucceed = (payload) => ({
+export const submitChainTemplateSucceed = () => ({
   type: SUBMIT_CHAIN_TEMPLATE_SUCCEED,
-  payload: payload
 });
 
 export const changeDate = (payload) => ({
@@ -145,7 +133,7 @@ export const changeDate = (payload) => ({
 export const changeTime = (payload) => ({
     type: SCHEDULE_TIME_CHANGED,
     payload: payload
-})
+});
 export const changeAmountOfTimes = (payload) => ({
   type: SCHEDULE_AMOUNT_OF_TIMES_CHANGED,
   payload: payload
@@ -183,11 +171,6 @@ export const fieldWasRemoved = (payload) => ({
 
 export const testBuilderTestsFetchSucceed = (payload) => ({
   type: TEST_BUILDER_TESTS_FETCH_SUCCEED,
-  payload: payload
-});
-
-export const testBuilderTestsFetchFail = (payload) => ({
-  type: TEST_BUILDER_TESTS_FETCH_FAIL,
   payload: payload
 });
 

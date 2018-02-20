@@ -1,17 +1,20 @@
-import React from 'react';
+import React from 'react'
 import {
   Button,
   Col,
-  Form, FormControl,
-  FormGroup, Glyphicon,
-  Grid, InputGroup,
+  Form,
+  FormControl,
+  FormGroup,
+  Glyphicon,
+  Grid,
+  InputGroup,
   Label,
   ListGroupItem,
   Panel,
   Row,
   Modal,
-} from "react-bootstrap";
-import Notifications from 'react-notification-system-redux';
+} from "react-bootstrap"
+import Notifications from 'react-notification-system-redux'
 
 class DataTemplatesBuilderPage extends React.Component {
 
@@ -33,6 +36,7 @@ class DataTemplatesBuilderPage extends React.Component {
   handleShow() {
     this.setState({show: true});
   }
+
   componentDidMount() {
     this.props.fetchDataTemplates();
   }
@@ -123,72 +127,50 @@ class DataTemplatesBuilderPage extends React.Component {
     ));
   }
 
-  renderSubmitButton() {
-    const {dataTemplates, selectedTemplateIndex, submitTemplate, dataTemplatesNames} = this.props;
-    return (
-      selectedTemplateIndex !== null
-        && (dataTemplates[selectedTemplateIndex].modified
-        || dataTemplates[selectedTemplateIndex].new)?
-        [<Button
-          bsStyle="success"
-          bsSize="large"
-          className="pull-right"
-          onClick={() => {submitTemplate({
-            value: dataTemplates[selectedTemplateIndex],
-            name: dataTemplatesNames[selectedTemplateIndex],
-          })}}
-        >
-          Submit
-        </Button>,
-          <div className="clearfix"/>
-        ]
-
-  : null
-    )
-  }
-
   render() {
     const {addNewTemplate, dataTemplates, selectedTemplateIndex, submitTemplate, dataTemplatesNames} = this.props;
     const submit = (
-          [ <Button className="pull-left" onClick={this.handleShow}>
-            <Glyphicon glyph='glyphicon glyphicon-question-sign'/>
-          </Button>,
+      [<Button className="pull-left" onClick={this.handleShow}>
+        <Glyphicon glyph='glyphicon glyphicon-question-sign'/>
+      </Button>,
 
-            <Button
-            bsStyle="success"
-            bsSize="large"
-            className="pull-right"
-            disabled={!(selectedTemplateIndex !== null
-              && (dataTemplates[selectedTemplateIndex].modified
-                || dataTemplates[selectedTemplateIndex].new))}
-            onClick={() => {submitTemplate({
+        <Button
+          bsStyle="success"
+          bsSize="large"
+          className="pull-right"
+          disabled={!(selectedTemplateIndex !== null
+            && (dataTemplates[selectedTemplateIndex].modified
+              || dataTemplates[selectedTemplateIndex].new))}
+          onClick={() => {
+            submitTemplate({
               value: dataTemplates[selectedTemplateIndex],
               name: dataTemplatesNames[selectedTemplateIndex],
-            })}}
-          >
-            Submit
-          </Button>,
-            <Modal show={this.state.show} onHide={this.handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title><strong>Конструктор тестов</strong></Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <p>Чтобы редактировать тест, необходимо:</p>
-                <li type="square">Выбрать тест из списка слева</li>
-                <li type="square">Заполнить необходимые параметры теста в форме справа</li>
-                <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Submit</li>
-                <br/>
-                <p>Чтобы создать тест, необходимо:</p>
-                <li type="square">Нажать кнопку Add new test</li>
-                <li type="square">Заполнить необходимые параметры теста в форме справа</li>
-                <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Submit</li>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button onClick={this.handleClose}>Закрыть</Button>
-              </Modal.Footer>
-            </Modal>,
-            <div className="clearfix"/>
-          ]
+            })
+          }}
+        >
+          Submit
+        </Button>,
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title><strong>Конструктор тестов</strong></Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Чтобы редактировать тест, необходимо:</p>
+            <li type="square">Выбрать тест из списка слева</li>
+            <li type="square">Заполнить необходимые параметры теста в форме справа</li>
+            <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Submit</li>
+            <br/>
+            <p>Чтобы создать тест, необходимо:</p>
+            <li type="square">Нажать кнопку Add new test</li>
+            <li type="square">Заполнить необходимые параметры теста в форме справа</li>
+            <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Submit</li>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.handleClose}>Закрыть</Button>
+          </Modal.Footer>
+        </Modal>,
+        <div className="clearfix"/>
+      ]
     );
     return (
       <div>

@@ -1,15 +1,30 @@
 import React from 'react'
-import {Row, Col, Button, FormGroup, FormControl, InputGroup} from 'react-bootstrap'
+import {
+  Row,
+  Col,
+  Button,
+  FormGroup,
+  FormControl,
+  InputGroup,
+} from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import ConfirmationDialog from '../ConfirmationDialog'
-import {createConfirmation} from 'react-confirm';
+import {createConfirmation} from 'react-confirm'
 import './style.css'
 
 const confirm = createConfirmation(ConfirmationDialog, 0);
 
 
-const ChainTemplatePropertyEditor = ({chainTemplate, chainTemplateMarkerChanged, onNameChange, deleteChainTemplate, updateChainTemplate, owner}) => {
-
+const ChainTemplatePropertyEditor = ({
+                                       chainTemplate,
+                                       chainTemplateMarkerChanged,
+                                       onNameChange,
+                                       deleteChainTemplate,
+                                       updateChainTemplate,
+                                       chainName,
+                                       owner,
+                                     }) => {
+  console.log(chainName);
   const deleteChain = () => {
     if (chainTemplate.owner  === owner) {
       confirm({confirmation: `Do you really want to delete ${chainTemplate.name}?`}).then(
@@ -19,12 +34,7 @@ const ChainTemplatePropertyEditor = ({chainTemplate, chainTemplateMarkerChanged,
     }
   };
 
-  /*const SubmitChain = () => {
-    confirm({confirmation: `Do you really want to submit ${chainTemplate.name}?`}).then(
-      () => updateChainTemplate(chainTemplate),
-      () => {
-      })
-  };*/
+  const disableSubmit = !(chainTemplate.modified || chainTemplate.new);
 
   return (
     <div>
@@ -35,6 +45,7 @@ const ChainTemplatePropertyEditor = ({chainTemplate, chainTemplateMarkerChanged,
               <InputGroup.Addon>Name</InputGroup.Addon>
               <FormControl
                 type="text"
+
                 value={chainTemplate.name}
                 placeholder="Chain Name"
                 onChange={e => onNameChange(e.target.value)}/>
@@ -51,7 +62,11 @@ const ChainTemplatePropertyEditor = ({chainTemplate, chainTemplateMarkerChanged,
           <Button
             className='chain-template-property-editor-button'
             bsStyle='primary'
-            onClick={() => updateChainTemplate(chainTemplate)}>
+            disabled={disableSubmit}
+            onClick={() => updateChainTemplate({
+              name: chainName,
+              value: chainTemplate,
+            })}>
             <FontAwesome name='floppy-o'/> SUBMIT</Button> : null}</Col>
       </Row>
       <Row>
