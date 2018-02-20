@@ -17,6 +17,7 @@ import {
 } from './actions'
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
+import createHistory from 'history/createBrowserHistory';
 
 export const submitFormTemplate = (formName, formTemplate, sheduleList, templates) => (dispatch) => {
 
@@ -83,30 +84,33 @@ const fetchUtil = (url, method = 'GET', data = {}) => {
 
 export const updateLoginSucceed = (history) =>() => {
   // console.log("ЕЕЕ  РОК");
-  history.push('/homepage');
+  console.log(history);
+  history.push('#/homepage');
 };
 
-// export const logFunction = (payload,history,publicKey) => (dispatch) => {
-//   var a = JSON.stringify(publicKey);
-//   var RSAKey = require('react-native-rsa');
-//   var rsa = new RSAKey();
-//   rsa.setPublicString(a);
-//   payload.password = rsa.encrypt(payload.password);
-//   dispatch(updateLoginForm(payload, history))
-// }
-//
-// export const getPublicKey = (payload, history) =>(dispatch) =>{
-//   if (payload.name === "" || payload.password === "") {
-//     dispatch(error({message: "Error: Not all fields was filled"}));
-//     return;
-//   }
-//   const url = `${BACKEND_URL}/login`;
-//   axios.get(url).then(function (response) {
-//     dispatch(logFunction(payload,history,response.data))
-//   }).catch(function (response) {
-//     dispatch(error({message: "Fetch failed with error!" + response}));
-//   });
-// };
+export const logFunction = (payload,history,publicKey) => (dispatch) => {
+  var a = JSON.stringify(publicKey);
+  var RSAKey = require('react-native-rsa');
+  var rsa = new RSAKey();
+  rsa.setPublicString(a);
+  payload.password = rsa.encrypt(payload.password);
+  console.log(payload.password);
+  dispatch(updateLoginForm(payload, history))
+
+}
+
+export const getPublicKey = (payload, history) =>(dispatch) =>{
+  if (payload.name === "" || payload.password === "") {
+    dispatch(error({message: "Error: Not all fields was filled"}));
+    return;
+  }
+  const url = `${BACKEND_URL}/login`;
+  axios.get(url).then(function (response) {
+    dispatch(logFunction(payload,history,response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
 export const putToken = (tokener) => (dispatch) => {
   // console.log(tokener);
 
@@ -125,6 +129,7 @@ export const updateLoginForm = (payload, history) => (dispatch) => {
 
   axios.post(url,payload).then(function (response) {
     dispatch(putToken(response.data.token))
+    console.log(history);
     history.push('/homepage');
   }).catch(function (response) {
     dispatch(error({message: "Fetch failed with error!" + response}));

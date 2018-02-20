@@ -5,7 +5,7 @@ import {Provider} from 'react-redux'
 import thunk from 'redux-thunk'
 import {createBrowserHistory} from 'history'
 import {Route, Switch} from 'react-router'
-import {HashRouter} from 'react-router-dom'
+import {HashRouter, Router} from 'react-router-dom'
 import rootReducer from './reducers'
 import HomePage from './containers/HomePage'
 import ChainEditorPage from './containers/ChainEditorPage'
@@ -38,7 +38,7 @@ ReactDOM.render((
     <Provider store={store}>
       <div>
 
-        <HashRouter history={history}>
+        <Router history={history}>
           <Switch>
             <Route path="/testbuilder" component={TestBuilder}/>
             <Route path="/chaineditor" component={ChainEditorPage}/>}
@@ -50,7 +50,7 @@ ReactDOM.render((
             <Route path="/registration" component={RegistrationPage}/>
             <Route exact path="/" component={AuthorizationPage}/>
           </Switch>
-        </HashRouter>
+        </Router>
 
       </div>
     </Provider>
