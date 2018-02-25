@@ -37,7 +37,8 @@ ReactDOM.render((
         <HashRouter /*history={history}*/>
           <Switch>
             <Route path="/testbuilder" component={TestBuilder}/>
-            <Route path="/chaineditor" component={ChainEditorPage}/>}
+            <Route exact path="/chaineditor" component={ChainEditorPage}/>}
+            <Route path="/chaineditor/:chainIndex" component={ChainEditorPage}/>}
             <Route path="/launcher" component={LauncherPage}/>
             <Route exact path="/formbuilder" component={FormBuilderPage}/>
             <Route path="/formbuilder/:chainIndex" component={FormBuilderPage}/>
