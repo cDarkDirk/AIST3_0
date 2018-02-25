@@ -15,6 +15,7 @@ const initialState = {
   chainTemplates: [],
   selectedChainTemplate: 0,
   chainNames: [],
+  dirtyChainTemplateIndicies: {},
 };
 
 const chainTemplateReducer = (state = initialState, action) => {
@@ -52,7 +53,11 @@ const chainTemplateReducer = (state = initialState, action) => {
           ...state.chainTemplates.slice(0, sel),
           {...state.chainTemplates[sel],  tests, modified},
           ...state.chainTemplates.slice(sel + 1, state.chainTemplates.length)
-        ]
+        ],
+        dirtyChainTemplateIndicies: {
+          ...state.dirtyChainTemplateIndicies,
+          [sel]: true
+        }
       }
     }
 
@@ -70,7 +75,11 @@ const chainTemplateReducer = (state = initialState, action) => {
       };
       return {
         ...state,
-        chainTemplates: allChainTemplates
+        chainTemplates: allChainTemplates,
+        dirtyChainTemplateIndicies: {
+          ...state.dirtyChainTemplateIndicies,
+          [selectedTemplateIndex]: true
+        }
       }
     }
 
@@ -88,6 +97,10 @@ const chainTemplateReducer = (state = initialState, action) => {
       return {
         ...state,
         chainTemplates,
+        dirtyChainTemplateIndicies: {
+          ...state.dirtyChainTemplateIndicies,
+          [selectedTemplateIndex]: true
+        }
       }
     }
 
@@ -103,6 +116,10 @@ const chainTemplateReducer = (state = initialState, action) => {
       return {
         ...state,
         chainTemplates,
+        dirtyChainTemplateIndicies: {
+          ...state.dirtyChainTemplateIndicies,
+          [sel]: true
+        }
       }
     }
 
@@ -111,6 +128,10 @@ const chainTemplateReducer = (state = initialState, action) => {
         ...state,
         selectedChainTemplate: 0,
         chainTemplates: state.chainTemplates.filter(t => t.name !== action.payload.name),
+        dirtyChainTemplateIndicies: {
+          ...state.dirtyChainTemplateIndicies,
+          [state.selectedChainTemplate]: false
+        }
       }
     }
 
@@ -131,6 +152,10 @@ const chainTemplateReducer = (state = initialState, action) => {
         selectedChainTemplate: 0,
         chainTemplates,
         chainNames,
+        dirtyChainTemplateIndicies: {
+          ...state.dirtyChainTemplateIndicies,
+          [state.chainTemplates.length]: true
+        }
       }
     }
 
@@ -143,6 +168,10 @@ const chainTemplateReducer = (state = initialState, action) => {
         ...state,
         chainTemplates,
         chainNames,
+        dirtyChainTemplateIndicies: {
+          ...state.dirtyChainTemplateIndicies,
+          [state.selectedChainTemplate]: false
+        }
       }
     }
 
@@ -158,6 +187,10 @@ const chainTemplateReducer = (state = initialState, action) => {
       return {
         ...state,
         chainTemplates,
+        dirtyChainTemplateIndicies: {
+          ...state.dirtyChainTemplateIndicies,
+          [state.selectedChainTemplate]: false
+        }
       }
     }
 

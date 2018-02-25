@@ -38,7 +38,7 @@ ReactDOM.render((
           <Switch>
             <Route path="/testbuilder" component={TestBuilder}/>
             <Route exact path="/chaineditor" component={ChainEditorPage}/>}
-            <Route path="/chaineditor/:chainIndex" component={ChainEditorPage}/>}
+            <Route path="/chaineditor/:chainName" component={ChainEditorPage}/>}
             <Route path="/launcher" component={LauncherPage}/>
             <Route exact path="/formbuilder" component={FormBuilderPage}/>
             <Route path="/formbuilder/:chainIndex" component={FormBuilderPage}/>
