@@ -6,6 +6,7 @@ const initialState = {
     name :"",
     password : "",
   },
+  token: "",
 };
 
 const dataAuthorization = (state = initialState, action) => {

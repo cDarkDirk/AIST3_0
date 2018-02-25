@@ -17,7 +17,7 @@ function mapStateToProps(state) {
     chainSelected: state.chainTemplates.selectedChainTemplate,
     chainName: state.chainTemplates.chainNames[state.chainTemplates.selectedChainTemplate] || '',
     notifications: state.notifications,
-    owner: state.dataAuthorization.paramNames.name
+    owner: state.dataAuthorization.paramNames.name,
   }
 }
 

@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import AuthorizationPage from '../components/AuthorizationPage'
 import {loginPasswordChange} from "../actions";
-import {getPublicKey, updateLoginForm} from "../api";
+import {getPublicKey} from "../api";
 import  history from '../history.js'
 
 function mapStateToProps(state) {

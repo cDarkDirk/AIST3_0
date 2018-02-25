@@ -24,7 +24,6 @@ const ChainTemplatePropertyEditor = ({
                                        chainName,
                                        owner,
                                      }) => {
-  console.log(chainName);
   const deleteChain = () => {
     if (chainTemplate.owner  === owner) {
       confirm({confirmation: `Do you really want to delete ${chainTemplate.name}?`}).then(

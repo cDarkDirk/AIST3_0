@@ -1,4 +1,4 @@
-import {error, success} from "react-notification-system-redux";
+import {error, removeAll, success} from "react-notification-system-redux";
 import {
   formTemplateFetchSuccseed,
   chainEditorTemplateFetchSucceed,
@@ -64,22 +64,62 @@ export const submitFormTemplate = (formName, formTemplate, sheduleList, template
   });
 */
 
-export const updateLoginSucceed = (history) =>() => {
-  // console.log("ЕЕЕ  РОК");
-  console.log(history);
-  history.push('#/homepage');
+/**
+ * Validation login and password
+ * Public key request for create account
+ */
+
+export const getPublicKeyRegistration = (payload, history) =>(dispatch) =>{
+  if (payload.name === "" || payload.password === "" || payload.confirmPassword === "") {
+    dispatch(error({message: "Error: Not all fields was  filled"}));
+    return;
+  }
+  if (payload.password !== payload.confirmPassword){
+    dispatch(error({message: "Error: Passwords was different"}));
+    return;
+  }
+
+  const url = `${BACKEND_URL}/registration`;
+  axios.get(url).then(function (response) {
+    dispatch(updateRegistrationForm(payload,history,response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
 };
 
-export const logFunction = (payload,history,publicKey) => (dispatch) => {
-  var a = JSON.stringify(publicKey);
-  var RSAKey = require('react-native-rsa');
-  var rsa = new RSAKey();
+/**
+ * Encrypt user Password
+ * Using the public key from server
+ */
+
+export const encryptPassword = (payload, publicKey) => {
+  let a = JSON.stringify(publicKey);
+  let RSAKey = require('react-native-rsa');
+  let rsa = new RSAKey();
   rsa.setPublicString(a);
   payload.password = rsa.encrypt(payload.password);
-  console.log(payload.password);
-  dispatch(updateLoginForm(payload, history))
-
 }
+
+/**
+ * Send login and encrypt password to server
+ * If all OK create account
+ */
+
+ export const updateRegistrationForm =  (payload, history, publicKey) => (dispatch) => {
+   encryptPassword(payload,publicKey);
+   const url = `${BACKEND_URL}/registration`;
+
+   axios.put(url,payload).then(function (response) {
+     window.location.hash = '#/';
+   }).catch(function (response) {
+     dispatch(error({message: "Fetch failed with error!" + response}));
+   });
+
+ }
+/**
+ * Validation login and password
+ * Public key request
+ */
 
 export const getPublicKey = (payload, history) =>(dispatch) =>{
   if (payload.name === "" || payload.password === "") {
@@ -88,31 +128,25 @@ export const getPublicKey = (payload, history) =>(dispatch) =>{
   }
   const url = `${BACKEND_URL}/login`;
   axios.get(url).then(function (response) {
-    dispatch(logFunction(payload,history,response.data))
+    dispatch(updateLoginForm(payload,history,response.data))
   }).catch(function (response) {
     dispatch(error({message: "Fetch failed with error!" + response}));
   });
 };
-export const putToken = (tokener) => (dispatch) => {
-  // console.log(tokener);
 
+/**
+ * Send login and encrypt password to server
+ * If all OK go to homepage
+ */
 
-}
-export const updateLoginForm = (payload, history) => (dispatch) => {
-    if (payload.name === "" || payload.password === "") {
-    dispatch(error({message: "Error: Not all fields was filled"}));
-    return;
-  }
-
-  // console.log("ЖАРА");
-
-  // console.log(payload.password);
+export const updateLoginForm = (payload, history, publicKey) => (dispatch) => {
+  encryptPassword(payload,publicKey);
   const url = `${BACKEND_URL}/login`;
 
   axios.post(url,payload).then(function (response) {
-    dispatch(putToken(response.data.token))
-    console.log(history);
-    history.push('/homepage');
+    payload.token=response.data.token
+    window.location.hash = '#/homepage';
+
   }).catch(function (response) {
     dispatch(error({message: "Fetch failed with error!" + response}));
   });

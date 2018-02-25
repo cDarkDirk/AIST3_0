@@ -1,47 +1,102 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {Button, Col, ControlLabel, Form, FormControl, FormGroup, Modal} from "react-bootstrap";
+import Notifications from "react-notification-system-redux";
 
+class RegistrationPage extends React.Component {
 
-export default () => {
-  return (
-    <div class="form">
-      <form class="form-horizontal" role="form" method="POST">
-        <div class="form-group">
-          <div class="form-group">
-            <label for="inputSelect1"class="col-sm-2 control-label">Example select</label>
-            <select class="col-sm-10" id="exampleSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">Login</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" placeholder="Login" name="login"/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-            <div class="col-sm-10">
-              <input type="password" class="form-control" placeholder="Password" name="password"/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Confirm password</label>
-            <div class="col-sm-10">
-              <input type="password" class="form-control" placeholder="Confirm password" name="confirmPassword"/>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <Link to = {'/'}><button type="submit" class="btn btn-default btn-sm">Create account</button></Link>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  )
+  state = {
+    login: "",
+    password: "",
+    confirmPassword: ""
+  };
+
+  ChangeLPP(payload) {
+    if (payload.key === "name") {
+      this.setState({login: payload.value})
+    }
+    if (payload.key === "password") {
+      this.setState({password: payload.value})
+    }
+    if (payload.key === "confirmPassword") {
+      this.setState({confirmPassword: payload.value})
+    }
+  }
+
+  CreateAccount() {
+    const {loginPasswordChange, ReqistrationButtonClick} = this.props;
+    loginPasswordChange({value: this.state.login, key: "name"}),
+      loginPasswordChange({value: this.state.password, key: "password"}),
+      loginPasswordChange({value: this.state.confirmPassword, key: "confirmPassword"})
+    ReqistrationButtonClick(this.state)
+  }
+
+  render() {
+    return (
+
+      <div class="form">
+        <form>
+            <Modal.Dialog>
+              <Modal.Header>
+                <Modal.Title>
+                  Create account
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form horizontal>
+                  <FormGroup controlId="formHorizontalLogin">
+                    <Col componentClass={ControlLabel} sm={2}>
+                      Login
+                    </Col>
+                    <Col sm={10}>
+                      <FormControl className="form-control"
+                                   type="text"
+                                   value={this.state.login}
+                                   onChange={e => this.ChangeLPP({value: e.target.value, key: "name"})}
+                                   placeholder="Enter login"/>
+                    </Col>
+                  </FormGroup>
+
+                  <FormGroup controlId="formHorizontalPassword">
+                    <Col componentClass={ControlLabel} sm={2}>
+                      Password
+                    </Col>
+                    <Col sm={10}>
+                      <FormControl className="form-control"
+                                   type="password"
+                                   value={this.state.password}
+                                   onChange={e => this.ChangeLPP({value: e.target.value, key: "password"})}
+                                   placeholder="Enter password"/>
+                    </Col>
+                  </FormGroup>
+
+                  <FormGroup controlId="formHorizontalConfirmPassword">
+                    <Col componentClass={ControlLabel} sm={2}>
+                      Confirm password
+                    </Col>
+                    <Col sm={10}>
+                      <FormControl className="form-control"
+                                   type="password"
+                                   value={this.state.confirmPassword}
+                                   onChange={e => this.ChangeLPP({value: e.target.value, key: "confirmPassword"})}
+                                   placeholder="Confirm password"/>
+                    </Col>
+                  </FormGroup>
+                </Form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button type="submit" class="btn btn-default btn-sm"
+                        onClick={() => this.CreateAccount()}
+                >Sign in</Button>
+              </Modal.Footer>
+
+            </Modal.Dialog>
+        </form>
+        <span>{console.log("---NOTIFICATIONS", this.props.notifications)}</span>
+        <Notifications notifications={this.props.notifications}/>
+      </div>
+    )
+  }
 }
+
+export default RegistrationPage;

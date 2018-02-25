@@ -37,13 +37,12 @@ import {
   CHAIN_TEMPLATE_MARKER_CHANGED,
   UPDATE_DATA_TEMPLATE_SUCCESS,
   LOGIN_BUTTON_CLICKED,
-  LOGIN_PASSWORD_CHANGE,
+  LOGIN_PASSWORD_CHANGE, REGISTRATION_BUTTON_CLICKED,
 } from './constants'
-
 
 export const loginButtonClicked = (payload) => ({
   type: LOGIN_BUTTON_CLICKED,
-  payload: {payload}
+  payload: payload
 });
 
 export const loginPasswordChange = (payload) => ({
