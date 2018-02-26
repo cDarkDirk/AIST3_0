@@ -9,7 +9,6 @@ function mapStateToProps(state) {
       chainTemplates: state.chainTemplates.chainTemplates,
       selectedChainTemplate: state.chainTemplates.selectedChainTemplate,
       chainNames: state.chainTemplates.chainNames,
-      dirtyChainTemplateIndicies: state.chainTemplates.dirtyChainTemplateIndicies
     }
 }
 

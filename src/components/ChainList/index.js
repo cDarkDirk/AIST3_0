@@ -1,9 +1,9 @@
 import React from "react"
-import {ListGroup, ListGroupItem, Badge} from 'react-bootstrap'
+import {ListGroup, ListGroupItem, Label} from 'react-bootstrap'
 
 import './style.css'
 
-const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, dirtyChainTemplateIndicies, name}) => {
+const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, chainNames, name}) => {
   chainTemplates.map((chain, idx) => {
     if(chain.name === name){
       chainSelected(idx);
@@ -11,14 +11,17 @@ const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, dirtyC
   });
   return (<ListGroup>
     {
-      chainTemplates.map((chain, idx) => {
+      chainNames.map((chain, idx) => {
         return <ListGroupItem
           key={idx}
           className='chain-list-item'
-          href={'/#/chaineditor/' + chain.name} active={idx === selectedChainTemplate}
+          href={'/#/chaineditor/' + chain} active={idx === selectedChainTemplate}
           onClick={() => chainSelected(idx)}>
-          {chain.name}
-          {dirtyChainTemplateIndicies[idx] && <Badge pullRight={true} bsStyle='success'>modified</Badge>}
+          {chain}
+          &nbsp;
+          &nbsp;
+          {chainTemplates[idx].modified && <Label bsStyle='warning'>modified</Label>}
+          {chainTemplates[idx].new && <Label bsStyle='primary'>New</Label>}
         </ListGroupItem>
       })
     }
