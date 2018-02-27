@@ -1,5 +1,4 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 import {Button, Col, ControlLabel, Form, FormControl, FormGroup, Modal} from "react-bootstrap";
 import Notifications from "react-notification-system-redux";
 
@@ -25,74 +24,73 @@ class RegistrationPage extends React.Component {
 
   CreateAccount() {
     const {loginPasswordChange, ReqistrationButtonClick} = this.props;
-    loginPasswordChange({value: this.state.login, key: "name"}),
-      loginPasswordChange({value: this.state.password, key: "password"}),
-      loginPasswordChange({value: this.state.confirmPassword, key: "confirmPassword"})
+    loginPasswordChange({value: this.state.login, key: "name"});
+    loginPasswordChange({value: this.state.password, key: "password"});
+    loginPasswordChange({value: this.state.confirmPassword, key: "confirmPassword"});
     ReqistrationButtonClick(this.state)
   }
 
   render() {
     return (
 
-      <div class="form">
-        <form>
-            <Modal.Dialog>
-              <Modal.Header>
-                <Modal.Title>
-                  Create account
-                </Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <Form horizontal>
-                  <FormGroup controlId="formHorizontalLogin">
-                    <Col componentClass={ControlLabel} sm={2}>
-                      Login
-                    </Col>
-                    <Col sm={10}>
-                      <FormControl className="form-control"
-                                   type="text"
-                                   value={this.state.login}
-                                   onChange={e => this.ChangeLPP({value: e.target.value, key: "name"})}
-                                   placeholder="Enter login"/>
-                    </Col>
-                  </FormGroup>
+      <div className="form">
+        <Form>
+          <Modal.Dialog>
+            <Modal.Header>
+              <Modal.Title>
+                Create account
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form horizontal>
+                <FormGroup controlId="formHorizontalLogin">
+                  <Col componentClass={ControlLabel} sm={2}>
+                    Login
+                  </Col>
+                  <Col sm={10}>
+                    <FormControl className="form-control"
+                                 type="text"
+                                 value={this.state.login}
+                                 onChange={e => this.ChangeLPP({value: e.target.value, key: "name"})}
+                                 placeholder="Enter login"/>
+                  </Col>
+                </FormGroup>
 
-                  <FormGroup controlId="formHorizontalPassword">
-                    <Col componentClass={ControlLabel} sm={2}>
-                      Password
-                    </Col>
-                    <Col sm={10}>
-                      <FormControl className="form-control"
-                                   type="password"
-                                   value={this.state.password}
-                                   onChange={e => this.ChangeLPP({value: e.target.value, key: "password"})}
-                                   placeholder="Enter password"/>
-                    </Col>
-                  </FormGroup>
+                <FormGroup controlId="formHorizontalPassword">
+                  <Col componentClass={ControlLabel} sm={2}>
+                    Password
+                  </Col>
+                  <Col sm={10}>
+                    <FormControl className="form-control"
+                                 type="password"
+                                 value={this.state.password}
+                                 onChange={e => this.ChangeLPP({value: e.target.value, key: "password"})}
+                                 placeholder="Enter password"/>
+                  </Col>
+                </FormGroup>
 
-                  <FormGroup controlId="formHorizontalConfirmPassword">
-                    <Col componentClass={ControlLabel} sm={2}>
-                      Confirm password
-                    </Col>
-                    <Col sm={10}>
-                      <FormControl className="form-control"
-                                   type="password"
-                                   value={this.state.confirmPassword}
-                                   onChange={e => this.ChangeLPP({value: e.target.value, key: "confirmPassword"})}
-                                   placeholder="Confirm password"/>
-                    </Col>
-                  </FormGroup>
-                </Form>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button type="submit" class="btn btn-default btn-sm"
-                        onClick={() => this.CreateAccount()}
-                >Sign in</Button>
-              </Modal.Footer>
+                <FormGroup controlId="formHorizontalConfirmPassword">
+                  <Col componentClass={ControlLabel} sm={2}>
+                    Confirm password
+                  </Col>
+                  <Col sm={10}>
+                    <FormControl className="form-control"
+                                 type="password"
+                                 value={this.state.confirmPassword}
+                                 onChange={e => this.ChangeLPP({value: e.target.value, key: "confirmPassword"})}
+                                 placeholder="Confirm password"/>
+                  </Col>
+                </FormGroup>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button type="submit" className="btn btn-default btn-sm"
+                      onClick={() => this.CreateAccount()}
+              >Sign in</Button>
+            </Modal.Footer>
 
-            </Modal.Dialog>
-        </form>
-        <span>{console.log("---NOTIFICATIONS", this.props.notifications)}</span>
+          </Modal.Dialog>
+        </Form>
         <Notifications notifications={this.props.notifications}/>
       </div>
     )

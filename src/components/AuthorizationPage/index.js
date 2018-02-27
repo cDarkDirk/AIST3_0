@@ -23,16 +23,16 @@ class AuthorizationPage extends React.Component {
 
   HandleLoginButtonCLick() {
     const {loginPasswordChange, loginButtonClicked} = this.props;
-    loginPasswordChange({value: this.state.login, key: "name"}),
-      loginPasswordChange({value: this.state.password, key: "password"})
+    loginPasswordChange({value: this.state.login, key: "name"});
+    loginPasswordChange({value: this.state.password, key: "password"});
     loginButtonClicked(this.state)
   }
 
   render() {
 
     return (
-      <div class="form">
-        <form>
+      <div className="form">
+        <Form>
           <Modal.Dialog>
             <Modal.Header>
               <Modal.Title>
@@ -74,16 +74,16 @@ class AuthorizationPage extends React.Component {
             </Modal.Body>
             <Modal.Footer>
               <Button
-                class="btn btn-default btn-sm"
+                className="btn btn-default btn-sm"
                 onClick={() => this.HandleLoginButtonCLick()}
               >Log in</Button>
               <Link to={'/registration'}>
-                <Button type="submit" class="btn btn-default btn-sm">Registration</Button>
+                <Button type="submit" className="btn btn-default btn-sm">Registration</Button>
               </Link>
             </Modal.Footer>
 
           </Modal.Dialog>
-        </form>
+        </Form>
         <Notifications notifications={this.props.notifications}/>
       </div>
     )

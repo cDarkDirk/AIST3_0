@@ -1,7 +1,6 @@
 import {connect} from 'react-redux'
 import RegistrationPage from '../components/RegistrationPage'
 import {getPublicKeyRegistration} from "../api";
-import history from "../history";
 import {loginPasswordChange} from "../actions";
 
 function mapStateToProps(state) {
@@ -12,7 +11,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ReqistrationButtonClick : (payload) => dispatch(getPublicKeyRegistration(payload, history)),
+    ReqistrationButtonClick : (payload) => dispatch(getPublicKeyRegistration(payload)),
     loginPasswordChange : (payload) => dispatch(loginPasswordChange(payload))
   }
 }

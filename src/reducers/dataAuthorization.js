@@ -25,7 +25,7 @@ const dataAuthorization = (state = initialState, action) => {
       else {
         paramNames.password = action.payload.value;
       }
-      return {state, paramNames }
+      return { ...state, paramNames }
     }
     default: return state
   }
