@@ -10,6 +10,7 @@ import Notifications from 'react-notification-system-redux'
 import FontAwesome from 'react-fontawesome'
 import {Link} from "react-router-dom"
 import './style.css'
+import Toolbar from "../toolbar";
 
 class ChainEditorPage extends React.Component {
   constructor(props, context) {
@@ -84,6 +85,14 @@ class ChainEditorPage extends React.Component {
             </Link>
           </Col>
         </Row>
+        <Toolbar
+          onNewEntryAdded={addChainTemplate}
+          help={this.handleShow}
+          onSubmit={updateChainTemplate}
+          onDelete={deleteChainTemplate}
+          chainName={chainName}
+          chainTemplate={chainTemplate}
+        />
         <Row>
           <Col md={3}>
             <SideBar>
