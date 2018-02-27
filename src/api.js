@@ -135,7 +135,7 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
 
   if(chainTemplate.value.modified){
     const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
-    axios.post(url, requestBody).then(function () {
+    axios.post(url, [requestBody]).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
       dispatch(submitChainTemplateSucceed());
     }).catch(function (response) {
@@ -144,7 +144,7 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
   }
   if(chainTemplate.value.new){
     const url = `${BACKEND_URL}/chain_templates`;
-    axios.put(url, requestBody).then(function () {
+    axios.put(url, [requestBody]).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
       dispatch(submitChainTemplateSucceed());
     }).catch(function (response) {
@@ -291,7 +291,7 @@ export const submitDataTemplates = (submitData) => (dispatch) => {
   if (submitData.value.new){
     const url = `${BACKEND_URL}/templates`;
 
-    axios.put(url, requestBody).then(function () {
+    axios.put(url, [requestBody]).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
       dispatch(updateDataTemplateSuccess());
     }).catch(function (response) {
