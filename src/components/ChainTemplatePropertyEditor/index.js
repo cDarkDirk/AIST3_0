@@ -36,35 +36,18 @@ const ChainTemplatePropertyEditor = ({
   return (
     <div>
       <Row>
-        <Col md={7}>
+        <Col md={12}>
           <FormGroup bsSize="large">
             <InputGroup>
               <InputGroup.Addon>Name</InputGroup.Addon>
               <FormControl
                 type="text"
-
                 value={chainTemplate.name}
                 placeholder="Chain Name"
                 onChange={e => onNameChange(e.target.value)}/>
             </InputGroup>
           </FormGroup>
         </Col>
-        <Col md={2}>{chainTemplate ?
-          <Button
-            className='chain-template-property-editor-button'
-            bsStyle='danger'
-            onClick={deleteChain}>
-            <FontAwesome name='trash'/></Button> : null}</Col>
-        <Col md={3}>{chainTemplate ?
-          <Button
-            className='chain-template-property-editor-button'
-            bsStyle='primary'
-            disabled={disableSubmit}
-            onClick={() => updateChainTemplate({
-              name: chainName,
-              value: chainTemplate,
-            })}>
-            <FontAwesome name='floppy-o'/> SUBMIT</Button> : null}</Col>
       </Row>
       <Row>
         <Col md={12}>

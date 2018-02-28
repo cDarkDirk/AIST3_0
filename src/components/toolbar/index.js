@@ -2,27 +2,62 @@ import React from 'react'
 import {Button, ButtonGroup, ButtonToolbar, Col, Glyphicon, Row} from "react-bootstrap";
 
 const Toolbar = (props) => {
-  const {onNewEntryAdded, onDelete, help, onSubmit, chainName, chainTemplate} = props;
+  const {onNewEntryAdded, onDelete, help, onSubmit, submitDisabled, style, redirText, link, additionalElement} = props;
+  const infoBtn = (
+    <ButtonGroup>
+      <Button bsStyle={'info'} bsSize={'small'} onClick={help}><Glyphicon glyph='glyphicon glyphicon-info-sign'/></Button>
+    </ButtonGroup>
+  );
+  const addNewBtn = (
+    <Button bsStyle={'primary'} bsSize={'small'} onClick={onNewEntryAdded}>
+      <Glyphicon glyph='glyphicon glyphicon-plus-sign'/>
+    </Button>);
+
+  const submitBtn = (
+    <Button bsStyle={'success'} bsSize={'small'} disabled={submitDisabled} onClick={onSubmit}>
+      <Glyphicon glyph='glyphicon glyphicon-floppy-disk'/>
+    </Button>
+  );
+  const deleteBtn = (
+    <Button bsStyle={'danger'} bsSize={'small'} onClick={onDelete}>
+      <Glyphicon glyph='glyphicon glyphicon-trash'/>
+    </Button>
+  );
+  const redirectBtn = [
+    <Button href={link}>{redirText}</Button>
+  ];
   return (
-    <Row>
-      <Col md={12}>
-        <ButtonToolbar>
-          <ButtonGroup>
-            <Button bsStyle={'info'} onClick={help}><Glyphicon glyph='glyphicon glyphicon-info-sign'/></Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button bsStyle={'primary'} onClick={onNewEntryAdded}><Glyphicon glyph='glyphicon glyphicon-plus-sign'/></Button>
-            <Button bsStyle={'success'} onClick={() => onSubmit({
-              name: chainName,
-              value: chainTemplate,
-            })}><Glyphicon glyph='glyphicon glyphicon-ok-sign'/></Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button bsStyle={'danger'} onClick={onDelete}><Glyphicon glyph='glyphicon glyphicon-remove-sign'/></Button>
-          </ButtonGroup>
-        </ButtonToolbar>
-      </Col>
-    </Row>
+    <div style={{
+      ...style,
+      position: 'relative',
+      backgroundColor: '#EEE',
+      boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)',
+      border: '1px solid #CCC',
+      borderRadius: 3,
+      marginLeft: -5,
+      marginTop: 5,
+      padding: 10
+    }}>
+      <Row>
+        <Col md={12}>
+          <ButtonToolbar>
+            {help && infoBtn}
+            <ButtonGroup>
+              {onNewEntryAdded && addNewBtn}
+              {onSubmit && submitBtn}
+            </ButtonGroup>
+            <ButtonGroup>
+              {onDelete && deleteBtn}
+            </ButtonGroup>
+            <ButtonGroup className='pull-right'>
+              {link && redirectBtn}
+            </ButtonGroup>
+          </ButtonToolbar>
+        </Col>
+      </Row>
+      <div style={{height:'10px'}}/>
+          {additionalElement && additionalElement}
+    </div>
   )
 };
 export default Toolbar
