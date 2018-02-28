@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Col, ControlLabel, Form, FormControl, FormGroup, Modal} from "react-bootstrap";
+import {Button, Col, ControlLabel, FormControl, Form, FormGroup, Modal} from "react-bootstrap";
 import Notifications from "react-notification-system-redux";
 
 class RegistrationPage extends React.Component {
@@ -27,14 +27,13 @@ class RegistrationPage extends React.Component {
     loginPasswordChange({value: this.state.login, key: "name"});
     loginPasswordChange({value: this.state.password, key: "password"});
     loginPasswordChange({value: this.state.confirmPassword, key: "confirmPassword"});
-    ReqistrationButtonClick(this.state)
+    ReqistrationButtonClick(this.state);
   }
 
   render() {
     return (
 
       <div className="form">
-        <Form>
           <Modal.Dialog>
             <Modal.Header>
               <Modal.Title>
@@ -88,9 +87,7 @@ class RegistrationPage extends React.Component {
                       onClick={() => this.CreateAccount()}
               >Sign in</Button>
             </Modal.Footer>
-
           </Modal.Dialog>
-        </Form>
         <Notifications notifications={this.props.notifications}/>
       </div>
     )

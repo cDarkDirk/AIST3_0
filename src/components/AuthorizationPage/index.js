@@ -32,7 +32,6 @@ class AuthorizationPage extends React.Component {
 
     return (
       <div className="form">
-        <Form>
           <Modal.Dialog>
             <Modal.Header>
               <Modal.Title>
@@ -81,9 +80,7 @@ class AuthorizationPage extends React.Component {
                 <Button type="submit" className="btn btn-default btn-sm">Registration</Button>
               </Link>
             </Modal.Footer>
-
           </Modal.Dialog>
-        </Form>
         <Notifications notifications={this.props.notifications}/>
       </div>
     )
