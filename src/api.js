@@ -78,7 +78,7 @@ export const getPublicKeyRegistration = (payload) =>(dispatch) =>{
     return;
   }
 
-  const url = `${BACKEND_URL}/registration`;
+  const url = `${BACKEND_URL}/owners/registration`;
   axios.get(url).then(function (response) {
     dispatch(updateRegistrationForm(payload,response.data))
   }).catch(function (response) {
@@ -106,9 +106,9 @@ export const encryptPassword = (payload, publicKey) => {
 
  export const updateRegistrationForm =  (payload, publicKey) => (dispatch) => {
    encryptPassword(payload,publicKey);
-   const url = `${BACKEND_URL}/registration`;
+   const url = `${BACKEND_URL}/owners/registration`;
 
-   axios.put(url,payload).then(function (response) {
+   axios.post(url,payload).then(function (response) {
      window.location.hash = '#/';
    }).catch(function (response) {
      dispatch(error({message: "Fetch failed with error!" + response}));
@@ -125,7 +125,7 @@ export const getPublicKey = (payload) =>(dispatch) =>{
     dispatch(error({message: "Error: Not all fields was filled"}));
     return;
   }
-  const url = `${BACKEND_URL}/login`;
+  const url = `${BACKEND_URL}/owners/login`;
   axios.get(url).then(function (response) {
     dispatch(updateLoginForm(payload,response.data))
   }).catch(function (response) {
@@ -134,15 +134,15 @@ export const getPublicKey = (payload) =>(dispatch) =>{
 };
 
 /**
- * Send login and encrypt password to server
+ * Send aowners and encrypt password to server
  * If all OK go to homepage
  */
 
 export const updateLoginForm = (payload, publicKey) => (dispatch) => {
   encryptPassword(payload,publicKey);
-  const url = `${BACKEND_URL}/login`;
+  const url = `${BACKEND_URL}/owners/login`;
 
-  axios.post(url,payload).then(function (response) {
+  axios.put(url,payload).then(function (response) {
     payload.token=response.data.token
     window.location.hash = '#/homepage';
 
