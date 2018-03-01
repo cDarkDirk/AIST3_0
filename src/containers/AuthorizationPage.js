@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import AuthorizationPage from '../components/AuthorizationPage'
 import {loginPasswordChange} from "../actions";
-import {getPublicKey} from "../api";
+import {getPublicKeyLogin} from "../api";
 
 function mapStateToProps(state) {
   return {
@@ -12,7 +12,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    loginButtonClicked : (payload) => dispatch(getPublicKey(payload)),
+    loginButtonClicked : (payload) => dispatch(getPublicKeyLogin(payload)),
     loginPasswordChange : (payload) => dispatch(loginPasswordChange(payload))
   }
 }
