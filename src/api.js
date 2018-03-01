@@ -97,6 +97,7 @@ export const encryptPassword = (payload, publicKey) => {
   let rsa = new RSAKey();
   rsa.setPublicString(a);
   payload.password = rsa.encrypt(payload.password);
+
 };
 
 /**
@@ -105,11 +106,13 @@ export const encryptPassword = (payload, publicKey) => {
  */
 
  export const updateRegistrationForm =  (payload, publicKey) => (dispatch) => {
+   let a = payload.password;
    encryptPassword(payload,publicKey);
    const url = `${BACKEND_URL}/owners/registration`;
    axios.put(url,payload).then(function (response) {
      window.location.hash = '#/';
    }).catch(function (response) {
+     payload.password = a;
      dispatch(error({message: "Fetch failed with error!" + response}));
    });
 
@@ -138,6 +141,7 @@ export const getPublicKeyLogin = (payload) =>(dispatch) =>{
  */
 
 export const updateLoginForm = (payload, publicKey) => (dispatch) => {
+  let a = payload.password;
   encryptPassword(payload,publicKey);
   const url = `${BACKEND_URL}/owners/login`;
   axios.post(url,payload).then(function (response) {
@@ -145,6 +149,7 @@ export const updateLoginForm = (payload, publicKey) => (dispatch) => {
     window.location.hash = '#/homepage';
 
   }).catch(function (response) {
+    payload.password = a;
     dispatch(error({message: "Fetch failed with error!" + response}));
   });
 };
