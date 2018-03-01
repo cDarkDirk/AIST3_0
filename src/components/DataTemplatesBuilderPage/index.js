@@ -112,9 +112,17 @@ class DataTemplatesBuilderPage extends React.Component {
 
   renderTemplatesList() {
     const {dataTemplatesNames, dataTemplates, selectedTemplateIndex, onTemplateSelected} = this.props;
+    dataTemplatesNames.map((template, index) => {
+      if (this.props.match.params.datatemplatesName === template) {
+        onTemplateSelected(index);
+      }
+
+    });
+    console.log(this.props.match.params.datatemplatesName);
     return (dataTemplatesNames.map((template, index) =>
       <ListGroupItem
         onClick={() => onTemplateSelected(index)}
+        href={'/#/datatemplates/' + template}
         active={index === selectedTemplateIndex}
         key={index}
       >
