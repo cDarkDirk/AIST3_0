@@ -36,7 +36,19 @@ import {
   NEW_DATA_TEMPLATE_PARAM_ADDED,
   CHAIN_TEMPLATE_MARKER_CHANGED,
   UPDATE_DATA_TEMPLATE_SUCCESS,
+  LOGIN_BUTTON_CLICKED,
+  LOGIN_PASSWORD_CHANGE,
 } from './constants'
+
+export const loginButtonClicked = (payload) => ({
+  type: LOGIN_BUTTON_CLICKED,
+  payload,
+});
+
+export const loginPasswordChange = (payload) => ({
+  type: LOGIN_PASSWORD_CHANGE,
+  payload,
+});
 
 export const selectChainForm =(payload)=> ({
   type: CHAIN_SELECTED,
@@ -78,8 +90,9 @@ export const deleteChainTemplate = (payload) => ({
   payload: payload
 });
 
-export const addChainTemplate = () => ({
-  type: CHAIN_TEMPLATE_ADDED
+export const addChainTemplate = (payload) => ({
+  type: CHAIN_TEMPLATE_ADDED,
+  payload,
 });
 
 export const formTemplateFetchFail = (payload) => ({

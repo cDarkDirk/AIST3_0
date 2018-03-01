@@ -15,6 +15,7 @@ const initialState = {
   chainTemplates: [],
   selectedChainTemplate: 0,
   chainNames: [],
+  owner:'',
 };
 
 const chainTemplateReducer = (state = initialState, action) => {
@@ -122,6 +123,7 @@ const chainTemplateReducer = (state = initialState, action) => {
           fields:[],
           marker:'',
           modified: false,
+          owner: action.payload,
           new: true,
         },
         ...state.chainTemplates];
