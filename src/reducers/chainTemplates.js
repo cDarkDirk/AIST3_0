@@ -9,6 +9,7 @@ import {
   CLOSE_BUTTON_CLICKED,
   SUBMIT_CHAIN_TEMPLATE_SUCCEED,
   CHAIN_TEMPLATE_MARKER_CHANGED,
+  DUPLICATE_CURENT_CHAIN,
 } from '../constants'
 
 const initialState = {
@@ -50,7 +51,7 @@ const chainTemplateReducer = (state = initialState, action) => {
         ...state,
         chainTemplates: [
           ...state.chainTemplates.slice(0, sel),
-          {...state.chainTemplates[sel],  tests, modified},
+          {...state.chainTemplates[sel], tests, modified},
           ...state.chainTemplates.slice(sel + 1, state.chainTemplates.length)
         ]
       }
@@ -119,8 +120,8 @@ const chainTemplateReducer = (state = initialState, action) => {
         {
           name: 'New Template',
           tests: [],
-          fields:[],
-          marker:'',
+          fields: [],
+          marker: '',
           modified: false,
           new: true,
         },
@@ -158,6 +159,23 @@ const chainTemplateReducer = (state = initialState, action) => {
       return {
         ...state,
         chainTemplates,
+      }
+    }
+
+    case DUPLICATE_CURENT_CHAIN: {
+      let oldChainTemplates = [...state.chainTemplates];
+      const newOne = {...oldChainTemplates[state.selectedChainTemplate]};
+      newOne.modified = false;
+      newOne.new = true;
+      const chainTemplates = [
+        newOne,
+          ...oldChainTemplates,
+      ];
+      const chainNames = chainTemplates.map(chain => chain.name);
+      return {
+        ...state,
+        chainTemplates,
+        chainNames,
       }
     }
 

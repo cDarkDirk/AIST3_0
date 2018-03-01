@@ -36,6 +36,7 @@ import {
   NEW_DATA_TEMPLATE_PARAM_ADDED,
   CHAIN_TEMPLATE_MARKER_CHANGED,
   UPDATE_DATA_TEMPLATE_SUCCESS,
+  DUPLICATE_CURENT_CHAIN,
 } from './constants'
 
 export const selectChainForm =(payload)=> ({
@@ -218,4 +219,9 @@ export const chainTemplateMarkerChanged = (payload) => ({
 
 export const updateDataTemplateSuccess = () => ({
   type: UPDATE_DATA_TEMPLATE_SUCCESS,
+});
+
+export const duplicateCurrentChain = (payload) => ({
+  type: DUPLICATE_CURENT_CHAIN,
+  payload,
 });

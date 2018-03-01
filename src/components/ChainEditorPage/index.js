@@ -1,6 +1,5 @@
 import React from 'react'
 import ChainDisplay from '../../containers/ChainDisplay'
-import SideBar from "../SideBar"
 import ChainList from "../../containers/ChainList"
 import {Row, Col, Modal, FormGroup, InputGroup, FormControl} from "react-bootstrap"
 import TestsList from "../../containers/TestsList"
@@ -10,6 +9,7 @@ import './style.css'
 import Toolbar from "../toolbar";
 import {createConfirmation} from "react-confirm";
 import ConfirmationDialog from "../ConfirmationDialog";
+import SearchBar from "../SearchBar";
 
 class ChainEditorPage extends React.Component {
   constructor(props, context) {
@@ -38,8 +38,9 @@ class ChainEditorPage extends React.Component {
   render() {
     const {
       chainTemplate, chainTemplateNameChanged, deleteChainTemplate,
-      addChainTemplate, updateChainTemplate, notifications, chainTemplateMarkerChanged, chainSelected,
-      chainName
+      addChainTemplate, updateChainTemplate, notifications,
+      chainTemplateMarkerChanged, chainSelected, chainName,
+      onChainSelected, duplicate, chainNames,
     } = this.props;
     const confirm = createConfirmation(ConfirmationDialog, 0);
     const deleteChain = () => {
@@ -107,13 +108,18 @@ class ChainEditorPage extends React.Component {
         </Col>
       </Row>
     ];
+    const searchOpt = chainNames.map((chain,index) => {
+      return {value:index, label:chain}
+    });
     return (
       <div className='container'>
         <Row>
           <Col md={3}>
-            <SideBar>
-              <ChainList/>
-            </SideBar>
+            <SearchBar
+              options={searchOpt}
+              onOptionClick={onChainSelected}
+            />
+            <ChainList/>
           </Col>
           <Col md={6}>
             <Row>
@@ -127,7 +133,8 @@ class ChainEditorPage extends React.Component {
                   chainTemplate={chainTemplate}
                   submitDisabled={!(chainTemplate.modified || chainTemplate.new)}
                   link={'#/formbuilder/' + chainSelected}
-                  redirText={'text'}
+                  redirText={'Редактировать форму'}
+                  onDuplicate={() => duplicate()}
                   additionalElement={chainParamsInput}
                 />
                 {modalTooltip}
@@ -142,10 +149,7 @@ class ChainEditorPage extends React.Component {
             <TestsList/>
           </Col>
         </Row>
-        <
-          Notifications
-          notifications={notifications}
-        />
+        <Notifications notifications={notifications}/>
       </div>
     )
   }

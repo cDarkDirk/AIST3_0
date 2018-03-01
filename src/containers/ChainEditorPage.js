@@ -8,6 +8,8 @@ import {
   deleteChainTemplate,
   addChainTemplate,
   chainTemplateMarkerChanged,
+  chainSelected,
+  duplicateCurrentChain,
 } from '../actions'
 import ChainEditorPage from '../components/ChainEditorPage'
 
@@ -17,6 +19,7 @@ function mapStateToProps(state) {
     chainSelected: state.chainTemplates.selectedChainTemplate,
     chainName: state.chainTemplates.chainNames[state.chainTemplates.selectedChainTemplate] || '',
     notifications: state.notifications,
+    chainNames: state.chainTemplates.chainNames,
   }
 }
 
@@ -28,6 +31,8 @@ function mapDispatchToProps(dispatch) {
     addChainTemplate: () => dispatch(addChainTemplate()),
     updateChainTemplate: (chainTemplate) => dispatch(updateChainTemplate(chainTemplate)),
     chainTemplateMarkerChanged: (marker) => dispatch(chainTemplateMarkerChanged(marker)),
+    onChainSelected: selectedChainTemplate => dispatch(chainSelected(selectedChainTemplate)),
+    duplicate: () => dispatch(duplicateCurrentChain()),
   }
 }
 
