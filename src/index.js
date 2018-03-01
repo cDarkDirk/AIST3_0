@@ -15,6 +15,8 @@ import TestBuilder from "./containers/TestBuilder";
 import DataDirectoryPage from "./containers/TestBuilder";
 
 import DataTemplatesBuilderPage from "./containers/DataTemplates";
+import AuthorizationPage from "./containers/AuthorizationPage"
+import RegistrationPage from "./containers/RegistrationPage"
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -43,7 +45,9 @@ ReactDOM.render((
             <Route path="/formbuilder/:chainIndex" component={FormBuilderPage}/>
             <Route path="/datadirectory" component={DataDirectoryPage}/>
             <Route path="/datatemplates" component={DataTemplatesBuilderPage}/>
-            <Route exact path="/" component={HomePage}/>
+            <Route path="/homepage" component={HomePage}/>
+            <Route path="/registration" component={RegistrationPage}/>
+            <Route exact path="/" component={AuthorizationPage}/>
           </Switch>
         </HashRouter>
       </div>

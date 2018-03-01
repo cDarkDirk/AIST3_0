@@ -3,7 +3,8 @@ import {connect} from 'react-redux'
 import HomePage from '../components/HomePage'
 
 function mapStateToProps(state) {
-  return {
+  return{
+    notifications: state.notifications,
   }
 }
 

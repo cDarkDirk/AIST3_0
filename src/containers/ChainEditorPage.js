@@ -20,6 +20,7 @@ function mapStateToProps(state) {
     chainName: state.chainTemplates.chainNames[state.chainTemplates.selectedChainTemplate] || '',
     notifications: state.notifications,
     chainNames: state.chainTemplates.chainNames,
+    owner: state.dataAuthorization.paramNames.name,
   }
 }
 
@@ -28,7 +29,7 @@ function mapDispatchToProps(dispatch) {
     fetchChainTemplates: () => dispatch(fetchChainTemplates()),
     chainTemplateNameChanged: (name) => dispatch(chainTemplateNameChanged(name)),
     deleteChainTemplate: (chainTemplate) => dispatch(deleteChainTemplate(chainTemplate)),
-    addChainTemplate: () => dispatch(addChainTemplate()),
+    addChainTemplate: (payload) => dispatch(addChainTemplate(payload)),
     updateChainTemplate: (chainTemplate) => dispatch(updateChainTemplate(chainTemplate)),
     chainTemplateMarkerChanged: (marker) => dispatch(chainTemplateMarkerChanged(marker)),
     onChainSelected: selectedChainTemplate => dispatch(chainSelected(selectedChainTemplate)),

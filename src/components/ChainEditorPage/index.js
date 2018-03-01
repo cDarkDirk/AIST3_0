@@ -40,14 +40,16 @@ class ChainEditorPage extends React.Component {
       chainTemplate, chainTemplateNameChanged, deleteChainTemplate,
       addChainTemplate, updateChainTemplate, notifications,
       chainTemplateMarkerChanged, chainSelected, chainName,
-      onChainSelected, duplicate, chainNames,
+      onChainSelected, duplicate, chainNames, owner
     } = this.props;
     const confirm = createConfirmation(ConfirmationDialog, 0);
     const deleteChain = () => {
-      confirm({confirmation: `Do you really want to delete ${chainTemplate.name}?`}).then(
-        () => deleteChainTemplate(chainTemplate),
-        () => {
-        })
+      if (chainTemplate.owner === owner) {
+        confirm({confirmation: `Do you really want to delete ${chainTemplate.name}?`}).then(
+          () => deleteChainTemplate(chainTemplate),
+          () => {
+          })
+      }
     };
     const modalTooltip = (
       <Modal show={this.state.show} onHide={this.handleClose}>
@@ -125,7 +127,7 @@ class ChainEditorPage extends React.Component {
             <Row>
               <Col md={12}>
                 <Toolbar
-                  onNewEntryAdded={addChainTemplate}
+                  onNewEntryAdded={() => addChainTemplate(owner)}
                   help={this.handleShow}
                   onSubmit={() => updateChainTemplate({name: chainName, value: chainTemplate,})}
                   onDelete={deleteChain}
