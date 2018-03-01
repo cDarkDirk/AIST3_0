@@ -97,7 +97,6 @@ export const encryptPassword = (payload, publicKey) => {
   let rsa = new RSAKey();
   rsa.setPublicString(a);
   payload.password = rsa.encrypt(payload.password);
-
 };
 
 /**
