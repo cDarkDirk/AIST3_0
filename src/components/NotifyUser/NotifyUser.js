@@ -13,11 +13,11 @@ const NotifyUser = ({show, proceed, dismiss, cancel, confirmation}) => {
         </Modal.Header>
 
         <Modal.Body>
-          {confirmation?confirmation:'Are you sure?'}
+          {confirmation?confirmation:'oops!'}
         </Modal.Body>
 
         <Modal.Footer>
-          <Button onClick={cancel}>Abort</Button>
+          <Button onClick={cancel}>Ok</Button>
         </Modal.Footer>
 
       </Modal.Dialog>

@@ -10,6 +10,7 @@ import Toolbar from "../toolbar";
 import {createConfirmation} from "react-confirm";
 import ConfirmationDialog from "../ConfirmationDialog";
 import SearchBar from "../SearchBar";
+import NotifyUser from "../NotifyUser/NotifyUser";
 
 class ChainEditorPage extends React.Component {
   constructor(props, context) {
@@ -43,12 +44,17 @@ class ChainEditorPage extends React.Component {
       onChainSelected, duplicate, chainNames, owner
     } = this.props;
     const confirm = createConfirmation(ConfirmationDialog, 0);
+    const notify = createConfirmation(NotifyUser, 0);
     const deleteChain = () => {
       if (chainTemplate.owner === owner) {
         confirm({confirmation: `Do you really want to delete ${chainTemplate.name}?`}).then(
           () => deleteChainTemplate(chainTemplate),
           () => {
           })
+      }
+      else {
+        notify({confirmation: `You can't delete ${chainTemplate.name}, because ${chainTemplate.name} created by another user!`}).then(
+          () => {})
       }
     };
     const modalTooltip = (
@@ -130,7 +136,6 @@ class ChainEditorPage extends React.Component {
                   onNewEntryAdded={() => addChainTemplate(owner)}
                   help={this.handleShow}
                   onSubmit={() => updateChainTemplate({name: chainName, value: chainTemplate,})}
-                  onDelete={deleteChain}
                   chainName={chainName}
                   chainTemplate={chainTemplate}
                   submitDisabled={!(chainTemplate.modified || chainTemplate.new)}

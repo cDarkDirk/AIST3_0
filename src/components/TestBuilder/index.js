@@ -13,7 +13,7 @@ import {
   Col,
   Label,
   Glyphicon,
-  Modal
+  Modal,
 } from 'react-bootstrap'
 import 'react-select/dist/react-select.css'
 import Select from 'react-select'
@@ -27,7 +27,7 @@ class TestBuilderPage extends React.Component {
     this.handleClose = this.handleClose.bind(this);
 
     this.state = {
-      show: false
+      show: false,
     };
   }
 
@@ -41,6 +41,23 @@ class TestBuilderPage extends React.Component {
 
   componentDidMount() {
     this.props.getTests();
+  }
+
+  handleTagInputChange(value, field) {
+    const {testBuilderTests, selectedTestIndex} = this.props;
+    const crunch = value.map((field) => {
+      return {label: field.label, value: field.value};
+    });
+    const toPayload = {
+      paramValue: {...testBuilderTests[selectedTestIndex].tag_names},
+      paramName: 'tag_names',
+    };
+    if (field === 'static') {
+      toPayload.paramValue.static = crunch;
+    } else if (field === 'dynamic') {
+      toPayload.paramValue.dynamic = crunch;
+    }
+    this.props.testBuilderFormInputChanged(toPayload);
   }
 
   handleInputChange(value, param) {
@@ -59,19 +76,11 @@ class TestBuilderPage extends React.Component {
           <FormGroup>
             <Panel header={'Test parameters:'}>
               <Row>
-                <Col md={6}>
+                <Col md={12}>
                   <InputGroup>
                     <InputGroup.Addon>Name</InputGroup.Addon>
                     <FormControl value={testBuilderTests[selectedTestIndex].test_name}
                                  onChange={(event) => this.handleInputChange(event.target.value, 'test_name')}
-                                 type="text"/>
-                  </InputGroup>
-                </Col>
-                <Col md={6}>
-                  <InputGroup>
-                    <InputGroup.Addon>Id</InputGroup.Addon>
-                    <FormControl value={testBuilderTests[selectedTestIndex].test_id}
-                                 onChange={(event) => this.handleInputChange(event.target.value, 'test_id')}
                                  type="text"/>
                   </InputGroup>
                 </Col>
@@ -119,18 +128,37 @@ class TestBuilderPage extends React.Component {
               <Row>
                 <Col md={12}>
                   <InputGroup>
-                    <InputGroup.Addon>#Tags</InputGroup.Addon>
+                    <InputGroup.Addon>Static #tags</InputGroup.Addon>
                     <Select.Creatable
                       multi={true}
-                      options={testBuilderTests[selectedTestIndex].tag_names.map((name) => ({
+                      options={testBuilderTests[selectedTestIndex].tag_names.static.map((name) => ({
                         label: name,
                         value: name,
                       }))}
                       menuStyle={{display: 'none'}}
                       arrowRenderer={null}
                       autosize={false}
-                      onChange={(values) => this.handleInputChange(values, 'tag_names')}
-                      value={testBuilderTests[selectedTestIndex].tag_names}
+                      onChange={(values) => this.handleTagInputChange(values, 'static')}
+                      value={testBuilderTests[selectedTestIndex].tag_names.static}
+                    />
+                  </InputGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={12}>
+                  <InputGroup>
+                    <InputGroup.Addon>Dynamic #tags</InputGroup.Addon>
+                    <Select.Creatable
+                      multi={true}
+                      options={testBuilderTests[selectedTestIndex].tag_names.dynamic.map((name) => ({
+                        label: name,
+                        value: name,
+                      }))}
+                      menuStyle={{display: 'none'}}
+                      arrowRenderer={null}
+                      autosize={false}
+                      onChange={(values) => this.handleTagInputChange(values, 'dynamic')}
+                      value={testBuilderTests[selectedTestIndex].tag_names.dynamic}
                     />
                   </InputGroup>
                 </Col>
@@ -168,7 +196,7 @@ class TestBuilderPage extends React.Component {
     const submitButton = [
       <Button className="pull-left" onClick={this.handleShow}>
         <Glyphicon glyph='glyphicon glyphicon-question-sign'/>
-      </Button>,<Modal show={this.state.show} onHide={this.handleClose}>
+      </Button>, <Modal show={this.state.show} onHide={this.handleClose}>
         <Modal.Header closeButton>
           <Modal.Title><strong>Конструктор тестов</strong></Modal.Title>
         </Modal.Header>
@@ -192,7 +220,7 @@ class TestBuilderPage extends React.Component {
         bsSize="large"
         className="pull-right"
         disabled={!(selectedTestIndex !== null && (testBuilderTests[selectedTestIndex].modified || testBuilderTests[selectedTestIndex].new))}
-        onClick={()=> submitCurrentTest({
+        onClick={() => submitCurrentTest({
           test: testBuilderTests[selectedTestIndex],
           id: testNamesForDropdown[selectedTestIndex].test_id
         })}

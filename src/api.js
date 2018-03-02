@@ -291,11 +291,20 @@ export const testBuilderDataFetch = () => (dispatch) => {
  * Submit data to database
  */
 export const submitTest = (testObject) => (dispatch, getState) => {
+  let tags;
+  if (testObject.test.tag_names.static.length === 0 && testObject.test.tag_names.dynamic.length === 0){
+    tags = {};
+  } else if(testObject.test.tag_names.dynamic.length > 0 && testObject.test.tag_names.static.length === 0){
+    tags = {dynamic: testObject.test.tag_names.dynamic};
+  } else if (testObject.test.tag_names.dynamic.length === 0 && testObject.test.tag_names.static > 0){
+    tags = {static: testObject.test.tag_names.static};
+  } else {
+    tags = testObject.test.tag_names;
+  }
   const result = [{
-    test_id: testObject.test.test_id,
     test_name: testObject.test.test_name,
     job_trigger: testObject.test.job_trigger,
-    tag_names: testObject.test.tag_names,
+    tag_names: tags,
   }];
 
   if (testObject.test.modified) {
