@@ -11,6 +11,7 @@ function mapStateToProps(state) {
   return {
     formBuilderChains: state.formBuilder.formBuilderChains || [],
     notifications: state.notifications,
+    owner: state.dataAuthorization.paramNames.name,
   }
 }
 
