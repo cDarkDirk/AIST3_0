@@ -11,6 +11,7 @@ import launcher from "./launcher"
 import testBuilder from "./TestBuilder"
 import dataTemplatesBuilderReducer from "./DataTemplates"
 import dataDirectory from './dataDirectory'
+import dataAuthorization from './dataAuthorization'
 
 
 const rootReducer = combineReducers({
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   dataTemplate,
   formBuilder,
   testBuilder,
+  dataAuthorization,
   dataTemplatesBuilderReducer,
   notifications,
   dataDirectory,
