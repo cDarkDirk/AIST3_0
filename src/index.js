@@ -15,6 +15,8 @@ import TestBuilder from "./containers/TestBuilder";
 import DataDirectoryPage from "./containers/TestBuilder";
 
 import DataTemplatesBuilderPage from "./containers/DataTemplates";
+import AuthorizationPage from "./containers/AuthorizationPage"
+import RegistrationPage from "./containers/RegistrationPage"
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 

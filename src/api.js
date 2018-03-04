@@ -63,6 +63,96 @@ export const submitFormTemplate = (formName, formTemplate, sheduleList, template
   });
 */
 
+/**
+ * Validation login and password
+ * Public key request for create account
+ */
+
+export const getPublicKeyRegistration = (payload) =>(dispatch) =>{
+  if (payload.login === "" || payload.password === "" || payload.confirmPassword === "") {
+    dispatch(error({message: "Error: Not all fields was  filled"}));
+    return;
+  }
+  if (payload.password !== payload.confirmPassword){
+    dispatch(error({message: "Error: Passwords was different"}));
+    return;
+  }
+
+  const url = `${BACKEND_URL}/owners/registration`;
+  axios.get(url).then(function (response) {
+    dispatch(updateRegistrationForm(payload,response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+
+/**
+ * Encrypt user Password
+ * Using the public key from server
+ */
+
+export const encryptPassword = (payload, publicKey) => {
+  let a = JSON.stringify(publicKey);
+  let RSAKey = require('react-native-rsa');
+  let rsa = new RSAKey();
+  rsa.setPublicString(a);
+  payload.password = rsa.encrypt(payload.password);
+};
+
+/**
+ * Send login and encrypt password to server
+ * If all OK create account
+ */
+
+ export const updateRegistrationForm =  (payload, publicKey) => (dispatch) => {
+   let a = payload.password;
+   encryptPassword(payload,publicKey);
+   const url = `${BACKEND_URL}/owners/registration`;
+   axios.put(url,payload).then(function (response) {
+     window.location.hash = '#/';
+   }).catch(function (response) {
+     payload.password = a;
+     dispatch(error({message: "Fetch failed with error!" + response}));
+   });
+
+ };
+/**
+ * Validation login and password
+ * Public key request
+ */
+
+export const getPublicKeyLogin = (payload) =>(dispatch) =>{
+  if (payload.login === "" || payload.password === "") {
+    dispatch(error({message: "Error: Not all fields was filled"}));
+    return;
+  }
+  const url = `${BACKEND_URL}/owners/login`;
+  axios.get(url).then(function (response) {
+    dispatch(updateLoginForm(payload,response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+
+/**
+ * Send aowners and encrypt password to server
+ * If all OK go to homepage
+ */
+
+export const updateLoginForm = (payload, publicKey) => (dispatch) => {
+  let a = payload.password;
+  encryptPassword(payload,publicKey);
+  const url = `${BACKEND_URL}/owners/login`;
+  axios.post(url,payload).then(function (response) {
+    payload.token=response.data.token;
+    window.location.hash = '#/homepage';
+
+  }).catch(function (response) {
+    payload.password = a;
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+
 export const fetchDataTemplatesList = () => (dispatch, getState) => {
     const url = `${BACKEND_URL}/data_templates`;
 
@@ -135,7 +225,7 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
 
   if(chainTemplate.value.modified){
     const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
-    axios.post(url, requestBody).then(function () {
+    axios.post(url, [requestBody]).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
       dispatch(submitChainTemplateSucceed());
     }).catch(function (response) {
@@ -144,7 +234,7 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
   }
   if(chainTemplate.value.new){
     const url = `${BACKEND_URL}/chain_templates`;
-    axios.put(url, requestBody).then(function () {
+    axios.put(url, [requestBody]).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
       dispatch(submitChainTemplateSucceed());
     }).catch(function (response) {
@@ -291,7 +381,7 @@ export const submitDataTemplates = (submitData) => (dispatch) => {
   if (submitData.value.new){
     const url = `${BACKEND_URL}/templates`;
 
-    axios.put(url, requestBody).then(function () {
+    axios.put(url, [requestBody]).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
       dispatch(updateDataTemplateSuccess());
     }).catch(function (response) {

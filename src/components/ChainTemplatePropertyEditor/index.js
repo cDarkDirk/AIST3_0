@@ -22,13 +22,15 @@ const ChainTemplatePropertyEditor = ({
                                        deleteChainTemplate,
                                        updateChainTemplate,
                                        chainName,
+                                       owner,
                                      }) => {
-  console.log(chainName);
   const deleteChain = () => {
-    confirm({confirmation: `Do you really want to delete ${chainTemplate.name}?`}).then(
-      () => deleteChainTemplate(chainTemplate),
-      () => {
-      })
+    if (chainTemplate.owner  === owner) {
+      confirm({confirmation: `Do you really want to delete ${chainTemplate.name}?`}).then(
+        () => deleteChainTemplate(chainTemplate),
+        () => {
+        })
+    }
   };
 
   const disableSubmit = !(chainTemplate.modified || chainTemplate.new);
