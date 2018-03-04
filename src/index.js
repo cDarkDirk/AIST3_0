@@ -47,9 +47,9 @@ ReactDOM.render((
             <Route path="/datadirectory" component={DataDirectoryPage}/>
             <Route path="/datatemplates/:datatemplatesName" component={DataTemplatesBuilderPage}/>
             <Route exact path="/datatemplates" component={DataTemplatesBuilderPage}/>
-            <Route path="/homepage" component={HomePage}/>
-            <Route path="/registration" component={RegistrationPage}/>
-            <Route exact path="/" component={AuthorizationPage}/>
+            <Route path="/" component={HomePage}/>
+            {/*<Route path="/registration" component={RegistrationPage}/>*/}
+            {/*<Route exact path="/" component={AuthorizationPage}/>*/}
           </Switch>
         </HashRouter>
       </div>

@@ -153,14 +153,14 @@ class TestBuilderPage extends React.Component {
       submitCurrentTest
     } = this.props;
 
-    console.log(this.props.match.params.testName);
-    testNamesForDropdown.map((test, index) => {
-      console.log(test.test_name);
-      if (this.props.match.params.datatemplatesName === test.test_name) {
-        setSelectedTestIndex(index);
+    this.props.testNamesForDropdown.map((test, index) => {
+      var myStr = this.props.match.params.testName,
+        mySecondStr = test.test_name;
+      if (myStr === mySecondStr) {
+        this.props.setSelectedTestIndex(index);
       }
-
     });
+
     const testsList = () => (testNamesForDropdown.map((test, index) =>
       <ListGroupItem
         onClick={() => setSelectedTestIndex(index)}
