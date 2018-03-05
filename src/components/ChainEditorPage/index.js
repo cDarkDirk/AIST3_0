@@ -1,9 +1,8 @@
 import React from 'react'
 import ChainDisplay from '../../containers/ChainDisplay'
 import ChainList from "../../containers/ChainList"
-import {Row, Col, Modal, FormGroup, InputGroup, FormControl} from "react-bootstrap"
+import {Row, Col, Modal, FormGroup, InputGroup, FormControl,Button} from "react-bootstrap"
 import TestsList from "../../containers/TestsList"
-import {Button} from 'react-bootstrap'
 import Notifications from 'react-notification-system-redux'
 import './style.css'
 import Toolbar from "../toolbar"
@@ -12,6 +11,7 @@ import ConfirmationDialog from "../ConfirmationDialog"
 import SearchBar from "../SearchBar"
 import NotifyUser from "../NotifyUser/NotifyUser"
 import Select from 'react-select'
+import Header from "../Header";
 
 class ChainEditorPage extends React.Component {
   constructor(props, context) {
@@ -137,7 +137,8 @@ class ChainEditorPage extends React.Component {
     const searchOpt = chainNames.map((chain,index) => {
       return {value:index, label:chain}
     });
-    return (
+    return [
+      <Header owner={owner}/>,
       <div className='container'>
         <Row>
           <Col md={3}>
@@ -145,7 +146,7 @@ class ChainEditorPage extends React.Component {
               options={searchOpt}
               onOptionClick={onChainSelected}
             />
-            <ChainList/>
+            <ChainList name={this.props.match.params.chainName}/>
           </Col>
           <Col md={6}>
             <Row>
@@ -176,7 +177,7 @@ class ChainEditorPage extends React.Component {
         </Row>
         <Notifications notifications={notifications}/>
       </div>
-    )
+    ]
   }
 }
 

@@ -5,6 +5,7 @@ import HomePage from '../components/HomePage'
 function mapStateToProps(state) {
   return{
     notifications: state.notifications,
+    owner: state.dataAuthorization.paramNames.name,
   }
 }
 

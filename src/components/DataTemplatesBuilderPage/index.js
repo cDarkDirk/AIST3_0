@@ -16,6 +16,7 @@ import {
 } from "react-bootstrap"
 import Notifications from 'react-notification-system-redux'
 import SearchBar from "../SearchBar";
+import Header from "../Header";
 
 class DataTemplatesBuilderPage extends React.Component {
 
@@ -113,9 +114,16 @@ class DataTemplatesBuilderPage extends React.Component {
 
   renderTemplatesList() {
     const {dataTemplatesNames, dataTemplates, selectedTemplateIndex, onTemplateSelected} = this.props;
+    dataTemplatesNames.map((template, index) => {
+      if (this.props.match.params.datatemplatesName === template) {
+        onTemplateSelected(index);
+      }
+
+    });
     return (dataTemplatesNames.map((template, index) =>
       <ListGroupItem
         onClick={() => onTemplateSelected(index)}
+        href={'/#/datatemplates/' + template}
         active={index === selectedTemplateIndex}
         key={index}
       >
@@ -129,7 +137,7 @@ class DataTemplatesBuilderPage extends React.Component {
   }
 
   render() {
-    const {addNewTemplate, dataTemplates, selectedTemplateIndex, submitTemplate, dataTemplatesNames, onTemplateSelected} = this.props;
+    const {addNewTemplate, dataTemplates, selectedTemplateIndex, submitTemplate, dataTemplatesNames, onTemplateSelected, owner} = this.props;
     const submit = (
       [<Button className="pull-left" onClick={this.handleShow}>
         <Glyphicon glyph='glyphicon glyphicon-question-sign'/>
@@ -178,6 +186,7 @@ class DataTemplatesBuilderPage extends React.Component {
     });
     return (
       <div>
+        <Header owner={owner}/>
         <Panel bsStyle='primary' header={submit}>
           <Grid fluid={true}>
             <Row key={'bla'}>

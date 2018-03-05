@@ -19,6 +19,7 @@ import 'react-select/dist/react-select.css'
 import Select from 'react-select'
 import Notifications from 'react-notification-system-redux'
 import SearchBar from "../SearchBar";
+import Header from "../Header";
 
 class TestBuilderPage extends React.Component {
   constructor(props, context) {
@@ -179,11 +180,22 @@ class TestBuilderPage extends React.Component {
       setSelectedTestIndex,
       testNamesForDropdown,
       addNewTest,
-      submitCurrentTest
+      submitCurrentTest,
+      owner
     } = this.props;
+
+    this.props.testNamesForDropdown.map((test, index) => {
+      let myStr = this.props.match.params.testName,
+        mySecondStr = test.test_name;
+      if (myStr === mySecondStr) {
+        this.props.setSelectedTestIndex(index);
+      }
+    });
+
     const testsList = () => (testNamesForDropdown.map((test, index) =>
       <ListGroupItem
         onClick={() => setSelectedTestIndex(index)}
+        href={'/#/testbuilder/' + test.test_name}
         active={index === selectedTestIndex}
         key={index}
       >
@@ -237,6 +249,7 @@ class TestBuilderPage extends React.Component {
 
     return (
       <div>
+        <Header owner={owner}/>
         <Panel header={submitButton} bsStyle="primary">
           <Grid fluid={true}>
             <Row>

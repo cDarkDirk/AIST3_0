@@ -60,7 +60,7 @@ const chainTemplateReducer = (state = initialState, action) => {
           ...state.chainTemplates.slice(0, sel),
           {...state.chainTemplates[sel], tests, modified},
           ...state.chainTemplates.slice(sel + 1, state.chainTemplates.length)
-        ]
+        ],
       }
     }
 
@@ -78,7 +78,7 @@ const chainTemplateReducer = (state = initialState, action) => {
       };
       return {
         ...state,
-        chainTemplates: allChainTemplates
+        chainTemplates: allChainTemplates,
       }
     }
 
@@ -175,6 +175,7 @@ const chainTemplateReducer = (state = initialState, action) => {
       const newOne = {...oldChainTemplates[state.selectedChainTemplate]};
       newOne.modified = false;
       newOne.new = true;
+      newOne.name += 'Clone';
       const chainTemplates = [
         newOne,
           ...oldChainTemplates,
