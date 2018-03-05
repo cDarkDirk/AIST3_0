@@ -1,20 +1,21 @@
 import React from "react"
-import {
-  ListGroup,
-  ListGroupItem,
-  Label,
-} from 'react-bootstrap'
+import {ListGroup, ListGroupItem, Label} from 'react-bootstrap'
+
 import './style.css'
 
-const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, chainNames}) => {
-  return (
-    <ListGroup>
+const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, chainNames, name}) => {
+  chainTemplates.map((chain, idx) => {
+    if(chain.name === name){
+      chainSelected(idx);
+    }
+  });
+  return (<ListGroup>
     {
       chainNames.map((chain, idx) => {
         return <ListGroupItem
           key={idx}
           className='chain-list-item'
-          active={idx === selectedChainTemplate}
+          href={'/#/chaineditor/' + chain} active={idx === selectedChainTemplate}
           onClick={() => chainSelected(idx)}>
           {chain}
           &nbsp;
@@ -26,4 +27,4 @@ const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, chainN
     }
   </ListGroup>);
 };
-export default ChainList
+export default ChainList;

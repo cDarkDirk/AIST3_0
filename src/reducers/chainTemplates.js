@@ -53,7 +53,7 @@ const chainTemplateReducer = (state = initialState, action) => {
           ...state.chainTemplates.slice(0, sel),
           {...state.chainTemplates[sel],  tests, modified},
           ...state.chainTemplates.slice(sel + 1, state.chainTemplates.length)
-        ]
+        ],
       }
     }
 
@@ -71,7 +71,7 @@ const chainTemplateReducer = (state = initialState, action) => {
       };
       return {
         ...state,
-        chainTemplates: allChainTemplates
+        chainTemplates: allChainTemplates,
       }
     }
 

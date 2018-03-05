@@ -91,7 +91,7 @@ class ChainEditorPage extends React.Component {
           <Row>
             <Col md={3}>
               <SideBar>
-                <ChainList/>
+                <ChainList name={this.props.match.params.chainName}/>
                 <div className='spacer'/>
                 <Button
                   bsStyle='primary'
@@ -110,7 +110,6 @@ class ChainEditorPage extends React.Component {
                 chainTemplateMarkerChanged={chainTemplateMarkerChanged}
                 chainName={chainName}
               />
-
               <ChainDisplay chainTemplate={chainTemplate}/>
             </Col>
             <Col md={3}>

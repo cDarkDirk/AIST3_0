@@ -18,6 +18,7 @@ function mapStateToProps(state) {
     selectedTemplateIndex: state.dataTemplatesBuilderReducer.selectedTemplateIndex,
     notifications: state.notifications,
     dataTemplatesNames: state.dataTemplatesBuilderReducer.dataTemplatesNames,
+    datatemplatesName: state.dataTemplatesBuilderReducer.datatemplatesName,
     owner: state.dataAuthorization.paramNames.name,
   }
 }

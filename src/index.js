@@ -38,13 +38,17 @@ ReactDOM.render((
       <div>
         <HashRouter /*history={history}*/>
           <Switch>
-            <Route path="/testbuilder" component={TestBuilder}/>
-            <Route path="/chaineditor" component={ChainEditorPage}/>}
-            <Route path="/launcher" component={LauncherPage}/>
+            <Route exact path="/testbuilder" component={TestBuilder}/>
+            <Route path="/testbuilder/:testName" component={TestBuilder}/>
+            <Route exact path="/chaineditor" component={ChainEditorPage}/>}
+            <Route path="/chaineditor/:chainName" component={ChainEditorPage}/>}
+            <Route exact path="/launcher" component={LauncherPage}/>
+            <Route path="/launcher/:launcherName" component={LauncherPage}/>
             <Route exact path="/formbuilder" component={FormBuilderPage}/>
             <Route path="/formbuilder/:chainIndex" component={FormBuilderPage}/>
             <Route path="/datadirectory" component={DataDirectoryPage}/>
-            <Route path="/datatemplates" component={DataTemplatesBuilderPage}/>
+            <Route path="/datatemplates/:datatemplatesName" component={DataTemplatesBuilderPage}/>
+            <Route exact path="/datatemplates" component={DataTemplatesBuilderPage}/>
             <Route path="/homepage" component={HomePage}/>
             <Route path="/registration" component={RegistrationPage}/>
             <Route exact path="/" component={AuthorizationPage}/>
