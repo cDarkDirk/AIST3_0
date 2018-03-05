@@ -47,6 +47,7 @@ class TestBuilderPage extends React.Component {
 
   handleTagInputChange(value, field) {
     const {testBuilderTests, selectedTestIndex} = this.props;
+    console.log('------------>',value);
     const crunch = value.map((field) => {
       return {label: field.label, value: field.value};
     });
@@ -72,6 +73,10 @@ class TestBuilderPage extends React.Component {
 
   renderTestParamsForm = () => {
     const {testBuilderTests, selectedTestIndex} = this.props;
+    const optsStatic = testBuilderTests[selectedTestIndex].tag_names.static.map((name) => ({
+      label: name,
+      value: name,
+    }));
     return (
       <Form>
         <ListGroupItem bsStyle="success" style={{maxHeight: '550px', overflow: 'auto'}}>
@@ -111,7 +116,7 @@ class TestBuilderPage extends React.Component {
                 <Col md={6}>
                   <InputGroup>
                     <InputGroup.Addon>Job name</InputGroup.Addon>
-                    <FormControl value={testBuilderTests[selectedTestIndex].job_trigger.job_name}
+                    <FormControl value={testBuilderTests[selectedTestIndex].job_trigger.jobName}
                                  onChange={(event) => this.handleInputChange(event.target.value, 'job_name')}
                                  type="text"/>
                   </InputGroup>
@@ -126,17 +131,15 @@ class TestBuilderPage extends React.Component {
                 </Col>
               </Row>
             </Panel>
-            <Panel header={'Test tags:'}>
+            {/*<Panel header={'Test tags:'}>
               <Row>
                 <Col md={12}>
                   <InputGroup>
                     <InputGroup.Addon>Static #tags</InputGroup.Addon>
                     <Select.Creatable
+                      id={'static'}
                       multi={true}
-                      options={testBuilderTests[selectedTestIndex].tag_names.static.map((name) => ({
-                        label: name,
-                        value: name,
-                      }))}
+                      options={optsStatic}
                       menuStyle={{display: 'none'}}
                       arrowRenderer={null}
                       autosize={false}
@@ -151,6 +154,7 @@ class TestBuilderPage extends React.Component {
                   <InputGroup>
                     <InputGroup.Addon>Dynamic #tags</InputGroup.Addon>
                     <Select.Creatable
+                      id={'dynamic'}
                       multi={true}
                       options={testBuilderTests[selectedTestIndex].tag_names.dynamic.map((name) => ({
                         label: name,
@@ -165,7 +169,7 @@ class TestBuilderPage extends React.Component {
                   </InputGroup>
                 </Col>
               </Row>
-            </Panel>
+            </Panel>*/}
           </FormGroup>
         </ListGroupItem>
       </Form>
@@ -209,7 +213,8 @@ class TestBuilderPage extends React.Component {
     const submitButton = [
       <Button className="pull-left" onClick={this.handleShow}>
         <Glyphicon glyph='glyphicon glyphicon-question-sign'/>
-      </Button>, <Modal show={this.state.show} onHide={this.handleClose}>
+      </Button>,
+      <Modal show={this.state.show} onHide={this.handleClose}>
         <Modal.Header closeButton>
           <Modal.Title><strong>Конструктор тестов</strong></Modal.Title>
         </Modal.Header>

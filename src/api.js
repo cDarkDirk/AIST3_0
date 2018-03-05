@@ -294,25 +294,20 @@ export const testBuilderDataFetch = () => (dispatch) => {
  * Submit data to database
  */
 export const submitTest = (testObject) => (dispatch, getState) => {
-  let tags;
-  if (testObject.test.tag_names.static.length === 0 && testObject.test.tag_names.dynamic.length === 0) {
-    tags = {};
-  } else if (testObject.test.tag_names.dynamic.length > 0 && testObject.test.tag_names.static.length === 0) {
-    tags = {dynamic: testObject.test.tag_names.dynamic.map(t => t.value)};
-  } else if (testObject.test.tag_names.dynamic.length === 0 && testObject.test.tag_names.static > 0) {
-    tags = {static: testObject.test.tag_names.static.map(t => t.value)};
-  } else {
-    tags = {
-      static: testObject.test.tag_names.static.map(t => t.value),
-      dynamic: testObject.test.tag_names.dynamic.map(t => t.value),
-    };
-  }
+  /*let staticTags, dynamicTags;
+  if (testObject.test.tag_names.static)
+    staticTags = testObject.test.tag_names.static.map(t => t.value);
+  if (testObject.test.tag_names.dynamic)
+    dynamicTags = testObject.test.tag_names.dynamic.map(t => t.value);
+  let tags = {
+    static: staticTags ? staticTags : [],
+    dynamic: dynamicTags ? dynamicTags : [],
+  };*/
   const result = [{
     test_name: testObject.test.test_name,
     job_trigger: testObject.test.job_trigger,
-    tag_names: tags,
+    tag_names: {},
   }];
-
 
   if (testObject.test.modified) {
     const updateTestUrl = `${BACKEND_URL}/tests/${testObject.id}`;
