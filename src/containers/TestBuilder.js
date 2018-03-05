@@ -18,6 +18,7 @@ function mapStateToProps(state) {
     selectedTestIndex: state.testBuilder.selectedTestIndex,
     testNamesForDropdown: state.testBuilder.testNamesForDropdown,
     testName: state.testBuilder.testName,
+    owner: state.dataAuthorization.paramNames.name,
   }
 }
 
