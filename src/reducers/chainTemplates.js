@@ -9,6 +9,8 @@ import {
   CLOSE_BUTTON_CLICKED,
   SUBMIT_CHAIN_TEMPLATE_SUCCEED,
   CHAIN_TEMPLATE_MARKER_CHANGED,
+  DUPLICATE_CURRENT_CHAIN,
+  DATA_TEMPLATE_ADDED,
 } from '../constants'
 
 const initialState = {
@@ -16,6 +18,7 @@ const initialState = {
   selectedChainTemplate: 0,
   chainNames: [],
   owner:'',
+  dataTemplatesNames: [],
 };
 
 const chainTemplateReducer = (state = initialState, action) => {
@@ -24,9 +27,13 @@ const chainTemplateReducer = (state = initialState, action) => {
       const chainTemplates = action.payload.map((chain) => {
         chain.modified = false;
         chain.new = false;
+        if (chain.templates) chain['templates'] = chain.templates.map(name => {
+          return{label: name, value: name};
+        });
         return chain;
       });
       const chainNames = action.payload.map((chain) => chain.name);
+
       return {
         ...state,
         chainTemplates,
@@ -51,7 +58,7 @@ const chainTemplateReducer = (state = initialState, action) => {
         ...state,
         chainTemplates: [
           ...state.chainTemplates.slice(0, sel),
-          {...state.chainTemplates[sel],  tests, modified},
+          {...state.chainTemplates[sel], tests, modified},
           ...state.chainTemplates.slice(sel + 1, state.chainTemplates.length)
         ],
       }
@@ -120,8 +127,8 @@ const chainTemplateReducer = (state = initialState, action) => {
         {
           name: 'New Template',
           tests: [],
-          fields:[],
-          marker:'',
+          fields: [],
+          marker: '',
           modified: false,
           owner: action.payload,
           new: true,
@@ -157,6 +164,34 @@ const chainTemplateReducer = (state = initialState, action) => {
         marker: action.payload,
         modified,
       };
+      return {
+        ...state,
+        chainTemplates,
+      }
+    }
+
+    case DUPLICATE_CURRENT_CHAIN: {
+      let oldChainTemplates = [...state.chainTemplates];
+      const newOne = {...oldChainTemplates[state.selectedChainTemplate]};
+      newOne.modified = false;
+      newOne.new = true;
+      newOne.name += 'Clone';
+      const chainTemplates = [
+        newOne,
+          ...oldChainTemplates,
+      ];
+      const chainNames = chainTemplates.map(chain => chain.name);
+      return {
+        ...state,
+        chainTemplates,
+        chainNames,
+      }
+    }
+
+    case DATA_TEMPLATE_ADDED: {
+      const chainTemplates = [...state.chainTemplates];
+      chainTemplates[state.selectedChainTemplate]['templates'] = action.payload;
+      chainTemplates[state.selectedChainTemplate].modified = !chainTemplates[state.selectedChainTemplate].new;
       return {
         ...state,
         chainTemplates,

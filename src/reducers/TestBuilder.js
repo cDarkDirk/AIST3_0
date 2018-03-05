@@ -25,6 +25,12 @@ const testBuilder = (state = initialState, action) => {
       const adaptedTests = tests.map((current) => {
         current.modified = false;
         current.new = false;
+        if (!current.tag_names.static){
+          current.tag_names.static = [];
+        }
+        if (!current.tag_names.dynamic){
+          current.tag_names.dynamic = [];
+        }
         return current;
       });
       return {
@@ -41,7 +47,6 @@ const testBuilder = (state = initialState, action) => {
     }
     case ADD_NEW_TEST: {
       const newTestEntry = {
-        "test_id": 'Enter test id number here...',
         "test_name": "Brand new test",
         "job_trigger":
         {
@@ -51,7 +56,7 @@ const testBuilder = (state = initialState, action) => {
           "job_name": "Enter job name here...",
           "passOrToken": "Job pass or token..."
         },
-        "tag_names": [],
+        "tag_names": {static: [], dynamic: []},
         'new': true,
         'modified': false
       };
@@ -88,61 +93,52 @@ const testBuilder = (state = initialState, action) => {
         case 'test_name': {
           testBuilderTests[state.selectedTestIndex].test_name = action.payload.paramValue;
           const newTest = testBuilderTests[state.selectedTestIndex].new;
-          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
+          testBuilderTests[state.selectedTestIndex].modified = !newTest;
           return {
             ...state,
-            testBuilderTests
-          }
-        }
-        case 'test_id': {
-          testBuilderTests[state.selectedTestIndex].test_id = action.payload.paramValue;
-          const newTest = testBuilderTests[state.selectedTestIndex].new;
-          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
-          return {
-            ...state,
-            testBuilderTests
+            testBuilderTests,
           }
         }
         case 'uri': {
-          testBuilderTests[state.selectedTestIndex].job_trigger.uri = action.payload.paramValue;
+          testBuilderTests[state.selectedTestIndex].job_trigger['uri'] = action.payload.paramValue;
           const newTest = testBuilderTests[state.selectedTestIndex].new;
-          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
+          testBuilderTests[state.selectedTestIndex].modified = !newTest;
           return {
             ...state,
-            testBuilderTests
+            testBuilderTests,
           }
         }
         case 'login': {
-          testBuilderTests[state.selectedTestIndex].job_trigger.login = action.payload.paramValue;
+          testBuilderTests[state.selectedTestIndex].job_trigger['login'] = action.payload.paramValue;
           const newTest = testBuilderTests[state.selectedTestIndex].new;
-          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
+          testBuilderTests[state.selectedTestIndex].modified = !newTest;
           return {
             ...state,
-            testBuilderTests
+            testBuilderTests,
           }
         }
         case 'job_name': {
-          testBuilderTests[state.selectedTestIndex].job_trigger.job_name = action.payload.paramValue;
+          testBuilderTests[state.selectedTestIndex].job_trigger['job_name'] = action.payload.paramValue;
           const newTest = testBuilderTests[state.selectedTestIndex].new;
-          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
+          testBuilderTests[state.selectedTestIndex].modified = !newTest;
           return {
             ...state,
-            testBuilderTests
+            testBuilderTests,
           }
         }
         case 'passOrToken': {
-          testBuilderTests[state.selectedTestIndex].job_trigger.passOrToken = action.payload.paramValue;
+          testBuilderTests[state.selectedTestIndex].job_trigger['passOrToken']= action.payload.paramValue;
           const newTest = testBuilderTests[state.selectedTestIndex].new;
-          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
+          testBuilderTests[state.selectedTestIndex].modified = !newTest;
           return {
             ...state,
-            testBuilderTests
+            testBuilderTests,
           }
         }
         case 'tag_names': {
-          testBuilderTests[state.selectedTestIndex].tag_names = action.payload.paramValue.map((parVal)=>parVal.value);
+          testBuilderTests[state.selectedTestIndex].tag_names = action.payload.paramValue;
           const newTest = testBuilderTests[state.selectedTestIndex].new;
-          if(!newTest) testBuilderTests[state.selectedTestIndex].modified = true;
+          testBuilderTests[state.selectedTestIndex].modified = !newTest;
           return {
             ...state,
             testBuilderTests,

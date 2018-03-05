@@ -15,7 +15,8 @@ const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, chainN
         return <ListGroupItem
           key={idx}
           className='chain-list-item'
-          href={'/#/chaineditor/' + chain} active={idx === selectedChainTemplate}
+          href={'/#/chaineditor/' + chain}
+          active={idx === selectedChainTemplate}
           onClick={() => chainSelected(idx)}>
           {chain}
           &nbsp;

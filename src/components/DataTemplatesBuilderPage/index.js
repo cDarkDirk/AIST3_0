@@ -15,6 +15,7 @@ import {
   Modal,
 } from "react-bootstrap"
 import Notifications from 'react-notification-system-redux'
+import SearchBar from "../SearchBar";
 import Header from "../Header";
 
 class DataTemplatesBuilderPage extends React.Component {
@@ -119,7 +120,6 @@ class DataTemplatesBuilderPage extends React.Component {
       }
 
     });
-    console.log(this.props.match.params.datatemplatesName);
     return (dataTemplatesNames.map((template, index) =>
       <ListGroupItem
         onClick={() => onTemplateSelected(index)}
@@ -137,7 +137,7 @@ class DataTemplatesBuilderPage extends React.Component {
   }
 
   render() {
-    const {addNewTemplate, dataTemplates, selectedTemplateIndex, submitTemplate, dataTemplatesNames,owner} = this.props;
+    const {addNewTemplate, dataTemplates, selectedTemplateIndex, submitTemplate, dataTemplatesNames, onTemplateSelected, owner} = this.props;
     const submit = (
       [<Button className="pull-left" onClick={this.handleShow}>
         <Glyphicon glyph='glyphicon glyphicon-question-sign'/>
@@ -181,6 +181,9 @@ class DataTemplatesBuilderPage extends React.Component {
         <div className="clearfix"/>
       ]
     );
+    const searchOpt = dataTemplatesNames.map((dt, idx) => {
+      return {label: dt, value: idx};
+    });
     return (
       <div>
         <Header owner={owner}/>
@@ -188,15 +191,20 @@ class DataTemplatesBuilderPage extends React.Component {
           <Grid fluid={true}>
             <Row key={'bla'}>
               <Col md={3}>
-                <Button
-                  bsStyle="primary"
-                  className='btn-block'
-                  onClick={() => addNewTemplate()}
-                  key={'addNewTemplate'}
-                >
-                  <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new test...
-                </Button>
-                {this.renderTemplatesList()}
+                <Row>
+                  <SearchBar options={searchOpt} onOptionClick={onTemplateSelected}/>
+                </Row>
+                <Row>
+                  <Button
+                    bsStyle="primary"
+                    className='btn-block'
+                    onClick={() => addNewTemplate()}
+                    key={'addNewTemplate'}
+                  >
+                    <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new test...
+                  </Button>
+                  {this.renderTemplatesList()}
+                </Row>
               </Col>
               <Col md={9}>
                 {this.props.selectedTemplateIndex !== null && this.renderTemplateBulder()}
