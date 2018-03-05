@@ -18,6 +18,7 @@ import {
 import 'react-select/dist/react-select.css'
 import Select from 'react-select'
 import Notifications from 'react-notification-system-redux'
+import Header from "../Header";
 
 class TestBuilderPage extends React.Component {
   constructor(props, context) {
@@ -150,7 +151,8 @@ class TestBuilderPage extends React.Component {
       setSelectedTestIndex,
       testNamesForDropdown,
       addNewTest,
-      submitCurrentTest
+      submitCurrentTest,
+      owner
     } = this.props;
     const testsList = () => (testNamesForDropdown.map((test, index) =>
       <ListGroupItem
@@ -204,6 +206,7 @@ class TestBuilderPage extends React.Component {
 
     return (
       <div>
+        <Header owner={owner}/>
         <Panel header={submitButton} bsStyle="primary">
           <Grid fluid={true}>
             <Row>

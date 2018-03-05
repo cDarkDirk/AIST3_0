@@ -1,0 +1,17 @@
+.header{
+  font-size: 16px;
+  width: 100%;
+  height: 50px;
+  text-align: right;
+  background-color: #1a9f29;
+  margin-bottom: 1%;
+
+  display: flex;
+  align-items: center;
+}
+header text {
+  color: #fff;
+  margin-left: 5%;
+  font: 17px/19px SeroPro,Helvetica Neue,Helvetica,Arial,sans-serif;
+
+}

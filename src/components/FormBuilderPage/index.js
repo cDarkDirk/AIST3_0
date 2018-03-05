@@ -14,6 +14,7 @@ import {
 } from 'react-bootstrap';
 import Notifications from 'react-notification-system-redux'
 import FieldPicker from "../FieldPicker";
+import Header from "../Header";
 
 
 class FormBuilderPage extends React.Component {
@@ -167,7 +168,7 @@ class FormBuilderPage extends React.Component {
   };
 
   render() {
-    const {formBuilderChains,notifications} = this.props;
+    const {formBuilderChains,notifications, owner} = this.props;
     const {chainIndex} = this.state;
     const chainDropDown = [
       <DropdownButton
@@ -227,6 +228,7 @@ class FormBuilderPage extends React.Component {
     ];
     return (
       <div>
+        <Header owner={owner}/>
         <Panel header={chainDropDown} footer={submitBtn} bsStyle="primary">
           <Grid fluid={true}>
             {chainIndex !== null && formBuilderChains[chainIndex] && this.renderFormBody()}

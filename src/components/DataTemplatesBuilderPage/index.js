@@ -15,6 +15,7 @@ import {
   Modal,
 } from "react-bootstrap"
 import Notifications from 'react-notification-system-redux'
+import Header from "../Header";
 
 class DataTemplatesBuilderPage extends React.Component {
 
@@ -128,7 +129,7 @@ class DataTemplatesBuilderPage extends React.Component {
   }
 
   render() {
-    const {addNewTemplate, dataTemplates, selectedTemplateIndex, submitTemplate, dataTemplatesNames} = this.props;
+    const {addNewTemplate, dataTemplates, selectedTemplateIndex, submitTemplate, dataTemplatesNames,owner} = this.props;
     const submit = (
       [<Button className="pull-left" onClick={this.handleShow}>
         <Glyphicon glyph='glyphicon glyphicon-question-sign'/>
@@ -174,6 +175,7 @@ class DataTemplatesBuilderPage extends React.Component {
     );
     return (
       <div>
+        <Header owner={owner}/>
         <Panel bsStyle='primary' header={submit}>
           <Grid fluid={true}>
             <Row key={'bla'}>
