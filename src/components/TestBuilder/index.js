@@ -18,6 +18,7 @@ import {
 import 'react-select/dist/react-select.css'
 import Select from 'react-select'
 import Notifications from 'react-notification-system-redux'
+import SearchBar from "../SearchBar";
 
 class TestBuilderPage extends React.Component {
   constructor(props, context) {
@@ -230,22 +231,31 @@ class TestBuilderPage extends React.Component {
       <div className="clearfix"/>
     ];
 
+    const searchOpt = testNamesForDropdown.map((test, index) => {
+      return {label: test.test_name, value: index}
+    });
+
     return (
       <div>
         <Panel header={submitButton} bsStyle="primary">
           <Grid fluid={true}>
             <Row>
               <Col md={3}>
-                <Button
-                  bsStyle="primary"
-                  className='btn-block'
-                  onClick={() => addNewTest()}
-                >
-                  <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new test...
-                </Button>
-                <ListGroup>
-                  {testsList()}
-                </ListGroup>
+                <Row>
+                  <SearchBar options={searchOpt} onOptionClick={setSelectedTestIndex}/>
+                </Row>
+                <Row>
+                  <Button
+                    bsStyle="primary"
+                    className='btn-block'
+                    onClick={() => addNewTest()}
+                  >
+                    <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new test...
+                  </Button>
+                  <ListGroup>
+                    {testsList()}
+                  </ListGroup>
+                </Row>
               </Col>
               <Col md={9}>
                 {selectedTestIndex !== null && this.renderTestParamsForm()}

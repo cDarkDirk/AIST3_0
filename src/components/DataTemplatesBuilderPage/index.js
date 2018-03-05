@@ -15,6 +15,7 @@ import {
   Modal,
 } from "react-bootstrap"
 import Notifications from 'react-notification-system-redux'
+import SearchBar from "../SearchBar";
 
 class DataTemplatesBuilderPage extends React.Component {
 
@@ -128,7 +129,7 @@ class DataTemplatesBuilderPage extends React.Component {
   }
 
   render() {
-    const {addNewTemplate, dataTemplates, selectedTemplateIndex, submitTemplate, dataTemplatesNames} = this.props;
+    const {addNewTemplate, dataTemplates, selectedTemplateIndex, submitTemplate, dataTemplatesNames, onTemplateSelected} = this.props;
     const submit = (
       [<Button className="pull-left" onClick={this.handleShow}>
         <Glyphicon glyph='glyphicon glyphicon-question-sign'/>
@@ -172,21 +173,29 @@ class DataTemplatesBuilderPage extends React.Component {
         <div className="clearfix"/>
       ]
     );
+    const searchOpt = dataTemplatesNames.map((dt, idx) => {
+      return {label: dt, value: idx};
+    });
     return (
       <div>
         <Panel bsStyle='primary' header={submit}>
           <Grid fluid={true}>
             <Row key={'bla'}>
               <Col md={3}>
-                <Button
-                  bsStyle="primary"
-                  className='btn-block'
-                  onClick={() => addNewTemplate()}
-                  key={'addNewTemplate'}
-                >
-                  <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new test...
-                </Button>
-                {this.renderTemplatesList()}
+                <Row>
+                  <SearchBar options={searchOpt} onOptionClick={onTemplateSelected}/>
+                </Row>
+                <Row>
+                  <Button
+                    bsStyle="primary"
+                    className='btn-block'
+                    onClick={() => addNewTemplate()}
+                    key={'addNewTemplate'}
+                  >
+                    <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new test...
+                  </Button>
+                  {this.renderTemplatesList()}
+                </Row>
               </Col>
               <Col md={9}>
                 {this.props.selectedTemplateIndex !== null && this.renderTemplateBulder()}
