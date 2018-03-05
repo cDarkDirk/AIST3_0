@@ -130,6 +130,7 @@ const chainTemplateReducer = (state = initialState, action) => {
           fields: [],
           marker: '',
           modified: false,
+          templates: [],
           owner: action.payload,
           new: true,
         },
