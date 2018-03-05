@@ -20,19 +20,15 @@ import {BACKEND_URL} from "./constants/endpoints";
 export const submitFormTemplate = (formName, formTemplate, sheduleList, templates) => (dispatch) => {
 
 //TODO Дима, добавь коментарий с описанием и убери в конец списка
-    const dataToSendLauncherPageBody = {
-       paramData: formTemplate
-   };
 
-  const dataToSendLauncherPageHeaders = {headers: {
-    formName: formName,
-    template: templates,
-    start_time: sheduleList
-  }};
+  const dataToSendLauncherPageBody = {
+      fields: formName,
+      templates: templates
+   };
 
   const url = `${BACKEND_URL}/chains`;
 
-  axios.put(url, dataToSendLauncherPageBody, dataToSendLauncherPageHeaders).then(function () {
+  axios.put(url, dataToSendLauncherPageBody).then(function () {
     dispatch(success({message: "Submit succeeded!"}));
   }).catch(function (response) {
     dispatch(error({message: "Submit failed with error!" + response}));
