@@ -6,7 +6,7 @@ Access-Control-Allow-Origin: *
   {
     "marker": "DebitCard",
     "name": "DebitCard",
-    "marker": "DebitCard",
+    "templates": ["7_IFT","9_IFT"],
     "tests": [
         {
           "id": 3
@@ -41,30 +41,31 @@ Access-Control-Allow-Origin: *
   {
     "marker": "FSClient",
     "name": "FSClient",
-    "marker": "FSClient",
+    "templates": [],
     "tests": [
         {
           "id": 2
         }
     ],
-           "fields": [
-             {
-               "label": "default",
-               "paramName": "default",
-               "regEx": "/test/i",
-               "type": "Input"
-             },
-             {
-               "label": "default",
-               "paramName": "default",
-               "type": "DropDown",
-               "dropDownOptions": ["1", "2", "3"]
-             }
-           ]
+    "fields": [
+      {
+        "label": "default",
+        "paramName": "default",
+        "regEx": "/test/i",
+        "type": "Input"
+      },
+      {
+        "label": "default",
+        "paramName": "default",
+        "type": "DropDown",
+        "dropDownOptions": ["1", "2", "3"]
+      }
+    ]
   },
   {
     "name": "SPOOBKCreditCard",
     "marker": "SPOOBKCreditCard",
+    "templates": [],
     "tests": [
         {
           "id": 11
@@ -79,24 +80,25 @@ Access-Control-Allow-Origin: *
           "id": 4
         }
     ],
-           "fields": [
-             {
-               "label": "default",
-               "paramName": "default",
-               "regEx": "/test/i",
-               "type": "Input"
-             },
-             {
-               "label": "default",
-               "paramName": "default",
-               "type": "DropDown",
-               "dropDownOptions": ["1", "2", "3"]
-             }
-           ]
+    "fields": [
+      {
+        "label": "default",
+        "paramName": "default",
+        "regEx": "/test/i",
+        "type": "Input"
+      },
+      {
+        "label": "default",
+        "paramName": "default",
+        "type": "DropDown",
+        "dropDownOptions": ["1", "2", "3"]
+      }
+    ]
   },
   {
     "name": "SPOOBKCreditCardWithSum",
     "marker": "SPOOBKCreditCardWithSum",
+    "templates": [],
     "tests": [
         {
           "id": 11
@@ -114,24 +116,25 @@ Access-Control-Allow-Origin: *
           "id": 1
         }
     ],
-           "fields": [
-             {
-               "label": "default",
-               "paramName": "default",
-               "regEx": "/test/i",
-               "type": "Input"
-             },
-             {
-               "label": "default",
-               "paramName": "default",
-               "type": "DropDown",
-               "dropDownOptions": ["1", "2", "3"]
-             }
-           ]
+    "fields": [
+      {
+        "label": "default",
+        "paramName": "default",
+        "regEx": "/test/i",
+        "type": "Input"
+      },
+      {
+        "label": "default",
+        "paramName": "default",
+        "type": "DropDown",
+        "dropDownOptions": ["1", "2", "3"]
+      }
+    ]
   },
   {
     "name": "UFS",
     "marker": "UFS",
+    "templates": [],
     "tests": [
         {
           "id": 201707191401206171
@@ -140,65 +143,67 @@ Access-Control-Allow-Origin: *
           "id": 201707191401206173
         }
     ],
-           "fields": [
-             {
-               "label": "default",
-               "paramName": "default",
-               "regEx": "/test/i",
-               "type": "Input"
-             },
-             {
-               "label": "default",
-               "paramName": "default",
-               "type": "DropDown",
-               "dropDownOptions": ["1", "2", "3"]
-             }
-           ]
+    "fields": [
+      {
+        "label": "default",
+        "paramName": "default",
+        "regEx": "/test/i",
+        "type": "Input"
+      },
+      {
+        "label": "default",
+        "paramName": "default",
+        "type": "DropDown",
+        "dropDownOptions": ["1", "2", "3"]
+      }
+    ]
   },
   {
     "name": "WAY4CardAccrual",
     "marker": "WAY4CardAccrual",
+    "templates": [],
     "tests": [
         {
           "id": 1
         }
     ],
-           "fields": [
-             {
-               "label": "default",
-               "paramName": "default",
-               "regEx": "/test/i",
-               "type": "Input"
-             },
-             {
-               "label": "default",
-               "paramName": "default",
-               "type": "DropDown",
-               "dropDownOptions": ["1", "2", "3"]
-             }
-           ]
+    "fields": [
+      {
+        "label": "default",
+        "paramName": "default",
+        "regEx": "/test/i",
+        "type": "Input"
+      },
+      {
+        "label": "default",
+        "paramName": "default",
+        "type": "DropDown",
+        "dropDownOptions": ["1", "2", "3"]
+      }
+    ]
   },
   {
     "name": "WAY4Ipass",
     "marker": "WAY4Ipass",
+    "templates": [],
     "tests": [
         {
           "id": 10
         }
     ],
-           "fields": [
-             {
-               "label": "default",
-               "paramName": "default",
-               "regEx": "/test/i",
-               "type": "Input"
-             },
-             {
-               "label": "default",
-               "paramName": "default",
-               "type": "DropDown",
-               "dropDownOptions": ["1", "2", "3"]
-             }
-           ]
+    "fields": [
+      {
+        "label": "default",
+        "paramName": "default",
+        "regEx": "/test/i",
+        "type": "Input"
+      },
+      {
+        "label": "default",
+        "paramName": "default",
+        "type": "DropDown",
+        "dropDownOptions": ["1", "2", "3"]
+      }
+    ]
   }
 ]

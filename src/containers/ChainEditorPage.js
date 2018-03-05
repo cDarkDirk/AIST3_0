@@ -2,6 +2,7 @@ import {connect} from 'react-redux'
 import {
   fetchChainTemplates,
   updateChainTemplate,
+  fetchDataTemplates,
 } from '../api'
 import {
   chainTemplateNameChanged,
@@ -10,6 +11,7 @@ import {
   chainTemplateMarkerChanged,
   chainSelected,
   duplicateCurrentChain,
+  addDTToChain,
 } from '../actions'
 import ChainEditorPage from '../components/ChainEditorPage'
 
@@ -21,6 +23,7 @@ function mapStateToProps(state) {
     notifications: state.notifications,
     chainNames: state.chainTemplates.chainNames,
     owner: state.dataAuthorization.paramNames.name,
+    dataTemplatesNames: state.dataTemplatesBuilderReducer.dataTemplatesNames,
   }
 }
 
@@ -34,6 +37,8 @@ function mapDispatchToProps(dispatch) {
     chainTemplateMarkerChanged: (marker) => dispatch(chainTemplateMarkerChanged(marker)),
     onChainSelected: selectedChainTemplate => dispatch(chainSelected(selectedChainTemplate)),
     duplicate: () => dispatch(duplicateCurrentChain()),
+    getAllDataTemplates: () => dispatch(fetchDataTemplates()),
+    addDTToChain: (payload) => dispatch(addDTToChain(payload)),
   }
 }
 

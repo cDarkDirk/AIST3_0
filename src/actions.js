@@ -36,9 +36,10 @@ import {
   NEW_DATA_TEMPLATE_PARAM_ADDED,
   CHAIN_TEMPLATE_MARKER_CHANGED,
   UPDATE_DATA_TEMPLATE_SUCCESS,
-  DUPLICATE_CURENT_CHAIN,
+  DUPLICATE_CURRENT_CHAIN,
   LOGIN_BUTTON_CLICKED,
   LOGIN_PASSWORD_CHANGE,
+  DATA_TEMPLATE_ADDED,
 } from './constants'
 
 export const loginButtonClicked = (payload) => ({
@@ -235,6 +236,11 @@ export const updateDataTemplateSuccess = () => ({
 });
 
 export const duplicateCurrentChain = (payload) => ({
-  type: DUPLICATE_CURENT_CHAIN,
+  type: DUPLICATE_CURRENT_CHAIN,
+  payload,
+});
+
+export const addDTToChain = (payload) => ({
+  type: DATA_TEMPLATE_ADDED,
   payload,
 });

@@ -6,11 +6,12 @@ import TestsList from "../../containers/TestsList"
 import {Button} from 'react-bootstrap'
 import Notifications from 'react-notification-system-redux'
 import './style.css'
-import Toolbar from "../toolbar";
-import {createConfirmation} from "react-confirm";
-import ConfirmationDialog from "../ConfirmationDialog";
-import SearchBar from "../SearchBar";
-import NotifyUser from "../NotifyUser/NotifyUser";
+import Toolbar from "../toolbar"
+import {createConfirmation} from "react-confirm"
+import ConfirmationDialog from "../ConfirmationDialog"
+import SearchBar from "../SearchBar"
+import NotifyUser from "../NotifyUser/NotifyUser"
+import Select from 'react-select'
 
 class ChainEditorPage extends React.Component {
   constructor(props, context) {
@@ -18,9 +19,11 @@ class ChainEditorPage extends React.Component {
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.props.fetchChainTemplates();
+    this.props.getAllDataTemplates();
 
     this.state = {
-      show: false
+      show: false,
     };
   }
 
@@ -32,16 +35,13 @@ class ChainEditorPage extends React.Component {
     this.setState({show: true});
   }
 
-  componentDidMount() {
-    this.props.fetchChainTemplates();
-  }
-
   render() {
     const {
       chainTemplate, chainTemplateNameChanged, deleteChainTemplate,
       addChainTemplate, updateChainTemplate, notifications,
       chainTemplateMarkerChanged, chainSelected, chainName,
-      onChainSelected, duplicate, chainNames, owner
+      onChainSelected, duplicate, chainNames, owner,
+      dataTemplatesNames,
     } = this.props;
     const confirm = createConfirmation(ConfirmationDialog, 0);
     const notify = createConfirmation(NotifyUser, 0);
@@ -86,6 +86,9 @@ class ChainEditorPage extends React.Component {
         </Modal.Footer>
       </Modal>
     );
+    const options = dataTemplatesNames.map((name) => {
+      return {label: name, value: name};
+    });
     const chainParamsInput = [
       <Row>
         <Col md={12}>
@@ -111,6 +114,21 @@ class ChainEditorPage extends React.Component {
                 value={chainTemplate.marker}
                 placeholder="Marker"
                 onChange={e => chainTemplateMarkerChanged(e.target.value)}/>
+            </InputGroup>
+          </FormGroup>
+        </Col>
+      </Row>,
+      <Row>
+        <Col md={12}>
+          <FormGroup>
+            <InputGroup>
+              <InputGroup.Addon>Data templates</InputGroup.Addon>
+              <Select.Creatable
+                multi={true}
+                options={options}
+                onChange={dt => this.props.addDTToChain(dt)}
+                value={chainTemplate.templates}
+              />
             </InputGroup>
           </FormGroup>
         </Col>

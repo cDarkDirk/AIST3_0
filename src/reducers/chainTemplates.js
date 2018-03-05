@@ -9,7 +9,8 @@ import {
   CLOSE_BUTTON_CLICKED,
   SUBMIT_CHAIN_TEMPLATE_SUCCEED,
   CHAIN_TEMPLATE_MARKER_CHANGED,
-  DUPLICATE_CURENT_CHAIN,
+  DUPLICATE_CURRENT_CHAIN,
+  DATA_TEMPLATE_ADDED,
 } from '../constants'
 
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
   selectedChainTemplate: 0,
   chainNames: [],
   owner:'',
+  dataTemplatesNames: [],
 };
 
 const chainTemplateReducer = (state = initialState, action) => {
@@ -25,9 +27,13 @@ const chainTemplateReducer = (state = initialState, action) => {
       const chainTemplates = action.payload.map((chain) => {
         chain.modified = false;
         chain.new = false;
+        if (chain.templates) chain['templates'] = chain.templates.map(name => {
+          return{label: name, value: name};
+        });
         return chain;
       });
       const chainNames = action.payload.map((chain) => chain.name);
+
       return {
         ...state,
         chainTemplates,
@@ -164,7 +170,7 @@ const chainTemplateReducer = (state = initialState, action) => {
       }
     }
 
-    case DUPLICATE_CURENT_CHAIN: {
+    case DUPLICATE_CURRENT_CHAIN: {
       let oldChainTemplates = [...state.chainTemplates];
       const newOne = {...oldChainTemplates[state.selectedChainTemplate]};
       newOne.modified = false;
@@ -178,6 +184,16 @@ const chainTemplateReducer = (state = initialState, action) => {
         ...state,
         chainTemplates,
         chainNames,
+      }
+    }
+
+    case DATA_TEMPLATE_ADDED: {
+      const chainTemplates = [...state.chainTemplates];
+      chainTemplates[state.selectedChainTemplate]['templates'] = action.payload;
+      chainTemplates[state.selectedChainTemplate].modified = !chainTemplates[state.selectedChainTemplate].new;
+      return {
+        ...state,
+        chainTemplates,
       }
     }
 

@@ -5,7 +5,7 @@ import {
   DATA_TEMPLATE_NAME_CHANGED,
   NEW_DATA_TEMPLATE_ADDED,
   NEW_DATA_TEMPLATE_PARAM_ADDED,
-  UPDATE_DATA_TEMPLATE_SUCCESS,
+  UPDATE_DATA_TEMPLATE_SUCCESS, DATA_TEMPLATE_ADDED,
 } from '../constants'
 
 const initialState = {
@@ -110,6 +110,13 @@ const dataTemplatesBuilderReducer = (state = initialState, action) => {
       return{
         ...state,
         dataTemplates,
+      }
+    }
+
+    case DATA_TEMPLATE_ADDED: {
+      return {
+        ...state,
+        dataTemplatesNames: [...state.dataTemplatesNames],
       }
     }
 
