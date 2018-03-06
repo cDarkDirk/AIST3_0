@@ -83,7 +83,7 @@ class MyForm extends React.Component {
           <Grid>
             <Form horizontal>
               <Row>{form}</Row>
-              <Row><Button onClick={() => this.submitTemplateForm()}>Сохранить</Button></Row>
+              <Row><Button onClick={() => this.submitTemplateForm()}>Отправить на запуск</Button></Row>
             </Form>
           </Grid>
 
