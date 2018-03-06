@@ -141,7 +141,7 @@ export const updateLoginForm = (payload, publicKey) => (dispatch) => {
   const url = `${BACKEND_URL}/owners/login`;
   axios.post(url, payload).then(function (response) {
     payload.token = response.data.token;
-    window.location.hash = '#/homepage';
+    window.location.hash = '#/TDME2E';
 
   }).catch(function (response) {
     payload.password = a;
