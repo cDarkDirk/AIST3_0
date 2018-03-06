@@ -53,10 +53,10 @@ const testBuilder = (state = initialState, action) => {
           "uri": "Enter Jenkins URL here...",
           "login": "Enter Jenkins URL here...",
           "params": {},
-          "job_name": "Enter job name here...",
+          "jobName": "Enter job name here...",
           "passOrToken": "Job pass or token..."
         },
-        "tag_names": {static: [], dynamic: []},
+        "tag_names": {"static": [], "dynamic": []},
         'new': true,
         'modified': false
       };
@@ -118,7 +118,7 @@ const testBuilder = (state = initialState, action) => {
           }
         }
         case 'job_name': {
-          testBuilderTests[state.selectedTestIndex].job_trigger['job_name'] = action.payload.paramValue;
+          testBuilderTests[state.selectedTestIndex].job_trigger['jobName'] = action.payload.paramValue;
           const newTest = testBuilderTests[state.selectedTestIndex].new;
           testBuilderTests[state.selectedTestIndex].modified = !newTest;
           return {
