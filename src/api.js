@@ -16,6 +16,7 @@ import {
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
+import {setCurrentUser} from './globalFunc';
 
 export const submitFormTemplate = (formName, formTemplate, sheduleList, templates) => (dispatch) => {
 
@@ -147,6 +148,7 @@ export const updateLoginForm = (payload, publicKey) => (dispatch) => {
   const url = `${BACKEND_URL}/owners/login`;
   axios.post(url, payload).then(function (response) {
     payload.token = response.data.token;
+    setCurrentUser(payload.login, response.data.token);
     window.location.hash = '#/homepage';
 
   }).catch(function (response) {

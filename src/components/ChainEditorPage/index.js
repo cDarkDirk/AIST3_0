@@ -12,6 +12,7 @@ import SearchBar from "../SearchBar"
 import NotifyUser from "../NotifyUser/NotifyUser"
 import Select from 'react-select'
 import Header from "../Header";
+import {forceLogin, getUserName} from '../../globalFunc';
 
 class ChainEditorPage extends React.Component {
   constructor(props, context) {
@@ -25,6 +26,10 @@ class ChainEditorPage extends React.Component {
     this.state = {
       show: false,
     };
+  }
+
+  componentWillMount(){
+    forceLogin();
   }
 
   handleClose() {
@@ -138,7 +143,7 @@ class ChainEditorPage extends React.Component {
       return {value:index, label:chain}
     });
     return [
-      <Header owner={owner}/>,
+      <Header owner={getUserName()}/>,
       <div className='container'>
         <Row>
           <Col md={3}>

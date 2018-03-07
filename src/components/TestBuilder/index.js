@@ -20,6 +20,7 @@ import Select from 'react-select'
 import Notifications from 'react-notification-system-redux'
 import SearchBar from "../SearchBar";
 import Header from "../Header";
+import {forceLogin, getUserName} from '../../globalFunc';
 
 class TestBuilderPage extends React.Component {
   constructor(props, context) {
@@ -43,6 +44,10 @@ class TestBuilderPage extends React.Component {
 
   componentDidMount() {
     this.props.getTests();
+  }
+
+  componentWillMount(){
+    forceLogin();
   }
 
   handleTagInputChange(value, field) {
@@ -254,7 +259,7 @@ class TestBuilderPage extends React.Component {
 
     return (
       <div>
-        <Header owner={owner}/>
+        <Header owner={getUserName()}/>
         <Panel header={submitButton} bsStyle="primary">
           <Grid fluid={true}>
             <Row>
