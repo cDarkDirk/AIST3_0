@@ -418,7 +418,7 @@ export const submitFormTemplate = (formName, formTemplate, sheduleList, template
 
   const url = `${BACKEND_URL}/orders`;
 
-  axios.put(url, [dataToSendLauncherPageBody]).then(function () {
+  axios.put(url, [dataToSendLauncherPageBody]).then(function (response) {
     dispatch(success({message: response.data}));
   }).catch(function (response) {
     dispatch(error({message: "Submit failed with error!" + response}));

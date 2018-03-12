@@ -19,7 +19,7 @@ class DropDownSelector extends React.Component {
       >
         {dropOptions.map((option, index) => {
           return (
-            <MenuItem active={selectedIndex === index} key={index} eventKey={{index: index, name: option.value}}>
+            <MenuItem active={selectedIndex === index} key={index} eventKey={{index, name: option.value}}>
               {option.label}
               &nbsp;
               {option.modified && <Label bsStyle="warning">Modified</Label>}

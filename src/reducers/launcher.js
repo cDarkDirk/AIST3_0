@@ -1,5 +1,5 @@
 import {
-  CHAIN_SELECTED,
+  LAUNCHER_CHAIN_SELECTED,
 } from '../constants'
 
 const initialState = {
@@ -9,7 +9,7 @@ const initialState = {
 
 const launcher = (state = initialState, action) => {
   switch (action.type) {
-    case CHAIN_SELECTED: {
+    case LAUNCHER_CHAIN_SELECTED: {
       return {
         ...state,
         selectedForm: action.payload.index,
