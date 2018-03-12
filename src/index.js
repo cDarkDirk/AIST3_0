@@ -22,6 +22,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import 'font-awesome/css/font-awesome.min.css';
 import './styles/main.css';
+import PersonalPage from "./components/PersonalPage";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 //const history = createBrowserHistory();
@@ -51,6 +52,7 @@ ReactDOM.render((
             <Route exact path="/datatemplates" component={DataTemplatesBuilderPage}/>
             <Route path="/homepage" component={HomePage}/>
             <Route path="/registration" component={RegistrationPage}/>
+            <Route path="/personaldata" component={PersonalPage}/>
             <Route exact path="/" component={AuthorizationPage}/>
           </Switch>
         </HashRouter>

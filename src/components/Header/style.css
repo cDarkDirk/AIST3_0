@@ -14,9 +14,15 @@
   margin-top: 14px;
   font: 17px/19px SeroPro,Helvetica Neue,Helvetica,Arial,sans-serif;
 }
+.personal-button{
+  position: absolute;
+  margin-top: 8px;
+  margin-left: 90%;
+  margin-right: 10px;
+}
 .exit-button{
   position: absolute;
   margin-top: 8px;
-  margin-left: 94%;
-  margin-right: 10%;
+  margin-left: 80%;
+  margin-right: 15%;
 }
