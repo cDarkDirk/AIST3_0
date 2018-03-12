@@ -18,24 +18,6 @@ import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
 import {setCurrentUser} from './globalFunc';
 
-export const submitFormTemplate = (formName, formTemplate, sheduleList, templates) => (dispatch) => {
-
-//TODO Дима, добавь коментарий с описанием и убери в конец списка
-
-  const dataToSendLauncherPageBody = {
-      fields: formName,
-      templates: templates
-   };
-
-  const url = `${BACKEND_URL}/chains`;
-
-  axios.put(url, dataToSendLauncherPageBody).then(function () {
-    dispatch(success({message: "Submit succeeded!"}));
-  }).catch(function (response) {
-    dispatch(error({message: "Submit failed with error!" + response}));
-  });
-};
-
 /** GET request example
  axios.get(url).then(function (response) {
     dispatch(fetchSuccessFunction(response.data))
@@ -152,7 +134,7 @@ export const updateLoginForm = (payload, publicKey) => (dispatch) => {
 };
 
 export const fetchDataTemplatesList = () => (dispatch, getState) => {
-  const url = `${BACKEND_URL}/data_templates`;
+  const url = `${BACKEND_URL}/templates`;
 
   axios.get(url).then(function (response) {
     dispatch(dataTemplateFetchSucceed(response.data));
@@ -407,5 +389,38 @@ export const filterDirectoryData = (filterData) => (dispatch) => {
     //  TODO обработка полученных данных тое диспач
   }).catch(function (response) {
     dispatch(error({message: "failed with error!" + response}));
+  });
+};
+
+/**
+  * Launcher page
+  * creates new order
+*/
+export const submitFormTemplate = (formName, formTemplate, sheduleList, templates, name) => (dispatch) => {
+  let dataToSendLauncherPageBody = {};
+
+  dataToSendLauncherPageBody["chain_name"] = name;
+  if(sheduleList.scheduleDate && sheduleList.scheduleTime) {
+    dataToSendLauncherPageBody["start_time"] = sheduleList.scheduleDate.format('Y.MM.DD')
+      + ' '
+      + sheduleList.scheduleTime.format('hh:mm:ss');
+      console.log('res --->',dataToSendLauncherPageBody)
+  } else if(
+      (!sheduleList.scheduleDate && sheduleList.scheduleTime)
+      || (sheduleList.scheduleDate && !sheduleList.scheduleTime)
+    ){
+    dispatch(error({message: "Оба поля Date и Time должны быть либо заполнены, либо пусты!"}));
+  }
+  dataToSendLauncherPageBody["data"] = formTemplate;
+  if (templates.length !== 0) {
+    dataToSendLauncherPageBody["templateNames"] = templates.map(e => e.value);
+  }
+
+  const url = `${BACKEND_URL}/orders`;
+
+  axios.put(url, [dataToSendLauncherPageBody]).then(function () {
+    dispatch(success({message: response.data}));
+  }).catch(function (response) {
+    dispatch(error({message: "Submit failed with error!" + response}));
   });
 };
