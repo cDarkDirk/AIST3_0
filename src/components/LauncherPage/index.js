@@ -5,9 +5,13 @@ import Form from "../../containers/Form"
 import TemplateForm from "../../containers/TemplateForm"
 import DropDownSelector from "../DropDownSelector"
 import Header from "../Header";
+import {forceLogin, getUserName} from '../../globalFunc';
 
 
 class LauncherPage extends React.Component {
+  componentWillMount(){
+    forceLogin();
+  }
 
   componentDidMount() {
     this.props.fetchBuilderChains();
@@ -17,7 +21,7 @@ class LauncherPage extends React.Component {
     const {formBuilderChains, selectChainForm, launcher: {selectedForm}, owner} = this.props;
     return (
       <div>
-        <Header owner={owner}/>
+        <Header owner={getUserName()}/>
         <DropDownSelector id={12}
                           onSelect={selectChainForm}
                           dropOptions={formBuilderChains.map((option, index) => {

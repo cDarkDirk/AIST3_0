@@ -2,10 +2,16 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {Button, Col, ControlLabel, Form, FormControl, FormGroup, Modal} from 'react-bootstrap'
 import Notifications from 'react-notification-system-redux';
+import {isUserLoggedIn, onUserLogOut} from '../../globalFunc';
 
 
 class AuthorizationPage extends React.Component {
 
+  componentWillMount(){
+    if (isUserLoggedIn()){
+      window.location.hash = '#/homepage';
+    }
+  }
 
   state = {
     login: "",

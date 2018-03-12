@@ -17,6 +17,7 @@ import {
 import Notifications from 'react-notification-system-redux'
 import SearchBar from "../SearchBar";
 import Header from "../Header";
+import {forceLogin, getUserName} from '../../globalFunc';
 
 class DataTemplatesBuilderPage extends React.Component {
 
@@ -37,6 +38,10 @@ class DataTemplatesBuilderPage extends React.Component {
 
   handleShow() {
     this.setState({show: true});
+  }
+
+  componentWillMount(){
+    forceLogin();
   }
 
   componentDidMount() {
@@ -186,7 +191,7 @@ class DataTemplatesBuilderPage extends React.Component {
     });
     return (
       <div>
-        <Header owner={owner}/>
+        <Header owner={getUserName()}/>
         <Panel bsStyle='primary' header={submit}>
           <Grid fluid={true}>
             <Row key={'bla'}>

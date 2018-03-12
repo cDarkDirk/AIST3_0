@@ -15,7 +15,7 @@ import {
 import Notifications from 'react-notification-system-redux'
 import FieldPicker from "../FieldPicker";
 import Header from "../Header";
-
+import {forceLogin, getUserName} from '../../globalFunc';
 
 class FormBuilderPage extends React.Component {
   constructor(props, context) {
@@ -42,6 +42,10 @@ class FormBuilderPage extends React.Component {
 
   handleShow() {
     this.setState({show: true});
+  }
+
+  componentWillMount(){
+    forceLogin();
   }
 
   componentWillUpdate(nextProps, prevProps) {
@@ -228,7 +232,7 @@ class FormBuilderPage extends React.Component {
     ];
     return (
       <div>
-        <Header owner={owner}/>
+        <Header owner={getUserName()}/>
         <Panel header={chainDropDown} footer={submitBtn} bsStyle="primary">
           <Grid fluid={true}>
             {chainIndex !== null && formBuilderChains[chainIndex] && this.renderFormBody()}

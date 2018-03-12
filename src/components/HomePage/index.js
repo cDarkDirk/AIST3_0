@@ -9,19 +9,25 @@ import Mock from '../../assets/Mock.PNG';
 import Param from '../../assets/Param.png';
 import Exit from '../../assets/exit.png';
 
-
-
-
-
+import Cookies from 'universal-cookie';
 import Notifications from 'react-notification-system-redux';
 import Header from "../Header";
+import {getUserName, onUserLogOut, forceLogin} from '../../globalFunc';
 
 class HomePage extends React.Component {
+  componentWillMount () {
+    forceLogin();
+  }
+
+  logOut() {
+    onUserLogOut();
+    forceLogin();
+  }
+
   render() {
-    const {owner} = this.props;
     return (
       <div>
-        <Header owner={owner}/>
+        <Header owner={getUserName()}/>
         <div className='container'>
 
             <h1 align="middle">Автоматизированная Интеграционная Система Тестирования 3.0</h1>
