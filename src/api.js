@@ -66,6 +66,19 @@ export const submitFormTemplate = (formName, formTemplate, sheduleList, template
   });
  */
 
+export const updatePersonalForm = (payload) => (dispatch) => {
+  if (payload.groupName === "" ){
+    dispatch(error({message: "Error: Field group name empty"}))
+  }
+  const url = `${BACKEND_URL}/owners/personal`;
+  axios.get(url).then(function (response) {
+    dispatch(success({message: "Group was created"}))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+
+};
+
 /**
  * Validation login and password
  * Public key request for create account
@@ -114,7 +127,6 @@ export const updateRegistrationForm = (payload, publicKey) => (dispatch) => {
   axios.put(url, payload).then(function (response) {
     window.location.hash = '#/';
   }).catch(function (response) {
-    payload.password = a;
     dispatch(error({message: "Fetch failed with error!" + response}));
   });
 

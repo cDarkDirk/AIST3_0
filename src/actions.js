@@ -39,8 +39,18 @@ import {
   DUPLICATE_CURRENT_CHAIN,
   LOGIN_BUTTON_CLICKED,
   LOGIN_PASSWORD_CHANGE,
-  DATA_TEMPLATE_ADDED,
+  DATA_TEMPLATE_ADDED, GROUP_NAME_CHANGE, CREATE_GROUP_CLICKED,
 } from './constants'
+
+export const groupNameChange = (payload) => ({
+  type: GROUP_NAME_CHANGE,
+  payload,
+});
+
+export const createGroupClicked = (payload) => ({
+  type: CREATE_GROUP_CLICKED,
+  payload,
+});
 
 export const loginButtonClicked = (payload) => ({
   type: LOGIN_BUTTON_CLICKED,
