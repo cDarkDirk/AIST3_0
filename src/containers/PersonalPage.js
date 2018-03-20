@@ -11,8 +11,6 @@ function mapStateToProps(state) {
   }
 }
 
-updatePersonalForm
-
 function mapDispatchToProps(dispatch) {
   return {
     createGroupClicked : (payload) => dispatch(updatePersonalForm(payload)),

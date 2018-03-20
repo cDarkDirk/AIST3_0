@@ -22,7 +22,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import 'font-awesome/css/font-awesome.min.css';
 import './styles/main.css';
-import PersonalPage from "./components/PersonalPage";
+import PersonalPage from "./containers/PersonalPage";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 //const history = createBrowserHistory();

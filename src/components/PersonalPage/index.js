@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../Header";
 import {forceLogin, getUserName} from "../../globalFunc";
 import {Button, Col, FormControl} from "react-bootstrap";
+import Notifications from "react-notification-system-redux";
 
 
 class PersonalPage extends React.Component {
@@ -27,7 +28,6 @@ class PersonalPage extends React.Component {
   }
 
   render() {
-    const {owner} = this.props;
     return (
       <div>
         <Header owner={getUserName()}/>
@@ -43,6 +43,7 @@ class PersonalPage extends React.Component {
             onClick={() => this.createGroupButtonClick()}
           >Создать Группу</Button>
         </Col>
+        <Notifications notifications={this.props.notifications}/>
       </div>
     )
   }
