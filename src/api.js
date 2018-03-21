@@ -16,7 +16,7 @@ import {
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
-import {setCurrentUser} from './globalFunc';
+import {getUserName, setCurrentUser} from './globalFunc';
 
 export const submitFormTemplate = (formName, formTemplate, sheduleList, templates) => (dispatch) => {
 
@@ -66,6 +66,25 @@ export const submitFormTemplate = (formName, formTemplate, sheduleList, template
   });
  */
 
+export const updatePersonalForm = (payload) => (dispatch) => {
+  if (payload.groupName === "" ){
+    dispatch(error({message: "Error: Field group name empty"}));
+    return;
+  }
+  const url = `${BACKEND_URL}/owners/personal`;
+  const requestBody = {
+    owner: getUserName(),
+    group : payload.groupName,
+  };
+  console.log(requestBody);
+  axios.put(url, requestBody).then(function (response) {
+    dispatch(success({message: "Group was created"}))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+
+};
+
 /**
  * Validation login and password
  * Public key request for create account
@@ -114,7 +133,6 @@ export const updateRegistrationForm = (payload, publicKey) => (dispatch) => {
   axios.put(url, payload).then(function (response) {
     window.location.hash = '#/';
   }).catch(function (response) {
-    payload.password = a;
     dispatch(error({message: "Fetch failed with error!" + response}));
   });
 
