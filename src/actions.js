@@ -42,6 +42,8 @@ import {
   DATA_TEMPLATE_ADDED,
   GROUP_NAME_CHANGE,
   CREATE_GROUP_CLICKED,
+  TEMPLATE_GROUP_FORM_INPUT_CHANGE,
+  DATA_GROUP_TEMPLATE_LIST_SUCCEED,
 } from './constants'
 
 export const groupNameChange = (payload) => ({
@@ -69,6 +71,11 @@ export const selectChainForm =(payload)=> ({
   payload: payload
 });
 
+export const selectGroupForm =(payload)=> ({
+  type: GROUP_SELECTED,
+  payload: payload
+});
+
 export const onFormInputChange = (value, paramName, formName) => ({
   type: FORM_INPUT_CHANGE,
   payload: {value, paramName, formName}
@@ -82,6 +89,11 @@ export const updateChainFormSucceed = (payload) => ({
 export const onTemplateFormInputChange = (value, paramName, formName) => ({
   type: TEMPLATE_FORM_INPUT_CHANGE,
   payload: {value, paramName, formName}
+});
+
+export const onTemplateGropupFormInputChange = (value) => ({
+  type: TEMPLATE_GROUP_FORM_INPUT_CHANGE,
+  payload: {value}
 });
 
 export const testBlockMoved = (payload) => ({
@@ -159,6 +171,11 @@ export const dataTemplateFetchFail = (payload) => ({
 
 export const dataTemplateFetchSucceed = (payload) => ({
   type: DATA_TEMPLATE_LIST_SUCCEED,
+  payload: payload
+});
+
+export const dataGroupTemplateFetchSucceed = (payload) => ({
+  type: DATA_GROUP_TEMPLATE_LIST_SUCCEED,
   payload: payload
 });
 

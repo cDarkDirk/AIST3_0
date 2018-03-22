@@ -1,4 +1,4 @@
-import {CREATE_GROUP_CLICKED, GROUP_NAME_CHANGE} from "../constants";
+import {CREATE_GROUP_CLICKED, GROUP_NAME_CHANGE, GROUP_SELECTED} from "../constants";
 
 const initialState = {
   groupName: ""
@@ -18,6 +18,13 @@ const dataPersonal = (state = initialState, action) => {
     case CREATE_GROUP_CLICKED:{
       return{...state}
     }
+    case GROUP_SELECTED: {
+      return {
+        ...state,
+        selectedForm: action.payload,
+      }
+    }
+
     default: return state
   }
 };

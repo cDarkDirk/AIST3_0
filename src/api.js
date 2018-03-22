@@ -242,6 +242,7 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
     fields: chainTemplate.value.fields,
     tests: chainTemplate.value.tests,
     templates: chainTemplate.value.templates.map(t => t.value),
+    // group: chainTemplate.value.group,
   };
 
   console.log('api.js: updateChainTemplate --->',requestBody);

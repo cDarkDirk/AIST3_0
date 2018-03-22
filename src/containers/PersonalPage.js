@@ -1,5 +1,5 @@
 import PersonalPage from '../components/PersonalPage'
-import { groupNameChange} from "../actions";
+import {groupNameChange, selectGroupForm} from "../actions";
 import {updatePersonalForm} from "../api";
 import {connect} from 'react-redux'
 
@@ -14,7 +14,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     createGroupClicked : (payload) => dispatch(updatePersonalForm(payload)),
-    groupNameChange : (payload) => dispatch(groupNameChange(payload))
+    groupNameChange : (payload) => dispatch(groupNameChange(payload)),
+    selectGroupForm: (chainName) => dispatch(selectGroupForm(chainName)),
   }
 }
 

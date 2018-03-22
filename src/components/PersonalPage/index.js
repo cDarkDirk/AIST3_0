@@ -13,6 +13,7 @@ class PersonalPage extends React.Component {
 
   state = {
     groupName: "",
+    groupIndex: null,
   };
 
   changeGroupName(payload) {
@@ -28,6 +29,7 @@ class PersonalPage extends React.Component {
   }
 
   render() {
+    const {selectGroupForm, formBuilderChains, dataPersonal : {selectedForm }} = this.state;
     return (
       <div>
         <Header owner={getUserName()}/>
@@ -42,6 +44,13 @@ class PersonalPage extends React.Component {
             className="btn btn-default btn-sm"
             onClick={() => this.createGroupButtonClick()}
           >Создать Группу</Button>
+          <DropDownSelector id={12}
+                            onSelect={selectGroupForm}
+                            dropOptions={formBuilderChains.map((option, index) => {
+                              return {value: option.name, label: option.name}
+                            })}
+                            selectedIndex={selectedForm}
+          />
         </Col>
         <Notifications notifications={this.props.notifications}/>
       </div>
