@@ -8,6 +8,7 @@ import Start from '../../assets/start.png';
 import Mock from '../../assets/Mock.PNG';
 import Param from '../../assets/Param.png';
 import Exit from '../../assets/exit.png';
+import  Grafana from '../../assets/grafana.png';
 
 import Cookies from 'universal-cookie';
 import Notifications from 'react-notification-system-redux';
@@ -58,8 +59,8 @@ class HomePage extends React.Component {
                   <Thumbnail href="#/dataTemplates" alt="171x180" src={Param}  />
                 </Col>
                 <Col xs={4} md={4}>
-                  <h1 align="middle">Выход</h1>
-                  <Thumbnail href="#/" alt="171x180" src={Exit}  />
+                  <h1 align="middle">Портал статистики</h1>
+                  <Thumbnail href="http://sbt-ot-289.ca.sbrf.ru:8069/dashboard/db/obshchaia-statistika" alt="171x180" src={Grafana}  />
                 </Col>
               </Row>
             </Grid>
