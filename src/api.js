@@ -13,10 +13,27 @@ import {
   resetModificationMarkers,
   dataTemplatesFetchSuccess,
   updateDataTemplateSuccess,
+  ordersFetchSucceed,
+  ordersFetchFail
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
 import {setCurrentUser} from './globalFunc';
+
+
+export const fetchOrdersByName = (chainName, dateFrom, dateTo) => (dispatch, getState) => {
+
+  const url = `${BACKEND_URL}/orders/?chainName=${chainName}&start=${dateFrom}&end=${dateTo}`;
+
+  axios.get(url).then(function (response) {
+    dispatch(ordersFetchSucceed(response.data));
+  }).catch(function (response) {
+    dispatch(ordersFetchFail());
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+
+
 
 /** GET request example
  axios.get(url).then(function (response) {

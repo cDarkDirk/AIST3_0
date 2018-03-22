@@ -3,6 +3,7 @@ import DataDirectoryPage from '../components/DataDirectoryPage'
 import {
   fetchBuilderChains,
   filterDirectoryData,
+  fetchOrdersByName
 } from "../api"
 
 
@@ -18,6 +19,7 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchBuilderChains: () => dispatch(fetchBuilderChains()),
     filter: (filterData) => dispatch(filterDirectoryData(filterData)),
+    fetchOrdersByName:(chainName, dateFrom, dateTo) => dispatch (fetchOrdersByName(chainName, dateFrom, dateTo)),
   }
 }
 

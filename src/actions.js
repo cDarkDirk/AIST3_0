@@ -41,7 +41,19 @@ import {
   LOGIN_BUTTON_CLICKED,
   LOGIN_PASSWORD_CHANGE,
   DATA_TEMPLATE_ADDED,
+  ORDERS_FETCH_SUCCEED,
+  ORDERS_FETCH_FAIL
 } from './constants'
+
+export const ordersFetchSucceed = (payload) => ({
+  type: ORDERS_FETCH_SUCCEED,
+  payload,
+});
+
+export const ordersFetchFail = (payload) => ({
+  type: ORDERS_FETCH_FAIL,
+  payload,
+});
 
 export const loginButtonClicked = (payload) => ({
   type: LOGIN_BUTTON_CLICKED,
