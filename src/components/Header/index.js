@@ -16,6 +16,9 @@ class Header extends React.Component {
     } = this.props;
     return (
       <div className='header'>
+        <div className='homepage-button'>
+          <Button href="#/HomePage">На главную</Button>
+        </div>
         <div className='text'>
           Привет, {owner}!
         </div>
