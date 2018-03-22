@@ -1,7 +1,9 @@
 import React from "react";
 import "./style.css";
-import {Row, Col, Button} from 'react-bootstrap';
+import {Thumbnail, Row, Col, Button} from 'react-bootstrap';
 import {onUserLogOut, forceLogin} from '../../globalFunc';
+import Home from '../../assets/home.png';
+
 
 class Header extends React.Component {
 
@@ -17,7 +19,7 @@ class Header extends React.Component {
     return (
       <div className='header'>
         <div className='homepage-button'>
-          <Button href="#/HomePage">На главную</Button>
+          <Thumbnail href="#/HomePage" src={Home}/>
         </div>
         <div className='text'>
           Привет, {owner}!
