@@ -126,10 +126,10 @@ class FieldPicker extends React.Component {
         }
         case 'DropDown': {
           return this.renderDropdown(field, index);
-        }
+        }/*
         case 'DatePicker': {
           return this.renderDatePicker(field, index);
-        }
+        }*/
         default:
           return null;
       }

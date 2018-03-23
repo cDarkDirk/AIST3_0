@@ -6,6 +6,7 @@ import TemplateForm from "../../containers/TemplateForm"
 import DropDownSelector from "../DropDownSelector"
 import Header from "../Header";
 import {forceLogin, getUserName} from '../../globalFunc';
+import Notifications from 'react-notification-system-redux'
 
 
 class LauncherPage extends React.Component {
@@ -18,7 +19,7 @@ class LauncherPage extends React.Component {
   }
 
   render() {
-    const {formBuilderChains, selectChainForm, launcher: {selectedForm}, owner} = this.props;
+    const {formBuilderChains, selectChainForm, launcher: {selectedForm}, launcher: {formName}, owner} = this.props;
     return (
       <div>
         <Header owner={getUserName()}/>
@@ -35,9 +36,10 @@ class LauncherPage extends React.Component {
             <ScheduleForm/>
           </Row>
           <TemplateForm/>
-          <Row><Form formName={selectedForm}/></Row>
+          <Row><Form formName={selectedForm} name={formName}/></Row>
         </div>
         }
+        <Notifications notifications={this.props.notifications}/>
       </div>
     )
   }

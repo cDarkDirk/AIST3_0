@@ -20,8 +20,8 @@ function mapDispatchToProps(dispatch) {
     return {
         onFormInputChange: (value, paramName, formName) => dispatch(onFormInputChange(value, paramName, formName)),
         fetchBuilderChains: () => dispatch(fetchBuilderChains()),
-        submit: (formName, formTemplate, scheduler, choosenDataTemplates) =>
-        dispatch(submitFormTemplate(formName, formTemplate, scheduler, choosenDataTemplates)),
+        submit: (formName, formTemplate, scheduler, choosenDataTemplates, name) =>
+        dispatch(submitFormTemplate(formName, formTemplate, scheduler, choosenDataTemplates, name)),
     }
 }
 

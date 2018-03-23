@@ -26,3 +26,11 @@
   margin-left: 80%;
   margin-right: 15%;
 }
+
+.homepage-button{
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 1%;
+  margin-right: 10%;
+  width: 2%;
+}

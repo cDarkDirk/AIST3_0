@@ -22,8 +22,8 @@ const TemplateForm = function (props) {
           <Select.Creatable
             multi={true}
             options={props.dataTemplates.map((option, idx) => ({
-              label: option.template_name,
-              value: option.template_id,
+              label: option.name,
+              value: option.name,
             }))}
             clearable={false}
             autosize={false}

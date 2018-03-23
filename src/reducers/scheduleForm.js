@@ -4,7 +4,7 @@ import {
   SCHEDULE_AMOUNT_OF_TIMES_CHANGED,
 } from '../constants'
 
-const initialState = {scheduleDate: "", amountOfTimes: "1"};
+const initialState = {amountOfTimes: "1"};
 
 const scheduleForm = (state = initialState, action) => {
   switch (action.type) {
