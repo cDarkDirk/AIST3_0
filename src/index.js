@@ -7,6 +7,7 @@ import {Route, Switch} from 'react-router';
 import {HashRouter} from 'react-router-dom';
 import rootReducer from './reducers';
 import HomePage from './containers/HomePage';
+import TDME2E from './containers/TDME2E';
 import ChainEditorPage from './containers/ChainEditorPage';
 import LauncherPage from "./containers/LauncherPage";
 import FormBuilderPage from "./containers/FormBuilderPage";
@@ -50,6 +51,7 @@ ReactDOM.render((
             <Route path="/datatemplates/:datatemplatesName" component={DataTemplatesBuilderPage}/>
             <Route exact path="/datatemplates" component={DataTemplatesBuilderPage}/>
             <Route path="/homepage" component={HomePage}/>
+            <Route path="/TDME2E" component={TDME2E}/>
             <Route path="/registration" component={RegistrationPage}/>
             <Route exact path="/" component={AuthorizationPage}/>
           </Switch>

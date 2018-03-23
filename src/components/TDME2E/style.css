@@ -1,0 +1,21 @@
+.test-block-container {
+    display: block;
+}
+
+.test-block-container > .arrow{
+    display: block;
+    position: relative;
+    text-align: center;
+}
+
+.test-block-content {
+    border: 1px solid #444;
+    background: #FFF;
+    border-radius: 2px;
+    height: 80px;
+    padding: 12px;
+}
+
+.test-block-content > .heading {
+    font-weight: bold;
+}
