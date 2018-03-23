@@ -74,6 +74,8 @@ class ChainEditorPage extends React.Component {
           <li type="square">(Опционально) Поменять порядок тестов, перетащив нужный элемент на нужную позицию</li>
           <li type="square">(Опционально) Изменить имя цепочки в поле Name</li>
           <li type="square">(Опционально) Изменить маркер цепочки в поле Marker</li>
+          <li type="square">(Опционально) Изменить список доступных для цепочки шаблонов с параметрами</li>
+
           <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Submit</li>
           <br/>
           <p>
@@ -84,6 +86,7 @@ class ChainEditorPage extends React.Component {
           <li type="square">Поменять порядок тестов, перетащив нужный элемент на нужную позицию</li>
           <li type="square">Изменить имя цепочки в поле Name</li>
           <li type="square">Изменить маркер цепочки в поле Marker</li>
+          <li type="square">(Опционально) Изменить список доступных для цепочки шаблонов с параметрами</li>
           <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Submit</li>
         </Modal.Body>
         <Modal.Footer>

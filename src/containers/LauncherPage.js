@@ -8,6 +8,7 @@ function mapStateToProps(state) {
     launcher: state.launcher,
     formBuilderChains: state.formBuilder.formBuilderChains || [],
     owner: state.dataAuthorization.paramNames.name,
+    notifications: state.notifications,
   }
 }
 

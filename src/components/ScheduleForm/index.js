@@ -20,12 +20,12 @@ const ScheduleForm = function (props) {
         <div>
             <Row>
               <FormGroup controlId="formHorizontalInput">
-                <Col componentClass={ControlLabel} sm={2}>
+                {/*<Col componentClass={ControlLabel} sm={2}>
                   <div>Amount of times: </div>
                 </Col>
                 <Col sm={1}>
                   <FormControl value={props.amountOfTimes} type="input" onChange={(e) => props.changeAmountOfTimes(e.target.value)}/>
-                </Col>
+                </Col>*/}
 
 
                 <Col componentClass={ControlLabel} sm={2}>
