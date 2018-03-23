@@ -40,6 +40,7 @@ import {
   LOGIN_BUTTON_CLICKED,
   LOGIN_PASSWORD_CHANGE,
   DATA_TEMPLATE_ADDED,
+  LAUNCHER_CHAIN_SELECTED,
 } from './constants'
 
 export const loginButtonClicked = (payload) => ({
@@ -243,4 +244,9 @@ export const duplicateCurrentChain = (payload) => ({
 export const addDTToChain = (payload) => ({
   type: DATA_TEMPLATE_ADDED,
   payload,
+});
+
+export const launcherChainSelected = (index) => ({
+  type: LAUNCHER_CHAIN_SELECTED,
+  index,
 });

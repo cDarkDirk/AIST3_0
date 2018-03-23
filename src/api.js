@@ -20,7 +20,6 @@ import {setCurrentUser} from './globalFunc';
 
 export const submitFormTemplate = (formName, formTemplate, sheduleList, templates) => (dispatch) => {
 
-//TODO Дима, добавь коментарий с описанием и убери в конец списка
   const dataToSendLauncherPageBody = {
     paramData: formTemplate
   };

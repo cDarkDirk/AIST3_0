@@ -74,21 +74,14 @@ class MyForm extends React.Component {
     }).map((field, index) => {
       return (<Col md={6}>{field}</Col>)
     })) : (
-      <div> NO FORM TEMPLATE SPECIFIED</div>
+      <div>NO FORM TEMPLATE SPECIFIED</div>
     );
 
     return (
-      <div className='container'>
-        <Jumbotron>
-          <Grid>
-            <Form horizontal>
-              <Row>{form}</Row>
-              <Row><Button onClick={() => this.submitTemplateForm()}>Сохранить</Button></Row>
-            </Form>
-          </Grid>
-
-        </Jumbotron>
-      </div>
+        <Form horizontal>
+          {form}
+          <Button onClick={() => this.submitTemplateForm()}>Сохранить</Button>
+        </Form>
     )
   }
 }

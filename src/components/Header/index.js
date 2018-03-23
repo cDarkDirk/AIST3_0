@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
-import {Row, Col, Button} from 'react-bootstrap';
-import {onUserLogOut, forceLogin} from '../../globalFunc';
+import {Button} from 'react-bootstrap';
+import {onUserLogOut, forceLogin, getUserName} from '../../globalFunc';
 
 class Header extends React.Component {
 
@@ -11,13 +11,10 @@ class Header extends React.Component {
   }
 
   render() {
-    const {
-      owner
-    } = this.props;
     return (
       <div className='header'>
         <div className='text'>
-          Привет, {owner}!
+          Привет, {getUserName()}!
         </div>
         <div className='exit-button'>
           <Button onClick={this.logOut}>Выход</Button>
