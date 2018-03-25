@@ -13,6 +13,7 @@ import {
   resetModificationMarkers,
   dataTemplatesFetchSuccess,
   updateDataTemplateSuccess,
+  formGroupsFetchSucceed,
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
@@ -252,6 +253,22 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
 
   axios.get(url).then(function (response) {
     dispatch(formBuilderChainsFetchSucceed(response.data))
+    console.log(response.data);
+  }).catch(function (response) {
+    dispatch(error({message: "fetch failed with error!" + response}));
+  });
+};
+
+/**
+ * Form builder
+ * fetching data from database
+ */
+export const fetchGroups = () => (dispatch, getState) => {
+  const url = `${BACKEND_URL}/owners/personal`;
+
+  axios.get(url).then(function (response) {
+    dispatch(formGroupsFetchSucceed(response.data))
+    console.log(response.data);
   }).catch(function (response) {
     dispatch(error({message: "fetch failed with error!" + response}));
   });

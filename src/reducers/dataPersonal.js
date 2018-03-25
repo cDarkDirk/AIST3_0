@@ -1,15 +1,17 @@
-import {CREATE_GROUP_CLICKED, GROUP_NAME_CHANGE, GROUP_SELECTED} from "../constants";
+import {CREATE_GROUP_CLICKED, FORM_GROUPS_FETCH_SUCCEED, GROUP_NAME_CHANGE, GROUP_SELECTED} from "../constants";
 
 const initialState = {
-  groupName: ""
+  groupName: "",
+  selectedForm: null,
+  formBuilderGroups: []
 };
 
 const dataPersonal = (state = initialState, action) => {
   switch(action.type){
     case GROUP_NAME_CHANGE:{
-      const groupName = {...state}
+      const groupName = {...state};
       if (action.payload.key === "groupName"){
-        groupName.groupName = action.payload.value;;
+        groupName.groupName = action.payload.value;
 
       }
       return {...state,groupName}
@@ -21,8 +23,15 @@ const dataPersonal = (state = initialState, action) => {
     case GROUP_SELECTED: {
       return {
         ...state,
-        selectedForm: action.payload,
+        selectedForm: action.payload.index,
       }
+    }
+    case FORM_GROUPS_FETCH_SUCCEED:{
+      return {
+        ...state,
+        formBuilderGroups: action.payload
+      }
+
     }
 
     default: return state

@@ -44,7 +44,7 @@ import {
   GROUP_NAME_CHANGE,
   CREATE_GROUP_CLICKED,
   TEMPLATE_GROUP_FORM_INPUT_CHANGE,
-  DATA_GROUP_TEMPLATE_LIST_SUCCEED,
+  DATA_GROUP_TEMPLATE_LIST_SUCCEED, GROUP_SELECTED, FORM_GROUPS_FETCH_SUCCEED,
 } from './constants'
 
 export const groupNameChange = (payload) => ({
@@ -182,6 +182,11 @@ export const dataGroupTemplateFetchSucceed = (payload) => ({
 
 export const formBuilderChainsFetchSucceed = (payload) => ({
   type: FORM_BUILDER_CHAINS_FETCH_SUCCEED,
+  payload: payload
+});
+
+export const formGroupsFetchSucceed = (payload) => ({
+  type: FORM_GROUPS_FETCH_SUCCEED,
   payload: payload
 });
 
