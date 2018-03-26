@@ -24,6 +24,7 @@ class Header extends React.Component {
         </div>
         <div  className='personal-button'>
           <Link to={'/personaldata'}> <Button>Личный кабинет</Button></Link>
+        </div>
         <div className='exit-button'>
           <Button onClick={Header.logOut}>Выход</Button>
         </div>
