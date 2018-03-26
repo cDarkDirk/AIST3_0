@@ -35,7 +35,7 @@ class PersonalPage extends React.Component {
   }
   // dataPersonal : {selectedForm}
   render() {
-    const {selectGroupForm, formBuilderChains } = this.state;
+    const {selectGroupForm, formBuilderGroups } = this.state;
     return (
       <div>
         <Header owner={getUserName()}/>
@@ -50,21 +50,21 @@ class PersonalPage extends React.Component {
             className="btn btn-default btn-sm"
             onClick={() => this.createGroupButtonClick()}
           >Создать Группу</Button>
-          {/*<DropDownSelector id={12}*/}
-                            {/*onSelect={selectGroupForm}*/}
-                             {/*dropOptions={formBuilderChains.map((option, index) => {*/}
-                               {/*return {value: option.name, label: option.name}*/}
-                             {/*})}*/}
-                             {/*selectedIndex={selectedForm}*/}
-          {/*/>*/}
           <DropDownSelector id={12}
                             onSelect={selectGroupForm}
-          dropOptions={[
-            {'name': 'Education', 'number': 33},
-            {'name': 'Promotion', 'number': 10},
-            {'name': 'Events', 'number': 55 }
-          ]}
+                             dropOptions={formBuilderGroups.map((option) => {
+                               return {value: option.name, label: option.name}
+                             })}
+                             // selectedIndex={selectedForm}
           />
+          {/*<DropDownSelector id={12}*/}
+                            {/*onSelect={selectGroupForm}*/}
+          {/*dropOptions={[*/}
+            {/*{'name': 'Education', 'number': 33},*/}
+            {/*{'name': 'Promotion', 'number': 10},*/}
+            {/*{'name': 'Events', 'number': 55 }*/}
+          {/*]}*/}
+          {/*/>*/}
         </Col>
         <Notifications notifications={this.props.notifications}/>
       </div>
