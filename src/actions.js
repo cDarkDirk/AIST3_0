@@ -2,7 +2,6 @@ import {
   TEST_BLOCK_MOVED,
   FORM_INPUT_CHANGE,
   CHAIN_SELECTED,
-  LAUNCHER_CHAIN_SELECTED,
   FORM_TEMPLATE_FETCH_SUCCSEED,
   FORM_TEMPLATE_FETCH_FAIL,
   CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
@@ -67,10 +66,6 @@ export const loginPasswordChange = (payload) => ({
   payload,
 });
 
-export const selectChainForm =(payload)=> ({
-  type: LAUNCHER_CHAIN_SELECTED,
-  payload: payload
-});
 
 export const selectGroupForm =(payload)=> ({
   type: GROUP_SELECTED,

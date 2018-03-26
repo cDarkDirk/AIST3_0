@@ -432,29 +432,11 @@ export const filterDirectoryData = (filterData) => (dispatch) => {
   * Launcher page
   * creates new order
 */
-export const submitFormTemplate = (formName, formTemplate, sheduleList, templates, name) => (dispatch) => {
-  let dataToSendLauncherPageBody = {};
-
-  dataToSendLauncherPageBody["chain_name"] = name;
-  if(sheduleList.scheduleDate && sheduleList.scheduleTime) {
-    dataToSendLauncherPageBody["start_time"] = sheduleList.scheduleDate.format('Y.MM.DD')
-      + ' '
-      + sheduleList.scheduleTime.format('hh:mm:ss');
-      console.log('res --->',dataToSendLauncherPageBody)
-  } else if(
-      (!sheduleList.scheduleDate && sheduleList.scheduleTime)
-      || (sheduleList.scheduleDate && !sheduleList.scheduleTime)
-    ){
-    dispatch(error({message: "Оба поля Date и Time должны быть либо заполнены, либо пусты!"}));
-  }
-  dataToSendLauncherPageBody["data"] = formTemplate;
-  if (templates.length !== 0) {
-    dataToSendLauncherPageBody["templateNames"] = templates.map(e => e.value);
-  }
+export const submitFormTemplate = (params) => (dispatch) => {
 
   const url = `${BACKEND_URL}/orders`;
 
-  axios.put(url, [dataToSendLauncherPageBody]).then(function (response) {
+  axios.put(url, [params]).then(function (response) {
     dispatch(success({message: response.data}));
   }).catch(function (response) {
     dispatch(error({message: "Submit failed with error!" + response}));
