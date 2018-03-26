@@ -3,15 +3,21 @@ import Header from "../Header";
 import {forceLogin} from "../../globalFunc";
 import {
   Alert,
-  Col, Form,
-  FormControl, FormGroup,
-  Grid, InputGroup,
+  Button,
+  Col,
+  Form,
+  FormControl,
+  FormGroup,
+  Glyphicon,
+  Grid,
+  InputGroup,
+  Jumbotron,
   OverlayTrigger,
   Panel,
   Row,
   Tooltip,
 } from "react-bootstrap";
-import DropdownList from "../DropDownSelector/refactor";
+import DropdownList from "../DropdownList/index";
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import moment from "moment";
@@ -33,6 +39,7 @@ class Launcher extends Component {
     this.getFieldValueByKey = this.getFieldValueByKey.bind(this);
     this.onFormInputChange = this.onFormInputChange.bind(this);
     this.fillFormData = this.fillFormData.bind(this);
+    this.launch = this.launch.bind(this);
     this.state = {
       selectedTemplates: [],
       selectedChain: null,
@@ -47,12 +54,19 @@ class Launcher extends Component {
   }
 
   onChainSelected(index) {
-    this.setState({
-      selectedTemplates: [],
-      formReady: false,
-      selectedChain: index,
-    });
-    this.fillFormData(index);
+    if(this.state[this.props.chains[index].name]) {
+      this.setState({
+        selectedChain: index,
+        selectedTemplates: [],
+      });
+    } else {
+      this.setState({
+        selectedTemplates: [],
+        formReady: false,
+        selectedChain: index,
+      });
+      this.fillFormData(index);
+    }
   }
 
   onHeaderInputChange(newValue) {
@@ -93,19 +107,32 @@ class Launcher extends Component {
     });
   }
 
+  launch(){
+    const {chains,submitFormTemplate} = this.props;
+    let launchParams = {};
+    launchParams['chain_name'] = chains[this.state.selectedChain].name;
+    launchParams['data'] = this.state[chains[this.state.selectedChain].name];
+    launchParams['start_time'] = this.state.startDate.format('YYYY.MM.DD HH:mm:' + '00');
+    launchParams['templateNames'] = this.state.selectedTemplates.map(t => t.value);
+    console.log('shit to launch ->', launchParams);
+    submitFormTemplate(launchParams);
+  }
+
   renderChainForm() {
     const {chains} = this.props;
     const formBody = chains[this.state.selectedChain].fields.map((field, index) => {
       switch (field.type) {
         case 'Input': {
           return (
-            <Col md={6}  key={field.paramName + 'Col'}>
-              <FormGroup key={field.paramName} controlId={field.paramName + index}>
-                <InputGroup key={field.paramName + 'InputGroup'}>
+            <Col md={6} key={chains[this.state.selectedChain].name + field.paramName + 'Col' + index}>
+              <FormGroup key={chains[this.state.selectedChain].name + field.paramName + index}
+                         controlId={field.paramName + index}>
+                <InputGroup key={chains[this.state.selectedChain].name + field.paramName + 'InputGroup' + index}>
                   <InputGroup.Addon>{field.label}</InputGroup.Addon>
-                  <FormControl key={field.paramName + 'FormControl'} value={this.getFieldValueByKey(field.paramName)}
+                  <FormControl key={chains[this.state.selectedChain].name + field.paramName + 'FormControl' + index}
+                               value={this.getFieldValueByKey(field.paramName)}
                                type="input"
-                               placeholder="auto"
+                               placeholder="Пусто"
                                onChange={(event) => this.onFormInputChange(field.paramName, event.target.value)}
                   />
                 </InputGroup>
@@ -116,17 +143,20 @@ class Launcher extends Component {
 
         case 'DropDown': {
           return (
-            <Col md={6} key={field.paramName + 'Col'}>
-              <FormGroup key={field.paramName + 'FormGroup'} controlId="formHorizontalDropDown">
-                <InputGroup key={field.paramName + 'InputGroup'}>
+            <Col md={6} key={chains[this.state.selectedChain].name + field.paramName + 'Col' + index}>
+              <FormGroup key={chains[this.state.selectedChain].name + field.paramName + 'FormGroup' + index}
+                         controlId="formHorizontalDropDown">
+                <InputGroup key={chains[this.state.selectedChain].name + field.paramName + 'InputGroup' + index}>
                   <InputGroup.Addon>{field.label}</InputGroup.Addon>
-                  <FormControl key={field.paramName + 'FormControl'}
+                  <FormControl key={chains[this.state.selectedChain].name + field.paramName + 'FormControl' + index}
                                componentClass="select"
                                value={this.getFieldValueByKey(field.paramName)}
                                type="input"
-                               placeholder="auto"
+                               placeholder="Пусто"
                                onChange={(event) => this.onFormInputChange(field.paramName, event.target.value)}>
-                    <option key={field.paramName + 'NullValue'} value={''}>Пусто</option>
+                    <option key={chains[this.state.selectedChain].name + field.paramName + 'NullValue' + index}
+                            value={''}>Пусто
+                    </option>
                     {field.dropDownOptions.map((op, idx) => (<option key={op + idx} value={op}>{op}</option>))}
                   </FormControl>
                 </InputGroup>
@@ -137,14 +167,15 @@ class Launcher extends Component {
 
         case 'DatePicker': {
           return (
-            <Col md={6} key={field.paramName + 'Col'}>
-              <FormGroup key={field.paramName + 'FormGroup'} controlId={field.paramName + index}>
-                <InputGroup key={field.paramName + 'InputGroup'}>
+            <Col md={6} key={chains[this.state.selectedChain].name + field.paramName + 'Col' + index}>
+              <FormGroup key={chains[this.state.selectedChain].name + field.paramName + 'FormGroup' + index}
+                         controlId={field.paramName + index}>
+                <InputGroup key={chains[this.state.selectedChain].name + field.paramName + 'InputGroup' + index}>
                   <InputGroup.Addon>{field.label}</InputGroup.Addon>
-                  <FormControl key={field.paramName + 'FormControl'}
+                  <FormControl key={chains[this.state.selectedChain].name + field.paramName + 'FormControl' + index}
                                value={this.getFieldValueByKey(field.paramName)}
                                type="input"
-                               placeholder="auto"
+                               placeholder="Пусто"
                                onChange={(event) => this.onFormInputChange(field.paramName, event.target.value)}
                   />
                 </InputGroup>
@@ -175,54 +206,37 @@ class Launcher extends Component {
     const header = (
       <Row>
         <Col md={3}>
-          <OverlayTrigger
-            placement="top"
-            overlay={setTooltip('chainSelect', 'Выберите цепочку из выпадающего списка')}
-          >
-            <div>
               <DropdownList
                 id={'launcherDropdown'}
                 options={chains}
+                tooltip={setTooltip('chainSelect', 'Выберите цепочку из выпадающего списка')}
                 onSelect={this.onChainSelected}
                 selectedIndex={this.state.selectedChain}
                 selLabel={this.state.selectedChain !== null ? chains[this.state.selectedChain].name : 'Select one...'}
               />
-            </div>
-          </OverlayTrigger>
         </Col>
         <Col md={2}>
-          <OverlayTrigger
-            placement="top"
-            overlay={setTooltip('orderNum', 'Сколько заявок нужно создать')}
-          >
-            <FormControl value={this.state.reqNumber}
-                         onChange={(event) => this.onHeaderInputChange({
-                           key: 'reqNumber',
-                           value: event.target.value,
-                         })}
-                         type="text"/>
-          </OverlayTrigger>
+          {this.state.selectedChain !== null ?
+            <OverlayTrigger
+              placement="top"
+              overlay={setTooltip('Date', 'Задайте дату запуска заявки')}
+            >
+              <div className={'form-date-picker'}>
+                <DatePicker
+                  locale="ru-RU"
+                  dateFormat="DD.MM.YYYY HH:mm"
+                  todayButton='Сегодня'
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={10}
+                  selected={this.state.startDate}
+                  onChange={this.handleDateChange}
+                />
+              </div>
+            </OverlayTrigger>
+            : null}
         </Col>
-        <Col md={2}>
-          <OverlayTrigger
-            placement="top"
-            overlay={setTooltip('Date', 'Задайте дату запуска заявки')}
-          >
-            <div className={'form-date-picker'}>
-              <DatePicker
-                locale="ru-RU"
-                dateFormat="DD.MM.YYYY HH:mm"
-                todayButton='Сегодня'
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={10}
-                selected={this.state.startDate}
-                onChange={this.handleDateChange}
-              />
-            </div>
-          </OverlayTrigger>
-        </Col>
-        <Col md={5}>
+        <Col md={6}>
           {this.state.selectedChain !== null ?
             <OverlayTrigger
               placement="top"
@@ -240,20 +254,23 @@ class Launcher extends Component {
             </OverlayTrigger>
             : null}
         </Col>
+        <Col md={1}>
+          {this.state.selectedChain !== null ?
+            <Button bsStyle='success' onClick={this.launch}>
+              <Glyphicon glyph='glyphicon glyphicon-play'/>
+            </Button>
+            : null}
+        </Col>
       </Row>
-    );
-
-    const noFormAlert = (
-      <Alert bsStyle="warning">
-        Ни одна цепочка не выбрана!
-      </Alert>
     );
 
     return [
       <Header/>,
       <Grid>
         <Panel header={header} bsStyle={'info'}>
-          {(this.state.selectedChain !== null && this.state.formReady) ? this.renderChainForm() : noFormAlert}
+          {(this.state.selectedChain !== null && this.state.formReady)
+            ? this.renderChainForm()
+            : <Alert bsStyle="warning">Ни одна цепочка не выбрана!</Alert>}
         </Panel>
       </Grid>
     ]

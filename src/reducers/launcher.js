@@ -1,4 +1,3 @@
-import {LAUNCHER_CHAIN_SELECTED} from "../constants";
 
 const initialState = {
   selectedForm: null,
@@ -7,14 +6,6 @@ const initialState = {
 
 const launcher = (state = initialState, action) => {
   switch (action.type) {
-    case LAUNCHER_CHAIN_SELECTED: {
-      return {
-        ...state,
-        selectedForm: action.payload.index,
-        formName: action.payload.name,
-      }
-    }
-
     default:
       return state
   }

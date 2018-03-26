@@ -9,7 +9,6 @@ import rootReducer from './reducers';
 import HomePage from './containers/HomePage';
 import TDME2E from './containers/TDME2E';
 import ChainEditorPage from './containers/ChainEditorPage';
-import LauncherPage from "./containers/LauncherPage";
 import FormBuilderPage from "./containers/FormBuilderPage";
 import TestBuilder from "./containers/TestBuilder";
 import DataDirectoryPage from "./containers/TestBuilder";
@@ -43,8 +42,6 @@ ReactDOM.render((
             <Route path="/testbuilder/:testName" component={TestBuilder}/>
             <Route exact path="/chaineditor" component={ChainEditorPage}/>}
             <Route path="/chaineditor/:chainName" component={ChainEditorPage}/>}
-            <Route exact path="/launcherOLD" component={LauncherPage}/>
-            <Route path="/launcherOLD/:launcherName" component={LauncherPage}/>
             <Route exact path="/formbuilder" component={FormBuilderPage}/>
             <Route path="/formbuilder/:chainIndex" component={FormBuilderPage}/>
             <Route path="/datadirectory" component={DataDirectoryPage}/>

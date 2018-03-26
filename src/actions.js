@@ -2,7 +2,6 @@ import {
   TEST_BLOCK_MOVED,
   FORM_INPUT_CHANGE,
   CHAIN_SELECTED,
-  LAUNCHER_CHAIN_SELECTED,
   FORM_TEMPLATE_FETCH_SUCCSEED,
   FORM_TEMPLATE_FETCH_FAIL,
   CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
@@ -41,7 +40,6 @@ import {
   LOGIN_BUTTON_CLICKED,
   LOGIN_PASSWORD_CHANGE,
   DATA_TEMPLATE_ADDED,
-  LAUNCHER_CHAIN_SELECTED,
 } from './constants'
 
 export const loginButtonClicked = (payload) => ({
@@ -52,11 +50,6 @@ export const loginButtonClicked = (payload) => ({
 export const loginPasswordChange = (payload) => ({
   type: LOGIN_PASSWORD_CHANGE,
   payload,
-});
-
-export const selectChainForm =(payload)=> ({
-  type: LAUNCHER_CHAIN_SELECTED,
-  payload: payload
 });
 
 export const onFormInputChange = (value, paramName, formName) => ({
@@ -245,9 +238,4 @@ export const duplicateCurrentChain = (payload) => ({
 export const addDTToChain = (payload) => ({
   type: DATA_TEMPLATE_ADDED,
   payload,
-});
-
-export const launcherChainSelected = (index) => ({
-  type: LAUNCHER_CHAIN_SELECTED,
-  index,
 });

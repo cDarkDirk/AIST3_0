@@ -24,7 +24,7 @@ class FormBuilderPage extends React.Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
 
-    /*this.state = {
+    this.state = {
       chainIndex: null,
       show: false,
       inputTypeIndex: 0,
@@ -32,15 +32,6 @@ class FormBuilderPage extends React.Component {
         'Input',
         'DropDown',
         'DatePicker',
-      ],
-    };*/
-      this.state = {
-      chainIndex: null,
-      show: false,
-      inputTypeIndex: 0,
-      inputTypes: [
-        'Input',
-        'DropDown',
       ],
     };
   }
@@ -105,7 +96,7 @@ class FormBuilderPage extends React.Component {
             dropDownOptions: [],
           });
         break;
-      }/*
+      }
       case 'DatePicker': {
         this.updateFormBuilderChains(
           {
@@ -114,7 +105,7 @@ class FormBuilderPage extends React.Component {
             type: inputTypes[inputTypeIndex],
           });
         break;
-      }*/
+      }
       default: console.log('UNEXPECTED FIELD TYPE!');
     }
   };
