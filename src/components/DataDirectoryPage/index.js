@@ -5,10 +5,18 @@ import {
   Panel,
   Grid,
   Label,
+  Button,
+  Form,
+  ListGroup,
+  ButtonGroup,
+  Glyphicon,
+  Modal
 } from 'react-bootstrap'
 import DatePicker from "react-datepicker"
 import Notifications from 'react-notification-system-redux'
 import {filterDirectoryData} from '../../api'
+import {forceLogin, getUserName} from '../../globalFunc';
+
 
 class DataDirectoryPage extends React.Component {
 
@@ -103,7 +111,7 @@ class DataDirectoryPage extends React.Component {
         </Panel>
         <Notifications notifications={notifications}/>
       </div>
-    )
+  )
   }
 }
 
