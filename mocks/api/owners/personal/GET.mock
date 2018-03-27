@@ -4,23 +4,23 @@ Access-Control-Allow-Origin: *
 
 [
   {
-    "name": "GroupName1",
-     "marker": "SPOOBKCreditCard"
+    "name": "Fertsd",
+     "members": ["q","w","e"]
   },
  {
-     "name": "GroupName2",
-      "marker": "SPOOBKCreditCard",
+     "name": "Ikar",
+      "members": ["q","r","t"]
  },
  {
-     "name": "GroupName3",
-      "marker": "SPOOBKCreditCard",
+     "name": "MAKAR",
+      "members": ["u","y","e"]
  },
  {
-    "name": "GroupName4",
-     "marker": "SPOOBKCreditCard",
+    "name": "TATar",
+     "members": ["o","w","a","e"]
  },
  {
-    "name": "GroupName5",
-     "marker": "SPOOBKCreditCard",
+    "name": "Gitar",
+     "members": ["z","a","d","o"]
  }
 ]

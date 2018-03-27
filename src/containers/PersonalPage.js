@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 function mapStateToProps(state) {
   return {
     dataPersonal : state.dataPersonal,
-    formBuilderGroups: state.dataPersonal.formBuilderChains || [],
+    formBuilderGroups: state.dataPersonal.formBuilderGroups || [],
     groupName : state.dataPersonal.groupName,
     notifications: state.notifications,
     owner: state.dataAuthorization.paramNames.name,

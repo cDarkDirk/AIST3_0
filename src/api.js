@@ -253,7 +253,6 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
 
   axios.get(url).then(function (response) {
     dispatch(formBuilderChainsFetchSucceed(response.data))
-    console.log(response.data);
   }).catch(function (response) {
     dispatch(error({message: "fetch failed with error!" + response}));
   });
@@ -268,7 +267,6 @@ export const fetchGroups = () => (dispatch, getState) => {
 
   axios.get(url).then(function (response) {
     dispatch(formGroupsFetchSucceed(response.data))
-    console.log(response.data);
   }).catch(function (response) {
     dispatch(error({message: "fetch failed with error!" + response}));
   });
