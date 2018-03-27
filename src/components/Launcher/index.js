@@ -11,7 +11,6 @@ import {
   Glyphicon,
   Grid,
   InputGroup,
-  Jumbotron,
   OverlayTrigger,
   Panel,
   Row,
@@ -25,6 +24,7 @@ import 'react-select/dist/react-select.css';
 import 'react-datepicker/dist/react-datepicker.css'
 import 'rc-time-picker/assets/index.css'
 import './style.css'
+import Notifications from "react-notification-system-redux";
 
 class Launcher extends Component {
   constructor(props, context) {
@@ -54,7 +54,7 @@ class Launcher extends Component {
   }
 
   onChainSelected(index) {
-    if(this.state[this.props.chains[index].name]) {
+    if (this.state[this.props.chains[index].name]) {
       this.setState({
         selectedChain: index,
         selectedTemplates: [],
@@ -107,14 +107,13 @@ class Launcher extends Component {
     });
   }
 
-  launch(){
-    const {chains,submitFormTemplate} = this.props;
+  launch() {
+    const {chains, submitFormTemplate} = this.props;
     let launchParams = {};
     launchParams['chain_name'] = chains[this.state.selectedChain].name;
     launchParams['data'] = this.state[chains[this.state.selectedChain].name];
     launchParams['start_time'] = this.state.startDate.format('YYYY.MM.DD HH:mm:' + '00');
     launchParams['templateNames'] = this.state.selectedTemplates.map(t => t.value);
-    console.log('shit to launch ->', launchParams);
     submitFormTemplate(launchParams);
   }
 
@@ -206,14 +205,14 @@ class Launcher extends Component {
     const header = (
       <Row>
         <Col md={3}>
-              <DropdownList
-                id={'launcherDropdown'}
-                options={chains}
-                tooltip={setTooltip('chainSelect', 'Выберите цепочку из выпадающего списка')}
-                onSelect={this.onChainSelected}
-                selectedIndex={this.state.selectedChain}
-                selLabel={this.state.selectedChain !== null ? chains[this.state.selectedChain].name : 'Select one...'}
-              />
+          <DropdownList
+            id={'launcherDropdown'}
+            options={chains}
+            tooltip={setTooltip('chainSelect', 'Выберите цепочку из выпадающего списка')}
+            onSelect={this.onChainSelected}
+            selectedIndex={this.state.selectedChain}
+            selLabel={this.state.selectedChain !== null ? chains[this.state.selectedChain].name : 'Select one...'}
+          />
         </Col>
         <Col md={2}>
           {this.state.selectedChain !== null ?
@@ -264,14 +263,26 @@ class Launcher extends Component {
       </Row>
     );
 
+    const orderCreatedAlert =() => {
+      if (this.props.orderId !== null){
+        return (
+          <Alert onDismiss={this.props.clearIdOrderAlert} key={'orderCreatedAlert'} bsStyle="success">
+            {this.props.orderId}
+        </Alert>)
+      }
+       return null;
+    };
+
     return [
       <Header/>,
       <Grid>
+        {orderCreatedAlert()}
         <Panel header={header} bsStyle={'info'}>
           {(this.state.selectedChain !== null && this.state.formReady)
             ? this.renderChainForm()
             : <Alert bsStyle="warning">Ни одна цепочка не выбрана!</Alert>}
         </Panel>
+        <Notifications notifications={this.props.notifications}/>
       </Grid>
     ]
   }

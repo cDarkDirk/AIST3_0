@@ -40,6 +40,8 @@ import {
   LOGIN_BUTTON_CLICKED,
   LOGIN_PASSWORD_CHANGE,
   DATA_TEMPLATE_ADDED,
+  ORDER_CREATED,
+  CLEAR_ID_ORDER_ALERT,
 } from './constants'
 
 export const loginButtonClicked = (payload) => ({
@@ -238,4 +240,13 @@ export const duplicateCurrentChain = (payload) => ({
 export const addDTToChain = (payload) => ({
   type: DATA_TEMPLATE_ADDED,
   payload,
+});
+
+export const orderCreated = (id) => ({
+  type: ORDER_CREATED,
+  id,
+});
+
+export const clearIdOrderAlert = () => ({
+  type: CLEAR_ID_ORDER_ALERT,
 });

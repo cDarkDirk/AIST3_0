@@ -12,7 +12,7 @@ import {
   testBuilderTestsFetchSucceed,
   resetModificationMarkers,
   dataTemplatesFetchSuccess,
-  updateDataTemplateSuccess,
+  updateDataTemplateSuccess, orderCreated,
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
@@ -401,7 +401,7 @@ export const submitFormTemplate = (params) => (dispatch) => {
   const url = `${BACKEND_URL}/orders`;
 
   axios.put(url, [params]).then(function (response) {
-    dispatch(success({message: response.data}));
+    dispatch(orderCreated(response.data.id));
   }).catch(function (response) {
     dispatch(error({message: "Submit failed with error!" + response}));
   });
