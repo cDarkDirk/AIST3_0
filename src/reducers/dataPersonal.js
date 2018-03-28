@@ -3,7 +3,8 @@ import {CREATE_GROUP_CLICKED, FORM_GROUPS_FETCH_SUCCEED, GROUP_NAME_CHANGE, GROU
 const initialState = {
   groupName: "",
   selectedForm: null,
-  formBuilderGroups: []
+  formBuilderGroups: [],
+  membersTemplates: [],
 };
 
 const dataPersonal = (state = initialState, action) => {
@@ -28,20 +29,15 @@ const dataPersonal = (state = initialState, action) => {
     }
     case FORM_GROUPS_FETCH_SUCCEED:{
       const membersTemplates = action.payload.map((owners) => {
-        owners.modified = false;
-        owners.new = false;
-        if (owners.members) owners['members'] = owners.members.map(name => {
-          return{label: name, value: name};
+        if (owners.members) owners['members'] = owners.members.map(index => {
+          return{label: index, value: index};
         });
         return owners;
       });
-      // const formBuilderGroups = action.payload.map((owners) => owners.name);
-
       return {
         ...state,
-        // formBuilderGroups,
         membersTemplates,
-        formBuilderGroups:action.payload
+        formBuilderGroups: action.payload
       }
 
     }

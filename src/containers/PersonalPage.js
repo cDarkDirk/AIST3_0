@@ -1,6 +1,6 @@
 import PersonalPage from '../components/PersonalPage'
 import {groupNameChange, selectGroupForm} from "../actions";
-import {fetchGroups, updatePersonalForm} from "../api";
+import {fetchGroups, submitFormMembers, updatePersonalForm} from "../api";
 import {connect} from 'react-redux'
 
 function mapStateToProps(state) {
@@ -10,6 +10,7 @@ function mapStateToProps(state) {
     groupName : state.dataPersonal.groupName,
     notifications: state.notifications,
     owner: state.dataAuthorization.paramNames.name,
+    membersTemplates : state.dataPersonal.membersTemplates,
   }
 }
 
@@ -18,6 +19,7 @@ function mapDispatchToProps(dispatch) {
     createGroupClicked : (payload) => dispatch(updatePersonalForm(payload)),
     groupNameChange : (payload) => dispatch(groupNameChange(payload)),
     selectGroupForm: (GroupName) => dispatch(selectGroupForm(GroupName)),
+    submitFormMembers : (param) => dispatch(submitFormMembers(param)),
     fetchGroups: () => dispatch(fetchGroups()),
   }
 }
