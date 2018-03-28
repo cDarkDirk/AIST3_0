@@ -204,7 +204,7 @@ class Launcher extends Component {
     );
     const header = (
       <Row>
-        <Col md={3}>
+        <Col md={5}>
           <DropdownList
             id={'launcherDropdown'}
             options={chains}
@@ -214,8 +214,9 @@ class Launcher extends Component {
             selLabel={this.state.selectedChain !== null ? chains[this.state.selectedChain].name : 'Select one...'}
           />
         </Col>
+        {this.state.selectedChain !== null
+        && chains[this.state.selectedChain].fields.length > 0 ? [
         <Col md={2}>
-          {this.state.selectedChain !== null ?
             <OverlayTrigger
               placement="top"
               overlay={setTooltip('Date', 'Задайте дату запуска заявки')}
@@ -233,10 +234,8 @@ class Launcher extends Component {
                 />
               </div>
             </OverlayTrigger>
-            : null}
-        </Col>
-        <Col md={6}>
-          {this.state.selectedChain !== null ?
+        </Col>,
+        <Col md={4}>
             <OverlayTrigger
               placement="top"
               overlay={setTooltip('templates', 'Задайте шаблон данных')}
@@ -251,15 +250,12 @@ class Launcher extends Component {
                 />
               </div>
             </OverlayTrigger>
-            : null}
-        </Col>
+        </Col>,
         <Col md={1}>
-          {this.state.selectedChain !== null ?
             <Button bsStyle='success' onClick={this.launch}>
               <Glyphicon glyph='glyphicon glyphicon-play'/>
             </Button>
-            : null}
-        </Col>
+        </Col>] : null}
       </Row>
     );
 
@@ -279,7 +275,8 @@ class Launcher extends Component {
         {orderCreatedAlert()}
         <Panel header={header} bsStyle={'info'}>
           {(this.state.selectedChain !== null && this.state.formReady)
-            ? this.renderChainForm()
+            ? chains[this.state.selectedChain].fields.length > 0 ? this.renderChainForm()
+              : <Alert bsStyle="info">Для запуска теста по этой цепочке необходимо сначала создать форму</Alert>
             : <Alert bsStyle="warning">Ни одна цепочка не выбрана!</Alert>}
         </Panel>
         <Notifications notifications={this.props.notifications}/>
