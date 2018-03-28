@@ -27,9 +27,21 @@ const dataPersonal = (state = initialState, action) => {
       }
     }
     case FORM_GROUPS_FETCH_SUCCEED:{
+      const membersTemplates = action.payload.map((owners) => {
+        owners.modified = false;
+        owners.new = false;
+        if (owners.members) owners['members'] = owners.members.map(name => {
+          return{label: name, value: name};
+        });
+        return owners;
+      });
+      // const formBuilderGroups = action.payload.map((owners) => owners.name);
+
       return {
         ...state,
-        formBuilderGroups: action.payload
+        // formBuilderGroups,
+        membersTemplates,
+        formBuilderGroups:action.payload
       }
 
     }

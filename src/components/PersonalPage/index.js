@@ -64,7 +64,7 @@ class PersonalPage extends React.Component {
   }
 
   render() {
-    const {formBuilderGroups } = this.props;
+    const {formBuilderGroups , membersTemplates} = this.props;
     console.log(formBuilderGroups);
     const setTooltip = (id, text) => (
       <Tooltip id={id.toString()}>{text}</Tooltip>
@@ -102,7 +102,7 @@ class PersonalPage extends React.Component {
                 <Select.Creatable
                   wrapperStyle={{zIndex: '3', position: 'relative'}}
                   multi={true}
-                  options={this.state.selectedGroup !== null ? formBuilderGroups[this.state.selectedGroup].members : []}
+                  options={this.state.selectedGroup !== null ? membersTemplates[this.state.selectedGroup].members : []}
                   onChange={this.dataMembersSelected}
                   value={this.state.selectedMembers}
                 />
