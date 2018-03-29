@@ -244,7 +244,15 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
  */
 export const updateChainForm = (chainName, chain, idx) => (dispatch) => {
   const url = `${BACKEND_URL}/chain_templates/${chainName}`;
-
+  let tempArr = [];
+  for (let field of chain.fields) {
+    if (tempArr.indexOf(field.paramName) === -1) {
+      tempArr.push(field.paramName);
+    } else {
+      dispatch(error({message: "Названия параметров дублируются! Дублирубющийся параметр: " + field.paramName}));
+      return;
+    }
+  }
   axios.post(url, [chain]).then(function () {
     dispatch(success({message: "Submit succeeded!"}));
     dispatch(updateChainFormSucceed(idx));
