@@ -92,7 +92,7 @@ class PersonalPage extends React.Component {
         <Grid>
           <Panel>
             <Row>
-              <Col md={1}>
+              <Col md={3}>
                 <DropdownList
                   id={'launcherDropdown'}
                   options={formBuilderGroups}

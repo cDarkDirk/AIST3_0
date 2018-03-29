@@ -57,8 +57,7 @@ export const updatePersonalForm = (payload) => (dispatch) => {
   const url = `${BACKEND_URL}/owners/personal`;
   const header = {headers: {SessionID : cookies.get('logedInUserToken')}};
   const requestBody = {groupName : payload.groupName};
-  console.log(header);
-  axios.put(url,requestBody, header).then(function (response) {
+  axios.put(url,[requestBody], header).then(function (response) {
     dispatch(success({message: "Group was created"}))
   }).catch(function (response) {
     dispatch(error({message: "Fetch failed with error!" + response}));
@@ -147,7 +146,7 @@ export const updateLoginForm = (payload, publicKey) => (dispatch) => {
   const url = `${BACKEND_URL}/owners/login`;
   axios.post(url, payload).then(function (response) {
     payload.token = response.data.token;
-    setCurrentUser(payload.login, response.data.token);
+    setCurrentUser(payload.login, response.data);
     window.location.hash = '#/TDME2E';
 
   }).catch(function (response) {
@@ -267,8 +266,9 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
  */
 export const fetchGroups = () => (dispatch, getState) => {
   const url = `${BACKEND_URL}/owners/personal`;
-
-  axios.get(url).then(function (response) {
+  const cookies = new Cookies();
+  const header = {headers: {SessionID : cookies.get('logedInUserToken')}};
+  axios.get(url, header).then(function (response) {
     dispatch(formGroupsFetchSucceed(response.data))
   }).catch(function (response) {
     dispatch(error({message: "fetch failed with error!" + response}));
