@@ -1,9 +1,16 @@
-import {ORDER_CREATED, CLEAR_ID_ORDER_ALERT} from "../constants";
+import {
+  ORDER_CREATED,
+  CLEAR_ID_ORDER_ALERT,
+  LAUNCHER_STANDS_FETCH_SUCCEED,
+  LAUNCHER_USER_GROUPS_FETCH_SUCCEED,
+} from "../constants";
 
 const initialState = {
   selectedForm: null,
   formName: null,
   orderId: null,
+  stands: [],
+  groups: [],
 };
 
 const launcher = (state = initialState, action) => {
@@ -20,6 +27,20 @@ const launcher = (state = initialState, action) => {
       return {
         ...state,
         orderId: null,
+      }
+    }
+
+    case LAUNCHER_STANDS_FETCH_SUCCEED: {
+      return {
+        ...state,
+        stands: action.stands,
+      }
+    }
+
+    case LAUNCHER_USER_GROUPS_FETCH_SUCCEED: {
+      return {
+        ...state,
+        groups: action.groups,
       }
     }
 

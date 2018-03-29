@@ -31,6 +31,8 @@ class Launcher extends Component {
     super(props, context);
     forceLogin();
     this.props.fetchChainTemplates();
+    this.props.fetchStands();
+    this.props.fetchGroups();
     this.dataTemplateSelected = this.dataTemplateSelected.bind(this);
     this.onChainSelected = this.onChainSelected.bind(this);
     this.onHeaderInputChange = this.onHeaderInputChange.bind(this);
@@ -40,17 +42,29 @@ class Launcher extends Component {
     this.onFormInputChange = this.onFormInputChange.bind(this);
     this.fillFormData = this.fillFormData.bind(this);
     this.launch = this.launch.bind(this);
+    this.handleStandSelection = this.handleStandSelection.bind(this);
+    this.handleGroupsSelection = this.handleGroupsSelection.bind(this);
     this.state = {
       selectedTemplates: [],
       selectedChain: null,
       reqNumber: 1,
-      startDate: moment(),
+      startDate: null,
       formReady: false,
+      standIndex: null,
+      groups: [],
     }
   }
 
   dataTemplateSelected(templates) {
     this.setState({selectedTemplates: templates});
+  }
+
+  handleGroupsSelection(groups){
+    this.setState({groups});
+  }
+
+  handleStandSelection(standIndex) {
+    this.setState({standIndex});
   }
 
   onChainSelected(index) {
@@ -114,6 +128,8 @@ class Launcher extends Component {
     launchParams['data'] = this.state[chains[this.state.selectedChain].name];
     launchParams['start_time'] = this.state.startDate.format('YYYY.MM.DD HH:mm:' + '00');
     launchParams['templateNames'] = this.state.selectedTemplates.map(t => t.value);
+    launchParams['groups'] = this.state.groups.map(g => g.label);
+    console.log(launchParams);
     submitFormTemplate(launchParams);
   }
 
@@ -204,7 +220,7 @@ class Launcher extends Component {
     );
     const header = (
       <Row>
-        <Col md={5}>
+        <Col md={10}>
           <DropdownList
             id={'launcherDropdown'}
             options={chains}
@@ -216,64 +232,105 @@ class Launcher extends Component {
         </Col>
         {this.state.selectedChain !== null
         && chains[this.state.selectedChain].fields.length > 0 ? [
-        <Col md={2}>
-            <OverlayTrigger
-              placement="top"
-              overlay={setTooltip('Date', 'Задайте дату запуска заявки')}
-            >
-              <div className={'form-date-picker'}>
-                <DatePicker
-                  locale="ru-RU"
-                  dateFormat="DD.MM.YYYY HH:mm"
-                  todayButton='Сегодня'
-                  showTimeSelect
-                  timeFormat="HH:mm"
-                  timeIntervals={10}
-                  selected={this.state.startDate}
-                  onChange={this.handleDateChange}
-                />
-              </div>
-            </OverlayTrigger>
-        </Col>,
-        <Col md={4}>
-            <OverlayTrigger
-              placement="top"
-              overlay={setTooltip('templates', 'Задайте шаблон данных')}
-            >
-              <div>
-                <Select.Creatable
-                  wrapperStyle={{zIndex: '3', position: 'relative'}}
-                  multi={true}
-                  options={this.state.selectedChain !== null ? chains[this.state.selectedChain].templates : []}
-                  onChange={this.dataTemplateSelected}
-                  value={this.state.selectedTemplates}
-                />
-              </div>
-            </OverlayTrigger>
-        </Col>,
-        <Col md={1}>
-            <Button bsStyle='success' onClick={this.launch}>
+          <Col md={2}>
+            <DropdownList
+              id={'standsDropdown'}
+              options={this.props.stands}
+              tooltip={setTooltip('standSelect', 'Выберите тестовый контур')}
+              onSelect={this.handleStandSelection}
+              selectedIndex={this.state.standIndex}
+              labelKey='code'
+              bsStyle='info'
+              selLabel={this.state.standIndex !== null ? this.props.stands[this.state.standIndex].code : 'Пусто'}
+            />
+            &nbsp;
+            <Button bsStyle='success' disabled={this.state.standIndex === null} onClick={this.launch}>
               <Glyphicon glyph='glyphicon glyphicon-play'/>
             </Button>
-        </Col>] : null}
+          </Col>] : null}
       </Row>
     );
 
-    const orderCreatedAlert =() => {
-      if (this.props.orderId !== null){
+    const orderCreatedAlert = () => {
+      if (this.props.orderId !== null) {
         return (
           <Alert onDismiss={this.props.clearIdOrderAlert} key={'orderCreatedAlert'} bsStyle="success">
             {this.props.orderId}
-        </Alert>)
+          </Alert>)
       }
-       return null;
+      return null;
     };
+
+    const selectGroups = this.props.groups.map((group, index) => {
+      return {
+        label: group,
+        value: index,
+      }
+    });
 
     return [
       <Header/>,
       <Grid>
         {orderCreatedAlert()}
         <Panel header={header} bsStyle={'info'}>
+          {this.state.selectedChain !== null
+          && chains[this.state.selectedChain].fields.length > 0 ?
+            <Panel bsStyle='info' header={'Параметры запуска'}>
+              <Col md={2}>
+                <OverlayTrigger
+                  placement="top"
+                  overlay={setTooltip('Date', 'Задайте дату запуска заявки')}
+                >
+                  <div className={'form-date-picker'}>
+                    <DatePicker
+                      locale="ru-RU"
+                      dateFormat="DD.MM.YYYY HH:mm"
+                      todayButton='Сегодня'
+                      showTimeSelect
+                      placeholderText='Время запуска'
+                      timeFormat="HH:mm"
+                      timeIntervals={10}
+                      selected={this.state.startDate}
+                      onChange={this.handleDateChange}
+                    />
+                  </div>
+                </OverlayTrigger>
+              </Col>
+              <Col md={6}>
+                <OverlayTrigger
+                  placement="top"
+                  overlay={setTooltip('templates', 'Задайте шаблон данных')}
+                >
+                  <div>
+                    <Select.Creatable
+                      wrapperStyle={{zIndex: '3', position: 'relative'}}
+                      multi={true}
+                      placeholder='Задайте шаблон данных'
+                      options={this.state.selectedChain !== null ? chains[this.state.selectedChain].templates : []}
+                      onChange={this.dataTemplateSelected}
+                      value={this.state.selectedTemplates}
+                    />
+                  </div>
+                </OverlayTrigger>
+              </Col>
+              <Col md={4}>
+                <OverlayTrigger
+                  placement="top"
+                  overlay={setTooltip('groups', 'Выберите группы для доступа к данным')}
+                >
+                  <div>
+                    <Select.Creatable
+                      wrapperStyle={{zIndex: '3', position: 'relative'}}
+                      multi={true}
+                      placeholder='Выберите группы для доступа к данным'
+                      options={this.state.selectedChain !== null ? selectGroups : []}
+                      onChange={this.handleGroupsSelection}
+                      value={this.state.groups}
+                    />
+                  </div>
+                </OverlayTrigger>
+              </Col>
+            </Panel> : null}
           {(this.state.selectedChain !== null && this.state.formReady)
             ? chains[this.state.selectedChain].fields.length > 0 ? this.renderChainForm()
               : <Alert bsStyle="info">Для запуска теста по этой цепочке необходимо сначала создать форму</Alert>

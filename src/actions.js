@@ -42,6 +42,8 @@ import {
   DATA_TEMPLATE_ADDED,
   ORDER_CREATED,
   CLEAR_ID_ORDER_ALERT,
+  LAUNCHER_STANDS_FETCH_SUCCEED,
+  LAUNCHER_USER_GROUPS_FETCH_SUCCEED,
 } from './constants'
 
 export const loginButtonClicked = (payload) => ({
@@ -249,4 +251,14 @@ export const orderCreated = (id) => ({
 
 export const clearIdOrderAlert = () => ({
   type: CLEAR_ID_ORDER_ALERT,
+});
+
+export const standsFetchSuccess = (stands) => ({
+  type: LAUNCHER_STANDS_FETCH_SUCCEED,
+  stands,
+});
+
+export const launcherUserGroupsFetchSucceed = (groups) => ({
+  type: LAUNCHER_USER_GROUPS_FETCH_SUCCEED,
+  groups,
 });

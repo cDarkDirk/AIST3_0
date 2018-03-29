@@ -12,7 +12,7 @@ import {
   testBuilderTestsFetchSucceed,
   resetModificationMarkers,
   dataTemplatesFetchSuccess,
-  updateDataTemplateSuccess, orderCreated,
+  updateDataTemplateSuccess, orderCreated, launcherUserGroupsFetchSucceed,
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
@@ -412,5 +412,35 @@ export const submitFormTemplate = (params) => (dispatch) => {
     dispatch(orderCreated(response.data.id));
   }).catch(function (response) {
     dispatch(error({message: "Submit failed with error!" + response}));
+  });
+};
+
+/**
+ * All pages
+ * gets information from dictionary and
+ * dispatches provided action
+ *
+ * @param dictionary - dictionary name (systems, stands, test_types)
+ * @param onSuccess - action to dispatch response
+ * @returns {function(*)}
+ */
+
+export const getDictionaryData = (dictionary, onSuccess) => (dispatch) => {
+  const url = `${BACKEND_URL}/dictionaries/${dictionary}`;
+
+  axios.get(url).then(function (response) {
+    dispatch(onSuccess(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+
+export const getUsersGroups = () => (dispatch) => {
+  const url = `${BACKEND_URL}/owners/personal/getGroups`;
+
+  axios.get(url).then(function (response) {
+    dispatch(launcherUserGroupsFetchSucceed(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
   });
 };
