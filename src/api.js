@@ -57,6 +57,7 @@ export const updatePersonalForm = (payload) => (dispatch) => {
   const url = `${BACKEND_URL}/owners/personal`;
   const header = {headers: {SessionID : cookies.get('logedInUserToken')}};
   const requestBody = {groupName : payload.groupName};
+  console.log(header);
   axios.put(url,requestBody, header).then(function (response) {
     dispatch(success({message: "Group was created"}))
   }).catch(function (response) {
