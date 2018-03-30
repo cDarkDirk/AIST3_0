@@ -20,6 +20,9 @@ import {forceLogin, getUserName} from '../../globalFunc';
 import overlayFactory from 'react-bootstrap-table2-overlay';
 
 
+//import paginationFactory from 'react-bootstrap-table2-paginator';
+
+
 class DataDirectoryPage extends React.Component {
 
   state = {
@@ -43,7 +46,8 @@ class DataDirectoryPage extends React.Component {
       text: 'Маркер данных:',
     }, {
       dataField: 'real_start_time',
-      text: 'Время запуска:'
+      text: 'Время запуска:',
+      sort: true
     }, {
       dataField: 'displayed_status',
       text: 'Текущий статус:',
@@ -60,6 +64,13 @@ class DataDirectoryPage extends React.Component {
       formatter: this.renderGetDataButton
     }
   ]
+  //Ещё описание таблицы: дефолтные сортировки и т.п.
+  defSort = [
+    {
+      dataField: 'real_start_time',
+      order: 'desc'
+    }]
+
 
 //Описание форматтеров для таблицы (функции, возвращающие кнопки, элементы и прочая)
   renderOrderDetails(cell, row, rowIndex) {
@@ -135,7 +146,7 @@ class DataDirectoryPage extends React.Component {
 
     if (chainIndex !== null && formBuilderChains[chainIndex]) {
       const chainName = formBuilderChains[chainIndex].name;
-      this.props.fetchOrdersByName(chainName, dateFrom, dateTo);
+      this.props.fetchOrdersByName(chainName, dateFrom.format('YYYY.MM.DD'), dateTo.format('YYYY.MM.DD'));
     }
   }
 
@@ -190,6 +201,13 @@ class DataDirectoryPage extends React.Component {
         Дата запуска от:
         <DatePicker onChange={this.changeDateFrom}
                     selected={dateFrom}
+                    locale="ru-RU"
+                    dateFormat="DD.MM.YYYY"
+                    todayButton='Сегодня'
+          //   showTimeSelect
+          //placeholderText='Время запуска'
+          // timeFormat="HH:mm"
+          //  timeIntervals={10}
         />
         Дата запуска до:
         <DatePicker onChange={this.changeDateTo}
@@ -208,6 +226,7 @@ class DataDirectoryPage extends React.Component {
         <BootstrapTable keyField='id'
                         data={this.props.directoryData}
                         columns={this.columns}
+                        defaultSorted={this.defSort}
                         overlay={overlayFactory()}/>
       </div>
     )
