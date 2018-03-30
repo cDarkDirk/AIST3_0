@@ -17,7 +17,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     createGroupClicked : (payload) => dispatch(updatePersonalForm(payload)),
-    groupNameChange : (payload) => dispatch(groupNameChange(payload)),
     selectGroupForm: (GroupName) => dispatch(selectGroupForm(GroupName)),
     submitFormMembers : (param) => dispatch(submitFormMembers(param)),
     fetchGroups: () => dispatch(fetchGroups()),

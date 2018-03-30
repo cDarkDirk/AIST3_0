@@ -28,17 +28,14 @@ class PersonalPage extends React.Component {
   }
 
   onGroupSelected(index) {
-    if (this.state[this.props.formBuilderGroups[index].name]) {
       this.setState({
         selectedGroup: index,
         selectedMembers: [],
       });
-    } else {
-      this.setState({
-        selectedGroup: index,
-        selectedMembers: [],
-      });
-    }
+  }
+
+  changeGroupName(payload) {
+      this.setState({groupName: payload.value})
   }
 
   updateGroupMembersButtonClick() {
@@ -49,15 +46,8 @@ class PersonalPage extends React.Component {
     submitFormMembers(groupParameters);
   }
 
-  changeGroupName(payload) {
-    if (payload.key === "groupName") {
-      this.setState({groupName: payload.value})
-    }
-  }
-
   createGroupButtonClick() {
-    const {createGroupClicked, groupNameChange} = this.props;
-    groupNameChange({value: this.state.groupName, key: "groupName"});
+    const {createGroupClicked} = this.props;
     createGroupClicked(this.state);
   }
 
@@ -68,7 +58,7 @@ class PersonalPage extends React.Component {
     );
     return (
       <div>
-        <Header owner={getUserName()}/>
+        <Header/>
         <Grid>
           <Panel>
             <Row>
@@ -76,9 +66,9 @@ class PersonalPage extends React.Component {
                 <FormControl className="form-control"
                              type="text"
                              value={this.state.groupName}
-                             onChange={e => this.changeGroupName({value: e.target.value, key: "groupName"})}
+                             onChange={e => this.changeGroupName({value: e.target.value})}
                              label="CreateGroup"
-                             placeholder="Enter group name"/>
+                             placeholder="Введите название новой группы"/>
               </Col>
               <Col md={1}>
                 <Button
@@ -96,7 +86,7 @@ class PersonalPage extends React.Component {
                 <DropdownList
                   id={'launcherDropdown'}
                   options={formBuilderGroups}
-                  tooltip={setTooltip('groupSelect', 'Выберите цепочку из выпадающего списка')}
+                  tooltip={setTooltip('groupSelect', 'Выберите группу из выпадающего списка')}
                   onSelect={this.onGroupSelected}
                   selectedIndex={this.state.selectedGroup}
                   selLabel={this.state.selectedGroup !== null ? formBuilderGroups[this.state.selectedGroup].name : 'Select one...'}
@@ -115,6 +105,7 @@ class PersonalPage extends React.Component {
                         options={this.state.selectedGroup !== null ? membersTemplates[this.state.selectedGroup].members : []}
                         onChange={this.dataMembersSelected}
                         value={this.state.selectedMembers}
+                        placeholder="Выберите необходимых пользователей"
                       />
                     </div>
                   </OverlayTrigger>
