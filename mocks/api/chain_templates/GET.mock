@@ -191,19 +191,6 @@ Access-Control-Allow-Origin: *
           "id": 10
         }
     ],
-    "fields": [
-      {
-        "label": "default",
-        "paramName": "default",
-        "regEx": "/test/i",
-        "type": "Input"
-      },
-      {
-        "label": "default",
-        "paramName": "default",
-        "type": "DropDown",
-        "dropDownOptions": ["1", "2", "3"]
-      }
-    ]
+    "fields": []
   }
 ]

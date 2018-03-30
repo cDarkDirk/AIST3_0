@@ -30,3 +30,6 @@ export function forceLogin() {
 export function getUserName() {
   return cookies.get('logedInUser');
 }
+export function getToken() {
+  return cookies.get('logedInUserToken');
+}

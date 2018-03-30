@@ -1,19 +1,46 @@
 import {
-  LAUNCHER_CHAIN_SELECTED,
-} from '../constants'
+  ORDER_CREATED,
+  CLEAR_ID_ORDER_ALERT,
+  LAUNCHER_STANDS_FETCH_SUCCEED,
+  LAUNCHER_USER_GROUPS_FETCH_SUCCEED,
+} from "../constants";
 
 const initialState = {
   selectedForm: null,
   formName: null,
+  orderId: null,
+  stands: [],
+  groups: [],
 };
 
 const launcher = (state = initialState, action) => {
   switch (action.type) {
-    case LAUNCHER_CHAIN_SELECTED: {
+
+    case ORDER_CREATED: {
       return {
         ...state,
-        selectedForm: action.payload.index,
-        formName: action.payload.name,
+        orderId: action.id,
+      }
+    }
+
+    case CLEAR_ID_ORDER_ALERT: {
+      return {
+        ...state,
+        orderId: null,
+      }
+    }
+
+    case LAUNCHER_STANDS_FETCH_SUCCEED: {
+      return {
+        ...state,
+        stands: action.stands,
+      }
+    }
+
+    case LAUNCHER_USER_GROUPS_FETCH_SUCCEED: {
+      return {
+        ...state,
+        groups: action.groups,
       }
     }
 
@@ -22,4 +49,4 @@ const launcher = (state = initialState, action) => {
   }
 };
 
-export default launcher
+export default launcher;

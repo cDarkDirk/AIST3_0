@@ -13,6 +13,8 @@ import {
   resetModificationMarkers,
   dataTemplatesFetchSuccess,
   updateDataTemplateSuccess,
+  orderCreated,
+  launcherUserGroupsFetchSucceed,
   ordersFetchSucceed,
   ordersFetchFail
 } from './actions';
@@ -261,7 +263,15 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
  */
 export const updateChainForm = (chainName, chain, idx) => (dispatch) => {
   const url = `${BACKEND_URL}/chain_templates/${chainName}`;
-
+  let tempArr = [];
+  for (let field of chain.fields) {
+    if (tempArr.indexOf(field.paramName) === -1) {
+      tempArr.push(field.paramName);
+    } else {
+      dispatch(error({message: "Названия параметров дублируются! Дублирубющийся параметр: " + field.paramName}));
+      return;
+    }
+  }
   axios.post(url, [chain]).then(function () {
     dispatch(success({message: "Submit succeeded!"}));
     dispatch(updateChainFormSucceed(idx));
@@ -413,31 +423,43 @@ export const filterDirectoryData = (filterData) => (dispatch) => {
   * Launcher page
   * creates new order
 */
-export const submitFormTemplate = (formName, formTemplate, sheduleList, templates, name) => (dispatch) => {
-  let dataToSendLauncherPageBody = {};
-
-  dataToSendLauncherPageBody["chain_name"] = name;
-  if(sheduleList.scheduleDate && sheduleList.scheduleTime) {
-    dataToSendLauncherPageBody["start_time"] = sheduleList.scheduleDate.format('Y.MM.DD')
-      + ' '
-      + sheduleList.scheduleTime.format('hh:mm:ss');
-      console.log('res --->',dataToSendLauncherPageBody)
-  } else if(
-      (!sheduleList.scheduleDate && sheduleList.scheduleTime)
-      || (sheduleList.scheduleDate && !sheduleList.scheduleTime)
-    ){
-    dispatch(error({message: "Оба поля Date и Time должны быть либо заполнены, либо пусты!"}));
-  }
-  dataToSendLauncherPageBody["data"] = formTemplate;
-  if (templates.length !== 0) {
-    dataToSendLauncherPageBody["templateNames"] = templates.map(e => e.value);
-  }
+export const submitFormTemplate = (params) => (dispatch) => {
 
   const url = `${BACKEND_URL}/orders`;
 
-  axios.put(url, [dataToSendLauncherPageBody]).then(function (response) {
-    dispatch(success({message: response.data}));
+  axios.put(url, [params]).then(function (response) {
+    dispatch(orderCreated(response.data.id));
   }).catch(function (response) {
     dispatch(error({message: "Submit failed with error!" + response}));
+  });
+};
+
+/**
+ * All pages
+ * gets information from dictionary and
+ * dispatches provided action
+ *
+ * @param dictionary - dictionary name (systems, stands, test_types)
+ * @param onSuccess - action to dispatch response
+ * @returns {function(*)}
+ */
+
+export const getDictionaryData = (dictionary, onSuccess) => (dispatch) => {
+  const url = `${BACKEND_URL}/dictionaries/${dictionary}`;
+
+  axios.get(url).then(function (response) {
+    dispatch(onSuccess(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+
+export const getUsersGroups = () => (dispatch) => {
+  const url = `${BACKEND_URL}/owners/personal/getGroups`;
+
+  axios.get(url).then(function (response) {
+    dispatch(launcherUserGroupsFetchSucceed(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
   });
 };

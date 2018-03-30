@@ -2,7 +2,6 @@ import {
   TEST_BLOCK_MOVED,
   FORM_INPUT_CHANGE,
   CHAIN_SELECTED,
-  LAUNCHER_CHAIN_SELECTED,
   FORM_TEMPLATE_FETCH_SUCCSEED,
   FORM_TEMPLATE_FETCH_FAIL,
   CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
@@ -43,6 +42,10 @@ import {
   DATA_TEMPLATE_ADDED,
   ORDERS_FETCH_SUCCEED,
   ORDERS_FETCH_FAIL
+  ORDER_CREATED,
+  CLEAR_ID_ORDER_ALERT,
+  LAUNCHER_STANDS_FETCH_SUCCEED,
+  LAUNCHER_USER_GROUPS_FETCH_SUCCEED,
 } from './constants'
 
 export const ordersFetchSucceed = (payload) => ({
@@ -63,11 +66,6 @@ export const loginButtonClicked = (payload) => ({
 export const loginPasswordChange = (payload) => ({
   type: LOGIN_PASSWORD_CHANGE,
   payload,
-});
-
-export const selectChainForm =(payload)=> ({
-  type: LAUNCHER_CHAIN_SELECTED,
-  payload: payload
 });
 
 export const onFormInputChange = (value, paramName, formName) => ({
@@ -256,4 +254,23 @@ export const duplicateCurrentChain = (payload) => ({
 export const addDTToChain = (payload) => ({
   type: DATA_TEMPLATE_ADDED,
   payload,
+});
+
+export const orderCreated = (id) => ({
+  type: ORDER_CREATED,
+  id,
+});
+
+export const clearIdOrderAlert = () => ({
+  type: CLEAR_ID_ORDER_ALERT,
+});
+
+export const standsFetchSuccess = (stands) => ({
+  type: LAUNCHER_STANDS_FETCH_SUCCEED,
+  stands,
+});
+
+export const launcherUserGroupsFetchSucceed = (groups) => ({
+  type: LAUNCHER_USER_GROUPS_FETCH_SUCCEED,
+  groups,
 });

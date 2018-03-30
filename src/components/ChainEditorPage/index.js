@@ -154,7 +154,7 @@ class ChainEditorPage extends React.Component {
               options={searchOpt}
               onOptionClick={onChainSelected}
             />
-            <ChainList name={this.props.match.params.chainName}/>
+            <ChainList/>
           </Col>
           <Col md={6}>
             <Row>
