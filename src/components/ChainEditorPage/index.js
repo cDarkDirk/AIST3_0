@@ -137,6 +137,21 @@ class ChainEditorPage extends React.Component {
             </InputGroup>
           </FormGroup>
         </Col>
+      </Row>,
+      <Row>
+        <Col md={12}>
+          <FormGroup>
+            <InputGroup>
+              <InputGroup.Addon>Group</InputGroup.Addon>
+              <Select.Creatable
+                multi={true}
+                options={options}
+                onChange={dt => this.props.addDTToChain(dt)}
+                value={chainTemplate.templates}
+              />
+            </InputGroup>
+          </FormGroup>
+        </Col>
       </Row>
     ];
     const searchOpt = chainNames.map((chain,index) => {
