@@ -1,8 +1,5 @@
 import React from 'react'
-import {Thumbnail, Image, Button, Jumbotron, Grid, Col, Row} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
-
-import JenkImg from '../../assets/Jenk.png';
+import {Thumbnail, Grid, Col, Row} from 'react-bootstrap'
 import E2E from '../../assets/E2E.png';
 import TDM from '../../assets/TDM.png';
 

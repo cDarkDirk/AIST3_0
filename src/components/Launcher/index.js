@@ -19,7 +19,6 @@ import {
 import DropdownList from "../DropdownList/index";
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
-import moment from "moment";
 import 'react-select/dist/react-select.css';
 import 'react-datepicker/dist/react-datepicker.css'
 import 'rc-time-picker/assets/index.css'
@@ -126,7 +125,7 @@ class Launcher extends Component {
     let launchParams = {};
     launchParams['chain_name'] = chains[this.state.selectedChain].name;
     launchParams['data'] = this.state[chains[this.state.selectedChain].name];
-    launchParams['start_time'] = this.state.startDate.format('YYYY.MM.DD HH:mm:' + '00');
+    launchParams['start_time'] = this.state.startDate.format('YYYY.MM.DD HH:mm:00');
     launchParams['templateNames'] = this.state.selectedTemplates.map(t => t.value);
     launchParams['groups'] = this.state.groups.map(g => g.label);
     console.log(launchParams);
@@ -143,7 +142,7 @@ class Launcher extends Component {
               <FormGroup key={chains[this.state.selectedChain].name + field.paramName + index}
                          controlId={field.paramName + index}>
                 <InputGroup key={chains[this.state.selectedChain].name + field.paramName + 'InputGroup' + index}>
-                  <InputGroup.Addon>{field.label}</InputGroup.Addon>
+                  <InputGroup.Addon key={chains[this.state.selectedChain].name + field.paramName + 'InputGroupAddon' + index}>{field.label}</InputGroup.Addon>
                   <FormControl key={chains[this.state.selectedChain].name + field.paramName + 'FormControl' + index}
                                value={this.getFieldValueByKey(field.paramName)}
                                type="input"
@@ -162,7 +161,7 @@ class Launcher extends Component {
               <FormGroup key={chains[this.state.selectedChain].name + field.paramName + 'FormGroup' + index}
                          controlId="formHorizontalDropDown">
                 <InputGroup key={chains[this.state.selectedChain].name + field.paramName + 'InputGroup' + index}>
-                  <InputGroup.Addon>{field.label}</InputGroup.Addon>
+                  <InputGroup.Addon key={chains[this.state.selectedChain].name + field.paramName + 'InputGroupAddon' + index}>{field.label}</InputGroup.Addon>
                   <FormControl key={chains[this.state.selectedChain].name + field.paramName + 'FormControl' + index}
                                componentClass="select"
                                value={this.getFieldValueByKey(field.paramName)}
@@ -170,9 +169,10 @@ class Launcher extends Component {
                                placeholder="Пусто"
                                onChange={(event) => this.onFormInputChange(field.paramName, event.target.value)}>
                     <option key={chains[this.state.selectedChain].name + field.paramName + 'NullValue' + index}
-                            value={''}>Пусто
+                            value={''}>
+                      Пусто
                     </option>
-                    {field.dropDownOptions.map((op, idx) => (<option key={op + idx} value={op}>{op}</option>))}
+                    {field.dropDownOptions.map((op, idx) => (<option key={chains[this.state.selectedChain].name + op + idx} value={op}>{op}</option>))}
                   </FormControl>
                 </InputGroup>
               </FormGroup>
@@ -186,7 +186,7 @@ class Launcher extends Component {
               <FormGroup key={chains[this.state.selectedChain].name + field.paramName + 'FormGroup' + index}
                          controlId={field.paramName + index}>
                 <InputGroup key={chains[this.state.selectedChain].name + field.paramName + 'InputGroup' + index}>
-                  <InputGroup.Addon>{field.label}</InputGroup.Addon>
+                  <InputGroup.Addon key={chains[this.state.selectedChain].name + field.paramName + 'InputGroupAddon' + index}>{field.label}</InputGroup.Addon>
                   <FormControl key={chains[this.state.selectedChain].name + field.paramName + 'FormControl' + index}
                                value={this.getFieldValueByKey(field.paramName)}
                                type="input"
@@ -205,8 +205,8 @@ class Launcher extends Component {
     });
 
     return (
-      <Form>
-        <Row>
+      <Form key={chains[this.state.selectedChain].name + 'FormTag'}>
+        <Row key={chains[this.state.selectedChain].name + 'RowTag'}>
           {formBody}
         </Row>
       </Form>
@@ -216,12 +216,13 @@ class Launcher extends Component {
   render() {
     const {chains} = this.props;
     const setTooltip = (id, text) => (
-      <Tooltip id={id.toString()}>{text}</Tooltip>
+      <Tooltip key={id.toString()+'Tooltip'} id={id.toString()}>{text}</Tooltip>
     );
     const header = (
-      <Row>
-        <Col md={10}>
+      <Row key={'headerRow'}>
+        <Col md={10} key={'chainSelectorColumn'}>
           <DropdownList
+            key={'DropdownListChainSelector'}
             id={'launcherDropdown'}
             options={chains}
             tooltip={setTooltip('chainSelect', 'Выберите цепочку из выпадающего списка')}
@@ -232,8 +233,9 @@ class Launcher extends Component {
         </Col>
         {this.state.selectedChain !== null
         && chains[this.state.selectedChain].fields.length > 0 ? [
-          <Col md={2}>
+          <Col md={2} key={'StandsSelectorColumn'}>
             <DropdownList
+              key={'StandsDropdown'}
               id={'standsDropdown'}
               options={this.props.stands}
               tooltip={setTooltip('standSelect', 'Выберите тестовый контур')}
@@ -244,8 +246,8 @@ class Launcher extends Component {
               selLabel={this.state.standIndex !== null ? this.props.stands[this.state.standIndex].code : 'Пусто'}
             />
             &nbsp;
-            <Button bsStyle='success' disabled={this.state.standIndex === null} onClick={this.launch}>
-              <Glyphicon glyph='glyphicon glyphicon-play'/>
+            <Button key={'LaunchButton'} bsStyle='success' disabled={this.state.standIndex === null} onClick={this.launch}>
+              <Glyphicon key={'launchGlyph'} glyph='glyphicon glyphicon-play'/>
             </Button>
           </Col>] : null}
       </Row>
@@ -275,14 +277,16 @@ class Launcher extends Component {
         <Panel header={header} bsStyle={'info'}>
           {this.state.selectedChain !== null
           && chains[this.state.selectedChain].fields.length > 0 ?
-            <Panel bsStyle='info' header={'Параметры запуска'}>
-              <Col md={2}>
+            <Panel key={'additionalParamsPanel'} bsStyle='info' header={'Параметры запуска'}>
+              <Col md={2} key={'FirstColumnKey'}>
                 <OverlayTrigger
+                  key={'launchTimeOverlay'}
                   placement="top"
                   overlay={setTooltip('Date', 'Задайте дату запуска заявки')}
                 >
-                  <div className={'form-date-picker'}>
+                  <div className={'form-date-picker'} key={'launchTimeDatepickerStyleDiv'}>
                     <DatePicker
+                      key={'launchTimeDatepicker'}
                       locale="ru-RU"
                       dateFormat="DD.MM.YYYY HH:mm"
                       todayButton='Сегодня'
@@ -296,13 +300,15 @@ class Launcher extends Component {
                   </div>
                 </OverlayTrigger>
               </Col>
-              <Col md={6}>
+              <Col md={6} key={'SecondColumnKey'}>
                 <OverlayTrigger
+                  key={'launchDataTemplateSelectorOverlay'}
                   placement="top"
                   overlay={setTooltip('templates', 'Задайте шаблон данных')}
                 >
-                  <div>
+                  <div key={'additionalDiv'}>
                     <Select.Creatable
+                      key={'launchDataTemplateSelector'}
                       wrapperStyle={{zIndex: '3', position: 'relative'}}
                       multi={true}
                       placeholder='Задайте шаблон данных'
@@ -313,13 +319,15 @@ class Launcher extends Component {
                   </div>
                 </OverlayTrigger>
               </Col>
-              <Col md={4}>
+              <Col md={4} key={'ThirdColumnKey'}>
                 <OverlayTrigger
+                  key={'launchGroupSelectorOverlay'}
                   placement="top"
                   overlay={setTooltip('groups', 'Выберите группы для доступа к данным')}
                 >
-                  <div>
+                  <div key={'additionalDivOne'}>
                     <Select.Creatable
+                      key={'launchGroupSelector'}
                       wrapperStyle={{zIndex: '3', position: 'relative'}}
                       multi={true}
                       placeholder='Выберите группы для доступа к данным'
@@ -333,8 +341,8 @@ class Launcher extends Component {
             </Panel> : null}
           {(this.state.selectedChain !== null && this.state.formReady)
             ? chains[this.state.selectedChain].fields.length > 0 ? this.renderChainForm()
-              : <Alert bsStyle="info">Для запуска теста по этой цепочке необходимо сначала создать форму</Alert>
-            : <Alert bsStyle="warning">Ни одна цепочка не выбрана!</Alert>}
+              : <Alert key={'CreateFormFirstAlert'} bsStyle="info">Для запуска теста по этой цепочке необходимо сначала создать форму</Alert>
+            : <Alert key={'SelectChainFirst'} bsStyle="warning">Ни одна цепочка не выбрана!</Alert>}
         </Panel>
         <Notifications notifications={this.props.notifications}/>
       </Grid>
