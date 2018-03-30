@@ -12,7 +12,9 @@ import {
   testBuilderTestsFetchSucceed,
   resetModificationMarkers,
   dataTemplatesFetchSuccess,
-  updateDataTemplateSuccess, orderCreated, launcherUserGroupsFetchSucceed,
+  updateDataTemplateSuccess,
+  orderCreated,
+  launcherUserGroupsFetchSucceed,
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
