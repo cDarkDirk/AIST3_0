@@ -17,7 +17,11 @@ import DatePicker from "react-datepicker"
 import Notifications from 'react-notification-system-redux'
 import {filterDirectoryData} from '../../api'
 import {forceLogin, getUserName} from '../../globalFunc';
+import Header from "../Header";
 import overlayFactory from 'react-bootstrap-table2-overlay';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import moment from "moment";
+import filterFactory, { textFilter,selectFilter } from 'react-bootstrap-table2-filter';
 
 
 //import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -28,8 +32,8 @@ class DataDirectoryPage extends React.Component {
   state = {
     chainIndex: null,
     inputTypeIndex: 0,
-    dateTo: "",
-    dateFrom: ""
+    dateTo: moment(),
+    dateFrom: moment()
   };
   // overlay={ overlayFactory({ spinner: true, background: 'rgba(192,192,192,0.3)' }) }
   //columns - описание таблицы (колонки, содержание, форматтеры)
@@ -37,31 +41,45 @@ class DataDirectoryPage extends React.Component {
     {
       dataField: 'id_order',
       text: 'ID заявки:',
-      formatter: this.renderOrderDetails
+      formatter: this.renderOrderDetails,
+      sort: true,
+      filter: textFilter()
     }, {
       dataField: 'chain_name',
-      text: 'Имя цепочки:'
+      text: 'Имя цепочки:',
+      sort: true,
+      filter: textFilter()
     }, {
       dataField: 'marker',
       text: 'Маркер данных:',
+      sort: true,
+      filter: textFilter()
+
     }, {
       dataField: 'real_start_time',
       text: 'Время запуска:',
-      sort: true
+      sort: true,
+      filter: textFilter()
+
     }, {
       dataField: 'displayed_status',
       text: 'Текущий статус:',
-      formatter: this.renderBuildStatusRef
+      sort: true,
+      formatter: this.renderBuildStatusRef,
+      filter: textFilter()
     },
     {
+      headerStyle: { position: 'top' },
       dataField: 'id_order',
       text: 'Перезапуск:',
-      formatter: this.renderRerunButton
+      formatter: this.renderRerunButton,
+      align: 'center'
     },
     {
       dataField: 'id_order',
       text: 'Взятие данных:',
-      formatter: this.renderGetDataButton
+      formatter: this.renderGetDataButton,
+      align: 'center'
     }
   ]
   //Ещё описание таблицы: дефолтные сортировки и т.п.
@@ -97,9 +115,7 @@ class DataDirectoryPage extends React.Component {
           bsStyle="success"
           bsSize="medium"
           title="Получение данных по заявке"
-          // disabled={
-          //   !(chainIndex !== null && formBuilderChains[chainIndex].modified)
-          // }
+          // disabled={false}
         >Использовать
       </Button>
       </span>
@@ -136,6 +152,9 @@ class DataDirectoryPage extends React.Component {
     });
   };
 
+  componentWillMount(){
+    forceLogin();
+  }
   componentDidMount() {
     this.props.fetchBuilderChains();
   }
@@ -184,7 +203,7 @@ class DataDirectoryPage extends React.Component {
       <DropdownButton
         id='chainSelector'
         onSelect={(chainIndex) => this.setFilter({chainIndex})}
-        title={chainIndex !== null ? formBuilderChains[chainIndex].name : 'Select one...'}
+        title={chainIndex !== null ? formBuilderChains[chainIndex].name : 'Выберите цепочку...'}
         bsStyle="btn btn-primary"
       >
         {formBuilderChains.map((chain, index) => {
@@ -204,20 +223,20 @@ class DataDirectoryPage extends React.Component {
                     locale="ru-RU"
                     dateFormat="DD.MM.YYYY"
                     todayButton='Сегодня'
-          //   showTimeSelect
-          //placeholderText='Время запуска'
-          // timeFormat="HH:mm"
-          //  timeIntervals={10}
         />
         Дата запуска до:
         <DatePicker onChange={this.changeDateTo}
-                    selected={dateTo}/>
+                    selected={dateTo}
+                    locale="ru-RU"
+                    dateFormat="DD.MM.YYYY"
+                    todayButton='Сегодня'/>
       </span>
     ];
 
     return (
-      <div>
-        <Panel header={chainDropDown} footer={null}>
+        <div>
+          <Header owner={getUserName()}/>,
+          <Panel header={chainDropDown} footer={null}>
           <Grid fluid={true}>
             {chainIndex !== null && formBuilderChains[chainIndex] && this.renderFormBody()}
           </Grid>
@@ -227,6 +246,10 @@ class DataDirectoryPage extends React.Component {
                         data={this.props.directoryData}
                         columns={this.columns}
                         defaultSorted={this.defSort}
+                        pagination={paginationFactory()}
+                        noDataIndication={ "Цепочка не выбрана" }
+                        filter={ filterFactory() }
+                        striped
                         overlay={overlayFactory()}/>
       </div>
     )
