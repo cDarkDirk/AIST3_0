@@ -60,7 +60,7 @@ class PersonalPage extends React.Component {
       <div>
         <Header/>
         <Grid>
-          <Panel>
+          <Panel header={"Создание группы"}>
             <Row>
               <Col sm={6}>
                 <FormControl className="form-control"
@@ -80,7 +80,7 @@ class PersonalPage extends React.Component {
           </Panel>
         </Grid>
         <Grid>
-          <Panel>
+          <Panel header={"Добавление пользователей в группы"}>
             <Row>
               <Col md={3}>
                 <DropdownList
