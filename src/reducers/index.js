@@ -1,6 +1,5 @@
 import {combineReducers} from 'redux'
 import {reducer as notifications} from 'react-notification-system-redux'
-import form from './form'
 import scheduleForm from './scheduleForm'
 import formTemplate from './formTemplate'
 import chainTemplates from './chainTemplates'
@@ -12,11 +11,11 @@ import testBuilder from "./TestBuilder"
 import dataTemplatesBuilderReducer from "./DataTemplates"
 import dataDirectory from './dataDirectory'
 import dataAuthorization from './dataAuthorization'
+import dataPersonal from "./dataPersonal";
 
 
 const rootReducer = combineReducers({
   launcher,
-  form,
   scheduleForm: scheduleForm,
   formTemplate,
   chainTemplates,
@@ -25,6 +24,7 @@ const rootReducer = combineReducers({
   formBuilder,
   testBuilder,
   dataAuthorization,
+  dataPersonal,
   dataTemplatesBuilderReducer,
   notifications,
   dataDirectory,
