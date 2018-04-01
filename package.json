@@ -13,6 +13,7 @@
     "history": "^4.7.2",
     "lodash": "^4.17.4",
     "mockserver": "^1.6.2",
+    "moment": "^2.21.0",
     "nodemon": "^1.14.11",
     "rc-time-picker": "^3.2.1",
     "react": "^16.2.0",

@@ -40,7 +40,23 @@ import {
   LOGIN_BUTTON_CLICKED,
   LOGIN_PASSWORD_CHANGE,
   DATA_TEMPLATE_ADDED,
+  GROUP_NAME_CHANGE,
+  CREATE_GROUP_CLICKED,
+  TEMPLATE_GROUP_FORM_INPUT_CHANGE,
+  DATA_GROUP_TEMPLATE_LIST_SUCCEED,
+  GROUP_SELECTED,
+  FORM_GROUPS_FETCH_SUCCEED,
 } from './constants'
+
+export const groupNameChange = (payload) => ({
+  type: GROUP_NAME_CHANGE,
+  payload,
+});
+
+export const createGroupClicked = (payload) => ({
+  type: CREATE_GROUP_CLICKED,
+  payload,
+});
 
 export const loginButtonClicked = (payload) => ({
   type: LOGIN_BUTTON_CLICKED,
@@ -52,8 +68,9 @@ export const loginPasswordChange = (payload) => ({
   payload,
 });
 
-export const selectChainForm =(payload)=> ({
-  type: CHAIN_SELECTED,
+
+export const selectGroupForm =(payload)=> ({
+  type: GROUP_SELECTED,
   payload: payload
 });
 
@@ -70,6 +87,11 @@ export const updateChainFormSucceed = (payload) => ({
 export const onTemplateFormInputChange = (value, paramName, formName) => ({
   type: TEMPLATE_FORM_INPUT_CHANGE,
   payload: {value, paramName, formName}
+});
+
+export const onTemplateGropupFormInputChange = (value) => ({
+  type: TEMPLATE_GROUP_FORM_INPUT_CHANGE,
+  payload: {value}
 });
 
 export const testBlockMoved = (payload) => ({
@@ -150,8 +172,18 @@ export const dataTemplateFetchSucceed = (payload) => ({
   payload: payload
 });
 
+export const dataGroupTemplateFetchSucceed = (payload) => ({
+  type: DATA_GROUP_TEMPLATE_LIST_SUCCEED,
+  payload: payload
+});
+
 export const formBuilderChainsFetchSucceed = (payload) => ({
   type: FORM_BUILDER_CHAINS_FETCH_SUCCEED,
+  payload: payload
+});
+
+export const formGroupsFetchSucceed = (payload) => ({
+  type: FORM_GROUPS_FETCH_SUCCEED,
   payload: payload
 });
 

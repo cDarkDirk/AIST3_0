@@ -1,27 +1,36 @@
 import React from "react";
 import "./style.css";
-import {Row, Col, Button} from 'react-bootstrap';
-import {onUserLogOut, forceLogin} from '../../globalFunc';
+import {Thumbnail, Row, Col, Button} from 'react-bootstrap';
+import {onUserLogOut, forceLogin, getUserName, getPersonalPage} from '../../globalFunc';
+import Home from '../../assets/home.png';
+import {Link} from "react-router-dom";
+import {ButtonGroup} from "reactstrap";
+
 
 class Header extends React.Component {
 
-  logOut(){
+  static logOut(){
     onUserLogOut();
     forceLogin();
   }
 
+  static getPersonal(){
+    getPersonalPage();
+  }
+
   render() {
-    const {
-      owner
-    } = this.props;
     return (
       <div className='header'>
+        <div className='homepage-button'>
+          <Thumbnail href="#/HomePage" src={Home}/>
+        </div>
         <div className='text'>
-          Привет, {owner}!
+          Привет, {getUserName()}!
         </div>
-        <div className='exit-button'>
-          <Button onClick={this.logOut}>Выход</Button>
-        </div>
+        <ButtonGroup className='group-button'>
+          <Button onClick={Header.getPersonal}>Личный кабинет</Button>
+          <Button onClick={Header.logOut}>Выход</Button>
+        </ButtonGroup>
       </div>
     )
   }
