@@ -3,6 +3,7 @@ import {
   fetchChainTemplates,
   updateChainTemplate,
   fetchDataTemplates,
+  fetchGroupsForMembers,
 } from '../api'
 import {
   chainTemplateNameChanged,
@@ -12,6 +13,7 @@ import {
   chainSelected,
   duplicateCurrentChain,
   addDTToChain,
+  addGroupToChain,
 } from '../actions'
 import ChainEditorPage from '../components/ChainEditorPage'
 
@@ -24,6 +26,7 @@ function mapStateToProps(state) {
     chainNames: state.chainTemplates.chainNames,
     owner: state.dataAuthorization.paramNames.name,
     dataTemplatesNames: state.dataTemplatesBuilderReducer.dataTemplatesNames,
+    selectedGroups: state.dataTemplatesBuilderReducer.selectedGroups,
   }
 }
 
@@ -39,6 +42,8 @@ function mapDispatchToProps(dispatch) {
     duplicate: () => dispatch(duplicateCurrentChain()),
     getAllDataTemplates: () => dispatch(fetchDataTemplates()),
     addDTToChain: (payload) => dispatch(addDTToChain(payload)),
+    addGroupToChain: (payload) => dispatch(addGroupToChain(payload)),
+    fetchGroupsForMembers: () => dispatch(fetchGroupsForMembers()),
   }
 }
 

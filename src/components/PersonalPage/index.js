@@ -56,6 +56,7 @@ class PersonalPage extends React.Component {
     const setTooltip = (id, text) => (
       <Tooltip id={id.toString()}>{text}</Tooltip>
     );
+    console.log(membersTemplates);
     return (
       <div>
         <Header/>

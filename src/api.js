@@ -14,6 +14,7 @@ import {
   dataTemplatesFetchSuccess,
   updateDataTemplateSuccess,
   formGroupsFetchSucceed,
+  formGroupsForMembersFetchSucceed,
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
@@ -222,7 +223,7 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
     fields: chainTemplate.value.fields,
     tests: chainTemplate.value.tests,
     templates: chainTemplate.value.templates.map(t => t.value),
-    // group: chainTemplate.value.group,
+    group: chainTemplate.value.groups,
   };
 
   console.log('api.js: updateChainTemplate --->',requestBody);
@@ -262,7 +263,7 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
 };
 
 /**
- * fetching groups from database
+ * fetching groups for owner from database
  */
 export const fetchGroups = () => (dispatch, getState) => {
   const url = `${BACKEND_URL}/owners/personal`;
@@ -270,6 +271,18 @@ export const fetchGroups = () => (dispatch, getState) => {
   const header = {headers: {SessionID : cookies.get('logedInUserToken')}};
   axios.get(url, header).then(function (response) {
     dispatch(formGroupsFetchSucceed(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "fetch failed with error!" + response}));
+  });
+};
+
+/**
+ * fetching groups for owner and members from database
+ */
+export const fetchGroupsForMembers = () => (dispatch) => {
+  const url = `${BACKEND_URL}/owners/group`;
+  axios.get(url).then(function (response) {
+    dispatch(formGroupsForMembersFetchSucceed(response.data))
   }).catch(function (response) {
     dispatch(error({message: "fetch failed with error!" + response}));
   });

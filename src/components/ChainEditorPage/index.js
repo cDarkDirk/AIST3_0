@@ -17,7 +17,7 @@ import {forceLogin, getUserName} from '../../globalFunc';
 class ChainEditorPage extends React.Component {
   constructor(props, context) {
     super(props, context);
-
+    this.props.fetchGroupsForMembers();
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.props.fetchChainTemplates();
@@ -46,8 +46,10 @@ class ChainEditorPage extends React.Component {
       addChainTemplate, updateChainTemplate, notifications,
       chainTemplateMarkerChanged, chainSelected, chainName,
       onChainSelected, duplicate, chainNames, owner,
-      dataTemplatesNames,
+      dataTemplatesNames, selectedGroups,
     } = this.props;
+    console.log(selectedGroups);
+
     const confirm = createConfirmation(ConfirmationDialog, 0);
     const notify = createConfirmation(NotifyUser, 0);
     const deleteChain = () => {
@@ -97,6 +99,11 @@ class ChainEditorPage extends React.Component {
     const options = dataTemplatesNames.map((name) => {
       return {label: name, value: name};
     });
+    console.log("O", options);
+    const groups = selectedGroups.map((name) => {
+      return {label: name, value: name};
+    });
+    console.log("G", groups);
     const chainParamsInput = [
       <Row>
         <Col md={12}>
@@ -148,9 +155,10 @@ class ChainEditorPage extends React.Component {
               <InputGroup.Addon>Group</InputGroup.Addon>
               <Select.Creatable
                 multi={true}
-                options={options}
-                onChange={dt => this.props.addDTToChain(dt)}
-                value={chainTemplate.templates}
+                options={groups}
+                onChange={gt => this.props.addGroupToChain(gt)}
+                value={chainTemplate.groups}
+                placeholder="EEE"
               />
             </InputGroup>
           </FormGroup>

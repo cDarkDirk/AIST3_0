@@ -10,7 +10,7 @@ import {
   SUBMIT_CHAIN_TEMPLATE_SUCCEED,
   CHAIN_TEMPLATE_MARKER_CHANGED,
   DUPLICATE_CURRENT_CHAIN,
-  DATA_TEMPLATE_ADDED,
+  DATA_TEMPLATE_ADDED, GROUP_ADDED,
 } from '../constants'
 
 const initialState = {
@@ -192,6 +192,16 @@ const chainTemplateReducer = (state = initialState, action) => {
     case DATA_TEMPLATE_ADDED: {
       const chainTemplates = [...state.chainTemplates];
       chainTemplates[state.selectedChainTemplate]['templates'] = action.payload;
+      chainTemplates[state.selectedChainTemplate].modified = !chainTemplates[state.selectedChainTemplate].new;
+      return {
+        ...state,
+        chainTemplates,
+      }
+    }
+
+    case GROUP_ADDED: {
+      const chainTemplates = [...state.chainTemplates];
+      chainTemplates[state.selectedChainTemplate]['groups'] = action.payload;
       chainTemplates[state.selectedChainTemplate].modified = !chainTemplates[state.selectedChainTemplate].new;
       return {
         ...state,

@@ -46,6 +46,8 @@ import {
   DATA_GROUP_TEMPLATE_LIST_SUCCEED,
   GROUP_SELECTED,
   FORM_GROUPS_FETCH_SUCCEED,
+  FORM_GROUPS_FOR_MEMBERS_FETCH_SUCCEED,
+  GROUP_ADDED,
 } from './constants'
 
 export const groupNameChange = (payload) => ({
@@ -187,6 +189,11 @@ export const formGroupsFetchSucceed = (payload) => ({
   payload: payload
 });
 
+export const formGroupsForMembersFetchSucceed = (payload) => ({
+  type: FORM_GROUPS_FOR_MEMBERS_FETCH_SUCCEED,
+  payload: payload
+});
+
 export const newFieldAdded = (payload) => ({
   type: NEW_FIELD_ADDED,
   payload: payload
@@ -274,5 +281,10 @@ export const duplicateCurrentChain = (payload) => ({
 
 export const addDTToChain = (payload) => ({
   type: DATA_TEMPLATE_ADDED,
+  payload,
+});
+
+export const addGroupToChain = (payload) => ({
+  type: GROUP_ADDED,
   payload,
 });
