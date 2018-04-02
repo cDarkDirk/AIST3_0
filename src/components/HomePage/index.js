@@ -27,18 +27,22 @@ class HomePage extends React.Component {
 
             <Grid>
               <Row>
-                <Col xs={4} md={4}>
+                <Col xs={4} md={3}>
                   <h1 align="middle">Запуск цепочек</h1>
                   <Thumbnail href="#/launcher" alt="171x180" src={Start}  />
                 </Col>
-                <Col xs={4} md={4}>
+                <Col xs={4} md={3}>
                   <h1 align="middle">Конструктор цепочек</h1>
                   <Thumbnail href="#/chaineditor" alt="171x180" src={BPM}  />
                 </Col>
 
-                <Col xs={4} md={4}>
+                <Col xs={4} md={3}>
                   <h1 align="middle">Добавление тестов</h1>
                   <Thumbnail href="#/testbuilder" alt="171x180" src={JenkImg}  />
+                </Col>
+                <Col xs={4} md={3}>
+                  <h1 align="middle">Справочник данных</h1>
+                  <Thumbnail href="#/datadirectory" alt="171x180" src={Param}  />
                 </Col>
               </Row>
               <Row>

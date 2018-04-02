@@ -29,10 +29,10 @@ import {getToken, getUserName, setCurrentUser} from './globalFunc';
 
 
 export const fetchOrdersByName = (chainName, dateFrom, dateTo) => (dispatch, getState) => {
-
+  const header = {headers: {SessionID : getToken()}};
   const url = `${BACKEND_URL}/orders/?chainName=${chainName}&start=${dateFrom}&end=${dateTo}`;
 
-  axios.get(url).then(function (response) {
+  axios.get(url, header).then(function (response) {
     dispatch(ordersFetchSucceed(response.data));
   }).catch(function (response) {
     dispatch(ordersFetchFail());
