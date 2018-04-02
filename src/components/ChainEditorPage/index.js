@@ -32,7 +32,6 @@ class ChainEditorPage extends React.Component {
 
   handleGroupChange(groups){
     this.setState({groups: groups});
-    console.log("G12",groups);
     this.props.addGroupToChain(groups);
   }
 
