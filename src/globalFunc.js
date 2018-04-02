@@ -38,4 +38,3 @@ export function getUserName() {
 export function getToken(){
   return cookies.get('logedInUserToken');
 }
-

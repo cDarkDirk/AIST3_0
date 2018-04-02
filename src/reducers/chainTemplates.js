@@ -15,7 +15,7 @@ import {
 
 const initialState = {
   chainTemplates: [],
-  selectedChainTemplate: 0,
+  selectedChainTemplate: null,
   chainNames: [],
   owner:'',
   groups:[],
@@ -47,6 +47,8 @@ const chainTemplateReducer = (state = initialState, action) => {
     }
 
     case CHAIN_SELECTED: {
+      window.location.hash = '#/chaineditor/'+state.chainTemplates[action.selectedChain].name;
+
       return {
         ...state,
         selectedChainTemplate: action.selectedChain

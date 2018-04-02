@@ -1,9 +1,8 @@
 import React from "react";
 import "./style.css";
-import {Thumbnail, Row, Col, Button} from 'react-bootstrap';
+import {Thumbnail, Button} from 'react-bootstrap';
 import {onUserLogOut, forceLogin, getUserName, getPersonalPage} from '../../globalFunc';
 import Home from '../../assets/home.png';
-import {Link} from "react-router-dom";
 import {ButtonGroup} from "reactstrap";
 
 
