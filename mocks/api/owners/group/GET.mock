@@ -6,6 +6,10 @@ Access-Control-Allow-Origin: *
   {
     "name": "MAKAR"
   },
-  {"name": "UGAR"},
-  {"name": "TOVAR"}
+  {
+    "name": "UGAR"
+  },
+  {
+    "name": "TOVAR"
+  }
 ]

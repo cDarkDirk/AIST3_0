@@ -20,12 +20,20 @@ class ChainEditorPage extends React.Component {
     this.props.fetchGroupsForMembers();
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleGroupChange = this.handleGroupChange.bind(this);
     this.props.fetchChainTemplates();
     this.props.getAllDataTemplates();
 
     this.state = {
+      groups: [],
       show: false,
     };
+  }
+
+  handleGroupChange(groups){
+    this.setState({groups: groups});
+    console.log("G12",groups);
+    this.props.addGroupToChain(groups);
   }
 
   componentWillMount(){
@@ -48,7 +56,6 @@ class ChainEditorPage extends React.Component {
       onChainSelected, duplicate, chainNames, owner,
       dataTemplatesNames, selectedGroups,
     } = this.props;
-    console.log(selectedGroups);
 
     const confirm = createConfirmation(ConfirmationDialog, 0);
     const notify = createConfirmation(NotifyUser, 0);
@@ -99,11 +106,9 @@ class ChainEditorPage extends React.Component {
     const options = dataTemplatesNames.map((name) => {
       return {label: name, value: name};
     });
-    console.log("O", options);
-    const groups = selectedGroups.map((name) => {
+    const groups = selectedGroups.map((name, index) => {
       return {label: name, value: name};
     });
-    console.log("G", groups);
     const chainParamsInput = [
       <Row>
         <Col md={12}>
@@ -143,6 +148,7 @@ class ChainEditorPage extends React.Component {
                 options={options}
                 onChange={dt => this.props.addDTToChain(dt)}
                 value={chainTemplate.templates}
+                id={"balla2"}
               />
             </InputGroup>
           </FormGroup>
@@ -156,9 +162,10 @@ class ChainEditorPage extends React.Component {
               <Select.Creatable
                 multi={true}
                 options={groups}
-                onChange={gt => this.props.addGroupToChain(gt)}
-                value={chainTemplate.groups}
-                placeholder="EEE"
+                onChange =  {this.handleGroupChange}
+                value = {chainTemplate.groups}
+                placeholder="Select"
+                id={"balla"}
               />
             </InputGroup>
           </FormGroup>

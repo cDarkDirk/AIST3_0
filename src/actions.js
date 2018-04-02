@@ -47,7 +47,7 @@ import {
   GROUP_SELECTED,
   FORM_GROUPS_FETCH_SUCCEED,
   FORM_GROUPS_FOR_MEMBERS_FETCH_SUCCEED,
-  GROUP_ADDED,
+  GROUP_ADDED, HANDLE_GROUP_CHANGE,
 } from './constants'
 
 export const groupNameChange = (payload) => ({
@@ -279,12 +279,17 @@ export const duplicateCurrentChain = (payload) => ({
   payload,
 });
 
+export const addGroupToChain = (payload) => ({
+  type: GROUP_ADDED,
+  payload,
+});
+
 export const addDTToChain = (payload) => ({
   type: DATA_TEMPLATE_ADDED,
   payload,
 });
 
-export const addGroupToChain = (payload) => ({
-  type: GROUP_ADDED,
+export const handleGroupChange = (payload) => ({
+  type: HANDLE_GROUP_CHANGE,
   payload,
 });

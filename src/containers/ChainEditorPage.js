@@ -14,6 +14,7 @@ import {
   duplicateCurrentChain,
   addDTToChain,
   addGroupToChain,
+  handleGroupChange,
 } from '../actions'
 import ChainEditorPage from '../components/ChainEditorPage'
 
@@ -32,17 +33,18 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    handleGroupChange : (payload) => dispatch(handleGroupChange(payload)),
     fetchChainTemplates: () => dispatch(fetchChainTemplates()),
     chainTemplateNameChanged: (name) => dispatch(chainTemplateNameChanged(name)),
     deleteChainTemplate: (chainTemplate) => dispatch(deleteChainTemplate(chainTemplate)),
     addChainTemplate: (payload) => dispatch(addChainTemplate(payload)),
-    updateChainTemplate: (chainTemplate) => dispatch(updateChainTemplate(chainTemplate)),
+    updateChainTemplate: (chainTemplate,payload) => dispatch(updateChainTemplate(chainTemplate,payload)),
     chainTemplateMarkerChanged: (marker) => dispatch(chainTemplateMarkerChanged(marker)),
     onChainSelected: selectedChainTemplate => dispatch(chainSelected(selectedChainTemplate)),
     duplicate: () => dispatch(duplicateCurrentChain()),
     getAllDataTemplates: () => dispatch(fetchDataTemplates()),
-    addDTToChain: (payload) => dispatch(addDTToChain(payload)),
     addGroupToChain: (payload) => dispatch(addGroupToChain(payload)),
+    addDTToChain: (payload) => dispatch(addDTToChain(payload)),
     fetchGroupsForMembers: () => dispatch(fetchGroupsForMembers()),
   }
 }

@@ -215,15 +215,16 @@ export const fetchChainTemplates = () => (dispatch, getState) => {
  * update chain if modified
  * insert chain if new
  */
-export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
-
+export const updateChainTemplate = (chainTemplate, payload) => (dispatch, getState) => {
+  console.log(payload);
+  console.log('G',chainTemplate.value.groups);
   const requestBody = {
     name: chainTemplate.value.name,
     marker: chainTemplate.value.marker,
     fields: chainTemplate.value.fields,
     tests: chainTemplate.value.tests,
     templates: chainTemplate.value.templates.map(t => t.value),
-    group: chainTemplate.value.groups,
+    group: chainTemplate.value.groups.map(t => t.value),
   };
 
   console.log('api.js: updateChainTemplate --->',requestBody);
