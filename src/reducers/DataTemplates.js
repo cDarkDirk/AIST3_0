@@ -5,13 +5,14 @@ import {
   DATA_TEMPLATE_NAME_CHANGED,
   NEW_DATA_TEMPLATE_ADDED,
   NEW_DATA_TEMPLATE_PARAM_ADDED,
-  UPDATE_DATA_TEMPLATE_SUCCESS, DATA_TEMPLATE_ADDED,
+  UPDATE_DATA_TEMPLATE_SUCCESS, DATA_TEMPLATE_ADDED, FORM_GROUPS_FOR_MEMBERS_FETCH_SUCCEED,
 } from '../constants'
 
 const initialState = {
   dataTemplates: [],
   selectedTemplateIndex: null,
   dataTemplatesNames: [],
+  selectedGroups:[],
 };
 
 const dataTemplatesBuilderReducer = (state = initialState, action) => {
@@ -117,6 +118,14 @@ const dataTemplatesBuilderReducer = (state = initialState, action) => {
       return {
         ...state,
         dataTemplatesNames: [...state.dataTemplatesNames],
+      }
+    }
+
+    case FORM_GROUPS_FOR_MEMBERS_FETCH_SUCCEED: {
+      const selectedGroups = action.payload.map((template)=> template.name);
+      return {
+        ...state,
+        selectedGroups,
       }
     }
 

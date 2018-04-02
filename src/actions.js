@@ -40,12 +40,18 @@ import {
   LOGIN_BUTTON_CLICKED,
   LOGIN_PASSWORD_CHANGE,
   DATA_TEMPLATE_ADDED,
+  ORDER_CREATED,
+  CLEAR_ID_ORDER_ALERT,
+  LAUNCHER_STANDS_FETCH_SUCCEED,
+  LAUNCHER_USER_GROUPS_FETCH_SUCCEED,
   GROUP_NAME_CHANGE,
   CREATE_GROUP_CLICKED,
   TEMPLATE_GROUP_FORM_INPUT_CHANGE,
   DATA_GROUP_TEMPLATE_LIST_SUCCEED,
   GROUP_SELECTED,
   FORM_GROUPS_FETCH_SUCCEED,
+  FORM_GROUPS_FOR_MEMBERS_FETCH_SUCCEED,
+  GROUP_ADDED,
 } from './constants'
 
 export const groupNameChange = (payload) => ({
@@ -187,6 +193,11 @@ export const formGroupsFetchSucceed = (payload) => ({
   payload: payload
 });
 
+export const formGroupsForMembersFetchSucceed = (payload) => ({
+  type: FORM_GROUPS_FOR_MEMBERS_FETCH_SUCCEED,
+  payload: payload
+});
+
 export const newFieldAdded = (payload) => ({
   type: NEW_FIELD_ADDED,
   payload: payload
@@ -272,7 +283,31 @@ export const duplicateCurrentChain = (payload) => ({
   payload,
 });
 
+export const addGroupToChain = (payload) => ({
+  type: GROUP_ADDED,
+  payload,
+});
+
 export const addDTToChain = (payload) => ({
   type: DATA_TEMPLATE_ADDED,
   payload,
+});
+
+export const orderCreated = (id) => ({
+  type: ORDER_CREATED,
+  id,
+});
+
+export const clearIdOrderAlert = () => ({
+  type: CLEAR_ID_ORDER_ALERT,
+});
+
+export const standsFetchSuccess = (stands) => ({
+  type: LAUNCHER_STANDS_FETCH_SUCCEED,
+  stands,
+});
+
+export const launcherUserGroupsFetchSucceed = (groups) => ({
+  type: LAUNCHER_USER_GROUPS_FETCH_SUCCEED,
+  groups,
 });

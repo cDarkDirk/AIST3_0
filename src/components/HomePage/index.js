@@ -1,27 +1,19 @@
 import React from 'react'
-import {Thumbnail, Image, Button, Jumbotron, Grid, Col, Row} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import {Thumbnail,Grid, Col, Row} from 'react-bootstrap'
 
 import JenkImg from '../../assets/Jenk.png';
 import BPM from '../../assets/BPM.png';
 import Start from '../../assets/start.png';
 import Mock from '../../assets/Mock.PNG';
 import Param from '../../assets/Param.png';
-import Exit from '../../assets/exit.png';
 import  Grafana from '../../assets/grafana.png';
 
-import Cookies from 'universal-cookie';
 import Notifications from 'react-notification-system-redux';
 import Header from "../Header";
-import {getUserName, onUserLogOut, forceLogin} from '../../globalFunc';
+import {getUserName, forceLogin} from '../../globalFunc';
 
 class HomePage extends React.Component {
   componentWillMount () {
-    forceLogin();
-  }
-
-  logOut() {
-    onUserLogOut();
     forceLogin();
   }
 
