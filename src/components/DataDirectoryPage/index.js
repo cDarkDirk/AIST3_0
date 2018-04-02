@@ -15,7 +15,7 @@ import {
 import BootstrapTable from 'react-bootstrap-table-next';
 import DatePicker from "react-datepicker"
 import Notifications from 'react-notification-system-redux'
-import {filterDirectoryData} from '../../api'
+import {filterDirectoryData,updateOrderRerun} from '../../api'
 import {forceLogin, getUserName} from '../../globalFunc';
 import Header from "../Header";
 import overlayFactory from 'react-bootstrap-table2-overlay';
@@ -23,11 +23,14 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import moment from "moment";
 import filterFactory, { textFilter,selectFilter } from 'react-bootstrap-table2-filter';
 
-
-//import paginationFactory from 'react-bootstrap-table2-paginator';
-
+import {BACKEND_URL} from "../../constants/endpoints";
 
 class DataDirectoryPage extends React.Component {
+
+  constructor(props,context){
+    super(props,context);
+    this.renderGetDataButton = this.renderGetDataButton.bind(this);
+  }
 
   state = {
     chainIndex: null,
@@ -68,19 +71,20 @@ class DataDirectoryPage extends React.Component {
       formatter: this.renderBuildStatusRef,
       filter: textFilter()
     },
-    {
-      headerStyle: { position: 'top' },
-      dataField: 'id_order',
-      text: 'Перезапуск:',
-      formatter: this.renderRerunButton,
-      align: 'center'
-    },
-    {
-      dataField: 'id_order',
-      text: 'Взятие данных:',
-      formatter: this.renderGetDataButton,
-      align: 'center'
-    }
+    // {
+    //   headerStyle: { position: 'top' },
+    //   dataField: 'id_order',
+    //   text: 'Перезапуск:',
+    //   formatter: this.renderRerunButton,
+    //   align: 'center'
+    // },
+    // {
+    //   dataField: 'id_order',
+    //   text: 'Взятие данных:',
+    //   formatter: this.renderGetDataButton,
+    //   align: 'center'
+    // }
+    //TODO вернуть эти кнопки
   ]
   //Ещё описание таблицы: дефолтные сортировки и т.п.
   defSort = [
@@ -93,8 +97,10 @@ class DataDirectoryPage extends React.Component {
 //Описание форматтеров для таблицы (функции, возвращающие кнопки, элементы и прочая)
   renderOrderDetails(cell, row, rowIndex) {
     return (
+      //TODO HREF поменять на API
       <span>
-        <a href={row.id_order} title="Подробности по запущенной заявке">{row.id_order}</a>
+        <a href={`${BACKEND_URL}/objects/${row.id_order}/csv`}
+           title="Скачать данные по заявке">{row.id_order}</a>
       </span>
     )
   }
@@ -106,16 +112,15 @@ class DataDirectoryPage extends React.Component {
       </span>
     )
   }
-
   renderGetDataButton(cell, row, rowIndex) {
     return (
       <span>
         <Button
-          //onClick={this.submitChanges}
+         // onClick={()=>Nope()}
           bsStyle="success"
           bsSize="medium"
           title="Получение данных по заявке"
-          // disabled={false}
+          disabled={row.f_used!="0"}
         >Использовать
       </Button>
       </span>
@@ -126,20 +131,19 @@ class DataDirectoryPage extends React.Component {
     return (
       <span>
         <Button
-          //onClick={this.submitChanges}
+          onClick={()=>console.log("To update")}
           bsStyle="success"
           bsSize="medium"
           title="Перезапуск с последнего теста в цепочке"
           // disabled={
-          //   !(chainIndex !== null && formBuilderChains[chainIndex].modified)
+          //    !(chainIndex !== null && formBuilderChains[chainIndex].modified)
           // }
         >Перезапустить
       </Button>
       </span>
     )
   }
-
-//Блок по таблице закончен. TODO - вынести в отдельную зависимость
+  //Блок по таблице закончен. TODO - вынести в отдельную зависимость
 
   setFilter = (data) => {
     const filterData = {
@@ -158,6 +162,8 @@ class DataDirectoryPage extends React.Component {
   componentDidMount() {
     this.props.fetchBuilderChains();
   }
+
+  get(orderID) {}
 
   fetchData() {
     const {formBuilderChains} = this.props;
@@ -191,7 +197,24 @@ class DataDirectoryPage extends React.Component {
 
   renderFormBody = () => {
     const {formBuilderChains} = this.props;
-    return (<div></div>);
+    return (<div>
+      <BootstrapTable keyField='id'
+                                 data={this.props.directoryData}
+                                 columns={this.columns}
+                                 defaultSorted={this.defSort}
+                                 pagination={paginationFactory()}
+                                 noDataIndication={ "Нет данных по запросу" }
+                                 filter={ filterFactory() }
+                                 striped
+                                 overlay={overlayFactory()}/>
+      {/*<Button*/}
+      {/*onClick={() => this.props.updateOrderRerun("201802211300060499")}*/}
+      {/*bsStyle="success"*/}
+      {/*bsSize="medium"*/}
+      {/*title="Перезапуск с последнего теста в цепочке"*/}
+    {/*>Перезапустить*/}
+    {/*</Button>*/}
+    </div>);
   };
 
   render() {
@@ -242,15 +265,7 @@ class DataDirectoryPage extends React.Component {
           </Grid>
         </Panel>
         <Notifications notifications={notifications}/>
-        <BootstrapTable keyField='id'
-                        data={this.props.directoryData}
-                        columns={this.columns}
-                        defaultSorted={this.defSort}
-                        pagination={paginationFactory()}
-                        noDataIndication={ "Цепочка не выбрана" }
-                        filter={ filterFactory() }
-                        striped
-                        overlay={overlayFactory()}/>
+
       </div>
     )
   }

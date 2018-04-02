@@ -16,7 +16,10 @@ import {
   orderCreated,
   launcherUserGroupsFetchSucceed,
   ordersFetchSucceed,
-  ordersFetchFail
+  ordersFetchFail,
+  ordersCSVFetchSucceed,
+  ordersCSVFetchFail,
+  submitRerunOrderSucceed
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
@@ -35,7 +38,32 @@ export const fetchOrdersByName = (chainName, dateFrom, dateTo) => (dispatch, get
   });
 };
 
+// //Перезапуск по ID
+export const updateOrderRerun = (orderID) => (dispatch) => {
 
+  const url = `${BACKEND_URL}/objects/${orderID}/restartChain`;
+
+  axios.post(url).then(function () {
+    dispatch(success({message: "Submit succeeded!"}));
+    dispatch(submitRerunOrderSucceed());
+  }).catch(function (response) {
+    dispatch(error({message: "Submit failed with error!" + response}));
+  });
+};
+
+
+//Получение CSV по ID
+export const getCSVbyOrderID = (orderID) => (dispatch) => {
+
+  const url = `${BACKEND_URL}/objects/${orderID}/csv`;
+
+  axios.get(url).then(function (response) {
+    dispatch(ordersCSVFetchSucceed(response.data));
+  }).catch(function (response) {
+    dispatch(ordersCSVFetchFail());
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
 
 /** GET request example
  axios.get(url).then(function (response) {
@@ -155,7 +183,7 @@ export const updateLoginForm = (payload, publicKey) => (dispatch) => {
 export const fetchDataTemplatesList = () => (dispatch, getState) => {
   const url = `${BACKEND_URL}/templates`;
 
-  axios.get(url).then(function (response) {
+  axios.post(url).then(function (response) {
     dispatch(dataTemplateFetchSucceed(response.data));
   }).catch(function (response) {
     dispatch(dataTemplateFetchFail());
@@ -221,7 +249,7 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
     templates: chainTemplate.value.templates.map(t => t.value),
   };
 
-  console.log('api.js: updateChainTemplate --->',requestBody);
+  console.log('api.js: updateChainTemplate --->', requestBody);
 
   if (chainTemplate.value.modified) {
     const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
@@ -420,9 +448,9 @@ export const filterDirectoryData = (filterData) => (dispatch) => {
 };
 
 /**
-  * Launcher page
-  * creates new order
-*/
+ * Launcher page
+ * creates new order
+ */
 export const submitFormTemplate = (params) => (dispatch) => {
 
   const url = `${BACKEND_URL}/orders`;

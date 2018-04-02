@@ -3,7 +3,9 @@ import DataDirectoryPage from '../components/DataDirectoryPage'
 import {
   fetchBuilderChains,
   filterDirectoryData,
-  fetchOrdersByName
+  fetchOrdersByName,
+  getCSVbyOrderID,
+  updateOrderRerun
 } from "../api"
 
 
@@ -20,6 +22,8 @@ function mapDispatchToProps(dispatch) {
     fetchBuilderChains: () => dispatch(fetchBuilderChains()),
     filter: (filterData) => dispatch(filterDirectoryData(filterData)),
     fetchOrdersByName:(chainName, dateFrom, dateTo) => dispatch (fetchOrdersByName(chainName, dateFrom, dateTo)),
+    getCSVbyOrderID: (orderID) => dispatch(getCSVbyOrderID(orderID)),
+    updateOrderRerun: (orderID) => dispatch(updateOrderRerun(orderID)),
   }
 }
 

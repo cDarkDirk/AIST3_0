@@ -1,7 +1,8 @@
 import {
   FILTER_DATA_DIRECTORY,
   ORDERS_FETCH_SUCCEED,
-  ORDERS_FETCH_FAIL
+  ORDERS_FETCH_FAIL,
+  SUBMIT_RERUN_ORDER_SUCCEED
 } from '../constants'
 
 const initialState = {
@@ -28,7 +29,12 @@ const dataDirectoryReducer = (state = initialState, action) => {
         data: action.payload
       }
     }
-
+    case SUBMIT_RERUN_ORDER_SUCCEED: {
+      return {
+        ...state,
+        data: action.payload
+      }
+    }
     default:
       return state
   }
