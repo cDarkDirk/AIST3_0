@@ -27,9 +27,14 @@ export function forceLogin() {
   }
 }
 
+export function getPersonalPage(){
+  window.location.hash = '#/personaldata';
+}
+
 export function getUserName() {
   return cookies.get('logedInUser');
 }
-export function getToken() {
+
+export function getToken(){
   return cookies.get('logedInUserToken');
 }

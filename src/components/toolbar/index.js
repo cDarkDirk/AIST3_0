@@ -18,6 +18,7 @@ class Toolbar extends React.Component {
       submitDisabled,
       style,
       redirText,
+      redirDisabled,
       link,
       additionalElement,
       onDuplicate,
@@ -49,6 +50,7 @@ class Toolbar extends React.Component {
         style={{
           backgroundColor:'#abee97'
         }}
+        disabled={redirDisabled}
         href={link}>{redirText}</Button>
     ];
     const duplicateBtn = [

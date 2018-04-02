@@ -24,6 +24,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import 'rc-time-picker/assets/index.css'
 import './style.css'
 import Notifications from "react-notification-system-redux";
+import moment from "moment";
 
 class Launcher extends Component {
   constructor(props, context) {
@@ -125,7 +126,7 @@ class Launcher extends Component {
     let launchParams = {};
     launchParams['chain_name'] = chains[this.state.selectedChain].name;
     launchParams['data'] = this.state[chains[this.state.selectedChain].name];
-    launchParams['start_time'] = this.state.startDate.format('YYYY.MM.DD HH:mm:00');
+    launchParams['start_time'] =  this.state.startDate !== null ? this.state.startDate.format('YYYY.MM.DD HH:mm:00') : moment().format('YYYY.MM.DD HH:mm:00');
     launchParams['templateNames'] = this.state.selectedTemplates.map(t => t.value);
     launchParams['groups'] = this.state.groups.map(g => g.label);
     console.log(launchParams);
@@ -220,7 +221,7 @@ class Launcher extends Component {
     );
     const header = (
       <Row key={'headerRow'}>
-        <Col md={10} key={'chainSelectorColumn'}>
+        <Col md={11} key={'chainSelectorColumn'}>
           <DropdownList
             key={'DropdownListChainSelector'}
             id={'launcherDropdown'}
@@ -233,8 +234,8 @@ class Launcher extends Component {
         </Col>
         {this.state.selectedChain !== null
         && chains[this.state.selectedChain].fields.length > 0 ? [
-          <Col md={2} key={'StandsSelectorColumn'}>
-            <DropdownList
+          <Col md={1} key={'StandsSelectorColumn'}>
+            {/*<DropdownList
               key={'StandsDropdown'}
               id={'standsDropdown'}
               options={this.props.stands}
@@ -245,8 +246,8 @@ class Launcher extends Component {
               bsStyle='info'
               selLabel={this.state.standIndex !== null ? this.props.stands[this.state.standIndex].code : 'Пусто'}
             />
-            &nbsp;
-            <Button key={'LaunchButton'} bsStyle='success' disabled={this.state.standIndex === null} onClick={this.launch}>
+            &nbsp;*/}
+            <Button key={'LaunchButton'} bsStyle='success' /*disabled={this.state.standIndex === null}*/ onClick={this.launch}>
               <Glyphicon key={'launchGlyph'} glyph='glyphicon glyphicon-play'/>
             </Button>
           </Col>] : null}
@@ -265,7 +266,7 @@ class Launcher extends Component {
 
     const selectGroups = this.props.groups.map((group, index) => {
       return {
-        label: group,
+        label: group.name,
         value: index,
       }
     });
@@ -308,6 +309,7 @@ class Launcher extends Component {
                 >
                   <div key={'additionalDiv'}>
                     <Select.Creatable
+                      id={'launchDataTemplateSelectorSelect'}
                       key={'launchDataTemplateSelector'}
                       wrapperStyle={{zIndex: '3', position: 'relative'}}
                       multi={true}
@@ -328,6 +330,7 @@ class Launcher extends Component {
                   <div key={'additionalDivOne'}>
                     <Select.Creatable
                       key={'launchGroupSelector'}
+                      id={'launchGroupSelectorSelect'}
                       wrapperStyle={{zIndex: '3', position: 'relative'}}
                       multi={true}
                       placeholder='Выберите группы для доступа к данным'

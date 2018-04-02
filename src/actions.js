@@ -48,8 +48,26 @@ import {
   LAUNCHER_USER_GROUPS_FETCH_SUCCEED,
   ORDERS_CSV_FETCH_SUCCEED,
   ORDERS_CSV_FETCH_FAIL,
-  SUBMIT_RERUN_ORDER_SUCCEED
+  SUBMIT_RERUN_ORDER_SUCCEED,
+  GROUP_NAME_CHANGE,
+  CREATE_GROUP_CLICKED,
+  TEMPLATE_GROUP_FORM_INPUT_CHANGE,
+  DATA_GROUP_TEMPLATE_LIST_SUCCEED,
+  GROUP_SELECTED,
+  FORM_GROUPS_FETCH_SUCCEED,
+  FORM_GROUPS_FOR_MEMBERS_FETCH_SUCCEED,
+  GROUP_ADDED,
 } from './constants'
+
+export const groupNameChange = (payload) => ({
+  type: GROUP_NAME_CHANGE,
+  payload,
+});
+
+export const createGroupClicked = (payload) => ({
+  type: CREATE_GROUP_CLICKED,
+  payload,
+});
 
 export const ordersFetchSucceed = (payload) => ({
   type: ORDERS_FETCH_SUCCEED,
@@ -82,6 +100,12 @@ export const loginPasswordChange = (payload) => ({
   payload,
 });
 
+
+export const selectGroupForm =(payload)=> ({
+  type: GROUP_SELECTED,
+  payload: payload
+});
+
 export const onFormInputChange = (value, paramName, formName) => ({
   type: FORM_INPUT_CHANGE,
   payload: {value, paramName, formName}
@@ -95,6 +119,11 @@ export const updateChainFormSucceed = (payload) => ({
 export const onTemplateFormInputChange = (value, paramName, formName) => ({
   type: TEMPLATE_FORM_INPUT_CHANGE,
   payload: {value, paramName, formName}
+});
+
+export const onTemplateGropupFormInputChange = (value) => ({
+  type: TEMPLATE_GROUP_FORM_INPUT_CHANGE,
+  payload: {value}
 });
 
 export const testBlockMoved = (payload) => ({
@@ -179,8 +208,23 @@ export const dataTemplateFetchSucceed = (payload) => ({
   payload: payload
 });
 
+export const dataGroupTemplateFetchSucceed = (payload) => ({
+  type: DATA_GROUP_TEMPLATE_LIST_SUCCEED,
+  payload: payload
+});
+
 export const formBuilderChainsFetchSucceed = (payload) => ({
   type: FORM_BUILDER_CHAINS_FETCH_SUCCEED,
+  payload: payload
+});
+
+export const formGroupsFetchSucceed = (payload) => ({
+  type: FORM_GROUPS_FETCH_SUCCEED,
+  payload: payload
+});
+
+export const formGroupsForMembersFetchSucceed = (payload) => ({
+  type: FORM_GROUPS_FOR_MEMBERS_FETCH_SUCCEED,
   payload: payload
 });
 
@@ -266,6 +310,11 @@ export const updateDataTemplateSuccess = () => ({
 
 export const duplicateCurrentChain = (payload) => ({
   type: DUPLICATE_CURRENT_CHAIN,
+  payload,
+});
+
+export const addGroupToChain = (payload) => ({
+  type: GROUP_ADDED,
   payload,
 });
 

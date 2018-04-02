@@ -1,14 +1,20 @@
 import React from "react";
 import "./style.css";
 import {Thumbnail, Button} from 'react-bootstrap';
-import {onUserLogOut, forceLogin, getUserName} from '../../globalFunc';
+import {onUserLogOut, forceLogin, getUserName, getPersonalPage} from '../../globalFunc';
 import Home from '../../assets/home.png';
+import {ButtonGroup} from "reactstrap";
+
 
 class Header extends React.Component {
 
   static logOut(){
     onUserLogOut();
     forceLogin();
+  }
+
+  static getPersonal(){
+    getPersonalPage();
   }
 
   render() {
@@ -20,9 +26,10 @@ class Header extends React.Component {
         <div className='text'>
           Привет, {getUserName()}!
         </div>
-        <div className='exit-button'>
+        <ButtonGroup className='group-button'>
+          <Button onClick={Header.getPersonal}>Личный кабинет</Button>
           <Button onClick={Header.logOut}>Выход</Button>
-        </div>
+        </ButtonGroup>
       </div>
     )
   }

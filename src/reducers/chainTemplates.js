@@ -10,7 +10,7 @@ import {
   SUBMIT_CHAIN_TEMPLATE_SUCCEED,
   CHAIN_TEMPLATE_MARKER_CHANGED,
   DUPLICATE_CURRENT_CHAIN,
-  DATA_TEMPLATE_ADDED,
+  DATA_TEMPLATE_ADDED, GROUP_ADDED, HANDLE_GROUP_CHANGE,
 } from '../constants'
 
 const initialState = {
@@ -18,6 +18,7 @@ const initialState = {
   selectedChainTemplate: null,
   chainNames: [],
   owner:'',
+  groups:[],
   dataTemplatesNames: [],
 };
 
@@ -30,12 +31,16 @@ const chainTemplateReducer = (state = initialState, action) => {
         if (chain.templates) chain['templates'] = chain.templates.map(name => {
           return{label: name, value: name};
         });
+        if (chain.groups) chain['groups'] = chain.groups.map((name, index) => {
+          return{label: name, value: name};
+        });
         return chain;
       });
       const chainNames = action.payload.map((chain) => chain.name);
 
       return {
         ...state,
+        groups: chainTemplates.groups,
         chainTemplates,
         chainNames,
       }
@@ -194,6 +199,16 @@ const chainTemplateReducer = (state = initialState, action) => {
     case DATA_TEMPLATE_ADDED: {
       const chainTemplates = [...state.chainTemplates];
       chainTemplates[state.selectedChainTemplate]['templates'] = action.payload;
+      chainTemplates[state.selectedChainTemplate].modified = !chainTemplates[state.selectedChainTemplate].new;
+      return {
+        ...state,
+        chainTemplates,
+      }
+    }
+
+    case GROUP_ADDED: {
+      const chainTemplates = [...state.chainTemplates];
+      chainTemplates[state.selectedChainTemplate]['groups'] = action.payload;
       chainTemplates[state.selectedChainTemplate].modified = !chainTemplates[state.selectedChainTemplate].new;
       return {
         ...state,
