@@ -168,8 +168,9 @@ class ChainEditorPage extends React.Component {
                   submitDisabled={!(chainTemplate.modified || chainTemplate.new)}
                   link={'#/formbuilder/' + chainSelected}
                   redirText={'Редактировать форму'}
+                  redirDisabled={this.props.chainSelected === null}
                   onDuplicate={() => duplicate()}
-                  additionalElement={chainParamsInput}
+                  additionalElement={this.props.chainSelected !== null ? chainParamsInput : null}
                 />
                 {modalTooltip}
               </Col>
