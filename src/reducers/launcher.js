@@ -38,6 +38,7 @@ const launcher = (state = initialState, action) => {
     }
 
     case LAUNCHER_USER_GROUPS_FETCH_SUCCEED: {
+      console.log(action.groups);
       return {
         ...state,
         groups: action.groups,
