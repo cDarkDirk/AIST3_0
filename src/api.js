@@ -15,10 +15,12 @@ import {
   updateDataTemplateSuccess,
   orderCreated,
   launcherUserGroupsFetchSucceed,
+  formGroupsFetchSucceed,
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
-import {setCurrentUser} from './globalFunc';
+import {getUserName, setCurrentUser} from './globalFunc';
+import Cookies from 'universal-cookie';
 
 /** GET request example
  axios.get(url).then(function (response) {
@@ -43,6 +45,27 @@ import {setCurrentUser} from './globalFunc';
     dispatch(error({message: "Submit failed with error!" + response}));
   });
  */
+
+/**
+ * Create new group
+ */
+
+export const updatePersonalForm = (payload) => (dispatch) => {
+  if (payload.groupName === "" ){
+    dispatch(error({message: "Error: Field group name empty"}));
+    return;
+  }
+  const cookies = new Cookies();
+  const url = `${BACKEND_URL}/owners/personal`;
+  const header = {headers: {SessionID : cookies.get('logedInUserToken')}};
+  const requestBody = {groupName : payload.groupName};
+  axios.put(url,[requestBody], header).then(function (response) {
+    dispatch(success({message: "Group was created"}))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+
+};
 
 /**
  * Validation login and password
@@ -92,7 +115,6 @@ export const updateRegistrationForm = (payload, publicKey) => (dispatch) => {
   axios.put(url, payload).then(function (response) {
     window.location.hash = '#/';
   }).catch(function (response) {
-    payload.password = a;
     dispatch(error({message: "Fetch failed with error!" + response}));
   });
 
@@ -126,7 +148,7 @@ export const updateLoginForm = (payload, publicKey) => (dispatch) => {
   const url = `${BACKEND_URL}/owners/login`;
   axios.post(url, payload).then(function (response) {
     payload.token = response.data.token;
-    setCurrentUser(payload.login, response.data.token);
+    setCurrentUser(payload.login, response.data);
     window.location.hash = '#/TDME2E';
 
   }).catch(function (response) {
@@ -202,6 +224,7 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
     fields: chainTemplate.value.fields,
     tests: chainTemplate.value.tests,
     templates: chainTemplate.value.templates.map(t => t.value),
+    // group: chainTemplate.value.group,
   };
 
   console.log('api.js: updateChainTemplate --->',requestBody);
@@ -235,6 +258,20 @@ export const fetchBuilderChains = () => (dispatch, getState) => {
 
   axios.get(url).then(function (response) {
     dispatch(formBuilderChainsFetchSucceed(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "fetch failed with error!" + response}));
+  });
+};
+
+/**
+ * fetching groups from database
+ */
+export const fetchGroups = () => (dispatch, getState) => {
+  const url = `${BACKEND_URL}/owners/personal`;
+  const cookies = new Cookies();
+  const header = {headers: {SessionID : cookies.get('logedInUserToken')}};
+  axios.get(url, header).then(function (response) {
+    dispatch(formGroupsFetchSucceed(response.data))
   }).catch(function (response) {
     dispatch(error({message: "fetch failed with error!" + response}));
   });
@@ -437,6 +474,11 @@ export const getDictionaryData = (dictionary, onSuccess) => (dispatch) => {
   });
 };
 
+/**
+ * Launcher
+ * Получить группы, в которых состоит текущий пользователь
+ * @returns {function(*)}
+ */
 export const getUsersGroups = () => (dispatch) => {
   const url = `${BACKEND_URL}/owners/personal/getGroups`;
 
@@ -446,3 +488,18 @@ export const getUsersGroups = () => (dispatch) => {
     dispatch(error({message: "Fetch failed with error!" + response}));
   });
 };
+
+/**
+ * Pesonal page
+ * update group members
+ */
+export const submitFormMembers = (params) => (dispatch) => {
+
+  const url = `${BACKEND_URL}/owners/personal`;
+  axios.post(url, [params]).then(function (response) {
+    dispatch(success({message:"Update succeeded"}));
+  }).catch(function (response) {
+    dispatch(error({message: "Submit failed with error!" + response}));
+  });
+};
+

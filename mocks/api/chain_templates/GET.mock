@@ -36,7 +36,8 @@ Access-Control-Allow-Origin: *
           "paramName": "default",
           "type": "DatePicker"
         }
-      ]
+      ],
+           "group" : ["public"]
   },
   {
     "marker": "FSClient",
@@ -60,7 +61,8 @@ Access-Control-Allow-Origin: *
         "type": "DropDown",
         "dropDownOptions": ["1", "2", "3"]
       }
-    ]
+    ],
+    "group" : ["public"]
   },
   {
     "name": "SPOOBKCreditCard",
@@ -93,7 +95,8 @@ Access-Control-Allow-Origin: *
         "type": "DropDown",
         "dropDownOptions": ["1", "2", "3"]
       }
-    ]
+    ],
+    "group" : ["public"]
   },
   {
     "name": "SPOOBKCreditCardWithSum",
@@ -129,7 +132,8 @@ Access-Control-Allow-Origin: *
         "type": "DropDown",
         "dropDownOptions": ["1", "2", "3"]
       }
-    ]
+    ],
+    "group" : ["public"]
   },
   {
     "name": "UFS",
@@ -156,7 +160,8 @@ Access-Control-Allow-Origin: *
         "type": "DropDown",
         "dropDownOptions": ["1", "2", "3"]
       }
-    ]
+    ],
+    "group" : ["public"]
   },
   {
     "name": "WAY4CardAccrual",
@@ -180,7 +185,8 @@ Access-Control-Allow-Origin: *
         "type": "DropDown",
         "dropDownOptions": ["1", "2", "3"]
       }
-    ]
+    ],
+    "group" : ["public"]
   },
   {
     "name": "WAY4Ipass",
@@ -191,6 +197,7 @@ Access-Control-Allow-Origin: *
           "id": 10
         }
     ],
-    "fields": []
+    "fields": [],
+    "group" : ["public"]
   }
 ]
