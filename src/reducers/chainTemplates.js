@@ -46,15 +46,6 @@ const chainTemplateReducer = (state = initialState, action) => {
       }
     }
 
-    case HANDLE_GROUP_CHANGE: {
-      console.log("REDUCER",  action.payload.groups);
-      return {
-        ...state,
-          groups: action.payload.value
-      }
-
-    }
-
     case CHAIN_SELECTED: {
       return {
         ...state,

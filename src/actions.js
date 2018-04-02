@@ -289,7 +289,3 @@ export const addDTToChain = (payload) => ({
   payload,
 });
 
-export const handleGroupChange = (payload) => ({
-  type: HANDLE_GROUP_CHANGE,
-  payload,
-});

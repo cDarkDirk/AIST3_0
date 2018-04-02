@@ -215,9 +215,7 @@ export const fetchChainTemplates = () => (dispatch, getState) => {
  * update chain if modified
  * insert chain if new
  */
-export const updateChainTemplate = (chainTemplate, payload) => (dispatch, getState) => {
-  console.log(payload);
-  console.log('G',chainTemplate.value.groups);
+export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
   const requestBody = {
     name: chainTemplate.value.name,
     marker: chainTemplate.value.marker,

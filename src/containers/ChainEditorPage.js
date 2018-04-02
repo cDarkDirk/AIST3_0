@@ -33,12 +33,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    handleGroupChange : (payload) => dispatch(handleGroupChange(payload)),
     fetchChainTemplates: () => dispatch(fetchChainTemplates()),
     chainTemplateNameChanged: (name) => dispatch(chainTemplateNameChanged(name)),
     deleteChainTemplate: (chainTemplate) => dispatch(deleteChainTemplate(chainTemplate)),
     addChainTemplate: (payload) => dispatch(addChainTemplate(payload)),
-    updateChainTemplate: (chainTemplate,payload) => dispatch(updateChainTemplate(chainTemplate,payload)),
+    updateChainTemplate: (chainTemplate) => dispatch(updateChainTemplate(chainTemplate)),
     chainTemplateMarkerChanged: (marker) => dispatch(chainTemplateMarkerChanged(marker)),
     onChainSelected: selectedChainTemplate => dispatch(chainSelected(selectedChainTemplate)),
     duplicate: () => dispatch(duplicateCurrentChain()),
