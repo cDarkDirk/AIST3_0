@@ -126,10 +126,10 @@ class Launcher extends Component {
     let launchParams = {};
     launchParams['chain_name'] = chains[this.state.selectedChain].name;
     launchParams['data'] = this.state[chains[this.state.selectedChain].name];
-    launchParams['start_time'] =  this.state.startDate !== null ? this.state.startDate.format('YYYY.MM.DD HH:mm:00') : moment().format('YYYY.MM.DD HH:mm:00');
+    if (this.state.startDate !== null)
+      launchParams['start_time'] = this.state.startDate.format('YYYY.MM.DD HH:mm:00');
     launchParams['templateNames'] = this.state.selectedTemplates.map(t => t.value);
     launchParams['groups'] = this.state.groups.map(g => g.label);
-    console.log(launchParams);
     submitFormTemplate(launchParams);
   }
 

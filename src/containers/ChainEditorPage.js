@@ -3,7 +3,7 @@ import {
   fetchChainTemplates,
   updateChainTemplate,
   fetchDataTemplates,
-  fetchGroupsForMembers,
+  fetchGroupsForMembers, fetchBuilderChains,
 } from '../api'
 import {
   chainTemplateNameChanged,
@@ -34,6 +34,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchChainTemplates: () => dispatch(fetchChainTemplates()),
+    fetchBuilderChains: () => dispatch(fetchBuilderChains()),
     chainTemplateNameChanged: (name) => dispatch(chainTemplateNameChanged(name)),
     deleteChainTemplate: (chainTemplate) => dispatch(deleteChainTemplate(chainTemplate)),
     addChainTemplate: (payload) => dispatch(addChainTemplate(payload)),

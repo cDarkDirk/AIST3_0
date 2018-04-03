@@ -269,7 +269,7 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
     fields: chainTemplate.value.fields,
     tests: chainTemplate.value.tests,
     templates: chainTemplate.value.templates.map(t => t.value),
-    group: chainTemplate.value.groups.map(t => t.value),
+    groups: chainTemplate.value.groups.map(t => t.label),
   };
   const header = {headers: {SessionID : getToken()}};
 
@@ -506,7 +506,7 @@ export const submitFormTemplate = (params) => (dispatch) => {
   const url = `${BACKEND_URL}/orders`;
   const header = {headers: {SessionID : getToken()}};
   axios.put(url, [params], header).then(function (response) {
-    dispatch(orderCreated(response.data.id));
+    dispatch(orderCreated(response.data.message));
   }).catch(function (response) {
     dispatch(error({message: "Submit failed with error!" + response}));
   });
