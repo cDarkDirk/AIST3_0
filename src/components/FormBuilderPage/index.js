@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 import {
   Button,
   MenuItem,
@@ -17,11 +17,11 @@ import FieldPicker from "../FieldPicker";
 import Header from "../Header";
 import {forceLogin, getUserName} from '../../globalFunc';
 
-class FormBuilderPage extends React.Component {
+class FormBuilderPage extends Component {
   constructor(props, context) {
     super(props, context);
-
     this.props.clearNotifications();
+    this.props.fetchBuilderChains();
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
 
@@ -56,10 +56,6 @@ class FormBuilderPage extends React.Component {
         chainIndex
       });
     }
-  }
-
-  componentDidMount() {
-    this.props.fetchBuilderChains();
   }
 
   updateFormBuilderChains(field) {

@@ -18,6 +18,7 @@ class ChainEditorPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.props.fetchGroupsForMembers();
+    this.props.fetchBuilderChains();
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleGroupChange = this.handleGroupChange.bind(this);
@@ -31,7 +32,7 @@ class ChainEditorPage extends React.Component {
   }
 
   handleGroupChange(groups){
-    this.setState({groups: groups});
+    this.setState({groups});
     this.props.addGroupToChain(groups);
   }
 
@@ -106,7 +107,7 @@ class ChainEditorPage extends React.Component {
       return {label: name, value: name};
     });
     const groups = selectedGroups.map((name, index) => {
-      return {label: name, value: name};
+      return {label: name, value: index};
     });
     const chainParamsInput = [
       <Row>
@@ -161,7 +162,7 @@ class ChainEditorPage extends React.Component {
               <Select.Creatable
                 multi={true}
                 options={groups}
-                onChange =  {this.handleGroupChange}
+                onChange = {this.handleGroupChange}
                 value = {chainTemplate.groups}
                 placeholder="Select"
                 id={"balla"}
