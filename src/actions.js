@@ -40,10 +40,15 @@ import {
   LOGIN_BUTTON_CLICKED,
   LOGIN_PASSWORD_CHANGE,
   DATA_TEMPLATE_ADDED,
+  ORDERS_FETCH_SUCCEED,
+  ORDERS_FETCH_FAIL,
   ORDER_CREATED,
   CLEAR_ID_ORDER_ALERT,
   LAUNCHER_STANDS_FETCH_SUCCEED,
   LAUNCHER_USER_GROUPS_FETCH_SUCCEED,
+  ORDERS_CSV_FETCH_SUCCEED,
+  ORDERS_CSV_FETCH_FAIL,
+  SUBMIT_RERUN_ORDER_SUCCEED,
   GROUP_NAME_CHANGE,
   CREATE_GROUP_CLICKED,
   TEMPLATE_GROUP_FORM_INPUT_CHANGE,
@@ -63,6 +68,27 @@ export const createGroupClicked = (payload) => ({
   type: CREATE_GROUP_CLICKED,
   payload,
 });
+
+export const ordersFetchSucceed = (payload) => ({
+  type: ORDERS_FETCH_SUCCEED,
+  payload,
+});
+
+export const ordersFetchFail = (payload) => ({
+  type: ORDERS_FETCH_FAIL,
+  payload,
+});
+
+export const ordersCSVFetchSucceed = (payload) => ({
+  type: ORDERS_CSV_FETCH_SUCCEED,
+  payload,
+});
+
+export const ordersCSVFetchFail = (payload) => ({
+  type: ORDERS_CSV_FETCH_FAIL,
+  payload,
+});
+
 
 export const loginButtonClicked = (payload) => ({
   type: LOGIN_BUTTON_CLICKED,
@@ -152,6 +178,10 @@ export const closeButtonClicked = (payload) => ({
 
 export const submitChainTemplateSucceed = () => ({
   type: SUBMIT_CHAIN_TEMPLATE_SUCCEED,
+});
+
+export const submitRerunOrderSucceed = () => ({
+  type: SUBMIT_RERUN_ORDER_SUCCEED,
 });
 
 export const changeDate = (payload) => ({

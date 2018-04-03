@@ -15,12 +15,57 @@ import {
   updateDataTemplateSuccess,
   orderCreated,
   launcherUserGroupsFetchSucceed,
+  ordersFetchSucceed,
+  ordersFetchFail,
+  ordersCSVFetchSucceed,
+  ordersCSVFetchFail,
+  submitRerunOrderSucceed,
   formGroupsFetchSucceed,
-  formGroupsForMembersFetchSucceed,
+  formGroupsForMembersFetchSucceed
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
 import {getToken, getUserName, setCurrentUser} from './globalFunc';
+
+
+export const fetchOrdersByName = (chainName, dateFrom, dateTo) => (dispatch, getState) => {
+  const header = {headers: {SessionID : getToken()}};
+  const url = `${BACKEND_URL}/orders/?chainName=${chainName}&start=${dateFrom}&end=${dateTo}`;
+
+  axios.get(url, header).then(function (response) {
+    dispatch(ordersFetchSucceed(response.data));
+  }).catch(function (response) {
+    dispatch(ordersFetchFail());
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+
+// //Перезапуск по ID
+export const updateOrderRerun = (orderID) => (dispatch) => {
+
+  const url = `${BACKEND_URL}/objects/${orderID}/restartChain`;
+
+  axios.post(url).then(function () {
+    dispatch(success({message: "Submit succeeded!"}));
+    dispatch(submitRerunOrderSucceed());
+  }).catch(function (response) {
+    dispatch(error({message: "Submit failed with error!" + response}));
+  });
+};
+
+
+//Получение CSV по ID
+export const getCSVbyOrderID = (orderID) => (dispatch) => {
+
+  const url = `${BACKEND_URL}/objects/${orderID}/csv`;
+
+  axios.get(url).then(function (response) {
+    dispatch(ordersCSVFetchSucceed(response.data));
+  }).catch(function (response) {
+    dispatch(ordersCSVFetchFail());
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
 
 /** GET request example
  axios.get(url).then(function (response) {
@@ -452,9 +497,9 @@ export const filterDirectoryData = (filterData) => (dispatch) => {
 };
 
 /**
-  * Launcher page
-  * creates new order
-*/
+ * Launcher page
+ * creates new order
+ */
 export const submitFormTemplate = (params) => (dispatch) => {
 
   const url = `${BACKEND_URL}/orders`;

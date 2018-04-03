@@ -14,7 +14,7 @@ import {
   Row,
   Modal,
 } from "react-bootstrap"
-import Notifications from 'react-notification-system-redux'
+import Notifications from 'react-notification-system-redux';
 import SearchBar from "../SearchBar";
 import Header from "../Header";
 import {forceLogin, getUserName} from '../../globalFunc';
