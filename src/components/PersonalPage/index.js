@@ -44,6 +44,8 @@ class PersonalPage extends React.Component {
     groupParameters['groupName'] = membersTemplates[this.state.selectedGroup].name;
     groupParameters['members'] = this.state.selectedMembers.map(t => t.value);
     submitFormMembers(groupParameters);
+    this.state.selectedGroup = null;
+    this.state.selectedMembers = [];
   }
 
   createGroupButtonClick() {
