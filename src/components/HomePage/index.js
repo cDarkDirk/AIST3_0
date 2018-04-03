@@ -1,27 +1,19 @@
 import React from 'react'
-import {Thumbnail, Image, Button, Jumbotron, Grid, Col, Row} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import {Thumbnail,Grid, Col, Row} from 'react-bootstrap'
 
 import JenkImg from '../../assets/Jenk.png';
 import BPM from '../../assets/BPM.png';
 import Start from '../../assets/start.png';
 import Mock from '../../assets/Mock.PNG';
 import Param from '../../assets/Param.png';
-import Exit from '../../assets/exit.png';
 import  Grafana from '../../assets/grafana.png';
 
-import Cookies from 'universal-cookie';
 import Notifications from 'react-notification-system-redux';
 import Header from "../Header";
-import {getUserName, onUserLogOut, forceLogin} from '../../globalFunc';
+import {getUserName, forceLogin} from '../../globalFunc';
 
 class HomePage extends React.Component {
   componentWillMount () {
-    forceLogin();
-  }
-
-  logOut() {
-    onUserLogOut();
     forceLogin();
   }
 
@@ -35,18 +27,22 @@ class HomePage extends React.Component {
 
             <Grid>
               <Row>
-                <Col xs={4} md={4}>
+                <Col xs={4} md={3}>
                   <h1 align="middle">Запуск цепочек</h1>
                   <Thumbnail href="#/launcher" alt="171x180" src={Start}  />
                 </Col>
-                <Col xs={4} md={4}>
+                <Col xs={4} md={3}>
                   <h1 align="middle">Конструктор цепочек</h1>
                   <Thumbnail href="#/chaineditor" alt="171x180" src={BPM}  />
                 </Col>
 
-                <Col xs={4} md={4}>
+                <Col xs={4} md={3}>
                   <h1 align="middle">Добавление тестов</h1>
                   <Thumbnail href="#/testbuilder" alt="171x180" src={JenkImg}  />
+                </Col>
+                <Col xs={4} md={3}>
+                  <h1 align="middle">Справочник данных</h1>
+                  <Thumbnail href="#/datadirectory" alt="171x180" src={Param}  />
                 </Col>
               </Row>
               <Row>

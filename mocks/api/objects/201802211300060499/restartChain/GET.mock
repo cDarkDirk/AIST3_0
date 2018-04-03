@@ -1,0 +1,34 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+[
+  {
+    "displayed_status":"WAY4 Выпуск карты через API FAILURE",
+    "id_order":"201802211300060499",
+    "marker":"DebitCardIFT",
+    "build_link":"http://aist-ci.oat.ca.sbrf.ru/job/WAY4CardProductionAPI_IFT/382/",
+    "f_used":"0","real_start_time":"2018.02.21 13:10:21",
+    "tag_names":"{}","starting_order":"2",
+    "chain_name":"3,19,5,10,1,6",
+    "status":"FAILURE"
+  },
+  {
+    "displayed_status":"МБК Подключение клиента к мобильному банку FAILURE",
+    "id_order":"201802211549267845","marker":"DebitCardIFT",
+    "build_link":"http://aist-ci.oat.ca.sbrf.ru/job/MBKConnectClient/549/",
+    "f_used":"1","real_start_time":"2018.02.21 15:57:38",
+    "tag_names":"{}",
+    "starting_order":"7",
+    "chain_name":"2,3,19,5,10,1,6","status":"FAILURE"
+  },
+  {
+    "displayed_status":"МБК Подключение клиента к мобильному банку SUCCESS",
+    "id_order":"201802211607319304",
+    "marker":"DebitCardIFT",
+    "build_link":"http://aist-ci.oat.ca.sbrf.ru/job/MBKConnectClient/562/",
+    "f_used":"0","real_start_time":"2018.02.21 16:19:45",
+    "tag_names":"{}","starting_order":"6",
+    "chain_name":"3,19,5,10,1,6",
+    "status":"SUCCESS"
+  }
+]

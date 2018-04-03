@@ -3,9 +3,10 @@ import {ListGroup, ListGroupItem, Label} from 'react-bootstrap'
 
 import './style.css'
 
-const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, chainNames, name}) => {
+const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, chainNames}) => {
+  let location = window.location.hash.split('/');
   chainTemplates.map((chain, idx) => {
-    if(chain.name === name){
+    if(chain.name === location[2] && selectedChainTemplate !== idx){
       chainSelected(idx);
     }
   });
@@ -15,8 +16,7 @@ const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, chainN
         return <ListGroupItem
           key={idx}
           className='chain-list-item'
-          href={'/#/chaineditor/' + chain}
-          active={idx === selectedChainTemplate}
+          active={selectedChainTemplate !== null ? idx === selectedChainTemplate : null}
           onClick={() => chainSelected(idx)}>
           {chain}
           &nbsp;

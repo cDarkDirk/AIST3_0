@@ -6,6 +6,7 @@ import {
   onFieldsValuesUpdate,
   fieldWasRemoved,
 } from "../actions"
+import {removeAll} from "react-notification-system-redux";
 
 function mapStateToProps(state) {
   return {
@@ -22,6 +23,7 @@ function mapDispatchToProps(dispatch) {
     updateFieldsValues: (some) => dispatch(onFieldsValuesUpdate(some)),
     submit: (name, fields, idx) => dispatch(updateChainForm(name, fields, idx)),
     removeField: (result) => dispatch(fieldWasRemoved(result)),
+    clearNotifications: () => dispatch(removeAll()),
   }
 }
 
