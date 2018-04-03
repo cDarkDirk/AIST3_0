@@ -11,7 +11,7 @@ import TDME2E from './containers/TDME2E';
 import ChainEditorPage from './containers/ChainEditorPage';
 import FormBuilderPage from "./containers/FormBuilderPage";
 import TestBuilder from "./containers/TestBuilder";
-import DataDirectoryPage from "./containers/TestBuilder";
+import DataDirectoryPage from "./containers/DataDirectoryPage";
 
 import DataTemplatesBuilderPage from "./containers/DataTemplates";
 import AuthorizationPage from "./containers/AuthorizationPage"
@@ -45,7 +45,11 @@ ReactDOM.render((
             <Route path="/chaineditor/:chainName" component={ChainEditorPage}/>}
             <Route exact path="/formbuilder" component={FormBuilderPage}/>
             <Route path="/formbuilder/:chainIndex" component={FormBuilderPage}/>
-            <Route path="/datadirectory" component={DataDirectoryPage}/>
+
+            {/*<Route path="/datadirectory" component={DataDirectoryPage}/>*/}
+            <Route exact path="/datadirectory" component={DataDirectoryPage}/>
+
+
             <Route path="/datatemplates/:datatemplatesName" component={DataTemplatesBuilderPage}/>
             <Route exact path="/datatemplates" component={DataTemplatesBuilderPage}/>
             <Route path="/homepage" component={HomePage}/>

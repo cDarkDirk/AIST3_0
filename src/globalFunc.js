@@ -4,7 +4,7 @@ const cookies = new Cookies();
 
 export function isUserLoggedIn() {
   const cookies = new Cookies();
-  if(!cookies.get('logedInUser') || cookies.get('logedInUser') === ''){
+  if (!cookies.get('logedInUser') || cookies.get('logedInUser') === '') {
     return false;
   } else {
     return true;
@@ -16,13 +16,13 @@ export function setCurrentUser(user, token) {
   cookies.set('logedInUserToken', token, {path: '/'});
 }
 
-export function onUserLogOut () {
+export function onUserLogOut() {
   cookies.remove('logedInUser', {path: '/'});
   cookies.remove('logedInUserToken', {path: '/'});
 }
 
 export function forceLogin() {
-  if (!isUserLoggedIn()){
+  if (!isUserLoggedIn()) {
     window.location.hash = '#/';
   }
 }
@@ -38,4 +38,3 @@ export function getUserName() {
 export function getToken(){
   return cookies.get('logedInUserToken');
 }
-

@@ -13,12 +13,59 @@ import {
   resetModificationMarkers,
   dataTemplatesFetchSuccess,
   updateDataTemplateSuccess,
+  orderCreated,
+  launcherUserGroupsFetchSucceed,
+  ordersFetchSucceed,
+  ordersFetchFail,
+  ordersCSVFetchSucceed,
+  ordersCSVFetchFail,
+  submitRerunOrderSucceed,
   formGroupsFetchSucceed,
-  formGroupsForMembersFetchSucceed,
+  formGroupsForMembersFetchSucceed
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
 import {getToken, getUserName, setCurrentUser} from './globalFunc';
+
+
+export const fetchOrdersByName = (chainName, dateFrom, dateTo) => (dispatch, getState) => {
+  const header = {headers: {SessionID : getToken()}};
+  const url = `${BACKEND_URL}/orders/?chainName=${chainName}&start=${dateFrom}&end=${dateTo}`;
+
+  axios.get(url, header).then(function (response) {
+    dispatch(ordersFetchSucceed(response.data));
+  }).catch(function (response) {
+    dispatch(ordersFetchFail());
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+
+// //Перезапуск по ID
+export const updateOrderRerun = (orderID) => (dispatch) => {
+
+  const url = `${BACKEND_URL}/objects/${orderID}/restartChain`;
+
+  axios.post(url).then(function () {
+    dispatch(success({message: "Submit succeeded!"}));
+    dispatch(submitRerunOrderSucceed());
+  }).catch(function (response) {
+    dispatch(error({message: "Submit failed with error!" + response}));
+  });
+};
+
+
+//Получение CSV по ID
+export const getCSVbyOrderID = (orderID) => (dispatch) => {
+
+  const url = `${BACKEND_URL}/objects/${orderID}/csv`;
+
+  axios.get(url).then(function (response) {
+    dispatch(ordersCSVFetchSucceed(response.data));
+  }).catch(function (response) {
+    dispatch(ordersCSVFetchFail());
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
 
 /** GET request example
  axios.get(url).then(function (response) {
@@ -157,6 +204,7 @@ export const updateLoginForm = (payload, publicKey) => (dispatch) => {
 
 export const fetchDataTemplatesList = () => (dispatch, getState) => {
   const url = `${BACKEND_URL}/templates`;
+  const header = {headers: {SessionID : getToken()}};
 
   axios.get(url).then(function (response) {
     dispatch(dataTemplateFetchSucceed(response.data));
@@ -188,7 +236,7 @@ export const fetchFormTemplate = (formName) => (dispatch) => {
 export const fetchTests = () => (dispatch) => {
   const url = `${BACKEND_URL}/tests`;
   const header = {headers: {SessionID : getToken()}};
-  axios.get(url,header).then(function (response) {
+  axios.get(url, header).then(function (response) {
     dispatch(testsListTemplateFetchSucceed(response.data))
   }).catch(function (response) {
     dispatch(error({message: "Fetch failed with error!" + response}));
@@ -223,12 +271,11 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
     templates: chainTemplate.value.templates.map(t => t.value),
     group: chainTemplate.value.groups.map(t => t.value),
   };
-
-  console.log('api.js: updateChainTemplate --->',requestBody);
   const header = {headers: {SessionID : getToken()}};
+
   if (chainTemplate.value.modified) {
     const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
-    axios.post(url, [requestBody],header).then(function () {
+    axios.post(url, [requestBody], header).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
       dispatch(submitChainTemplateSucceed());
     }).catch(function (response) {
@@ -237,7 +284,7 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
   }
   if (chainTemplate.value.new) {
     const url = `${BACKEND_URL}/chain_templates`;
-    axios.put(url, [requestBody],header).then(function () {
+    axios.put(url, [requestBody], header).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
       dispatch(submitChainTemplateSucceed());
     }).catch(function (response) {
@@ -252,8 +299,8 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
  */
 export const fetchBuilderChains = () => (dispatch, getState) => {
   const url = `${BACKEND_URL}/chain_templates`;
-
-  axios.get(url).then(function (response) {
+  const header = {headers: {SessionID: getToken()}};
+  axios.get(url,header ).then(function (response) {
     dispatch(formBuilderChainsFetchSucceed(response.data))
   }).catch(function (response) {
     dispatch(error({message: "fetch failed with error!" + response}));
@@ -292,8 +339,17 @@ export const fetchGroupsForMembers = () => (dispatch) => {
  */
 export const updateChainForm = (chainName, chain, idx) => (dispatch) => {
   const url = `${BACKEND_URL}/chain_templates/${chainName}`;
-  const header = {headers: {SessionID : getToken()}};
-  axios.post(url, [chain],header).then(function () {
+  let tempArr = [];
+  for (let field of chain.fields) {
+    if (tempArr.indexOf(field.paramName) === -1) {
+      tempArr.push(field.paramName);
+    } else {
+      dispatch(error({message: "Названия параметров дублируются! Дублирубющийся параметр: " + field.paramName}));
+      return;
+    }
+  }
+  const header = {headers: {SessionID: getToken()}};
+  axios.post(url, [chain], header).then(function () {
     dispatch(success({message: "Submit succeeded!"}));
     dispatch(updateChainFormSucceed(idx));
   }).catch(function (response) {
@@ -307,8 +363,9 @@ export const updateChainForm = (chainName, chain, idx) => (dispatch) => {
  */
 export const testBuilderDataFetch = () => (dispatch) => {
   const url = `${BACKEND_URL}/tests`;
+  const header = {headers: {SessionID : getToken()}};
 
-  axios.get(url).then(function (response) {
+  axios.get(url, header).then(function (response) {
     dispatch(testBuilderTestsFetchSucceed(response.data))
   }).catch(function (response) {
     dispatch(error({message: "Fetch failed with error!" + response}));
@@ -334,11 +391,10 @@ export const submitTest = (testObject) => (dispatch, getState) => {
     job_trigger: testObject.test.job_trigger,
     tag_names: {},
   }];
-
+  const header = {headers: {SessionID : getToken()}};
   if (testObject.test.modified) {
     const updateTestUrl = `${BACKEND_URL}/tests/${testObject.id}`;
-
-    axios.post(updateTestUrl, result).then(function () {
+    axios.post(updateTestUrl, result, header).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
       dispatch(resetModificationMarkers());
     }).catch(function (response) {
@@ -348,7 +404,7 @@ export const submitTest = (testObject) => (dispatch, getState) => {
   if (testObject.test.new) {
     const addTestUrl = `${BACKEND_URL}/tests`;
 
-    axios.put(addTestUrl, result).then(function () {
+    axios.put(addTestUrl, result, header).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
       dispatch(resetModificationMarkers());
     }).catch(function (response) {
@@ -364,7 +420,7 @@ export const submitTest = (testObject) => (dispatch, getState) => {
 export const fetchDataTemplates = () => (dispatch) => {
   const url = `${BACKEND_URL}/templates`;
   const header = {headers: {SessionID : getToken()}};
-  axios.get(url,header).then(function (response) {
+  axios.get(url, header).then(function (response) {
     dispatch(dataTemplatesFetchSuccess(response.data))
   }).catch(function (response) {
     dispatch(error({message: "Fetch failed with error!" + response}));
@@ -399,6 +455,7 @@ export const submitDataTemplates = (submitData) => (dispatch) => {
     acc[current.key] = current.value;
     return acc;
   }, {});
+  const header = {headers: {SessionID : getToken()}};
 
   const requestBody = {
     name: submitData.value.name,
@@ -408,7 +465,7 @@ export const submitDataTemplates = (submitData) => (dispatch) => {
   if (submitData.value.modified) {
     const url = `${BACKEND_URL}/templates/${submitData.name}`;
 
-    axios.post(url, [requestBody]).then(function () {
+    axios.post(url, [requestBody], header).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
       dispatch(updateDataTemplateSuccess());
     }).catch(function (response) {
@@ -418,7 +475,7 @@ export const submitDataTemplates = (submitData) => (dispatch) => {
   if (submitData.value.new) {
     const url = `${BACKEND_URL}/templates`;
 
-    axios.put(url, [requestBody]).then(function () {
+    axios.put(url, [requestBody], header).then(function () {
       dispatch(success({message: "Submit succeeded!"}));
       dispatch(updateDataTemplateSuccess());
     }).catch(function (response) {
@@ -441,17 +498,53 @@ export const filterDirectoryData = (filterData) => (dispatch) => {
 };
 
 /**
-  * Launcher page
-  * creates new order
-*/
+ * Launcher page
+ * creates new order
+ */
 export const submitFormTemplate = (params) => (dispatch) => {
 
   const url = `${BACKEND_URL}/orders`;
-
-  axios.put(url, [params]).then(function (response) {
-    dispatch(success({message: response.data}));
+  const header = {headers: {SessionID : getToken()}};
+  axios.put(url, [params], header).then(function (response) {
+    dispatch(orderCreated(response.data.id));
   }).catch(function (response) {
     dispatch(error({message: "Submit failed with error!" + response}));
+  });
+};
+
+/**
+ * All pages
+ * gets information from dictionary and
+ * dispatches provided action
+ *
+ * @param dictionary - dictionary name (systems, stands, test_types)
+ * @param onSuccess - action to dispatch response
+ * @returns {function(*)}
+ */
+
+export const getDictionaryData = (dictionary, onSuccess) => (dispatch) => {
+  const url = `${BACKEND_URL}/dictionaries/${dictionary}`;
+
+  axios.get(url).then(function (response) {
+    dispatch(onSuccess(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+
+/**
+ * Launcher
+ * Получить группы, в которых состоит текущий пользователь
+ * @returns {function(*)}
+ */
+export const getUsersGroups = () => (dispatch) => {
+  const url = `${BACKEND_URL}/owners/personal/getGroups`;
+  const header = {headers: {SessionID : getToken()}};
+  axios.get(url, header).then(function (response) {
+    console.log('response',response);
+    dispatch(launcherUserGroupsFetchSucceed(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
   });
 };
 

@@ -1,0 +1,16 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+
+[
+  {
+    "code": "IFT",
+    "name": "ИФТ",
+    "description": "Интеграционное функциональное тестирование"
+  },
+  {
+    "code": "STAGE",
+    "name": "",
+    "description": ""
+  }
+]

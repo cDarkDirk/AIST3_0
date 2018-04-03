@@ -21,6 +21,7 @@ class FormBuilderPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    this.props.clearNotifications();
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
 

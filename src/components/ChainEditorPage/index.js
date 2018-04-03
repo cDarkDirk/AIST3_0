@@ -183,7 +183,7 @@ class ChainEditorPage extends React.Component {
               options={searchOpt}
               onOptionClick={onChainSelected}
             />
-            <ChainList name={this.props.match.params.chainName}/>
+            <ChainList/>
           </Col>
           <Col md={6}>
             <Row>
@@ -197,8 +197,9 @@ class ChainEditorPage extends React.Component {
                   submitDisabled={!(chainTemplate.modified || chainTemplate.new)}
                   link={'#/formbuilder/' + chainSelected}
                   redirText={'Редактировать форму'}
+                  redirDisabled={this.props.chainSelected === null}
                   onDuplicate={() => duplicate()}
-                  additionalElement={chainParamsInput}
+                  additionalElement={this.props.chainSelected !== null ? chainParamsInput : null}
                 />
                 {modalTooltip}
               </Col>
