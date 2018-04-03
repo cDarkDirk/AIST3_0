@@ -61,6 +61,7 @@ export const updatePersonalForm = (payload) => (dispatch) => {
   }).catch(function (response) {
     dispatch(error({message: "Fetch failed with error!" + response}));
   });
+  payload.groupName = "";
 
 };
 
