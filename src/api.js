@@ -92,12 +92,12 @@ export const getCSVbyOrderID = (orderID) => (dispatch) => {
  */
 
 /**
- * Create new group
+ * Create new getGroups
  */
 
 export const updatePersonalForm = (payload) => (dispatch) => {
   if (payload.groupName === "" ){
-    dispatch(error({message: "Error: Field group name empty"}));
+    dispatch(error({message: "Error: Field getGroups name empty"}));
     return;
   }
   const url = `${BACKEND_URL}/owners/personal`;
@@ -108,6 +108,7 @@ export const updatePersonalForm = (payload) => (dispatch) => {
   }).catch(function (response) {
     dispatch(error({message: "Fetch failed with error!" + response}));
   });
+  payload.groupName = "";
 
 };
 
@@ -549,7 +550,7 @@ export const getUsersGroups = () => (dispatch) => {
 
 /**
  * Pesonal page
- * update group members
+ * update getGroups members
  */
 export const submitFormMembers = (params) => (dispatch) => {
 

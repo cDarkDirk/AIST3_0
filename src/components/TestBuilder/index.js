@@ -200,7 +200,6 @@ class TestBuilderPage extends React.Component {
         this.props.setSelectedTestIndex(index);
       }
     });
-
     const testsList = () => (testNamesForDropdown.map((test, index) =>
       <ListGroupItem
         onClick={() => setSelectedTestIndex(index)}
