@@ -1,10 +1,14 @@
 import React from "react";
 import Header from "../Header";
 import {forceLogin, getUserName} from "../../globalFunc";
-import {Button, Col, FormControl, Grid, OverlayTrigger, Panel, Row, Tooltip} from "react-bootstrap";
+import {
+  Button, Col, FormControl, Grid, ListGroup, ListGroupItem, OverlayTrigger, Panel, Row,
+  Tooltip
+} from "react-bootstrap";
 import Notifications from "react-notification-system-redux";
 import DropdownList from "../DropdownList";
 import Select from 'react-select';
+import './style.css'
 
 
 class PersonalPage extends React.Component {
@@ -12,6 +16,7 @@ class PersonalPage extends React.Component {
     super(props, context);
     forceLogin();
     this.props.fetchGroups();
+    this.props.fetchGroupsForMembers();
     this.onGroupSelected = this.onGroupSelected.bind(this);
     this.dataMembersSelected = this.dataMembersSelected.bind(this);
     this.updateGroupMembersButtonClick = this.updateGroupMembersButtonClick.bind(this);
@@ -44,8 +49,7 @@ class PersonalPage extends React.Component {
     groupParameters['groupName'] = membersTemplates[this.state.selectedGroup].name;
     groupParameters['members'] = this.state.selectedMembers.map(t => t.value);
     submitFormMembers(groupParameters);
-    this.state.selectedGroup = null;
-    this.state.selectedMembers = [];
+    this.setState({selectedGroup : null});
   }
 
   createGroupButtonClick() {
@@ -54,11 +58,20 @@ class PersonalPage extends React.Component {
   }
 
   render() {
-    const {formBuilderGroups, membersTemplates} = this.props;
+    const {formBuilderGroups, membersTemplates,selectedGroups} = this.props;
     const setTooltip = (id, text) => (
       <Tooltip id={id.toString()}>{text}</Tooltip>
     );
-    console.log(membersTemplates);
+    const groups = selectedGroups.map((name, index) => {
+      return {label: name, value: name};
+    });
+    const groupsList = () => (groups.map((group) =>
+      <ListGroupItem
+      >
+        {group.value}
+        &nbsp;
+        &nbsp;
+      </ListGroupItem>));
     return (
       <div>
         <Header/>
@@ -121,6 +134,18 @@ class PersonalPage extends React.Component {
                     onClick={() => this.updateGroupMembersButtonClick()}
                   >Добавить в группу </Button>
                   : null}
+              </Col>
+            </Row>
+          </Panel>
+        </Grid>
+        <Grid>
+          <Panel header={"Список групп в которые входит пользователь"}>
+            <Row>
+              <Col sm={3}/>
+              <Col sm={6}>
+                <ListGroup className ="listgroup">
+                  {groupsList()}
+                </ListGroup>
               </Col>
             </Row>
           </Panel>

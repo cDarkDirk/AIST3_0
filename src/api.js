@@ -45,12 +45,12 @@ import {getToken, getUserName, setCurrentUser} from './globalFunc';
  */
 
 /**
- * Create new group
+ * Create new getGroups
  */
 
 export const updatePersonalForm = (payload) => (dispatch) => {
   if (payload.groupName === "" ){
-    dispatch(error({message: "Error: Field group name empty"}));
+    dispatch(error({message: "Error: Field getGroups name empty"}));
     return;
   }
   const url = `${BACKEND_URL}/owners/personal`;
@@ -277,7 +277,7 @@ export const fetchGroups = () => (dispatch, getState) => {
  * fetching groups for owner and members from database
  */
 export const fetchGroupsForMembers = () => (dispatch) => {
-  const url = `${BACKEND_URL}/owners/group`;
+  const url = `${BACKEND_URL}/owners/personal/getGroups`;
   const header = {headers: {SessionID : getToken()}};
   axios.get(url,header).then(function (response) {
     dispatch(formGroupsForMembersFetchSucceed(response.data))
@@ -457,7 +457,7 @@ export const submitFormTemplate = (params) => (dispatch) => {
 
 /**
  * Pesonal page
- * update group members
+ * update getGroups members
  */
 export const submitFormMembers = (params) => (dispatch) => {
 
