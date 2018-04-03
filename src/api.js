@@ -21,7 +21,7 @@ import {
   ordersCSVFetchFail,
   submitRerunOrderSucceed,
   formGroupsFetchSucceed,
-  formGroupsForMembersFetchSucceed
+  formGroupsForMembersFetchSucceed,
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
@@ -324,7 +324,7 @@ export const fetchGroups = () => (dispatch, getState) => {
  * fetching groups for owner and members from database
  */
 export const fetchGroupsForMembers = () => (dispatch) => {
-  const url = `${BACKEND_URL}/owners/personal/getGroups`;
+  const url = `${BACKEND_URL}/owners/personal`;
   const header = {headers: {SessionID : getToken()}};
   axios.get(url,header).then(function (response) {
     dispatch(formGroupsForMembersFetchSucceed(response.data))

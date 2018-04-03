@@ -1,6 +1,11 @@
 import PersonalPage from '../components/PersonalPage'
-import {groupNameChange, selectGroupForm} from "../actions";
-import {fetchGroups, fetchGroupsForMembers, submitFormMembers, updatePersonalForm} from "../api";
+import {selectGroupForm} from "../actions";
+import {
+  fetchGroups,
+  fetchGroupsForMembers,
+  submitFormMembers,
+  updatePersonalForm,
+} from "../api";
 import {connect} from 'react-redux'
 
 function mapStateToProps(state) {

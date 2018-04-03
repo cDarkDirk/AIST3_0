@@ -1,4 +1,8 @@
-import {CREATE_GROUP_CLICKED, FORM_GROUPS_FETCH_SUCCEED, GROUP_NAME_CHANGE, GROUP_SELECTED} from "../constants";
+import {
+  CREATE_GROUP_CLICKED,
+  FORM_GROUPS_FETCH_SUCCEED,
+  GROUP_SELECTED,
+  } from "../constants";
 
 const initialState = {
   selectedForm: null,

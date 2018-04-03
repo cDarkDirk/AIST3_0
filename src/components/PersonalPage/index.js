@@ -1,8 +1,16 @@
-import React from "react";
+import React,{Component} from "react";
 import Header from "../Header";
-import {forceLogin, getUserName} from "../../globalFunc";
+import {forceLogin} from "../../globalFunc";
 import {
-  Button, Col, FormControl, Grid, ListGroup, ListGroupItem, OverlayTrigger, Panel, Row,
+  Button,
+  Col,
+  FormControl,
+  Grid,
+  ListGroup,
+  ListGroupItem,
+  OverlayTrigger,
+  Panel,
+  Row,
   Tooltip
 } from "react-bootstrap";
 import Notifications from "react-notification-system-redux";
@@ -11,7 +19,7 @@ import Select from 'react-select';
 import './style.css'
 
 
-class PersonalPage extends React.Component {
+class PersonalPage extends Component {
   constructor(props, context) {
     super(props, context);
     forceLogin();
