@@ -57,7 +57,9 @@ import {
   FORM_GROUPS_FETCH_SUCCEED,
   FORM_GROUPS_FOR_MEMBERS_FETCH_SUCCEED,
   GROUP_ADDED,
-} from './constants'
+  TEST_BUILDER_AS_FETCH_SUCCEED,
+  TEST_AS_SELECTED,
+} from './constants';
 
 export const groupNameChange = (payload) => ({
   type: GROUP_NAME_CHANGE,
@@ -89,7 +91,6 @@ export const ordersCSVFetchFail = (payload) => ({
   payload,
 });
 
-
 export const loginButtonClicked = (payload) => ({
   type: LOGIN_BUTTON_CLICKED,
   payload,
@@ -99,7 +100,6 @@ export const loginPasswordChange = (payload) => ({
   type: LOGIN_PASSWORD_CHANGE,
   payload,
 });
-
 
 export const selectGroupForm =(payload)=> ({
   type: GROUP_SELECTED,
@@ -340,4 +340,14 @@ export const standsFetchSuccess = (stands) => ({
 export const launcherUserGroupsFetchSucceed = (groups) => ({
   type: LAUNCHER_USER_GROUPS_FETCH_SUCCEED,
   groups,
+});
+
+export const testBuilderAsFetchSucceed = (as) => ({
+  type: TEST_BUILDER_AS_FETCH_SUCCEED,
+  as,
+});
+
+export const testASSelected = (index) => ({
+  type: TEST_AS_SELECTED,
+  index,
 });

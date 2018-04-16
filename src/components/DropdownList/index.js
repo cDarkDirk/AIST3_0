@@ -28,7 +28,9 @@ class DropdownList extends Component {
       options = [],
       labelKey = 'name',
       selectedIndex,
+      pullRight = false,
       tooltip,
+      componentClass
     } = this.props;
 
     const ddBodyTooltip = (
@@ -41,6 +43,7 @@ class DropdownList extends Component {
           onSelect={onSelect}
           title={selLabel}
           bsStyle={bsStyle}
+          pullRight={pullRight}
           style={style}
         >
           {options && options.map((option, index) => {
@@ -60,7 +63,9 @@ class DropdownList extends Component {
         onSelect={onSelect}
         title={selLabel}
         bsStyle={bsStyle}
+        pullRight={true}
         style={style}
+        componentClass={componentClass}
       >
         {options && options.map((option, index) => {
           return (

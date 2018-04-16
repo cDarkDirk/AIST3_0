@@ -1,0 +1,76 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+
+[
+    {
+        "code": "МБК",
+        "name": "",
+        "description": ""
+    },
+    {
+        "code": "TSM",
+        "name": "",
+        "description": ""
+    },
+    {
+        "code": "CRM",
+        "name": "",
+        "description": ""
+    },
+    {
+        "code": "ФС",
+        "name": "",
+        "description": ""
+    },
+    {
+        "code": "СПООБК2",
+        "name": "",
+        "description": ""
+    },
+    {
+        "code": "TSME",
+        "name": "",
+        "description": ""
+    },
+    {
+        "code": "Калита",
+        "name": "",
+        "description": ""
+    },
+    {
+        "code": "ЕФС",
+        "name": "",
+        "description": ""
+    },
+    {
+        "code": "ЕКП",
+        "name": "",
+        "description": ""
+    },
+    {
+        "code": "WAY4",
+        "name": "",
+        "description": ""
+    },
+    {
+        "code": "ЦОД",
+        "name": "",
+        "description": ""
+    },
+    {
+        "code": "Залоги",
+        "name": "",
+        "description": ""
+    },
+    {
+        "code": "ЕРИБ",
+        "name": "",
+        "description": ""
+    },
+    {
+        "code": "ЕКС",
+        "name": "",
+        "description": ""
+    }
+]

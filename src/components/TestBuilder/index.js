@@ -14,23 +14,30 @@ import {
   Label,
   Glyphicon,
   Modal,
+  ControlLabel,
 } from 'react-bootstrap'
 import 'react-select/dist/react-select.css'
 import Select from 'react-select'
 import Notifications from 'react-notification-system-redux'
 import SearchBar from "../SearchBar";
 import Header from "../Header";
-import {forceLogin, getUserName} from '../../globalFunc';
+import {forceLogin, getUserName, setTooltip} from '../../globalFunc';
+import DropdownList from "../DropdownList";
 
 class TestBuilderPage extends React.Component {
   constructor(props, context) {
     super(props, context);
+    forceLogin();
+    this.props.getTests();
+    this.props.getAS();
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleSystemChanges = this.handleSystemChanges.bind(this);
 
     this.state = {
       show: false,
+      selectedSystem: null,
     };
   }
 
@@ -42,29 +49,18 @@ class TestBuilderPage extends React.Component {
     this.setState({show: true});
   }
 
-  componentDidMount() {
-    this.props.getTests();
-  }
-
-  componentWillMount(){
-    forceLogin();
-  }
 
   handleTagInputChange(value, field) {
     const {testBuilderTests, selectedTestIndex} = this.props;
-    console.log('------------>',value);
-    const crunch = value.map((field) => {
-      return {label: field.label, value: field.value};
+
+    const crunch = value.map((field, index) => {
+      return {label: field.label, value: index};
     });
     const toPayload = {
       paramValue: {...testBuilderTests[selectedTestIndex].tag_names},
       paramName: 'tag_names',
     };
-    if (field === 'static') {
-      toPayload.paramValue.static = crunch;
-    } else if (field === 'dynamic') {
-      toPayload.paramValue.dynamic = crunch;
-    }
+    toPayload.paramValue[field] = crunch;
     this.props.testBuilderFormInputChanged(toPayload);
   }
 
@@ -76,17 +72,54 @@ class TestBuilderPage extends React.Component {
     this.props.testBuilderFormInputChanged(toPayload);
   }
 
+  handleSystemChanges(index) {
+    this.setState({selectedSystem: index});
+    this.props.sysIndexChanged(index);
+  }
+
+  handleSubmitButtonClick = () => {
+    const {testBuilderTests, selectedTestIndex, testNamesForDropdown, systems, submitCurrentTest} = this.props;
+    let test = {...testBuilderTests[selectedTestIndex]};
+    let id = testNamesForDropdown[selectedTestIndex].test_id;
+    test.asystem = systems[this.state.selectedSystem];
+    submitCurrentTest({test, id});
+  };
+
+  handleTestSelection = (index) => {
+    const {setSelectedTestIndex, systems, testBuilderTests} = this.props;
+    if (testBuilderTests[index].asystem !== '') {
+      let sysIndex = systems.map(sys => sys.code).indexOf(testBuilderTests[index].asystem);
+      this.setState({selectedSystem: sysIndex});
+    } else {
+      this.setState({selectedSystem: null});
+    }
+    setSelectedTestIndex(index);
+  };
+
   renderTestParamsForm = () => {
-    const {testBuilderTests, selectedTestIndex} = this.props;
-    const optsStatic = testBuilderTests[selectedTestIndex].tag_names.static.map((name) => ({
-      label: name,
-      value: name,
-    }));
+    const {testBuilderTests, selectedTestIndex, systems} = this.props;
+    const testParamHeader = ['Test parameters:',
+      <div className="pull-right">
+        <DropdownList
+          id={'asSelector' + testBuilderTests[selectedTestIndex].test_name}
+          options={systems}
+          selLabel={this.state.selectedSystem !== null ? systems[this.state.selectedSystem].code : 'Название АС'}
+          labelKey='code'
+          pullRight={true}
+          tooltip={setTooltip(
+            'asSelectorTooltip' + testBuilderTests[selectedTestIndex].test_name,
+            'Выберите АС для теста')}
+          selectedIndex={this.state.selectedSystem}
+          onSelect={this.handleSystemChanges}
+        />
+      </div>,
+      <div className="clearfix"/>
+    ];
     return (
       <Form>
-        <ListGroupItem bsStyle="success" style={{maxHeight: '550px', overflow: 'auto'}}>
+        <ListGroupItem bsStyle="success" style={{maxHeight: '10000px', overflow: 'auto'}}>
           <FormGroup>
-            <Panel header={'Test parameters:'}>
+            <Panel header={testParamHeader}>
               <Row>
                 <Col md={12}>
                   <InputGroup>
@@ -136,15 +169,15 @@ class TestBuilderPage extends React.Component {
                 </Col>
               </Row>
             </Panel>
-            {/*<Panel header={'Test tags:'}>
+            <Panel header={'Test tags:'}>
               <Row>
                 <Col md={12}>
                   <InputGroup>
                     <InputGroup.Addon>Static #tags</InputGroup.Addon>
                     <Select.Creatable
-                      id={'static'}
+                      id={'static' + testBuilderTests[selectedTestIndex].test_name}
                       multi={true}
-                      options={optsStatic}
+                      options={[]}
                       menuStyle={{display: 'none'}}
                       arrowRenderer={null}
                       autosize={false}
@@ -159,12 +192,9 @@ class TestBuilderPage extends React.Component {
                   <InputGroup>
                     <InputGroup.Addon>Dynamic #tags</InputGroup.Addon>
                     <Select.Creatable
-                      id={'dynamic'}
+                      id={'dynamic' + testBuilderTests[selectedTestIndex].test_name}
                       multi={true}
-                      options={testBuilderTests[selectedTestIndex].tag_names.dynamic.map((name) => ({
-                        label: name,
-                        value: name,
-                      }))}
+                      options={[]}
                       menuStyle={{display: 'none'}}
                       arrowRenderer={null}
                       autosize={false}
@@ -174,7 +204,7 @@ class TestBuilderPage extends React.Component {
                   </InputGroup>
                 </Col>
               </Row>
-            </Panel>*/}
+            </Panel>
           </FormGroup>
         </ListGroupItem>
       </Form>
@@ -189,8 +219,6 @@ class TestBuilderPage extends React.Component {
       setSelectedTestIndex,
       testNamesForDropdown,
       addNewTest,
-      submitCurrentTest,
-      owner
     } = this.props;
 
     this.props.testNamesForDropdown.map((test, index) => {
@@ -202,7 +230,7 @@ class TestBuilderPage extends React.Component {
     });
     const testsList = () => (testNamesForDropdown.map((test, index) =>
       <ListGroupItem
-        onClick={() => setSelectedTestIndex(index)}
+        onClick={() => this.handleTestSelection(index)}
         href={'/#/testbuilder/' + test.test_name}
         active={index === selectedTestIndex}
         key={index}
@@ -241,11 +269,8 @@ class TestBuilderPage extends React.Component {
         bsStyle="success"
         bsSize="large"
         className="pull-right"
-        disabled={!(selectedTestIndex !== null && (testBuilderTests[selectedTestIndex].modified || testBuilderTests[selectedTestIndex].new))}
-        onClick={() => submitCurrentTest({
-          test: testBuilderTests[selectedTestIndex],
-          id: testNamesForDropdown[selectedTestIndex].test_id
-        })}
+        disabled={!(selectedTestIndex !== null && this.state.selectedSystem !== null && (testBuilderTests[selectedTestIndex].modified || testBuilderTests[selectedTestIndex].new))}
+        onClick={this.handleSubmitButtonClick}
       >
         SUBMIT
       </Button>,

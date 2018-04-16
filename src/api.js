@@ -377,19 +377,21 @@ export const testBuilderDataFetch = () => (dispatch) => {
  * Submit data to database
  */
 export const submitTest = (testObject) => (dispatch, getState) => {
-  /*let staticTags, dynamicTags;
-  if (testObject.test.tag_names.static)
-    staticTags = testObject.test.tag_names.static.map(t => t.value);
-  if (testObject.test.tag_names.dynamic)
-    dynamicTags = testObject.test.tag_names.dynamic.map(t => t.value);
-  let tags = {
-    static: staticTags ? staticTags : [],
-    dynamic: dynamicTags ? dynamicTags : [],
-  };*/
+  let staticTags, dynamicTags;
+  let tags = {};
+  if (testObject.test.tag_names.static.length > 0){
+    staticTags = testObject.test.tag_names.static.map(t => t.label);
+    tags.static = staticTags;
+  }
+  if (testObject.test.tag_names.dynamic.length > 0){
+    dynamicTags = testObject.test.tag_names.dynamic.map(t => t.label);
+    tags.dynamic = dynamicTags;
+  }
   const result = [{
     test_name: testObject.test.test_name,
     job_trigger: testObject.test.job_trigger,
-    tag_names: {},
+    tag_names: tags,
+    asystem: testObject.test.asystem,
   }];
   const header = {headers: {SessionID : getToken()}};
   if (testObject.test.modified) {

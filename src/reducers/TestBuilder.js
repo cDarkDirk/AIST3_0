@@ -4,12 +4,15 @@ import {
   TEST_BUILDER_FORM_INPUT_CHANGED,
   ADD_NEW_TEST,
   RESET_MODIFICATION_MARKERS,
+  TEST_BUILDER_AS_FETCH_SUCCEED,
+  TEST_AS_SELECTED,
 } from '../constants'
 
 const initialState = {
   testBuilderTests: [],
   selectedTestIndex: null,
   testNamesForDropdown: [],
+  systems: [],
 };
 
 const testBuilder = (state = initialState, action) => {
@@ -27,9 +30,18 @@ const testBuilder = (state = initialState, action) => {
         current.new = false;
         if (!current.tag_names.static){
           current.tag_names.static = [];
+        } else {
+          let tmp = [...current.tag_names.static];
+          current.tag_names.static = tmp.map((tag,index) => {return {label: tag, value: index}});
         }
         if (!current.tag_names.dynamic){
           current.tag_names.dynamic = [];
+        } else {
+          let tmp = [...current.tag_names.dynamic];
+          current.tag_names.dynamic = tmp.map((tag,index) => {return {label: tag, value: index}});
+        }
+        if (!current.asystem){
+          current.asystem = '';
         }
         return current;
       });
@@ -39,6 +51,14 @@ const testBuilder = (state = initialState, action) => {
         testNamesForDropdown: testNamesForDropdown,
       }
     }
+
+    case TEST_BUILDER_AS_FETCH_SUCCEED: {
+      return {
+        ...state,
+        systems: action.as,
+      }
+    }
+
     case TEST_SELECTED: {
       return {
         ...state,
@@ -57,6 +77,7 @@ const testBuilder = (state = initialState, action) => {
           "passOrToken": "Job pass or token..."
         },
         "tag_names": {"static": [], "dynamic": []},
+        "asystem": '',
         'new': true,
         'modified': false
       };
@@ -151,6 +172,19 @@ const testBuilder = (state = initialState, action) => {
         }
       }
     }
+
+    case TEST_AS_SELECTED:{
+      let testBuilderTests = [...state.testBuilderTests];
+      testBuilderTests[state.selectedTestIndex].asystem = state.systems[action.index].code;
+      const newTest = testBuilderTests[state.selectedTestIndex].new;
+      testBuilderTests[state.selectedTestIndex].modified = !newTest;
+      console.log('testBuilderTests --->', testBuilderTests);
+      return {
+        ...state,
+        testBuilderTests,
+      }
+    }
+
     default:
       return {
         ...state,

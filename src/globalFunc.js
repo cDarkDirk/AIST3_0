@@ -1,4 +1,6 @@
 import Cookies from 'universal-cookie';
+import React from "react";
+import {Tooltip} from "react-bootstrap";
 
 const cookies = new Cookies();
 
@@ -38,3 +40,6 @@ export function getUserName() {
 export function getToken(){
   return cookies.get('logedInUserToken');
 }
+export const setTooltip = (id, text) => (
+  <Tooltip key={id.toString()+'Tooltip'} id={id.toString()}>{text}</Tooltip>
+);
