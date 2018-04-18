@@ -6,6 +6,9 @@ import {
   RESET_MODIFICATION_MARKERS,
   TEST_BUILDER_AS_FETCH_SUCCEED,
   TEST_AS_SELECTED,
+  TEST_BUILDER_STANDS_FETCH_SUCCEED,
+  DUPLICATE_CURRENT_TEST,
+  TEST_STANDS_INPUT_CHANGE,
 } from '../constants'
 
 const initialState = {
@@ -13,6 +16,7 @@ const initialState = {
   selectedTestIndex: null,
   testNamesForDropdown: [],
   systems: [],
+  stands: [],
 };
 
 const testBuilder = (state = initialState, action) => {
@@ -40,8 +44,12 @@ const testBuilder = (state = initialState, action) => {
           let tmp = [...current.tag_names.dynamic];
           current.tag_names.dynamic = tmp.map((tag,index) => {return {label: tag, value: index}});
         }
-        if (!current.asystem){
-          current.asystem = '';
+        if (!current.a_system){
+          current.a_system = '';
+        }
+        if (current.stands.length >0){
+          let stands = current.stands.map((s,index) => {return {label: s, value: index}});
+          current.stands = stands;
         }
         return current;
       });
@@ -60,6 +68,7 @@ const testBuilder = (state = initialState, action) => {
     }
 
     case TEST_SELECTED: {
+      window.location.hash = '#/testbuilder/' + state.testBuilderTests[action.payload].test_name;
       return {
         ...state,
         selectedTestIndex: action.payload,
@@ -77,7 +86,7 @@ const testBuilder = (state = initialState, action) => {
           "passOrToken": "Job pass or token..."
         },
         "tag_names": {"static": [], "dynamic": []},
-        "asystem": '',
+        "a_system": '',
         'new': true,
         'modified': false
       };
@@ -175,11 +184,46 @@ const testBuilder = (state = initialState, action) => {
 
     case TEST_AS_SELECTED:{
       let testBuilderTests = [...state.testBuilderTests];
-      testBuilderTests[state.selectedTestIndex].asystem = state.systems[action.index].code;
+      testBuilderTests[state.selectedTestIndex].a_system = state.systems[action.index].code;
       const newTest = testBuilderTests[state.selectedTestIndex].new;
       testBuilderTests[state.selectedTestIndex].modified = !newTest;
-      console.log('testBuilderTests --->', testBuilderTests);
       return {
+        ...state,
+        testBuilderTests,
+      }
+    }
+
+    case TEST_BUILDER_STANDS_FETCH_SUCCEED:{
+      const stands = action.stands.map((stand, index) => {return {label: stand.code, value: index}});
+      return{
+        ...state,
+        stands,
+      }
+    }
+
+    case DUPLICATE_CURRENT_TEST: {
+      const dupTest = {...state.testBuilderTests[state.selectedTestIndex]};
+      dupTest.test_name += ' Clone';
+      dupTest.new = true;
+      dupTest.modified = false;
+      const testNamesForDropdown = [{test_name: dupTest.test_name}, ...state.testNamesForDropdown];
+      const testBuilderTests = [dupTest,...state.testBuilderTests];
+      window.location.hash = '#/testbuilder/' + state.testBuilderTests[0].test_name;
+      let selectedTestIndex = 0;
+      return {
+        ...state,
+        testBuilderTests,
+        testNamesForDropdown,
+        selectedTestIndex,
+      }
+    }
+
+    case TEST_STANDS_INPUT_CHANGE: {
+      const testBuilderTests = [...state.testBuilderTests];
+      console.log('stands --->',action.stands);
+      testBuilderTests[state.selectedTestIndex].stands = action.stands;
+      testBuilderTests[state.selectedTestIndex].modified = !testBuilderTests[state.selectedTestIndex].new;
+      return{
         ...state,
         testBuilderTests,
       }

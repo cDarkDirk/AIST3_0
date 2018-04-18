@@ -391,7 +391,8 @@ export const submitTest = (testObject) => (dispatch, getState) => {
     test_name: testObject.test.test_name,
     job_trigger: testObject.test.job_trigger,
     tag_names: tags,
-    asystem: testObject.test.asystem,
+    stands: testObject.test.stands,
+    a_system: testObject.test.a_system,
   }];
   const header = {headers: {SessionID : getToken()}};
   if (testObject.test.modified) {
@@ -543,7 +544,6 @@ export const getUsersGroups = () => (dispatch) => {
   const url = `${BACKEND_URL}/owners/personal/getGroups`;
   const header = {headers: {SessionID : getToken()}};
   axios.get(url, header).then(function (response) {
-    console.log('response',response);
     dispatch(launcherUserGroupsFetchSucceed(response.data))
   }).catch(function (response) {
     dispatch(error({message: "Fetch failed with error!" + response}));

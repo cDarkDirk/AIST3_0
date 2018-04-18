@@ -14,6 +14,7 @@ class SearchBar extends React.Component {
             wrapperStyle={{position:'relative', zIndex:'3'}}
             placeholder={'Search here...'}
             onChange={(value) => onOptionClick(value.value)}
+            style={{borderRadius:'0 4px 4px 0'}}
           />
         </InputGroup>
       </FormGroup>

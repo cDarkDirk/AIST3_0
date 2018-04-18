@@ -12,6 +12,9 @@ import {
   newTestAdded,
   testBuilderAsFetchSucceed,
   testASSelected,
+  testBuilderStandsFetchSucceed,
+  duplicateCurrentTest,
+  testStandsInputChange,
 } from "../actions"
 
 function mapStateToProps(state) {
@@ -23,6 +26,7 @@ function mapStateToProps(state) {
     testName: state.testBuilder.testName,
     owner: state.dataAuthorization.paramNames.name,
     systems: state.testBuilder.systems,
+    stands: state.testBuilder.stands,
   }
 }
 
@@ -34,7 +38,10 @@ function mapDispatchToProps(dispatch) {
     addNewTest: () => dispatch(newTestAdded()),
     submitCurrentTest: (testObject) => dispatch(submitTest(testObject)),
     getAS: () => dispatch(getDictionaryData('systems', testBuilderAsFetchSucceed)),
+    getStands: () => dispatch(getDictionaryData('stands', testBuilderStandsFetchSucceed)),
     sysIndexChanged: (index) => dispatch(testASSelected(index)),
+    duplicateCurrentTest: () => dispatch(duplicateCurrentTest()),
+    testStandsInputChange: (stands) => dispatch(testStandsInputChange(stands)),
   }
 }
 

@@ -59,6 +59,9 @@ import {
   GROUP_ADDED,
   TEST_BUILDER_AS_FETCH_SUCCEED,
   TEST_AS_SELECTED,
+  TEST_BUILDER_STANDS_FETCH_SUCCEED,
+  DUPLICATE_CURRENT_TEST,
+  TEST_STANDS_INPUT_CHANGE,
 } from './constants';
 
 export const groupNameChange = (payload) => ({
@@ -350,4 +353,18 @@ export const testBuilderAsFetchSucceed = (as) => ({
 export const testASSelected = (index) => ({
   type: TEST_AS_SELECTED,
   index,
+});
+
+export const testBuilderStandsFetchSucceed = (stands) => ({
+  type: TEST_BUILDER_STANDS_FETCH_SUCCEED,
+  stands,
+});
+
+export const duplicateCurrentTest = () => ({
+  type: DUPLICATE_CURRENT_TEST,
+});
+
+export const testStandsInputChange = (stands) => ({
+  type: TEST_STANDS_INPUT_CHANGE,
+  stands,
 });

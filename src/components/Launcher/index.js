@@ -16,7 +16,6 @@ import {
   Row,
   Tooltip,
 } from "react-bootstrap";
-import DropdownList from "../DropdownList/index";
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import 'react-select/dist/react-select.css';
@@ -24,7 +23,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import 'rc-time-picker/assets/index.css'
 import './style.css'
 import Notifications from "react-notification-system-redux";
-import moment from "moment";
+const CHAIN_PLACEHOLDER = {label: 'Выберите цепочку...', value:'Выберите цепочку...'};
 
 class Launcher extends Component {
   constructor(props, context) {
@@ -52,6 +51,7 @@ class Launcher extends Component {
       formReady: false,
       standIndex: null,
       groups: [],
+      chain: CHAIN_PLACEHOLDER,
     }
   }
 
@@ -67,19 +67,23 @@ class Launcher extends Component {
     this.setState({standIndex});
   }
 
-  onChainSelected(index) {
-    if (this.state[this.props.chains[index].name]) {
-      this.setState({
-        selectedChain: index,
-        selectedTemplates: [],
-      });
-    } else {
-      this.setState({
-        selectedTemplates: [],
-        formReady: false,
-        selectedChain: index,
-      });
-      this.fillFormData(index);
+  onChainSelected(value) {
+    if (value !== null) {
+      if (this.state[this.props.chains[value.value].name]) {
+        this.setState({
+          chain: value,
+          selectedChain: value.value,
+          selectedTemplates: [],
+        });
+      } else {
+        this.setState({
+          selectedTemplates: [],
+          chain: value,
+          formReady: false,
+          selectedChain: value.value,
+        });
+        this.fillFormData(value.value);
+      }
     }
   }
 
@@ -216,22 +220,25 @@ class Launcher extends Component {
 
   render() {
     const {chains} = this.props;
+    let chainsOpts = chains.map((chain, index) => {return {label:chain.name, value: index}});
     const setTooltip = (id, text) => (
       <Tooltip key={id.toString()+'Tooltip'} id={id.toString()}>{text}</Tooltip>
     );
     const header = (
       <Row key={'headerRow'}>
-        <Col md={11} key={'chainSelectorColumn'}>
-          <DropdownList
-            key={'DropdownListChainSelector'}
-            id={'launcherDropdown'}
-            options={chains}
-            tooltip={setTooltip('chainSelect', 'Выберите цепочку из выпадающего списка')}
-            onSelect={this.onChainSelected}
-            selectedIndex={this.state.selectedChain}
-            selLabel={this.state.selectedChain !== null ? chains[this.state.selectedChain].name : 'Select one...'}
+        <Col md={6} key={'chainSelectorColumn'}>
+          <Select
+            key={'selectChainElement'}
+            options={chainsOpts}
+            wrapperStyle={{position:'relative', zIndex:'4'}}
+            onChange={this.onChainSelected}
+            clearable={false}
+            value={this.state.chain}
+            menuStyle={{maxHeight: '780px', overflow: 'auto'}}
+            style={{borderRadius:'4px 4px 4px 4px'}}
           />
         </Col>
+        <Col md={5} key={'column-placeholder'}/>
         {this.state.selectedChain !== null
         && chains[this.state.selectedChain].fields.length > 0 ? [
           <Col md={1} key={'StandsSelectorColumn'}>

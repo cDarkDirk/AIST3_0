@@ -32,7 +32,7 @@ const chainTemplateReducer = (state = initialState, action) => {
           return{label: name, value: name};
         });
         if (chain.groups) chain['groups'] = chain.groups.map((name, index) => {
-          return{label: name.name, value: index};
+          return{label: name, value: index};
         });
         return chain;
       });

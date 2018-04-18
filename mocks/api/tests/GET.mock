@@ -5,7 +5,7 @@ Content-Type: application/json; charset=utf-8
   {
     "test_id": 3,
     "test_name": "Create Client FS",
-    "asystem": "ФС",
+    "a_system": "ФС",
     "job_trigger":
           {
             "uri": "someURL",
@@ -22,7 +22,7 @@ Content-Type: application/json; charset=utf-8
   {
     "test_id": 4,
     "test_name": "Create Request Debit Card FS",
-    "asystem": "ФС",
+    "a_system": "ФС",
     "job_trigger":
       {
         "uri": "someURL",
@@ -49,7 +49,7 @@ Content-Type: application/json; charset=utf-8
   {
     "test_id": 2,
     "test_name": "Create Client with Account",
-    "asystem": "ФС",
+    "a_system": "ФС",
     "job_trigger":
           {
             "uri": "someURL",
@@ -63,7 +63,7 @@ Content-Type: application/json; charset=utf-8
   {
     "test_id": 11,
     "test_name": "Create Request for Credit Card",
-    "asystem": "СПООБК2",
+    "a_system": "СПООБК2",
     "job_trigger":
           {
             "uri": "someURL",
@@ -76,7 +76,7 @@ Content-Type: application/json; charset=utf-8
   },
   {
     "test_id": 12,
-    "asystem": "WAY4",
+    "a_system": "WAY4",
     "test_name": "Check Application Credit Card",
     "job_trigger":
           {
@@ -116,7 +116,7 @@ Content-Type: application/json; charset=utf-8
   },
   {
     "test_id": 201704191401206171,
-    "asystem": "ЕКП",
+    "a_system": "ЕКП",
     "test_name": "Create Mortage Loan",
     "job_trigger":
           {
