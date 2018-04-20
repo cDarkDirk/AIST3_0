@@ -236,6 +236,8 @@ class Launcher extends Component {
             value={this.state.chain}
             menuStyle={{maxHeight: '780px', overflow: 'auto'}}
             style={{borderRadius:'4px 4px 4px 4px'}}
+            shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
+            promptTextCreator={name => name}
           />
         </Col>
         <Col md={5} key={'column-placeholder'}/>
@@ -282,7 +284,7 @@ class Launcher extends Component {
       <Header/>,
       <Grid>
         {orderCreatedAlert()}
-        <Panel header={header} bsStyle={'info'}>
+        <Panel header={header} bsStyle={'info'} className={'main-panel'}>
           {this.state.selectedChain !== null
           && chains[this.state.selectedChain].fields.length > 0 ?
             <Panel key={'additionalParamsPanel'} bsStyle='info' header={'Параметры запуска'}>
@@ -324,6 +326,8 @@ class Launcher extends Component {
                       options={this.state.selectedChain !== null ? chains[this.state.selectedChain].templates : []}
                       onChange={this.dataTemplateSelected}
                       value={this.state.selectedTemplates}
+                      shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
+                      promptTextCreator={name => name}
                     />
                   </div>
                 </OverlayTrigger>
@@ -344,6 +348,8 @@ class Launcher extends Component {
                       options={this.state.selectedChain !== null ? selectGroups : []}
                       onChange={this.handleGroupsSelection}
                       value={this.state.groups}
+                      shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
+                      promptTextCreator={name => name}
                     />
                   </div>
                 </OverlayTrigger>

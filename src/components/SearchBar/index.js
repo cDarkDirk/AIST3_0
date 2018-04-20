@@ -4,7 +4,10 @@ import Select from "react-select";
 
 class SearchBar extends React.Component {
   render() {
-    const {options,onOptionClick} = this.props;
+    const {
+      options,
+      onOptionClick,
+      placeholder = 'Search here...'} = this.props;
     return(
       <FormGroup>
         <InputGroup>
@@ -12,7 +15,7 @@ class SearchBar extends React.Component {
           <Select
             options={options}
             wrapperStyle={{position:'relative', zIndex:'3'}}
-            placeholder={'Search here...'}
+            placeholder={placeholder}
             onChange={(value) => onOptionClick(value.value)}
             style={{borderRadius:'0 4px 4px 0'}}
           />

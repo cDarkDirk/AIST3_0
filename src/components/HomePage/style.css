@@ -19,3 +19,30 @@
 .test-block-content > .heading {
     font-weight: bold;
 }
+
+.column > div:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid #CCC;
+  border-radius: 3px;
+  color: rgb(232, 255, 255);
+  text-align: center;
+  background-color: rgb(84, 170, 192);
+}
+.column > div:hover h1 {
+  text-align: center;
+  background-color: rgb(84, 170, 192);
+}
+
+.system-name {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  font-size: 26px;
+  color: rgb(232, 255, 255);
+  font-weight: bold;
+  background-color: rgb(84, 170, 192);
+  text-transform: uppercase;
+  margin: auto auto 1%;
+  padding-top: 30px;
+}

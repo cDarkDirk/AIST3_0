@@ -48,8 +48,9 @@ const testBuilder = (state = initialState, action) => {
           current.a_system = '';
         }
         if (current.stands.length >0){
-          let stands = current.stands.map((s,index) => {return {label: s, value: index}});
-          current.stands = stands;
+          current.stands = current.stands.map((s, index) => {
+            return {label: s, value: index}
+          });
         }
         return current;
       });
@@ -57,6 +58,7 @@ const testBuilder = (state = initialState, action) => {
         ...state,
         testBuilderTests: adaptedTests,
         testNamesForDropdown: testNamesForDropdown,
+        selectedTestIndex: null,
       }
     }
 

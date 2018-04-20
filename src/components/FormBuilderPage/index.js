@@ -169,7 +169,7 @@ class FormBuilderPage extends Component {
   };
 
   render() {
-    const {formBuilderChains,notifications, owner} = this.props;
+    const {formBuilderChains, notifications} = this.props;
     const {chainIndex} = this.state;
     const chainDropDown = [
       <DropdownButton
@@ -230,7 +230,7 @@ class FormBuilderPage extends Component {
     return (
       <div>
         <Header owner={getUserName()}/>
-        <Panel header={chainDropDown} footer={submitBtn} bsStyle="primary">
+        <Panel style={{marginTop: '1%', position: 'relative'}} header={chainDropDown} footer={submitBtn} bsStyle="primary">
           <Grid fluid={true}>
             {chainIndex !== null && formBuilderChains[chainIndex] && this.renderFormBody()}
           </Grid>

@@ -565,3 +565,19 @@ export const submitFormMembers = (params) => (dispatch) => {
   });
 };
 
+/**
+ * All pages
+ * Запрос на фильтрацию по тегам.
+ * @param tags - тело запроса (сами теги)
+ * @param entity - название таблицы. На момент написания комментария доступны 'tests' и 'chain_templates'
+ * @param callback - функция для обработки возвращаемого значения
+ */
+export const filterEntityByTags = (tags, entity, callback) => (dispatch) => {
+  const url = `${BACKEND_URL}/${entity}/filter`;
+
+  axios.post(url, tags).then(function (response) {
+    dispatch(callback(response.data));
+  }).catch(function (response) {
+    dispatch(error({message: "Request failed with error!" + response.message}));
+  });
+};

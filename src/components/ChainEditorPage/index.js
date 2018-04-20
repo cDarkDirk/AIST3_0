@@ -149,6 +149,8 @@ class ChainEditorPage extends React.Component {
                 onChange={dt => this.props.addDTToChain(dt)}
                 value={chainTemplate.templates}
                 id={"balla2"}
+                shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
+                promptTextCreator={name => name}
               />
             </InputGroup>
           </FormGroup>
@@ -166,6 +168,8 @@ class ChainEditorPage extends React.Component {
                 value = {chainTemplate.groups}
                 placeholder="Select"
                 id={"balla"}
+                shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
+                promptTextCreator={name => name}
               />
             </InputGroup>
           </FormGroup>
@@ -177,7 +181,7 @@ class ChainEditorPage extends React.Component {
     });
     return [
       <Header owner={getUserName()}/>,
-      <div className='container'>
+      <div className='container chain-editor-main'>
         <Row>
           <Col md={3}>
             <SearchBar

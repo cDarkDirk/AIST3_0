@@ -4,6 +4,7 @@ import {
   testBuilderDataFetch,
   submitTest,
   getDictionaryData,
+  filterEntityByTags,
 } from "../api"
 
 import {
@@ -15,6 +16,7 @@ import {
   testBuilderStandsFetchSucceed,
   duplicateCurrentTest,
   testStandsInputChange,
+  testBuilderTestsFetchSucceed,
 } from "../actions"
 
 function mapStateToProps(state) {
@@ -42,6 +44,7 @@ function mapDispatchToProps(dispatch) {
     sysIndexChanged: (index) => dispatch(testASSelected(index)),
     duplicateCurrentTest: () => dispatch(duplicateCurrentTest()),
     testStandsInputChange: (stands) => dispatch(testStandsInputChange(stands)),
+    filterTestsByTags: (tags) => dispatch(filterEntityByTags(tags, 'tests', testBuilderTestsFetchSucceed)),
   }
 }
 
