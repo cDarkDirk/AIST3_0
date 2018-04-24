@@ -9,6 +9,9 @@ import {
   TEST_BUILDER_STANDS_FETCH_SUCCEED,
   DUPLICATE_CURRENT_TEST,
   TEST_STANDS_INPUT_CHANGE,
+  CLEAR_TEST_FILTER,
+  FILTERED_TEST_BY_TAGS_FETCH_SUCCEED,
+  APPLY_TESTS_FILTERS,
 } from '../constants'
 
 const initialState = {
@@ -17,12 +20,15 @@ const initialState = {
   testNamesForDropdown: [],
   systems: [],
   stands: [],
+  testsOrigin: [],
 };
+
+const MODULE_MAIN = '#/testbuilder/';
 
 const testBuilder = (state = initialState, action) => {
   switch (action.type) {
     case TEST_BUILDER_TESTS_FETCH_SUCCEED: {
-      const testNamesForDropdown = action.payload.map((test)=>{
+      const testNamesForDropdown = action.payload.map((test) => {
         return {
           test_name: test.test_name,
           test_id: test.test_id,
@@ -32,22 +38,26 @@ const testBuilder = (state = initialState, action) => {
       const adaptedTests = tests.map((current) => {
         current.modified = false;
         current.new = false;
-        if (!current.tag_names.static){
+        if (!current.tag_names.static) {
           current.tag_names.static = [];
         } else {
           let tmp = [...current.tag_names.static];
-          current.tag_names.static = tmp.map((tag,index) => {return {label: tag, value: index}});
+          current.tag_names.static = tmp.map((tag, index) => {
+            return {label: tag, value: index}
+          });
         }
-        if (!current.tag_names.dynamic){
+        if (!current.tag_names.dynamic) {
           current.tag_names.dynamic = [];
         } else {
           let tmp = [...current.tag_names.dynamic];
-          current.tag_names.dynamic = tmp.map((tag,index) => {return {label: tag, value: index}});
+          current.tag_names.dynamic = tmp.map((tag, index) => {
+            return {label: tag, value: index}
+          });
         }
-        if (!current.a_system){
+        if (!current.a_system) {
           current.a_system = '';
         }
-        if (current.stands.length >0){
+        if (current.stands.length > 0) {
           current.stands = current.stands.map((s, index) => {
             return {label: s, value: index}
           });
@@ -59,6 +69,7 @@ const testBuilder = (state = initialState, action) => {
         testBuilderTests: adaptedTests,
         testNamesForDropdown: testNamesForDropdown,
         selectedTestIndex: null,
+        testsOrigin: adaptedTests,
       }
     }
 
@@ -70,7 +81,7 @@ const testBuilder = (state = initialState, action) => {
     }
 
     case TEST_SELECTED: {
-      window.location.hash = '#/testbuilder/' + state.testBuilderTests[action.payload].test_name;
+      window.location.hash = MODULE_MAIN + state.testBuilderTests[action.payload].test_name;
       return {
         ...state,
         selectedTestIndex: action.payload,
@@ -80,13 +91,13 @@ const testBuilder = (state = initialState, action) => {
       const newTestEntry = {
         "test_name": "Brand new test",
         "job_trigger":
-        {
-          "uri": "Enter Jenkins URL here...",
-          "login": "Enter Jenkins URL here...",
-          "params": {},
-          "jobName": "Enter job name here...",
-          "passOrToken": "Job pass or token..."
-        },
+          {
+            "uri": "Enter Jenkins URL here...",
+            "login": "Enter Jenkins URL here...",
+            "params": {},
+            "jobName": "Enter job name here...",
+            "passOrToken": "Job pass or token..."
+          },
         "tag_names": {"static": [], "dynamic": []},
         "a_system": '',
         'new': true,
@@ -98,10 +109,11 @@ const testBuilder = (state = initialState, action) => {
       },
         ...state.testNamesForDropdown,
       ];
-      return{
+      return {
         ...state,
         selectedTestIndex: 0,
-        testBuilderTests: [newTestEntry,...state.testBuilderTests],
+        testBuilderTests: [newTestEntry, ...state.testBuilderTests],
+        testsOrigin: [newTestEntry, ...state.testsOrigin],
         testNamesForDropdown,
       }
     }
@@ -159,7 +171,7 @@ const testBuilder = (state = initialState, action) => {
           }
         }
         case 'passOrToken': {
-          testBuilderTests[state.selectedTestIndex].job_trigger['passOrToken']= action.payload.paramValue;
+          testBuilderTests[state.selectedTestIndex].job_trigger['passOrToken'] = action.payload.paramValue;
           const newTest = testBuilderTests[state.selectedTestIndex].new;
           testBuilderTests[state.selectedTestIndex].modified = !newTest;
           return {
@@ -184,7 +196,7 @@ const testBuilder = (state = initialState, action) => {
       }
     }
 
-    case TEST_AS_SELECTED:{
+    case TEST_AS_SELECTED: {
       let testBuilderTests = [...state.testBuilderTests];
       testBuilderTests[state.selectedTestIndex].a_system = state.systems[action.index].code;
       const newTest = testBuilderTests[state.selectedTestIndex].new;
@@ -195,9 +207,11 @@ const testBuilder = (state = initialState, action) => {
       }
     }
 
-    case TEST_BUILDER_STANDS_FETCH_SUCCEED:{
-      const stands = action.stands.map((stand, index) => {return {label: stand.code, value: index}});
-      return{
+    case TEST_BUILDER_STANDS_FETCH_SUCCEED: {
+      const stands = action.stands.map((stand, index) => {
+        return {label: stand.code, value: index}
+      });
+      return {
         ...state,
         stands,
       }
@@ -209,25 +223,186 @@ const testBuilder = (state = initialState, action) => {
       dupTest.new = true;
       dupTest.modified = false;
       const testNamesForDropdown = [{test_name: dupTest.test_name}, ...state.testNamesForDropdown];
-      const testBuilderTests = [dupTest,...state.testBuilderTests];
-      window.location.hash = '#/testbuilder/' + state.testBuilderTests[0].test_name;
+      const testBuilderTests = [dupTest, ...state.testBuilderTests];
+      const testsOrigin = [dupTest, ...state.testsOrigin];
+      window.location.hash = MODULE_MAIN + state.testBuilderTests[0].test_name;
       let selectedTestIndex = 0;
       return {
         ...state,
         testBuilderTests,
         testNamesForDropdown,
         selectedTestIndex,
+        testsOrigin,
       }
     }
 
     case TEST_STANDS_INPUT_CHANGE: {
       const testBuilderTests = [...state.testBuilderTests];
-      console.log('stands --->',action.stands);
       testBuilderTests[state.selectedTestIndex].stands = action.stands;
       testBuilderTests[state.selectedTestIndex].modified = !testBuilderTests[state.selectedTestIndex].new;
+      return {
+        ...state,
+        testBuilderTests,
+      }
+    }
+
+    case CLEAR_TEST_FILTER: {
+      const testBuilderTests = [...state.testsOrigin];
+      const testNamesForDropdown = [...state.testsOrigin].map((test) => {
+        return {
+          test_name: test.test_name,
+          test_id: test.test_id,
+        }
+      });
       return{
         ...state,
         testBuilderTests,
+        testNamesForDropdown,
+      }
+    }
+
+    case FILTERED_TEST_BY_TAGS_FETCH_SUCCEED: {
+      const tests = [...action.tests];
+      const adaptedTests = tests.map((current) => {
+        current.modified = false;
+        current.new = false;
+        if (!current.tag_names.static) {
+          current.tag_names.static = [];
+        } else {
+          let tmp = [...current.tag_names.static];
+          current.tag_names.static = tmp.map((tag, index) => {
+            return {label: tag, value: index}
+          });
+        }
+        if (!current.tag_names.dynamic) {
+          current.tag_names.dynamic = [];
+        } else {
+          let tmp = [...current.tag_names.dynamic];
+          current.tag_names.dynamic = tmp.map((tag, index) => {
+            return {label: tag, value: index}
+          });
+        }
+        if (!current.a_system) {
+          current.a_system = '';
+        }
+        if (current.stands.length > 0) {
+          current.stands = current.stands.map((s, index) => {
+            return {label: s, value: index}
+          });
+        }
+        return current;
+      });
+      const origin = [...adaptedTests];
+      const filters = action.filters;
+      let filtersAllied = [];
+
+      if (filters.systems !== null && filters.stands !== null) {
+        origin.map(t => {
+          let sys = false;
+          let stand = false;
+          if (t.a_system === filters.systems.label) {
+            sys = true;
+          }
+          if (t.stands.length > 0) {
+            t.stands.map(s => {
+              if (s.label === filters.stands.label) stand = true;
+            });
+          }
+          if (sys && stand) filtersAllied.push(t);
+        });
+      } else {
+        if (filters.systems !== null) {
+          origin.map(t => {
+            if (t.a_system === filters.systems.label) {
+              filtersAllied.push(t);
+            }
+          });
+        } else {
+          if (filters.stands !== null) {
+            origin.map(t => {
+              if (t.stands.length > 0)
+                t.stands.map(s => {
+                  if (s.label === filters.stands.label) filtersAllied.push(t);
+                });
+            });
+          } else {
+            filtersAllied = origin;
+          }
+        }
+
+      }
+
+      let testBuilderTests = filtersAllied;
+
+      const testNamesForDropdown = testBuilderTests.map((test) => {
+        return {
+          test_name: test.test_name,
+          test_id: test.test_id,
+        }
+      });
+
+      window.location.hash = MODULE_MAIN;
+      return {
+        ...state,
+        testBuilderTests,
+        testNamesForDropdown,
+        selectedTestIndex: null,
+      }
+    }
+
+    case APPLY_TESTS_FILTERS: {
+      const origin = [...state.testsOrigin];
+      const filters = action.filters;
+      let filtersAllied = [];
+
+      if (filters.systems !== null && filters.stands !== null){
+        origin.map(t => {
+          let sys = false;
+          let stand = false;
+          if (t.a_system === filters.systems.label) {
+            sys = true;
+          }
+          if (t.stands.length > 0){
+            t.stands.map(s => {
+              if (s.label === filters.stands.label) stand = true;
+            });
+          }
+          if (sys && stand) filtersAllied.push(t);
+        });
+      } else {
+        if (filters.systems !== null){
+          origin.map(t => {
+            if (t.a_system === filters.systems.label) {
+              filtersAllied.push(t);
+            }
+          });
+        } else {
+          if (filters.stands !== null) {
+            origin.map(t => {
+              if (t.stands.length > 0)
+                t.stands.map(s => {
+                  if (s.label === filters.stands.label) filtersAllied.push(t);
+                });
+            });
+          } else {
+            filtersAllied = origin;
+          }
+        }
+
+      }
+      let testBuilderTests = filtersAllied;
+      const testNamesForDropdown = testBuilderTests.map((test) => {
+        return {
+          test_name: test.test_name,
+          test_id: test.test_id,
+        }
+      });
+
+      return {
+        ...state,
+        testBuilderTests,
+        testNamesForDropdown,
+        selectedTestIndex: null,
       }
     }
 

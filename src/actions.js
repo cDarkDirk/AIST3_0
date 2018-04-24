@@ -62,6 +62,9 @@ import {
   TEST_BUILDER_STANDS_FETCH_SUCCEED,
   DUPLICATE_CURRENT_TEST,
   TEST_STANDS_INPUT_CHANGE,
+  CLEAR_TEST_FILTER,
+  FILTERED_TEST_BY_TAGS_FETCH_SUCCEED,
+  APPLY_TESTS_FILTERS,
 } from './constants';
 
 export const groupNameChange = (payload) => ({
@@ -367,4 +370,19 @@ export const duplicateCurrentTest = () => ({
 export const testStandsInputChange = (stands) => ({
   type: TEST_STANDS_INPUT_CHANGE,
   stands,
+});
+
+export const clearTestFilter = () => ({
+  type: CLEAR_TEST_FILTER,
+});
+
+export const filteredTestByTagsFetchSucceed = (tests, filters) => ({
+  type: FILTERED_TEST_BY_TAGS_FETCH_SUCCEED,
+  tests,
+  filters,
+});
+
+export const applyTestsFilters = (filters) => ({
+  type: APPLY_TESTS_FILTERS,
+  filters,
 });

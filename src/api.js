@@ -570,13 +570,14 @@ export const submitFormMembers = (params) => (dispatch) => {
  * Запрос на фильтрацию по тегам.
  * @param tags - тело запроса (сами теги)
  * @param entity - название таблицы. На момент написания комментария доступны 'tests' и 'chain_templates'
+ * @param ...props - дополнительные параметры, для передачи в редьюсер, например другие фильтры
  * @param callback - функция для обработки возвращаемого значения
  */
-export const filterEntityByTags = (tags, entity, callback) => (dispatch) => {
+export const filterEntityByTags = (tags, entity, callback, {...props}) => (dispatch) => {
   const url = `${BACKEND_URL}/${entity}/filter`;
 
   axios.post(url, tags).then(function (response) {
-    dispatch(callback(response.data));
+    dispatch(callback(response.data, props));
   }).catch(function (response) {
     dispatch(error({message: "Request failed with error!" + response.message}));
   });
