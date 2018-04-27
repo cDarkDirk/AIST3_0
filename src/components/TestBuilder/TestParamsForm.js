@@ -5,6 +5,8 @@ import DropdownList from "../DropdownList/index";
 import Select from 'react-select';
 import {setTooltip} from '../../globalFunc';
 
+import './style.css'
+
 class TestParamsForm extends Component {
   render(){
     const {testBuilderTests, selectedTestIndex, systems, stands, testStandsInputChange} = this.props;
@@ -19,6 +21,7 @@ class TestParamsForm extends Component {
                     <InputGroup.Addon>Наименование теста</InputGroup.Addon>
                     <FormControl value={testBuilderTests[selectedTestIndex].test_name}
                                  onChange={(event) => this.props.handleInputChange(event.target.value, 'test_name')}
+                                 placeholder='Введите имя теста...'
                                  type="text"/>
                     <InputGroup.Button>
                       <DropdownList
@@ -51,6 +54,7 @@ class TestParamsForm extends Component {
                       wrapperStyle={{zIndex: '1', position: 'relative'}}
                       options={stands.length > 0 ? stands : []}
                       onChange={(stands) => testStandsInputChange(stands)}
+                      placeholder='Выберите стенд(ы) для теста...'
                       style={{borderRadius: '0 4px 4px 0'}}
                       value={testBuilderTests[selectedTestIndex].stands}
                       searchable={true}
@@ -66,6 +70,7 @@ class TestParamsForm extends Component {
                     <InputGroup.Addon>URL</InputGroup.Addon>
                     <FormControl value={testBuilderTests[selectedTestIndex].job_trigger.uri}
                                  style={{zIndex: '0', position: 'relative'}}
+                                 placeholder='Введите URL Jenkins...'
                                  onChange={(event) => this.props.handleInputChange(event.target.value, 'uri')}
                                  type="text"/>
                   </InputGroup>
@@ -75,6 +80,7 @@ class TestParamsForm extends Component {
                     <InputGroup.Addon>Login</InputGroup.Addon>
                     <FormControl value={testBuilderTests[selectedTestIndex].job_trigger.login}
                                  style={{zIndex: '0', position: 'relative'}}
+                                 placeholder='Введите login Jenkins...'
                                  onChange={(event) => this.props.handleInputChange(event.target.value, 'login')}
                                  type="text"/>
                   </InputGroup>
@@ -86,6 +92,7 @@ class TestParamsForm extends Component {
                     <InputGroup.Addon>Job name</InputGroup.Addon>
                     <FormControl value={testBuilderTests[selectedTestIndex].job_trigger.jobName}
                                  style={{zIndex: '0', position: 'relative'}}
+                                 placeholder='Введите имя Job...'
                                  onChange={(event) => this.props.handleInputChange(event.target.value, 'job_name')}
                                  type="text"/>
                   </InputGroup>
@@ -95,6 +102,7 @@ class TestParamsForm extends Component {
                     <InputGroup.Addon>Job token/pass</InputGroup.Addon>
                     <FormControl value={testBuilderTests[selectedTestIndex].job_trigger.passOrToken}
                                  style={{zIndex: '0', position: 'relative'}}
+                                 placeholder='Введите Job token/pass...'
                                  onChange={(event) => this.props.handleInputChange(event.target.value, 'passOrToken')}
                                  type="text"/>
                   </InputGroup>
@@ -110,9 +118,12 @@ class TestParamsForm extends Component {
                       id={'static' + testBuilderTests[selectedTestIndex].test_name}
                       multi={true}
                       options={[]}
-                      menuStyle={{display: 'none'}}
                       arrowRenderer={null}
+                      menuRenderer={null}
                       autosize={false}
+                      menuStyle={{display:'none'}}
+                      placeholder='Введите имя тега...'
+                      inputProps={{fixCaret: 'fixCaret'}}
                       shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
                       promptTextCreator={name => name}
                       onChange={(values) => this.props.handleTagInputChange(values, 'static')}
@@ -132,7 +143,9 @@ class TestParamsForm extends Component {
                       options={[]}
                       menuStyle={{display: 'none'}}
                       arrowRenderer={null}
+                      placeholder='Введите имя тега...'
                       autosize={false}
+                      inputProps={{fixCaret: 'fixCaret'}}
                       shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
                       promptTextCreator={name => name}
                       onChange={(values) => this.props.handleTagInputChange(values, 'dynamic')}

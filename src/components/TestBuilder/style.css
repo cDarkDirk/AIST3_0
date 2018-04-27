@@ -11,3 +11,7 @@
   z-index: 5;
   position: relative;
 }
+
+.Select-input input[fixCaret] {
+  margin-left: 0;
+}

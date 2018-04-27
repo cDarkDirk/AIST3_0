@@ -14,16 +14,55 @@
   font: 17px/19px SeroPro,Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 
-.homepage-button{
-  position: absolute;
-  margin-top:0.3%;
-  margin-left: 1%;
-  margin-right: 10%;
-  width: 2%;
+.bar-buttons {
+  float: right;
+  overflow: hidden;
+}
+
+.bar-buttons button{
+  border: none;
+  height: 50px;
+  width: 50px;
+  background-color: rgb(69,122,140);
+}
+
+.bar-buttons button > span {
+  color: rgb(255,255,255);
+}
+
+.bar-buttons button:hover {
+  background-color: rgb(84, 170, 192);
+}
+
+.bar-buttons button:hover > span{
+  color: #000;
 }
 
 .group-button{
   position: absolute;
   margin-top: 8px;
   margin-right: 10px;
+}
+
+.home-btn {
+  float: left;
+}
+
+.home-btn button{
+  border: none;
+  height: 50px;
+  width: 50px;
+  background-color: rgb(69,122,140);
+}
+
+.home-btn button > span {
+  color: #FFF;
+}
+
+.home-btn button:hover {
+  background-color: rgb(84, 170, 192);
+}
+
+.home-btn button:hover > span {
+  color: #000;
 }

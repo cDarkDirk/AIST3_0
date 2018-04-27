@@ -33,6 +33,24 @@
   background-color: rgb(84, 170, 192);
 }
 
+.column > div[disabled] {
+  color: rgb(120, 120, 120);
+
+}
+
+.column > div[disabled]:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid #CCC;
+  border-radius: 3px;
+  color: rgb(120, 120, 120);
+  text-align: center;
+  background-color: #CCCCCC;
+}
+.column > div[disabled]:hover h1 {
+  text-align: center;
+  background-color: #CCCCCC;
+}
+
 .system-name {
   position: relative;
   width: 100%;

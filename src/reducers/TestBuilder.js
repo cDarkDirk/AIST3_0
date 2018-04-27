@@ -89,14 +89,14 @@ const testBuilder = (state = initialState, action) => {
     }
     case ADD_NEW_TEST: {
       const newTestEntry = {
-        "test_name": "Brand new test",
+        "test_name": "",
         "job_trigger":
           {
-            "uri": "Enter Jenkins URL here...",
-            "login": "Enter Jenkins URL here...",
+            "uri": "",
+            "login": "",
             "params": {},
-            "jobName": "Enter job name here...",
-            "passOrToken": "Job pass or token..."
+            "jobName": "",
+            "passOrToken": ""
           },
         "tag_names": {"static": [], "dynamic": []},
         "a_system": '',
@@ -104,8 +104,7 @@ const testBuilder = (state = initialState, action) => {
         'modified': false
       };
       const testNamesForDropdown = [{
-        test_name: newTestEntry.test_name,
-        test_id: newTestEntry.test_id,
+        test_name: "newTest",
       },
         ...state.testNamesForDropdown,
       ];
@@ -254,7 +253,7 @@ const testBuilder = (state = initialState, action) => {
           test_id: test.test_id,
         }
       });
-      return{
+      return {
         ...state,
         testBuilderTests,
         testNamesForDropdown,
@@ -355,14 +354,14 @@ const testBuilder = (state = initialState, action) => {
       const filters = action.filters;
       let filtersAllied = [];
 
-      if (filters.systems !== null && filters.stands !== null){
+      if (filters.systems !== null && filters.stands !== null) {
         origin.map(t => {
           let sys = false;
           let stand = false;
           if (t.a_system === filters.systems.label) {
             sys = true;
           }
-          if (t.stands.length > 0){
+          if (t.stands.length > 0) {
             t.stands.map(s => {
               if (s.label === filters.stands.label) stand = true;
             });
@@ -370,7 +369,7 @@ const testBuilder = (state = initialState, action) => {
           if (sys && stand) filtersAllied.push(t);
         });
       } else {
-        if (filters.systems !== null){
+        if (filters.systems !== null) {
           origin.map(t => {
             if (t.a_system === filters.systems.label) {
               filtersAllied.push(t);
