@@ -23,6 +23,7 @@ function mapStateToProps(state) {
     chainTemplate: state.chainTemplates.chainTemplates[state.chainTemplates.selectedChainTemplate] || {tests: []},
     chainSelected: state.chainTemplates.selectedChainTemplate,
     chainName: state.chainTemplates.chainNames[state.chainTemplates.selectedChainTemplate] || '',
+    chainMarkers: state.chainTemplates.chainMarkers,
     notifications: state.notifications,
     chainNames: state.chainTemplates.chainNames,
     owner: state.dataAuthorization.paramNames.name,

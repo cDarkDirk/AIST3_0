@@ -54,7 +54,7 @@ class ChainEditorPage extends React.Component {
       addChainTemplate, updateChainTemplate, notifications,
       chainTemplateMarkerChanged, chainSelected, chainName,
       onChainSelected, duplicate, chainNames, owner,
-      dataTemplatesNames, selectedGroups,
+      dataTemplatesNames, selectedGroups, chainMarkers,
     } = this.props;
 
     const confirm = createConfirmation(ConfirmationDialog, 0);
@@ -175,16 +175,26 @@ class ChainEditorPage extends React.Component {
     const searchOpt = chainNames.map((chain,index) => {
       return {value:index, label:chain}
     });
+    const searchMarker = chainMarkers.map((chain,index) => {
+      return {value:index, label:chain}
+    });
     return [
       <Header owner={getUserName()}/>,
       <div className='container'>
         <Row>
           <Col md={3}>
+            <h5>Поиск по названию цепочки</h5>
             <SearchBar
               options={searchOpt}
               onOptionClick={onChainSelected}
             />
+            <h5>Поиск по маркеру цепочки</h5>
+            <SearchBar
+              options={searchMarker}
+              onOptionClick={onChainSelected}
+            />
             <ChainList/>
+
           </Col>
           <Col md={6}>
             <Row>

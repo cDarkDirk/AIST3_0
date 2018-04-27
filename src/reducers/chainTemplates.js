@@ -10,7 +10,7 @@ import {
   SUBMIT_CHAIN_TEMPLATE_SUCCEED,
   CHAIN_TEMPLATE_MARKER_CHANGED,
   DUPLICATE_CURRENT_CHAIN,
-  DATA_TEMPLATE_ADDED, GROUP_ADDED, HANDLE_GROUP_CHANGE,
+  DATA_TEMPLATE_ADDED, GROUP_ADDED,
 } from '../constants'
 
 const initialState = {
@@ -19,6 +19,7 @@ const initialState = {
   chainNames: [],
   owner:'',
   groups:[],
+  chainMarkers: [],
   dataTemplatesNames: [],
 };
 
@@ -32,17 +33,19 @@ const chainTemplateReducer = (state = initialState, action) => {
           return{label: name, value: name};
         });
         if (chain.groups) chain['groups'] = chain.groups.map((name, index) => {
-          return{label: name.name, value: index};
+          return{label: name, value: index};
         });
         return chain;
       });
       const chainNames = action.payload.map((chain) => chain.name);
-
+      const chainMarkers = action.payload.map((chain) => chain.marker);
+      console.log("groups- ", chainTemplates.groups);
       return {
         ...state,
         groups: chainTemplates.groups,
         chainTemplates,
         chainNames,
+        chainMarkers
       }
     }
 
