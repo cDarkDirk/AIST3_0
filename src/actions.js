@@ -57,7 +57,15 @@ import {
   FORM_GROUPS_FETCH_SUCCEED,
   FORM_GROUPS_FOR_MEMBERS_FETCH_SUCCEED,
   GROUP_ADDED,
-} from './constants'
+  TEST_BUILDER_AS_FETCH_SUCCEED,
+  TEST_AS_SELECTED,
+  TEST_BUILDER_STANDS_FETCH_SUCCEED,
+  DUPLICATE_CURRENT_TEST,
+  TEST_STANDS_INPUT_CHANGE,
+  CLEAR_TEST_FILTER,
+  FILTERED_TEST_BY_TAGS_FETCH_SUCCEED,
+  APPLY_TESTS_FILTERS,
+} from './constants';
 
 export const groupNameChange = (payload) => ({
   type: GROUP_NAME_CHANGE,
@@ -89,7 +97,6 @@ export const ordersCSVFetchFail = (payload) => ({
   payload,
 });
 
-
 export const loginButtonClicked = (payload) => ({
   type: LOGIN_BUTTON_CLICKED,
   payload,
@@ -99,7 +106,6 @@ export const loginPasswordChange = (payload) => ({
   type: LOGIN_PASSWORD_CHANGE,
   payload,
 });
-
 
 export const selectGroupForm =(payload)=> ({
   type: GROUP_SELECTED,
@@ -340,4 +346,43 @@ export const standsFetchSuccess = (stands) => ({
 export const launcherUserGroupsFetchSucceed = (groups) => ({
   type: LAUNCHER_USER_GROUPS_FETCH_SUCCEED,
   groups,
+});
+
+export const testBuilderAsFetchSucceed = (as) => ({
+  type: TEST_BUILDER_AS_FETCH_SUCCEED,
+  as,
+});
+
+export const testASSelected = (index) => ({
+  type: TEST_AS_SELECTED,
+  index,
+});
+
+export const testBuilderStandsFetchSucceed = (stands) => ({
+  type: TEST_BUILDER_STANDS_FETCH_SUCCEED,
+  stands,
+});
+
+export const duplicateCurrentTest = () => ({
+  type: DUPLICATE_CURRENT_TEST,
+});
+
+export const testStandsInputChange = (stands) => ({
+  type: TEST_STANDS_INPUT_CHANGE,
+  stands,
+});
+
+export const clearTestFilter = () => ({
+  type: CLEAR_TEST_FILTER,
+});
+
+export const filteredTestByTagsFetchSucceed = (tests, filters) => ({
+  type: FILTERED_TEST_BY_TAGS_FETCH_SUCCEED,
+  tests,
+  filters,
+});
+
+export const applyTestsFilters = (filters) => ({
+  type: APPLY_TESTS_FILTERS,
+  filters,
 });

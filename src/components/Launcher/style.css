@@ -25,5 +25,10 @@
   background-color: #fff;
   background-image: none;
   border: 1px solid #ccc;
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px 4px 4px 4px;
+}
+
+.main-panel {
+  margin-top: 1%;
+  position: relative;
 }

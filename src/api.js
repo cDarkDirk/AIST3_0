@@ -194,7 +194,7 @@ export const updateLoginForm = (payload, publicKey) => (dispatch) => {
   axios.post(url, payload).then(function (response) {
     payload.token = response.data.token;
     setCurrentUser(payload.login, response.data);
-    window.location.hash = '#/TDME2E';
+    window.location.hash = '#/homepage';
 
   }).catch(function (response) {
     payload.password = a;
@@ -377,19 +377,22 @@ export const testBuilderDataFetch = () => (dispatch) => {
  * Submit data to database
  */
 export const submitTest = (testObject) => (dispatch, getState) => {
-  /*let staticTags, dynamicTags;
-  if (testObject.test.tag_names.static)
-    staticTags = testObject.test.tag_names.static.map(t => t.value);
-  if (testObject.test.tag_names.dynamic)
-    dynamicTags = testObject.test.tag_names.dynamic.map(t => t.value);
-  let tags = {
-    static: staticTags ? staticTags : [],
-    dynamic: dynamicTags ? dynamicTags : [],
-  };*/
+  let staticTags, dynamicTags;
+  let tags = {};
+  if (testObject.test.tag_names.static.length > 0){
+    staticTags = testObject.test.tag_names.static.map(t => t.label);
+    tags.static = staticTags;
+  }
+  if (testObject.test.tag_names.dynamic.length > 0){
+    dynamicTags = testObject.test.tag_names.dynamic.map(t => t.label);
+    tags.dynamic = dynamicTags;
+  }
   const result = [{
     test_name: testObject.test.test_name,
     job_trigger: testObject.test.job_trigger,
-    tag_names: {},
+    tag_names: tags,
+    stands: testObject.test.stands,
+    a_system: testObject.test.a_system,
   }];
   const header = {headers: {SessionID : getToken()}};
   if (testObject.test.modified) {
@@ -541,7 +544,6 @@ export const getUsersGroups = () => (dispatch) => {
   const url = `${BACKEND_URL}/owners/personal/getGroups`;
   const header = {headers: {SessionID : getToken()}};
   axios.get(url, header).then(function (response) {
-    console.log('response',response);
     dispatch(launcherUserGroupsFetchSucceed(response.data))
   }).catch(function (response) {
     dispatch(error({message: "Fetch failed with error!" + response}));
@@ -563,3 +565,20 @@ export const submitFormMembers = (params) => (dispatch) => {
   });
 };
 
+/**
+ * All pages
+ * Запрос на фильтрацию по тегам.
+ * @param tags - тело запроса (сами теги)
+ * @param entity - название таблицы. На момент написания комментария доступны 'tests' и 'chain_templates'
+ * @param ...props - дополнительные параметры, для передачи в редьюсер, например другие фильтры
+ * @param callback - функция для обработки возвращаемого значения
+ */
+export const filterEntityByTags = (tags, entity, callback, {...props}) => (dispatch) => {
+  const url = `${BACKEND_URL}/${entity}/filter`;
+
+  axios.post(url, tags).then(function (response) {
+    dispatch(callback(response.data, props));
+  }).catch(function (response) {
+    dispatch(error({message: "Request failed with error!" + response.message}));
+  });
+};

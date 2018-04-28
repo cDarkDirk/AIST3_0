@@ -8,10 +8,7 @@ import {DropdownButton, MenuItem, OverlayTrigger} from "react-bootstrap";
  * options.
  *
  * id - ID компонента
- * onSelect - Функция, которая будет выполняться при выборе элемента
  * selLabel - Лейбл, который будет обображаться на самой кнопке
- * style - дополнительные стили, если нужно
- * bsStyle - бутсраповский стиль кнопки
  * options - массив значений
  * labelKey - Ключ, значение которого будет отображаться в выпадющем списке
  * selectedIndex - индекс текущего выбранного элемента в списке
@@ -21,14 +18,13 @@ class DropdownList extends Component {
   render() {
     const {
       id,
-      onSelect,
       selLabel = 'Select one...',
-      style,
       bsStyle = 'primary',
       options = [],
       labelKey = 'name',
       selectedIndex,
       tooltip,
+      ...props,
     } = this.props;
 
     const ddBodyTooltip = (
@@ -38,10 +34,9 @@ class DropdownList extends Component {
       >
         <DropdownButton
           id={id}
-          onSelect={onSelect}
-          title={selLabel}
           bsStyle={bsStyle}
-          style={style}
+          title={selLabel}
+          {...props}
         >
           {options && options.map((option, index) => {
             return (
@@ -57,10 +52,9 @@ class DropdownList extends Component {
     const ddBody = (
       <DropdownButton
         id={id}
-        onSelect={onSelect}
-        title={selLabel}
         bsStyle={bsStyle}
-        style={style}
+        title={selLabel}
+        {...props}
       >
         {options && options.map((option, index) => {
           return (
