@@ -14,7 +14,7 @@ import {
   duplicateCurrentChain,
   addDTToChain,
   addGroupToChain,
-  handleGroupChange,
+  handleGroupChange, clearTestFilter,
 } from '../actions'
 import ChainEditorPage from '../components/ChainEditorPage'
 
@@ -47,6 +47,7 @@ function mapDispatchToProps(dispatch) {
     addGroupToChain: (payload) => dispatch(addGroupToChain(payload)),
     addDTToChain: (payload) => dispatch(addDTToChain(payload)),
     fetchGroupsForMembers: () => dispatch(fetchGroupsForMembers()),
+    clearTestFilter: () => dispatch(clearTestFilter()),
   }
 }
 

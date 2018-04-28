@@ -1,7 +1,10 @@
 import React from 'react'
 import ChainDisplay from '../../containers/ChainDisplay'
 import ChainList from "../../containers/ChainList"
-import {Row, Col, Modal, FormGroup, InputGroup, FormControl,Button} from "react-bootstrap"
+import {Row, Col, Modal, FormGroup, InputGroup, FormControl,Button,   ButtonToolbar,
+  ToggleButtonGroup,
+  ToggleButton,
+  ButtonGroup,} from "react-bootstrap"
 import TestsList from "../../containers/TestsList"
 import Notifications from 'react-notification-system-redux'
 import './style.css'
@@ -28,6 +31,12 @@ class ChainEditorPage extends React.Component {
     this.state = {
       groups: [],
       show: false,
+      selectedFilter: [],
+      filters: {
+        tags: [],
+        systems: null,
+        stands: null,
+      }
     };
   }
 
@@ -48,14 +57,126 @@ class ChainEditorPage extends React.Component {
     this.setState({show: true});
   }
 
+  handleTestSelection = (index) => {
+    const {onChainSelected, systems, testBuilderTests} = this.props;
+    // if (testBuilderTests[index].a_system !== '') {
+    //   let sysIndex = systems.map(sys => sys.code).indexOf(testBuilderTests[index].a_system);
+    //   this.setState({selectedSystem: sysIndex});
+    // } else {
+    //   this.setState({selectedSystem: null});
+    // }
+    onChainSelected(index);
+  };
+
+  clearSearchInputs = (filter) => {
+    this.props.clearTestFilter();
+    this.setState({
+      selectedFilter: filter,
+      filters: {
+        tags: [],
+        systems: null,
+        stands: null,
+      }
+    });
+  };
+
+  // const searchOpt = chainNames.map((chain,index) => {
+  //   return {value:index, label:chain}
+  // });
+  // const searchMarker = chainMarkers.map((chain,index) => {
+  //   return {value:index, label:chain}
+  // });
+
+  renderSearches = () => {
+    const searchOpt = this.props.chainNames.map((test, index) => {
+      return {label: test, value: index}
+    });
+    const searchMarker = this.props.chainMarkers.map((test, index) => {
+      return {label: test, value: index}
+    });
+    const searchBarSwitcher = () => {
+      let searches = [];
+      let filters = [...this.state.selectedFilter];
+      let applyFiltersBtn = this.state.selectedFilter.length > 0 ? (
+        <Row>
+          <Button className={'pull-right'} style={{position: 'relative', marginRight: '14px', marginTop: '5px'}}
+                  onClick={this.handleApplyFiltersBtn}>Применить</Button>
+          <div className="clearfix"/>
+        </Row>
+      ) : null;
+      if (filters.length > 0) {
+        while (filters.length > 0) {
+          switch (filters.shift()) {
+            case 'tags': {
+              searches.push(
+                <Select.Creatable
+                  multi
+                  value={this.state.filters.tags}
+                  placeholder={'Фильтрация тестов по тегам...'}
+                  menuStyle={{display: 'none'}}
+                  arrowRenderer={null}
+                  options={[]}
+                  shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
+                  promptTextCreator={name => name}
+                  onChange={this.handleSearchTagCreation}
+                />
+              );
+              break;
+            }
+
+            case 'as': {
+              searches.push(
+                <Select
+                  className='test-filter'
+                  options={searchMarker}
+                  placeholder={'Фильтрация тестов по Маркерам...'}
+                  onChange={this.handleSysFilterInput}
+                  value={this.state.filters.systems}
+                />
+              );
+              break;
+            }
+
+            default:
+              break;
+          }
+
+        }
+      }
+      searches.push(applyFiltersBtn);
+      return searches;
+    };
+
+    return [
+      <SearchBar options={searchOpt} placeholder={'Поиск теста по названию...'}
+                 onOptionClick={this.handleTestSelection}/>,
+      <InputGroup style={{marginBottom: '5px', marginTop: '5px'}}>
+        <InputGroup.Addon>Фильтрация по:</InputGroup.Addon>
+        <ButtonToolbar>
+          <ButtonGroup>
+            <ToggleButtonGroup type='checkbox' name='searchesSwitcher' value={this.state.selectedFilter}
+                               onChange={searchType => this.clearSearchInputs(searchType)}>
+              <ToggleButton style={{borderRadius: '0'}} value={'tags'}>Тегам</ToggleButton>
+              <ToggleButton value={'as'}>Маркеру</ToggleButton>
+            </ToggleButtonGroup>
+            {this.state.selectedFilter.length > 0
+              ? <Button bsStyle='danger'
+                        onClick={() => this.clearSearchInputs([])}>Сброс</Button>
+              : null}
+          </ButtonGroup>
+        </ButtonToolbar>
+      </InputGroup>,
+      searchBarSwitcher()
+    ];
+  };
+
+
   render() {
     const {
       chainTemplate, chainTemplateNameChanged, deleteChainTemplate,
       addChainTemplate, updateChainTemplate, notifications,
       chainTemplateMarkerChanged, chainSelected, chainName,
-      onChainSelected, duplicate, chainNames, owner,
-      dataTemplatesNames, selectedGroups, chainMarkers,
-    } = this.props;
+      duplicate, owner, dataTemplatesNames, selectedGroups } = this.props;
 
     const confirm = createConfirmation(ConfirmationDialog, 0);
     const notify = createConfirmation(NotifyUser, 0);
@@ -176,26 +297,25 @@ class ChainEditorPage extends React.Component {
         </Col>
       </Row>
     ];
-    const searchOpt = chainNames.map((chain,index) => {
-      return {value:index, label:chain}
-    });
-    const searchMarker = chainMarkers.map((chain,index) => {
-      return {value:index, label:chain}
-    });
+
     return [
       <Header owner={getUserName()}/>,
       <div className='container chain-editor-main'>
         <Row>
           <Col md={3}>
-            <h5>Поиск по названию цепочки</h5>
-            <SearchBar
-              options={searchOpt}
-              onOptionClick={onChainSelected}
-            />
-            <h5>Поиск по маркеру цепочки</h5>
-            <SearchBar
-              options={searchMarker}
-              onOptionClick={onChainSelected}
+            {/*<h5>Поиск по названию цепочки</h5>*/}
+            {/*<SearchBar*/}
+              {/*options={searchOpt}*/}
+              {/*onOptionClick={onChainSelected}*/}
+            {/*/>*/}
+            {/*<h5>Поиск по маркеру цепочки</h5>*/}
+            {/*<SearchBar*/}
+              {/*options={searchMarker}*/}
+              {/*onOptionClick={onChainSelected}*/}
+            {/*/>*/}
+            <Toolbar
+              style={{marginLeft: 10}}
+              additionalElement={this.renderSearches()}
             />
             <ChainList/>
 
