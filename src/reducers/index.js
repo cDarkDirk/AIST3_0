@@ -12,6 +12,7 @@ import dataTemplatesBuilderReducer from "./DataTemplates"
 import dataDirectory from './dataDirectory'
 import dataAuthorization from './dataAuthorization'
 import dataPersonal from "./dataPersonal";
+import testList from "./testList";
 
 
 const rootReducer = combineReducers({
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   dataTemplatesBuilderReducer,
   notifications,
   dataDirectory,
+  testList,
 });
 
 export default rootReducer

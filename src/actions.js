@@ -65,6 +65,7 @@ import {
   CLEAR_TEST_FILTER,
   FILTERED_TEST_BY_TAGS_FETCH_SUCCEED,
   APPLY_TESTS_FILTERS,
+  TEST_LIST_TESTS_FETCH_SUCCEED,
 } from './constants';
 
 export const groupNameChange = (payload) => ({
@@ -251,6 +252,11 @@ export const fieldWasRemoved = (payload) => ({
 
 export const testBuilderTestsFetchSucceed = (payload) => ({
   type: TEST_BUILDER_TESTS_FETCH_SUCCEED,
+  payload: payload
+});
+
+export const testListTestsFetchSucceed = (payload) => ({
+  type: TEST_LIST_TESTS_FETCH_SUCCEED,
   payload: payload
 });
 

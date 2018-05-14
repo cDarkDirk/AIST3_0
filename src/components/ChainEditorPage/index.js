@@ -88,85 +88,25 @@ class ChainEditorPage extends React.Component {
   // });
 
   renderSearches = () => {
+    const {onChainSelected} = this.props;
     const searchOpt = this.props.chainNames.map((test, index) => {
       return {label: test, value: index}
     });
     const searchMarker = this.props.chainMarkers.map((test, index) => {
       return {label: test, value: index}
     });
-    const searchBarSwitcher = () => {
-      let searches = [];
-      let filters = [...this.state.selectedFilter];
-      let applyFiltersBtn = this.state.selectedFilter.length > 0 ? (
-        <Row>
-          <Button className={'pull-right'} style={{position: 'relative', marginRight: '14px', marginTop: '5px'}}
-                  onClick={this.handleApplyFiltersBtn}>Применить</Button>
-          <div className="clearfix"/>
-        </Row>
-      ) : null;
-      if (filters.length > 0) {
-        while (filters.length > 0) {
-          switch (filters.shift()) {
-            case 'tags': {
-              searches.push(
-                <Select.Creatable
-                  multi
-                  value={this.state.filters.tags}
-                  placeholder={'Фильтрация тестов по тегам...'}
-                  menuStyle={{display: 'none'}}
-                  arrowRenderer={null}
-                  options={[]}
-                  shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
-                  promptTextCreator={name => name}
-                  onChange={this.handleSearchTagCreation}
-                />
-              );
-              break;
-            }
-
-            case 'as': {
-              searches.push(
-                <Select
-                  className='test-filter'
-                  options={searchMarker}
-                  placeholder={'Фильтрация тестов по Маркерам...'}
-                  onChange={this.handleSysFilterInput}
-                  value={this.state.filters.systems}
-                />
-              );
-              break;
-            }
-
-            default:
-              break;
-          }
-
-        }
-      }
-      searches.push(applyFiltersBtn);
-      return searches;
-    };
 
     return [
-      <SearchBar options={searchOpt} placeholder={'Поиск теста по названию...'}
-                 onOptionClick={this.handleTestSelection}/>,
-      <InputGroup style={{marginBottom: '5px', marginTop: '5px'}}>
-        <InputGroup.Addon>Фильтрация по:</InputGroup.Addon>
-        <ButtonToolbar>
-          <ButtonGroup>
-            <ToggleButtonGroup type='checkbox' name='searchesSwitcher' value={this.state.selectedFilter}
-                               onChange={searchType => this.clearSearchInputs(searchType)}>
-              <ToggleButton style={{borderRadius: '0'}} value={'tags'}>Тегам</ToggleButton>
-              <ToggleButton value={'as'}>Маркеру</ToggleButton>
-            </ToggleButtonGroup>
-            {this.state.selectedFilter.length > 0
-              ? <Button bsStyle='danger'
-                        onClick={() => this.clearSearchInputs([])}>Сброс</Button>
-              : null}
-          </ButtonGroup>
-        </ButtonToolbar>
-      </InputGroup>,
-      searchBarSwitcher()
+      <SearchBar
+      options={searchOpt}
+      onOptionClick={onChainSelected}
+      placeholder = {'Поиск по цепочке'}
+      />,
+      <SearchBar
+      options={searchMarker}
+      onOptionClick={onChainSelected}
+      placeholder = {'Поиск по маркеру'}
+      />
     ];
   };
 
@@ -297,7 +237,12 @@ class ChainEditorPage extends React.Component {
         </Col>
       </Row>
     ];
-
+    const searchOpt = this.props.chainNames.map((test, index) => {
+      return {label: test, value: index}
+    });
+    const searchMarker = this.props.chainMarkers.map((test, index) => {
+      return {label: test, value: index}
+    });
     return [
       <Header owner={getUserName()}/>,
       <div className='container chain-editor-main'>
@@ -313,6 +258,7 @@ class ChainEditorPage extends React.Component {
               {/*options={searchMarker}*/}
               {/*onOptionClick={onChainSelected}*/}
             {/*/>*/}
+
             <Toolbar
               style={{marginLeft: 10}}
               additionalElement={this.renderSearches()}

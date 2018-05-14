@@ -21,7 +21,7 @@ import {
   ordersCSVFetchFail,
   submitRerunOrderSucceed,
   formGroupsFetchSucceed,
-  formGroupsForMembersFetchSucceed,
+  formGroupsForMembersFetchSucceed, testListTestsFetchSucceed,
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
@@ -367,6 +367,21 @@ export const testBuilderDataFetch = () => (dispatch) => {
 
   axios.get(url, header).then(function (response) {
     dispatch(testBuilderTestsFetchSucceed(response.data))
+  }).catch(function (response) {
+    dispatch(error({message: "Fetch failed with error!" + response}));
+  });
+};
+
+/**
+ * Test List
+ * fetching data from database
+ */
+export const testListDataFetch = () => (dispatch) => {
+  const url = `${BACKEND_URL}/tests`;
+  const header = {headers: {SessionID : getToken()}};
+
+  axios.get(url, header).then(function (response) {
+    dispatch(testListTestsFetchSucceed(response.data))
   }).catch(function (response) {
     dispatch(error({message: "Fetch failed with error!" + response}));
   });
