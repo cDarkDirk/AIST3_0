@@ -12,7 +12,7 @@ import {
   CLEAR_TEST_FILTER,
   FILTERED_TEST_BY_TAGS_FETCH_SUCCEED,
   APPLY_TESTS_FILTERS,
-  TEST_LIST_TESTS_FETCH_SUCCEED,
+  TEST_LIST_TESTS_FETCH_SUCCEED, TEST_LIST_SELECTED,
 } from '../constants'
 
 const initialState = {
@@ -82,7 +82,7 @@ const testList = (state = initialState, action) => {
       }
     }
 
-    case TEST_SELECTED: {
+    case TEST_LIST_SELECTED: {
       window.location.hash = MODULE_MAIN + state.testBuilderTests[action.payload].test_name;
       return {
         ...state,
