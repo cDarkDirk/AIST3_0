@@ -1,5 +1,5 @@
 import {
-    TEST_FETCH_SUCCEED,
+  TEST_FETCH_SUCCEED
 } from '../constants'
 
 const initialState = null;
