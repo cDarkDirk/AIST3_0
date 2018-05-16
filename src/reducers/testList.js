@@ -12,7 +12,7 @@ import {
   CLEAR_TEST_FILTER,
   FILTERED_TEST_BY_TAGS_FETCH_SUCCEED,
   APPLY_TESTS_FILTERS,
-  TEST_LIST_TESTS_FETCH_SUCCEED, TEST_LIST_SELECTED,
+  TEST_LIST_TESTS_FETCH_SUCCEED, TEST_LIST_SELECTED, TEST_LIST_AS_SELECTED, TEST_LIST_AS_FETCH_SUCCEED,
 } from '../constants'
 
 const initialState = {
@@ -29,8 +29,7 @@ const MODULE_MAIN = '#/chaineditor/';
 const testList = (state = initialState, action) => {
   switch (action.type) {
     case TEST_LIST_TESTS_FETCH_SUCCEED: {
-      console.log("БЫЛ ТУТ!")
-      const testNamesForDropdownTwo = action.payload.map((test) => {
+      const testNamesForDropdown2 = action.payload.map((test) => {
         return {
           test_name: test.test_name,
           test_id: test.test_id,
@@ -69,13 +68,13 @@ const testList = (state = initialState, action) => {
       return {
         ...state,
         testBuilderTests: adaptedTests,
-        testNamesForDropdownTwo: testNamesForDropdownTwo,
+        testNamesForDropdown: testNamesForDropdown2,
         selectedTestIndex: null,
         testsOrigin: adaptedTests,
       }
     }
 
-    case TEST_BUILDER_AS_FETCH_SUCCEED: {
+    case TEST_LIST_AS_FETCH_SUCCEED: {
       return {
         ...state,
         systems: action.as,
@@ -90,7 +89,7 @@ const testList = (state = initialState, action) => {
       }
     }
 
-    case TEST_AS_SELECTED: {
+    case TEST_LIST_AS_SELECTED: {
       let testBuilderTests = [...state.testBuilderTests];
       testBuilderTests[state.selectedTestIndex].a_system = state.systems[action.index].code;
       const newTest = testBuilderTests[state.selectedTestIndex].new;
@@ -113,7 +112,7 @@ const testList = (state = initialState, action) => {
 
     case CLEAR_TEST_FILTER: {
       const testBuilderTests = [...state.testsOrigin];
-      const testNamesForDropdownTwo = [...state.testsOrigin].map((test) => {
+      const testNamesForDropdown = [...state.testsOrigin].map((test) => {
         return {
           test_name: test.test_name,
           test_id: test.test_id,
@@ -122,12 +121,13 @@ const testList = (state = initialState, action) => {
       return {
         ...state,
         testBuilderTests,
-        testNamesForDropdownTwo,
+        testNamesForDropdown,
       }
     }
 
     case FILTERED_TEST_BY_TAGS_FETCH_SUCCEED: {
       const tests = [...action.tests];
+      console.log("TETS-0",tests );
       const adaptedTests = tests.map((current) => {
         current.modified = false;
         current.new = false;
@@ -199,7 +199,7 @@ const testList = (state = initialState, action) => {
 
       let testBuilderTests = filtersAllied;
 
-      const testNamesForDropdownTwo = testBuilderTests.map((test) => {
+      const testNamesForDropdown = testBuilderTests.map((test) => {
         return {
           test_name: test.test_name,
           test_id: test.test_id,
@@ -210,13 +210,14 @@ const testList = (state = initialState, action) => {
       return {
         ...state,
         testBuilderTests,
-        testNamesForDropdownTwo,
+        testNamesForDropdown,
         selectedTestIndex: null,
       }
     }
 
     case APPLY_TESTS_FILTERS: {
       const origin = [...state.testsOrigin];
+      console.log("origin", origin);
       const filters = action.filters;
       let filtersAllied = [];
 
@@ -256,7 +257,7 @@ const testList = (state = initialState, action) => {
 
       }
       let testBuilderTests = filtersAllied;
-      const testNamesForDropdownTwo = testBuilderTests.map((test) => {
+      const testNamesForDropdown = testBuilderTests.map((test) => {
         return {
           test_name: test.test_name,
           test_id: test.test_id,
@@ -266,7 +267,7 @@ const testList = (state = initialState, action) => {
       return {
         ...state,
         testBuilderTests,
-        testNamesForDropdownTwo,
+        testNamesForDropdown,
         selectedTestIndex: null,
       }
     }

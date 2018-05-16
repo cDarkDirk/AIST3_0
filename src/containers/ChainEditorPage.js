@@ -3,7 +3,7 @@ import {
   fetchChainTemplates,
   updateChainTemplate,
   fetchDataTemplates,
-  fetchGroupsForMembers, fetchBuilderChains,
+  fetchGroupsForMembers, fetchBuilderChains, filterEntityByTags,
 } from '../api'
 import {
   chainTemplateNameChanged,
@@ -14,7 +14,8 @@ import {
   duplicateCurrentChain,
   addDTToChain,
   addGroupToChain,
-  handleGroupChange, clearTestFilter,
+  handleGroupChange, clearTestFilter, filteredTestByTagsFetchSucceed, applyTestsFilters,
+  filteredTestByChainFetchSucceed, chainEditorTemplateFetchSucceed, applyChainsFilters, clearChainFilter,
 } from '../actions'
 import ChainEditorPage from '../components/ChainEditorPage'
 
@@ -47,7 +48,9 @@ function mapDispatchToProps(dispatch) {
     addGroupToChain: (payload) => dispatch(addGroupToChain(payload)),
     addDTToChain: (payload) => dispatch(addDTToChain(payload)),
     fetchGroupsForMembers: () => dispatch(fetchGroupsForMembers()),
-    clearTestFilter: () => dispatch(clearTestFilter()),
+    clearTestFilter: () => dispatch(clearChainFilter()),
+    filterTestsByTags: (tags, filters) => dispatch(filterEntityByTags(tags, 'chain_templates', chainEditorTemplateFetchSucceed, filters)),
+    applyTestsFilters: (filters) => dispatch(applyChainsFilters(filters)),
   }
 }
 

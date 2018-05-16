@@ -10,7 +10,8 @@ import {
   SUBMIT_CHAIN_TEMPLATE_SUCCEED,
   CHAIN_TEMPLATE_MARKER_CHANGED,
   DUPLICATE_CURRENT_CHAIN,
-  DATA_TEMPLATE_ADDED, GROUP_ADDED,
+  DATA_TEMPLATE_ADDED, GROUP_ADDED, APPLY_CHAINS_FILTERS, CLEAR_TEST_FILTER, CLEAR_CHAIN_FILTER,
+  ALL_CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
 } from '../constants'
 
 const initialState = {
@@ -21,10 +22,40 @@ const initialState = {
   groups:[],
   chainMarkers: [],
   dataTemplatesNames: [],
+  allChainTemplates: [],
 };
 
 const chainTemplateReducer = (state = initialState, action) => {
   switch (action.type) {
+
+    case ALL_CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED:{
+      const chainTemplates = action.payload.map((chain) => {
+        chain.modified = false;
+        chain.new = false;
+        if (chain.templates) chain['templates'] = chain.templates.map(name => {
+          return{label: name, value: name};
+        });
+        if (chain.groups) chain['groups'] = chain.groups.map((name, index) => {
+          return{label: name, value: index};
+        });
+        return chain;
+      });
+      const allChainTemplates = chainTemplates;
+      let chainNames = action.payload.map((chain) => chain.name);
+      let chainMarkersFind = [];
+      action.payload.map((chain) => {if (chainMarkersFind.indexOf(chain.marker)  === -1){
+        chainMarkersFind.push(chain.marker);
+        return chain.marker;
+      }});
+      return {
+        ...state,
+        groups: chainTemplates.groups,
+        chainTemplates,
+        chainNames,
+        chainMarkers : chainMarkersFind,
+        allChainTemplates,
+      }
+    }
     case CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED: {
       const chainTemplates = action.payload.map((chain) => {
         chain.modified = false;
@@ -37,15 +68,42 @@ const chainTemplateReducer = (state = initialState, action) => {
         });
         return chain;
       });
-      const chainNames = action.payload.map((chain) => chain.name);
-      const chainMarkers = action.payload.map((chain) => chain.marker);
-      console.log("groups- ", chainTemplates.groups);
+      let chainNames = action.payload.map((chain) => chain.name);
       return {
         ...state,
         groups: chainTemplates.groups,
         chainTemplates,
         chainNames,
-        chainMarkers
+      }
+    }
+
+    case APPLY_CHAINS_FILTERS: {
+      const filters = action.filters;
+      const chainTemplates = state.chainTemplates;
+      let filtersChainTemplates = [];
+      let filtersChainNames = [];
+      chainTemplates.map(t => {
+        if (t.marker === filters.marker.label) {
+          filtersChainNames.push(t.name);
+          filtersChainTemplates.push(t)
+        }
+      });
+
+      return {
+        ...state,
+        chainNames: filtersChainNames,
+        chainTemplates: filtersChainTemplates,
+      }
+    }
+
+    case CLEAR_CHAIN_FILTER: {
+      const chainTemplates = state.allChainTemplates;
+      const chainNames = chainTemplates.map((chain)=> chain.name);
+      window.location.hash = '#/chaineditor/';
+      return{
+        ...state,
+        chainTemplates,
+        chainNames,
       }
     }
 
@@ -81,9 +139,7 @@ const chainTemplateReducer = (state = initialState, action) => {
       allChainTemplates[selectedTemplateIndex] = {
         ...allChainTemplates[selectedTemplateIndex],
         tests: [...allChainTemplates[selectedTemplateIndex].tests,
-          {
-            id: action.payload.test_id
-          }],
+          action.payload.test_id],
         modified,
       };
       return {

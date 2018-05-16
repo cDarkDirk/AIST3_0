@@ -34,11 +34,60 @@ class ChainEditorPage extends React.Component {
       selectedFilter: [],
       filters: {
         tags: [],
-        systems: null,
+        marker: null,
         stands: null,
       }
     };
   }
+
+  handleSearchTagChainCreation = (tags) => {
+    if (tags.length > 0) {
+      this.setState({
+        filters: {
+          ...this.state.filters,
+          tags,
+        }
+      });
+    } else {
+      this.setState({
+        filters: {
+          ...this.state.filters,
+          tags: [],
+        }
+      });
+    }
+  };
+
+  handleMarkerFilterInput = (filterOpts) => {
+    if (filterOpts !== null) {
+      this.setState({
+        filters: {
+          ...this.state.filters,
+          marker: filterOpts,
+        }
+      });
+    } else {
+      this.setState({
+        filters: {
+          ...this.state.filters,
+          marker: null,
+        }
+      });
+    }
+  };
+
+  handleApplyFiltersBtn = () => {
+    if (this.state.filters.tags.length > 0) {
+      let formattedTags = {tag_names: this.state.filters.tags.map(t => t.label)};
+      this.props.filterTestsByTags(formattedTags, this.state.filters);
+    } else {
+      if (this.state.filters.marker !== null) {
+        this.props.applyTestsFilters(this.state.filters);
+      } else {
+        this.props.clearTestFilter();
+      }
+    }
+  };
 
   handleGroupChange(groups){
     this.setState({groups});
@@ -57,35 +106,16 @@ class ChainEditorPage extends React.Component {
     this.setState({show: true});
   }
 
-  handleTestSelection = (index) => {
-    const {onChainSelected, systems, testBuilderTests} = this.props;
-    // if (testBuilderTests[index].a_system !== '') {
-    //   let sysIndex = systems.map(sys => sys.code).indexOf(testBuilderTests[index].a_system);
-    //   this.setState({selectedSystem: sysIndex});
-    // } else {
-    //   this.setState({selectedSystem: null});
-    // }
-    onChainSelected(index);
-  };
-
   clearSearchInputs = (filter) => {
     this.props.clearTestFilter();
     this.setState({
       selectedFilter: filter,
       filters: {
         tags: [],
-        systems: null,
-        stands: null,
+        marker: null,
       }
     });
   };
-
-  // const searchOpt = chainNames.map((chain,index) => {
-  //   return {value:index, label:chain}
-  // });
-  // const searchMarker = chainMarkers.map((chain,index) => {
-  //   return {value:index, label:chain}
-  // });
 
   renderSearches = () => {
     const {onChainSelected} = this.props;
@@ -96,17 +126,81 @@ class ChainEditorPage extends React.Component {
       return {label: test, value: index}
     });
 
+    const searchBarSwitcher = () => {
+      let searches = [];
+      let filters = [...this.state.selectedFilter];
+      let applyFiltersBtn = this.state.selectedFilter.length > 0 ? (
+        <Row>
+          <Button className={'pull-right'} style={{position: 'relative', marginRight: '14px', marginTop: '5px'}}
+                  onClick={this.handleApplyFiltersBtn}>Применить</Button>
+          <div className="clearfix"/>
+        </Row>
+      ) : null;
+      if (filters.length > 0) {
+        while (filters.length > 0) {
+          switch (filters.shift()) {
+            case 'tags': {
+              searches.push(
+                <Select.Creatable
+                  multi
+                  value={this.state.filters.tags}
+                  placeholder={'Фильтрация тестов по тегам...'}
+                  menuStyle={{display: 'none'}}
+                  arrowRenderer={null}
+                  options={[]}
+                  shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
+                  promptTextCreator={name => name}
+                  onChange={this.handleSearchTagChainCreation}
+                />
+              );
+              break;
+            }
+
+            case 'marker': {
+              searches.push(
+                <Select
+                  className='test-filter'
+                  options={searchMarker}
+                  placeholder={'Фильтрация тестов по маркеру...'}
+                  onChange={this.handleMarkerFilterInput}
+                  value={this.state.filters.marker}
+                />
+              );
+              break;
+            }
+
+
+            default:
+              break;
+          }
+
+        }
+      }
+      searches.push(applyFiltersBtn);
+      return searches;
+    };
+
     return [
-      <SearchBar
-      options={searchOpt}
-      onOptionClick={onChainSelected}
-      placeholder = {'Поиск по цепочке'}
-      />,
-      <SearchBar
-      options={searchMarker}
-      onOptionClick={onChainSelected}
-      placeholder = {'Поиск по маркеру'}
-      />
+      <SearchBar options={searchOpt} placeholder={'Поиск теста по названию...'}
+                 onOptionClick={onChainSelected}/>,
+      <InputGroup style={{marginBottom: '5px', marginTop: '5px'}}>
+        <InputGroup.Addon>Фильтры:</InputGroup.Addon>
+        <ButtonToolbar>
+          <ButtonGroup>
+            <ToggleButtonGroup type='checkbox' name='searchesSwitcher' value={this.state.selectedFilter}
+                               onChange={searchType => this.clearSearchInputs(searchType)}>
+              <ToggleButton style={{borderRadius: '0'}} value={'tags'}>Тегам</ToggleButton>
+              <ToggleButton value={'marker'}>Маркеру</ToggleButton>
+            </ToggleButtonGroup>
+            {this.state.selectedFilter.length > 0
+              ? <Button bsStyle='danger'
+                        onClick={() => this.clearSearchInputs([])}>Сброс</Button>
+              : null}
+          </ButtonGroup>
+        </ButtonToolbar>
+      </InputGroup>,
+
+      searchBarSwitcher(),
     ];
   };
 
@@ -248,17 +342,6 @@ class ChainEditorPage extends React.Component {
       <div className='container chain-editor-main'>
         <Row>
           <Col md={3}>
-            {/*<h5>Поиск по названию цепочки</h5>*/}
-            {/*<SearchBar*/}
-              {/*options={searchOpt}*/}
-              {/*onOptionClick={onChainSelected}*/}
-            {/*/>*/}
-            {/*<h5>Поиск по маркеру цепочки</h5>*/}
-            {/*<SearchBar*/}
-              {/*options={searchMarker}*/}
-              {/*onOptionClick={onChainSelected}*/}
-            {/*/>*/}
-
             <Toolbar
               style={{marginLeft: 10}}
               additionalElement={this.renderSearches()}

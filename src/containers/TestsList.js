@@ -8,7 +8,7 @@ import {
   applyTestsFilters,
   clearTestFilter, duplicateCurrentTest, filteredTestByTagsFetchSucceed, newTestAdded, testASSelected, testBlockClicked,
   testBuilderAsFetchSucceed, testBuilderFormInputChanged,
-  testBuilderStandsFetchSucceed,
+  testBuilderStandsFetchSucceed, testListAsFetchSucceed, testListASSelected, testListSelected,
   testSelected, testStandsInputChange
 } from '../actions'
 import test from "../reducers/test";
@@ -22,8 +22,7 @@ function mapStateToProps(state) {
       testBuilderTests: state.testList.testBuilderTests,
       notifications: state.notifications,
       selectedTestIndex: state.testList.selectedTestIndex,
-      testNamesForDropdownTwo: state.testList.testNamesForDropdownTwo,
-      // testNamesForDropdown: state.test,
+      testNamesForDropdown: state.testList.testNamesForDropdown,
       testName: state.testList.testName,
       owner: state.dataAuthorization.paramNames.name,
       systems: state.testList.systems,
@@ -37,11 +36,11 @@ function mapDispatchToProps(dispatch) {
       fetchTests: () => dispatch(fetchTests()),
       testBlockClicked: (test) => dispatch(testBlockClicked(test)),
       getTests: () => dispatch(testListDataFetch()),
-      setSelectedTestIndex: (index) => dispatch(testSelected(index)),
+      setSelectedTestIndex: (index) => dispatch(testListSelected(index)),
       submitCurrentTest: (testObject) => dispatch(submitTest(testObject)),
-      getAS: () => dispatch(getDictionaryData('systems', testBuilderAsFetchSucceed)),
+      getAS: () => dispatch(getDictionaryData('systems', testListAsFetchSucceed)),
       getStands: () => dispatch(getDictionaryData('stands', testBuilderStandsFetchSucceed)),
-      sysIndexChanged: (index) => dispatch(testASSelected(index)),
+      sysIndexChanged: (index) => dispatch(testListASSelected(index)),
       filterTestsByTags: (tags, filters) => dispatch(filterEntityByTags(tags, 'tests', filteredTestByTagsFetchSucceed, filters)),
       clearTestFilter: () => dispatch(clearTestFilter()),
       applyTestsFilters: (filters) => dispatch(applyTestsFilters(filters)),

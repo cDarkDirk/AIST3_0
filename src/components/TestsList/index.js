@@ -1,11 +1,17 @@
 import React from 'react'
-import TestBlock from '../TestBlock'
 import './style.css'
 import SearchBar from "../SearchBar";
-import {Row, InputGroup,Button,   ButtonToolbar,
+import {
+  Button,
+  ListGroupItem,
+  InputGroup,
+  Row,
+  Label,
+  ButtonToolbar,
   ToggleButtonGroup,
   ToggleButton,
-  ButtonGroup} from "react-bootstrap"
+  ButtonGroup,
+} from 'react-bootstrap'
 import Toolbar from "../toolbar"
 import Select from 'react-select'
 
@@ -28,6 +34,7 @@ class TestsList extends React.Component {
   }
   componentDidMount() {
     this.props.fetchTests();
+    this.props.getTests();
     this.props.getAS();
     this.props.getStands();
   }
@@ -114,45 +121,20 @@ class TestsList extends React.Component {
   handleTestSelection = (index) => {
     const {setSelectedTestIndex, systems, testBuilderTests} = this.props;
     if (testBuilderTests[index].a_system !== '') {
-    console.log("Test "  +  testBuilderTests);
       let sysIndex = systems.map(sys => sys.code).indexOf(testBuilderTests[index].a_system);
       this.setState({selectedSystem: sysIndex});
     } else {
       this.setState({selectedSystem: null});
     }
     setSelectedTestIndex(index);
-  };
-
-  handleSubmitButtonClick = () => {
-    const {testBuilderTests, selectedTestIndex, testNamesForDropdown, systems, submitCurrentTest} = this.props;
-    let test = {...testBuilderTests[selectedTestIndex]};
-    let id = testNamesForDropdown[selectedTestIndex].test_id;
-    let currentStands = test.stands.map(stand => stand.label);
-    test.a_system = systems[this.state.selectedSystem].code;
-    test.stands = currentStands;
-    submitCurrentTest({test, id});
+    const test = {test_name: testBuilderTests[index].name, test_id: testBuilderTests[index].test_id};
+    this.props.testBlockClicked(test);
   };
 
   renderSearches = () => {
-    // const searchMarker = this.props.chainMarkers.map((test, index) => {
-    //   return {label: test, value: index}
-    // });
-    // console.log(this.props.testNamesForDropdown);
-    // const searchOpt = this.props.testNamesForDropdown.map((test, index) => {
-    //   return {label: test.test_name, value: index}
-    // });
-    const searchOpt2 = this.props.testNamesForDropdown;
-    // console.log("drop2 " + this.props.tests);
-    const tests = this.props.tests || [];
-    const selectedChainTemplateTests = this.props.selectedChainTemplate.tests || [];
-    const filteredTests = tests.filter(t => {
-      const testInChain = selectedChainTemplateTests.find((element) => {
-        return element.id === t.test_id
-      });
-      return !testInChain
-    });
-    const searchOpt = filteredTests.map((test) => {
-      return {label: test.test_name, value: test}
+    const {testNamesForDropdown} = this.props;
+    const searchOpt = this.props.testNamesForDropdown.map((test, index) => {
+      return {label: test.test_name, value: index}
     });
     const sysToSearchThrough = this.props.systems.map((sys, idx) => {
       return {label: sys.code, value: idx}
@@ -243,41 +225,41 @@ class TestsList extends React.Component {
           </ButtonGroup>
         </ButtonToolbar>
       </InputGroup>,
-      searchBarSwitcher()
+      searchBarSwitcher(),
+      <Row>
+      {testNamesForDropdown !== undefined ? this.renderTestsList() : null}
+      </Row>,
+
     ];
   };
+  renderTestsList = () => {
+    const {
+      testBuilderTests,
+      selectedTestIndex,
+      testNamesForDropdown,
+    } = this.props;
+    return (testNamesForDropdown.map((test, index) => {
+        return (
+        <ListGroupItem className='use-test-button' onClick={() => {
+          this.handleTestSelection( index)
+        }}   active={index === selectedTestIndex}
+             key={index}>
+          {test.test_name}
+          {testBuilderTests[index].modified && <Label style={{marginLeft: 5}} bsStyle="warning">Modified</Label>}
+          {testBuilderTests[index].new && <Label style={{marginLeft: 5}} bsStyle="primary">New</Label>}
+        </ListGroupItem>
+        )}));
+
+  };
+
 
   render() {
-    const tests = this.props.tests || [];
-    const selectedChainTemplateTests = this.props.selectedChainTemplate.tests || [];
-    const filteredTests = tests.filter(t => {
-      const testInChain = selectedChainTemplateTests.find((element) => {
-        return element.id === t.test_id
-      });
-      return !testInChain
-    });
-    // const options = filteredTests.map((test) => {
-    //   return {label: test.test_name, value: test}
-    // });
     return [
       <ol>
         <Toolbar
           style={{marginLeft: 10}}
           additionalElement={this.renderSearches()}
         />
-        {/*<SearchBar*/}
-          {/*options={options}*/}
-          {/*onOptionClick={this.props.testBlockClicked}*/}
-        {/*/>*/}
-        {filteredTests.map((test, idx) => {
-          return (
-            <div className='use-test-button' onClick={() => {
-              this.props.testBlockClicked(test)
-            }} key={idx}>
-              <TestBlock id={test.test_id} name={test.test_name} description="" showArrow={false}/>
-            </div>
-          )
-        })}
       </ol>
     ]
   }

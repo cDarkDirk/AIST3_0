@@ -189,7 +189,6 @@ class TestBuilderPage extends React.Component {
   };
 
   renderSearches = () => {
-    console.log("1" + this.props.testNamesForDropdown);
     const searchOpt = this.props.testNamesForDropdown.map((test, index) => {
       return {label: test.test_name, value: index}
     });
