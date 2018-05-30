@@ -144,7 +144,7 @@ class TestsList extends React.Component {
       let filters = [...this.state.selectedFilter];
       let applyFiltersBtn = this.state.selectedFilter.length > 0 ? (
         <Row>
-          <Button className={'pull-right'} style={{position: 'relative', marginRight: '14px', marginTop: '5px'}}
+          <Button style={{position: 'relative', marginRight: '14px', marginTop: '5px'}} className={'pull-right'}
                   onClick={this.handleApplyFiltersBtn}>Применить</Button>
           <div className="clearfix"/>
         </Row>
@@ -208,13 +208,13 @@ class TestsList extends React.Component {
     return [
       <SearchBar options={searchOpt} placeholder={'Поиск теста по названию...'}
                  onOptionClick={this.handleTestSelection}/>,
-      <InputGroup style={{marginBottom: '5px', marginTop: '5px'}}>
+      <InputGroup  style={{marginBottom: '5px', marginTop: '5px'}} >
         <InputGroup.Addon>Фильтры:</InputGroup.Addon>
         <ButtonToolbar>
           <ButtonGroup>
             <ToggleButtonGroup type='checkbox' name='searchesSwitcher' value={this.state.selectedFilter}
                                onChange={searchType => this.clearSearchInputs(searchType)}>
-              <ToggleButton style={{borderRadius: '0'}} value={'tags'}>Тегам</ToggleButton>
+              <ToggleButton style={{borderRadius: '0'}}  value={'tags'}>Тегам</ToggleButton>
               <ToggleButton value={'as'}>АС</ToggleButton>
               <ToggleButton value={'stand'}>Контуру</ToggleButton>
             </ToggleButtonGroup>
@@ -225,11 +225,7 @@ class TestsList extends React.Component {
           </ButtonGroup>
         </ButtonToolbar>
       </InputGroup>,
-      searchBarSwitcher(),
-      <Row>
-      {testNamesForDropdown !== undefined ? this.renderTestsList() : null}
-      </Row>,
-
+      searchBarSwitcher()
     ];
   };
   renderTestsList = () => {
@@ -254,12 +250,16 @@ class TestsList extends React.Component {
 
 
   render() {
+    const {testNamesForDropdown} =this.props;
     return [
       <ol>
         <Toolbar
-          style={{marginLeft: 10}}
+          style={{marginLeft: -40, marginRight:-40}}
           additionalElement={this.renderSearches()}
         />
+        <Row>
+          {testNamesForDropdown !== undefined ? this.renderTestsList() : null}
+        </Row>
       </ol>
     ]
   }

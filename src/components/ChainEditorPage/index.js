@@ -343,7 +343,6 @@ class ChainEditorPage extends React.Component {
         <Row>
           <Col md={3}>
             <Toolbar
-              style={{marginLeft: 10}}
               additionalElement={this.renderSearches()}
             />
             <ChainList/>
