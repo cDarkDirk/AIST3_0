@@ -10,7 +10,7 @@ const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, chainN
       chainSelected(idx);
     }
   });
-  return (<ListGroup>
+  return (<ListGroup style={{ maxHeight: '1080px', overflow: 'auto'}}>
     {
       chainNames.map((chain, idx) => {
         return <ListGroupItem

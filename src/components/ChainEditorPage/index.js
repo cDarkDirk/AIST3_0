@@ -1,7 +1,7 @@
 import React from 'react'
 import ChainDisplay from '../../containers/ChainDisplay'
 import ChainList from "../../containers/ChainList"
-import {Row, Col, Modal, FormGroup, InputGroup, FormControl,Button,   ButtonToolbar,
+import {Row, Col, Modal, FormGroup, InputGroup, FormControl,Button,   ButtonToolbar, ListGroup,
   ToggleButtonGroup,
   ToggleButton,
   ButtonGroup,} from "react-bootstrap"
@@ -369,7 +369,7 @@ class ChainEditorPage extends React.Component {
             </Row>
             <div style={{height: '10px'}}/>
             <Row>
-              <ChainDisplay chainTemplate={chainTemplate}/>
+                <ChainDisplay chainTemplate={chainTemplate}/>
             </Row>
           </Col>
           <Col md={3}>

@@ -4,6 +4,7 @@ import SearchBar from "../SearchBar";
 import {
   Button,
   ListGroupItem,
+  ListGroup,
   InputGroup,
   Row,
   Label,
@@ -119,14 +120,14 @@ class TestsList extends React.Component {
   };
 
   handleTestSelection = (index) => {
-    const {setSelectedTestIndex, systems, testBuilderTests} = this.props;
+    const {setSelectedTestIndex, systems, testBuilderTests, testNamesForDropdown} = this.props;
     if (testBuilderTests[index].a_system !== '') {
       let sysIndex = systems.map(sys => sys.code).indexOf(testBuilderTests[index].a_system);
       this.setState({selectedSystem: sysIndex});
     } else {
       this.setState({selectedSystem: null});
     }
-    setSelectedTestIndex(index);
+    // setSelectedTestIndex(index);
     const test = {test_name: testBuilderTests[index].name, test_id: testBuilderTests[index].test_id};
     this.props.testBlockClicked(test);
   };
@@ -238,8 +239,12 @@ class TestsList extends React.Component {
         return (
         <ListGroupItem className='use-test-button' onClick={() => {
           this.handleTestSelection( index)
-        }}   active={index === selectedTestIndex}
-             key={index}>
+         }}
+             key={index} showArrow={false}>
+          {/*active={index === selectedTestIndex}*/}
+          {/*if (test.index !== index){*/}
+            {/*{test.test_name}*/}
+          {/*}*/}
           {test.test_name}
           {testBuilderTests[index].modified && <Label style={{marginLeft: 5}} bsStyle="warning">Modified</Label>}
           {testBuilderTests[index].new && <Label style={{marginLeft: 5}} bsStyle="primary">New</Label>}
@@ -250,7 +255,7 @@ class TestsList extends React.Component {
 
 
   render() {
-    const {testNamesForDropdown} =this.props;
+    const {testNamesForDropdown} = this.props;
     return [
       <ol>
         <Toolbar
@@ -258,7 +263,9 @@ class TestsList extends React.Component {
           additionalElement={this.renderSearches()}
         />
         <Row>
-          {testNamesForDropdown !== undefined ? this.renderTestsList() : null}
+          <ListGroup style={{marginLeft: -5, marginRight: -5, maxHeight: '1080px', overflow: 'auto'}}>
+            {testNamesForDropdown !== undefined ? this.renderTestsList() : null}
+          </ListGroup>
         </Row>
       </ol>
     ]
