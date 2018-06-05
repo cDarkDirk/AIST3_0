@@ -122,7 +122,8 @@ class TestsList extends React.Component {
   handleTestSelection = (index) => {
     const {setSelectedTestIndex, systems, testBuilderTests, testNamesForDropdown, filteredTests} = this.props;
     const selectedChainTemplateTests = this.props.selectedChainTemplate.tests || [];
-    if (selectedChainTemplateTests.length !== 0) {
+    const selectedChainTemplateIndex = this.props.selectedChainTemplateIndex;
+    if (selectedChainTemplateIndex !== null) {
       const testBuilderTests2 = testBuilderTests.filter(t => {
         const testInChain = selectedChainTemplateTests.find((element) => {
           return element === t.test_id

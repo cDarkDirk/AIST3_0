@@ -22,6 +22,7 @@ function mapStateToProps(state) {
         selectedChainTemplate: state.chainTemplates.chainTemplates[state.chainTemplates.selectedChainTemplate] || {
             tests: []
         },
+      selectedChainTemplateIndex : state.chainTemplates.selectedChainTemplate,
       testBuilderTests: state.testList.testBuilderTests,
       notifications: state.notifications,
       selectedTestIndex: state.testList.selectedTestIndex,
