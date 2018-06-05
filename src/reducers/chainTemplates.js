@@ -68,14 +68,19 @@ const chainTemplateReducer = (state = initialState, action) => {
       let filtersAllied = [];
       const filters = action.filters;
       let chainTemplates = [...action.chain_templates];
+      let chainNamesForDropdown = chainTemplates.map((chain) => chain.name);
       if (filters.marker !== null) {
         chainTemplates.map(t => {
           if (t.marker === filters.marker.label) {
             filtersAllied.push(t);
           }
         });
+       chainNamesForDropdown = filtersAllied.map((chain) => chain.name);
       }
-      let chainNamesForDropdown = filtersAllied.map((chain) => chain.name);
+      if (filtersAllied = []){
+        filtersAllied = [...action.chain_templates];
+      }
+
       return {
         ...state,
         chainTemplates: filtersAllied,
