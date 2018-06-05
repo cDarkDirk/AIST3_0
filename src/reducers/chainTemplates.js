@@ -237,11 +237,13 @@ const chainTemplateReducer = (state = initialState, action) => {
         },
         ...state.chainTemplates];
       const chainNames = chainTemplates.map(chain => chain.name);
+      const chainNamesForDropdown = chainNames;
       return {
         ...state,
         selectedChainTemplate: 0,
         chainTemplates,
         chainNames,
+        chainNamesForDropdown,
       }
     }
 
@@ -250,10 +252,12 @@ const chainTemplateReducer = (state = initialState, action) => {
       chainTemplates[state.selectedChainTemplate].modified = false;
       chainTemplates[state.selectedChainTemplate].new = false;
       const chainNames = chainTemplates.map(chain => chain.name);
+      const chainNamesForDropdown = chainNames;
       return {
         ...state,
         chainTemplates,
         chainNames,
+        chainNamesForDropdown,
       }
     }
 
@@ -283,10 +287,12 @@ const chainTemplateReducer = (state = initialState, action) => {
           ...oldChainTemplates,
       ];
       const chainNames = chainTemplates.map(chain => chain.name);
+      const chainNamesForDropdown = chainNames;
       return {
         ...state,
         chainTemplates,
         chainNames,
+        chainNamesForDropdown,
       }
     }
 

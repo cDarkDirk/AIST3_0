@@ -135,7 +135,6 @@ class TestsList extends React.Component {
       } else {
         this.setState({selectedSystem: null});
       }
-      // setSelectedTestIndex(index);
       const test = {test_name: testBuilderTests2[index].name, test_id: testBuilderTests2[index].test_id};
       this.props.testBlockClicked(test);
     }
@@ -264,8 +263,8 @@ class TestsList extends React.Component {
           this.handleTestSelection( index)
         }} key={index}>
           {test.test_name}
-          {testBuilderTests[index].modified && <Label style={{marginLeft: 5}} bsStyle="warning">Modified</Label>}
-          {testBuilderTests[index].new && <Label style={{marginLeft: 5}} bsStyle="primary">New</Label>}
+          {/*{testBuilderTests[index].modified && <Label style={{marginLeft: 5}} bsStyle="warning">Modified</Label>}*/}
+          {/*{testBuilderTests[index].new && <Label style={{marginLeft: 5}} bsStyle="primary">New</Label>}*/}
           </ListGroupItem>
       )}));
 
