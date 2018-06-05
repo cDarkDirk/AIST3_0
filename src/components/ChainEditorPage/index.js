@@ -1,7 +1,14 @@
 import React from 'react'
 import ChainDisplay from '../../containers/ChainDisplay'
 import ChainList from "../../containers/ChainList"
-import {Row, Col, Modal, FormGroup, InputGroup, FormControl,Button,   ButtonToolbar, ListGroup,
+import {Row,
+  Col,
+  Modal,
+  FormGroup,
+  InputGroup,
+  FormControl,
+  Button,
+  ButtonToolbar,
   ToggleButtonGroup,
   ToggleButton,
   ButtonGroup,} from "react-bootstrap"

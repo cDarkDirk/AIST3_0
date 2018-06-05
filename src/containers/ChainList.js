@@ -9,6 +9,7 @@ function mapStateToProps(state) {
       chainTemplates: state.chainTemplates.chainTemplates,
       selectedChainTemplate: state.chainTemplates.selectedChainTemplate,
       chainNames: state.chainTemplates.chainNames,
+      chainNamesForDropdown : state.chainTemplates.chainNamesForDropdown,
     }
 }
 

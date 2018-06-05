@@ -21,7 +21,9 @@ import {
   ordersCSVFetchFail,
   submitRerunOrderSucceed,
   formGroupsFetchSucceed,
-  formGroupsForMembersFetchSucceed, testListTestsFetchSucceed, allChainEditorTemplateFetchSucceed,
+  formGroupsForMembersFetchSucceed,
+  testListTestsFetchSucceed,
+  allChainEditorTemplateFetchSucceed,
 } from './actions';
 import axios from 'axios';
 import {BACKEND_URL} from "./constants/endpoints";
@@ -272,7 +274,6 @@ export const updateChainTemplate = (chainTemplate) => (dispatch, getState) => {
     groups: chainTemplate.value.groups.map(t => t.label),
   };
   const header = {headers: {SessionID : getToken()}};
-  console.log("chainTemplate", chainTemplate);
   if (chainTemplate.value.modified) {
     const url = `${BACKEND_URL}/chain_templates/${chainTemplate.name}`;
     axios.post(url, [requestBody], header).then(function () {

@@ -1,18 +1,12 @@
 import {
-  TEST_BUILDER_TESTS_FETCH_SUCCEED,
-  TEST_SELECTED,
-  TEST_BUILDER_FORM_INPUT_CHANGED,
-  ADD_NEW_TEST,
-  RESET_MODIFICATION_MARKERS,
-  TEST_BUILDER_AS_FETCH_SUCCEED,
-  TEST_AS_SELECTED,
   TEST_BUILDER_STANDS_FETCH_SUCCEED,
-  DUPLICATE_CURRENT_TEST,
-  TEST_STANDS_INPUT_CHANGE,
   CLEAR_TEST_FILTER,
-  FILTERED_TEST_BY_TAGS_FETCH_SUCCEED,
   APPLY_TESTS_FILTERS,
-  TEST_LIST_TESTS_FETCH_SUCCEED, TEST_LIST_SELECTED, TEST_LIST_AS_SELECTED, TEST_LIST_AS_FETCH_SUCCEED,
+  TEST_LIST_TESTS_FETCH_SUCCEED,
+  TEST_LIST_SELECTED,
+  TEST_LIST_AS_SELECTED,
+  TEST_LIST_AS_FETCH_SUCCEED,
+  FILTERED_TEST_BY_TAGS_FETCH_SUCCEED_CHAIN_EDITOR,
 } from '../constants'
 
 const initialState = {
@@ -125,9 +119,8 @@ const testList = (state = initialState, action) => {
       }
     }
 
-    case FILTERED_TEST_BY_TAGS_FETCH_SUCCEED: {
+    case FILTERED_TEST_BY_TAGS_FETCH_SUCCEED_CHAIN_EDITOR: {
       const tests = [...action.tests];
-      console.log("TETS-0",tests );
       const adaptedTests = tests.map((current) => {
         current.modified = false;
         current.new = false;
@@ -196,7 +189,6 @@ const testList = (state = initialState, action) => {
         }
 
       }
-
       let testBuilderTests = filtersAllied;
 
       const testNamesForDropdown = testBuilderTests.map((test) => {
@@ -217,7 +209,6 @@ const testList = (state = initialState, action) => {
 
     case APPLY_TESTS_FILTERS: {
       const origin = [...state.testsOrigin];
-      console.log("origin", origin);
       const filters = action.filters;
       let filtersAllied = [];
 

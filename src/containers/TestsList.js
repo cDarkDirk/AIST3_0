@@ -6,10 +6,13 @@ import {
 import TestsList from '../components/TestsList'
 import {
   applyTestsFilters,
-  clearTestFilter, duplicateCurrentTest, filteredTestByTagsFetchSucceed, newTestAdded, testASSelected, testBlockClicked,
-  testBuilderAsFetchSucceed, testBuilderFormInputChanged,
-  testBuilderStandsFetchSucceed, testListAsFetchSucceed, testListASSelected, testListSelected,
-  testSelected, testStandsInputChange
+  clearTestFilter,
+  filteredTestByTagsFetchSucceedChainEditor,
+  testBlockClicked,
+  testBuilderStandsFetchSucceed,
+  testListAsFetchSucceed,
+  testListASSelected,
+  testListSelected,
 } from '../actions'
 import test from "../reducers/test";
 
@@ -32,7 +35,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-      // getTests: () => dispatch(testBuilderDataFetch()),
       fetchTests: () => dispatch(fetchTests()),
       testBlockClicked: (test) => dispatch(testBlockClicked(test)),
       getTests: () => dispatch(testListDataFetch()),
@@ -41,7 +43,7 @@ function mapDispatchToProps(dispatch) {
       getAS: () => dispatch(getDictionaryData('systems', testListAsFetchSucceed)),
       getStands: () => dispatch(getDictionaryData('stands', testBuilderStandsFetchSucceed)),
       sysIndexChanged: (index) => dispatch(testListASSelected(index)),
-      filterTestsByTags: (tags, filters) => dispatch(filterEntityByTags(tags, 'tests', filteredTestByTagsFetchSucceed, filters)),
+      filterTestsByTags: (tags, filters) => dispatch(filterEntityByTags(tags, 'tests', filteredTestByTagsFetchSucceedChainEditor, filters)),
       clearTestFilter: () => dispatch(clearTestFilter()),
       applyTestsFilters: (filters) => dispatch(applyTestsFilters(filters)),
     }

@@ -122,21 +122,23 @@ class TestsList extends React.Component {
   handleTestSelection = (index) => {
     const {setSelectedTestIndex, systems, testBuilderTests, testNamesForDropdown, filteredTests} = this.props;
     const selectedChainTemplateTests = this.props.selectedChainTemplate.tests || [];
-    const testBuilderTests2 = testBuilderTests.filter(t => {
-      const testInChain = selectedChainTemplateTests.find((element) => {
-        return element === t.test_id
+    if (selectedChainTemplateTests.length !== 0) {
+      const testBuilderTests2 = testBuilderTests.filter(t => {
+        const testInChain = selectedChainTemplateTests.find((element) => {
+          return element === t.test_id
+        });
+        return !testInChain
       });
-      return !testInChain
-    });
-    if (testBuilderTests2[index].a_system !== '') {
-      let sysIndex = systems.map(sys => sys.code).indexOf(testBuilderTests2[index].a_system);
-      this.setState({selectedSystem: sysIndex});
-    } else {
-      this.setState({selectedSystem: null});
+      if (testBuilderTests2[index].a_system !== '') {
+        let sysIndex = systems.map(sys => sys.code).indexOf(testBuilderTests2[index].a_system);
+        this.setState({selectedSystem: sysIndex});
+      } else {
+        this.setState({selectedSystem: null});
+      }
+      // setSelectedTestIndex(index);
+      const test = {test_name: testBuilderTests2[index].name, test_id: testBuilderTests2[index].test_id};
+      this.props.testBlockClicked(test);
     }
-    // setSelectedTestIndex(index);
-    const test = {test_name: testBuilderTests2[index].name, test_id: testBuilderTests2[index].test_id};
-    this.props.testBlockClicked(test);
   };
 
   renderSearches = () => {

@@ -65,9 +65,14 @@ import {
   CLEAR_TEST_FILTER,
   FILTERED_TEST_BY_TAGS_FETCH_SUCCEED,
   APPLY_TESTS_FILTERS,
-  TEST_LIST_TESTS_FETCH_SUCCEED, TEST_LIST_SELECTED, TEST_LIST_AS_SELECTED, TEST_LIST_AS_FETCH_SUCCEED,
-  FILTERED_CHAIN_BY_TAGS_FETCH_SUCCEED, APPLY_CHAINS_FILTERS, CLEAR_CHAIN_FILTER,
-  ALL_CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
+  TEST_LIST_TESTS_FETCH_SUCCEED,
+  TEST_LIST_SELECTED,
+  TEST_LIST_AS_SELECTED,
+  TEST_LIST_AS_FETCH_SUCCEED,
+  FILTERED_CHAIN_BY_TAGS_FETCH_SUCCEED,
+  APPLY_CHAINS_FILTERS,
+  CLEAR_CHAIN_FILTER,
+  ALL_CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED, FILTERED_TEST_BY_TAGS_FETCH_SUCCEED_CHAIN_EDITOR,
 } from './constants';
 
 export const groupNameChange = (payload) => ({
@@ -414,7 +419,13 @@ export const filteredTestByTagsFetchSucceed = (tests, filters) => ({
   filters,
 });
 
-export const filteredTestByChainFetchSucceed = (chain_templates, filters) => ({
+export const filteredTestByTagsFetchSucceedChainEditor = (tests, filters) => ({
+  type: FILTERED_TEST_BY_TAGS_FETCH_SUCCEED_CHAIN_EDITOR,
+  tests,
+  filters,
+});
+
+export const filteredChainByTagsFetchSucceed = (chain_templates, filters) => ({
   type: FILTERED_CHAIN_BY_TAGS_FETCH_SUCCEED,
   chain_templates,
   filters,

@@ -10,8 +10,12 @@ import {
   SUBMIT_CHAIN_TEMPLATE_SUCCEED,
   CHAIN_TEMPLATE_MARKER_CHANGED,
   DUPLICATE_CURRENT_CHAIN,
-  DATA_TEMPLATE_ADDED, GROUP_ADDED, APPLY_CHAINS_FILTERS, CLEAR_TEST_FILTER, CLEAR_CHAIN_FILTER,
+  DATA_TEMPLATE_ADDED,
+  GROUP_ADDED,
+  APPLY_CHAINS_FILTERS,
+  CLEAR_CHAIN_FILTER,
   ALL_CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
+  FILTERED_CHAIN_BY_TAGS_FETCH_SUCCEED,
 } from '../constants'
 
 const initialState = {
@@ -23,6 +27,7 @@ const initialState = {
   chainMarkers: [],
   dataTemplatesNames: [],
   allChainTemplates: [],
+  chainNamesForDropdown : [],
 };
 
 const chainTemplateReducer = (state = initialState, action) => {
@@ -47,16 +52,39 @@ const chainTemplateReducer = (state = initialState, action) => {
         chainMarkersFind.push(chain.marker);
         return chain.marker;
       }});
+      let chainNamesForDropdown = action.payload.map((chain) => chain.name);
       return {
         ...state,
         groups: chainTemplates.groups,
         chainTemplates,
         chainNames,
+        chainNamesForDropdown,
         chainMarkers : chainMarkersFind,
         allChainTemplates,
       }
     }
+
+    case FILTERED_CHAIN_BY_TAGS_FETCH_SUCCEED:{
+      let filtersAllied = [];
+      const filters = action.filters;
+      let chainTemplates = [...action.chain_templates];
+      if (filters.marker !== null) {
+        chainTemplates.map(t => {
+          if (t.marker === filters.marker.label) {
+            filtersAllied.push(t);
+          }
+        });
+      }
+      let chainNamesForDropdown = filtersAllied.map((chain) => chain.name);
+      return {
+        ...state,
+        chainTemplates: filtersAllied,
+        chainNamesForDropdown,
+      }
+    }
+
     case CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED: {
+
       const chainTemplates = action.payload.map((chain) => {
         chain.modified = false;
         chain.new = false;
@@ -68,6 +96,7 @@ const chainTemplateReducer = (state = initialState, action) => {
         });
         return chain;
       });
+
       let chainNames = action.payload.map((chain) => chain.name);
       return {
         ...state,
@@ -79,19 +108,18 @@ const chainTemplateReducer = (state = initialState, action) => {
 
     case APPLY_CHAINS_FILTERS: {
       const filters = action.filters;
-      const chainTemplates = state.chainTemplates;
+      const chainTemplates = state.allChainTemplates;
+      let chainNamesForDropdown = state.chainNames;
       let filtersChainTemplates = [];
-      let filtersChainNames = [];
       chainTemplates.map(t => {
         if (t.marker === filters.marker.label) {
-          filtersChainNames.push(t.name);
           filtersChainTemplates.push(t)
         }
       });
-
+      chainNamesForDropdown = filtersChainTemplates.map((chain) => chain.name);
       return {
         ...state,
-        chainNames: filtersChainNames,
+        chainNamesForDropdown,
         chainTemplates: filtersChainTemplates,
       }
     }
@@ -99,11 +127,13 @@ const chainTemplateReducer = (state = initialState, action) => {
     case CLEAR_CHAIN_FILTER: {
       const chainTemplates = state.allChainTemplates;
       const chainNames = chainTemplates.map((chain)=> chain.name);
+      const chainNamesForDropdown = chainTemplates.map((chain) => chain.name);
       window.location.hash = '#/chaineditor/';
       return{
         ...state,
         chainTemplates,
         chainNames,
+        chainNamesForDropdown,
       }
     }
 
