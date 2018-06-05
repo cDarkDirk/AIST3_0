@@ -1,18 +1,20 @@
 import React from "react"
-import {ListGroup, ListGroupItem, Label} from 'react-bootstrap'
+import {ListGroup,
+  ListGroupItem,
+  Label} from 'react-bootstrap'
 
 import './style.css'
 
-const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, chainNames}) => {
+const ChainList = ({chainTemplates, selectedChainTemplate, chainSelected, chainNamesForDropdown}) => {
   let location = window.location.hash.split('/');
   chainTemplates.map((chain, idx) => {
     if(chain.name === location[2] && selectedChainTemplate !== idx){
       chainSelected(idx);
     }
   });
-  return (<ListGroup>
+  return (<ListGroup style={{ maxHeight: '1080px', overflow: 'auto'}}>
     {
-      chainNames.map((chain, idx) => {
+      chainNamesForDropdown.map((chain, idx) => {
         return <ListGroupItem
           key={idx}
           className='chain-list-item'

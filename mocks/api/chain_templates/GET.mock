@@ -4,7 +4,7 @@ Access-Control-Allow-Origin: *
 
 [
   {
-    "marker": "DebitCard",
+    "marker": "CHERTAM",
     "name": "DebitCard",
     "templates": ["7_IFT","9_IFT"],
     "tests": [

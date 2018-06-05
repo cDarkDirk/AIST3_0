@@ -3,7 +3,9 @@ import {
   fetchChainTemplates,
   updateChainTemplate,
   fetchDataTemplates,
-  fetchGroupsForMembers, fetchBuilderChains,
+  fetchGroupsForMembers,
+  fetchBuilderChains,
+  filterEntityByTags,
 } from '../api'
 import {
   chainTemplateNameChanged,
@@ -15,6 +17,9 @@ import {
   addDTToChain,
   addGroupToChain,
   handleGroupChange,
+  applyChainsFilters,
+  clearChainFilter,
+  filteredChainByTagsFetchSucceed,
 } from '../actions'
 import ChainEditorPage from '../components/ChainEditorPage'
 
@@ -23,6 +28,8 @@ function mapStateToProps(state) {
     chainTemplate: state.chainTemplates.chainTemplates[state.chainTemplates.selectedChainTemplate] || {tests: []},
     chainSelected: state.chainTemplates.selectedChainTemplate,
     chainName: state.chainTemplates.chainNames[state.chainTemplates.selectedChainTemplate] || '',
+    chainMarkers: state.chainTemplates.chainMarkers,
+    chainNamesForDropdown : state.chainTemplates.chainNamesForDropdown,
     notifications: state.notifications,
     chainNames: state.chainTemplates.chainNames,
     owner: state.dataAuthorization.paramNames.name,
@@ -46,6 +53,9 @@ function mapDispatchToProps(dispatch) {
     addGroupToChain: (payload) => dispatch(addGroupToChain(payload)),
     addDTToChain: (payload) => dispatch(addDTToChain(payload)),
     fetchGroupsForMembers: () => dispatch(fetchGroupsForMembers()),
+    clearTestFilter: () => dispatch(clearChainFilter()),
+    filterTestsByTags: (tags, filters) => dispatch(filterEntityByTags(tags, 'chain_templates', filteredChainByTagsFetchSucceed, filters)),
+    applyTestsFilters: (filters) => dispatch(applyChainsFilters(filters)),
   }
 }
 

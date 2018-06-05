@@ -65,6 +65,15 @@ import {
   CLEAR_TEST_FILTER,
   FILTERED_TEST_BY_TAGS_FETCH_SUCCEED,
   APPLY_TESTS_FILTERS,
+  TEST_LIST_TESTS_FETCH_SUCCEED,
+  TEST_LIST_SELECTED,
+  TEST_LIST_AS_SELECTED,
+  TEST_LIST_AS_FETCH_SUCCEED,
+  FILTERED_CHAIN_BY_TAGS_FETCH_SUCCEED,
+  APPLY_CHAINS_FILTERS,
+  CLEAR_CHAIN_FILTER,
+  ALL_CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
+  FILTERED_TEST_BY_TAGS_FETCH_SUCCEED_CHAIN_EDITOR,
 } from './constants';
 
 export const groupNameChange = (payload) => ({
@@ -167,6 +176,11 @@ export const chainEditorTemplateFetchSucceed = (payload) => ({
   payload: payload
 });
 
+export const allChainEditorTemplateFetchSucceed = (payload) => ({
+  type: ALL_CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
+  payload: payload
+});
+
 export const testsListTemplateFetchSucceed = (payload) => ({
   type: TEST_FETCH_SUCCEED,
   payload: payload
@@ -254,8 +268,18 @@ export const testBuilderTestsFetchSucceed = (payload) => ({
   payload: payload
 });
 
+export const testListTestsFetchSucceed = (payload) => ({
+  type: TEST_LIST_TESTS_FETCH_SUCCEED,
+  payload: payload
+});
+
 export const testSelected = (payload) => ({
   type: TEST_SELECTED,
+  payload: payload
+});
+
+export const testListSelected = (payload) => ({
+  type: TEST_LIST_SELECTED,
   payload: payload
 });
 
@@ -353,8 +377,18 @@ export const testBuilderAsFetchSucceed = (as) => ({
   as,
 });
 
+export const testListAsFetchSucceed = (as) => ({
+  type: TEST_LIST_AS_FETCH_SUCCEED,
+  as,
+});
+
 export const testASSelected = (index) => ({
   type: TEST_AS_SELECTED,
+  index,
+});
+
+export const testListASSelected = (index) => ({
+  type: TEST_LIST_AS_SELECTED,
   index,
 });
 
@@ -376,13 +410,34 @@ export const clearTestFilter = () => ({
   type: CLEAR_TEST_FILTER,
 });
 
+export const clearChainFilter = () => ({
+  type: CLEAR_CHAIN_FILTER,
+});
+
 export const filteredTestByTagsFetchSucceed = (tests, filters) => ({
   type: FILTERED_TEST_BY_TAGS_FETCH_SUCCEED,
   tests,
   filters,
 });
 
+export const filteredTestByTagsFetchSucceedChainEditor = (tests, filters) => ({
+  type: FILTERED_TEST_BY_TAGS_FETCH_SUCCEED_CHAIN_EDITOR,
+  tests,
+  filters,
+});
+
+export const filteredChainByTagsFetchSucceed = (chain_templates, filters) => ({
+  type: FILTERED_CHAIN_BY_TAGS_FETCH_SUCCEED,
+  chain_templates,
+  filters,
+});
+
 export const applyTestsFilters = (filters) => ({
   type: APPLY_TESTS_FILTERS,
+  filters,
+});
+
+export const applyChainsFilters = (filters) => ({
+  type: APPLY_CHAINS_FILTERS,
   filters,
 });

@@ -10,7 +10,12 @@ import {
   SUBMIT_CHAIN_TEMPLATE_SUCCEED,
   CHAIN_TEMPLATE_MARKER_CHANGED,
   DUPLICATE_CURRENT_CHAIN,
-  DATA_TEMPLATE_ADDED, GROUP_ADDED, HANDLE_GROUP_CHANGE,
+  DATA_TEMPLATE_ADDED,
+  GROUP_ADDED,
+  APPLY_CHAINS_FILTERS,
+  CLEAR_CHAIN_FILTER,
+  ALL_CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED,
+  FILTERED_CHAIN_BY_TAGS_FETCH_SUCCEED,
 } from '../constants'
 
 const initialState = {
@@ -19,12 +24,16 @@ const initialState = {
   chainNames: [],
   owner:'',
   groups:[],
+  chainMarkers: [],
   dataTemplatesNames: [],
+  allChainTemplates: [],
+  chainNamesForDropdown : [],
 };
 
 const chainTemplateReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED: {
+
+    case ALL_CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED:{
       const chainTemplates = action.payload.map((chain) => {
         chain.modified = false;
         chain.new = false;
@@ -36,13 +45,100 @@ const chainTemplateReducer = (state = initialState, action) => {
         });
         return chain;
       });
-      const chainNames = action.payload.map((chain) => chain.name);
-
+      const allChainTemplates = chainTemplates;
+      let chainNames = action.payload.map((chain) => chain.name);
+      let chainMarkersFind = [];
+      action.payload.map((chain) => {if (chainMarkersFind.indexOf(chain.marker)  === -1){
+        chainMarkersFind.push(chain.marker);
+        return chain.marker;
+      }});
+      let chainNamesForDropdown = action.payload.map((chain) => chain.name);
       return {
         ...state,
         groups: chainTemplates.groups,
         chainTemplates,
         chainNames,
+        chainNamesForDropdown,
+        chainMarkers : chainMarkersFind,
+        allChainTemplates,
+      }
+    }
+
+    case FILTERED_CHAIN_BY_TAGS_FETCH_SUCCEED:{
+      let filtersAllied = [];
+      const filters = action.filters;
+      let chainTemplates = [...action.chain_templates];
+      let chainNamesForDropdown = chainTemplates.map((chain) => chain.name);
+      if (filters.marker !== null) {
+        chainTemplates.map(t => {
+          if (t.marker === filters.marker.label) {
+            filtersAllied.push(t);
+          }
+        });
+       chainNamesForDropdown = filtersAllied.map((chain) => chain.name);
+      }
+      if (filtersAllied = []){
+        filtersAllied = [...action.chain_templates];
+      }
+
+      return {
+        ...state,
+        chainTemplates: filtersAllied,
+        chainNamesForDropdown,
+      }
+    }
+
+    case CHAIN_EDITOR_TEMPLATE_FETCH_SUCCEED: {
+
+      const chainTemplates = action.payload.map((chain) => {
+        chain.modified = false;
+        chain.new = false;
+        if (chain.templates) chain['templates'] = chain.templates.map(name => {
+          return{label: name, value: name};
+        });
+        if (chain.groups) chain['groups'] = chain.groups.map((name, index) => {
+          return{label: name, value: index};
+        });
+        return chain;
+      });
+
+      let chainNames = action.payload.map((chain) => chain.name);
+      return {
+        ...state,
+        groups: chainTemplates.groups,
+        chainTemplates,
+        chainNames,
+      }
+    }
+
+    case APPLY_CHAINS_FILTERS: {
+      const filters = action.filters;
+      const chainTemplates = state.allChainTemplates;
+      let chainNamesForDropdown = state.chainNames;
+      let filtersChainTemplates = [];
+      chainTemplates.map(t => {
+        if (t.marker === filters.marker.label) {
+          filtersChainTemplates.push(t)
+        }
+      });
+      chainNamesForDropdown = filtersChainTemplates.map((chain) => chain.name);
+      return {
+        ...state,
+        chainNamesForDropdown,
+        chainTemplates: filtersChainTemplates,
+      }
+    }
+
+    case CLEAR_CHAIN_FILTER: {
+      const chainTemplates = state.allChainTemplates;
+      const chainNames = chainTemplates.map((chain)=> chain.name);
+      const chainNamesForDropdown = chainTemplates.map((chain) => chain.name);
+      window.location.hash = '#/chaineditor/';
+      return{
+        ...state,
+        chainTemplates,
+        chainNames,
+        chainNamesForDropdown,
       }
     }
 
@@ -78,9 +174,7 @@ const chainTemplateReducer = (state = initialState, action) => {
       allChainTemplates[selectedTemplateIndex] = {
         ...allChainTemplates[selectedTemplateIndex],
         tests: [...allChainTemplates[selectedTemplateIndex].tests,
-          {
-            id: action.payload.test_id
-          }],
+          action.payload.test_id],
         modified,
       };
       return {
@@ -143,11 +237,13 @@ const chainTemplateReducer = (state = initialState, action) => {
         },
         ...state.chainTemplates];
       const chainNames = chainTemplates.map(chain => chain.name);
+      const chainNamesForDropdown = chainNames;
       return {
         ...state,
         selectedChainTemplate: 0,
         chainTemplates,
         chainNames,
+        chainNamesForDropdown,
       }
     }
 
@@ -156,10 +252,12 @@ const chainTemplateReducer = (state = initialState, action) => {
       chainTemplates[state.selectedChainTemplate].modified = false;
       chainTemplates[state.selectedChainTemplate].new = false;
       const chainNames = chainTemplates.map(chain => chain.name);
+      const chainNamesForDropdown = chainNames;
       return {
         ...state,
         chainTemplates,
         chainNames,
+        chainNamesForDropdown,
       }
     }
 
@@ -189,10 +287,12 @@ const chainTemplateReducer = (state = initialState, action) => {
           ...oldChainTemplates,
       ];
       const chainNames = chainTemplates.map(chain => chain.name);
+      const chainNamesForDropdown = chainNames;
       return {
         ...state,
         chainTemplates,
         chainNames,
+        chainNamesForDropdown,
       }
     }
 

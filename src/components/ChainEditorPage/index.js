@@ -1,7 +1,17 @@
 import React from 'react'
 import ChainDisplay from '../../containers/ChainDisplay'
 import ChainList from "../../containers/ChainList"
-import {Row, Col, Modal, FormGroup, InputGroup, FormControl,Button} from "react-bootstrap"
+import {Row,
+  Col,
+  Modal,
+  FormGroup,
+  InputGroup,
+  FormControl,
+  Button,
+  ButtonToolbar,
+  ToggleButtonGroup,
+  ToggleButton,
+  ButtonGroup,} from "react-bootstrap"
 import TestsList from "../../containers/TestsList"
 import Notifications from 'react-notification-system-redux'
 import './style.css'
@@ -28,8 +38,63 @@ class ChainEditorPage extends React.Component {
     this.state = {
       groups: [],
       show: false,
+      selectedFilter: [],
+      filters: {
+        tags: [],
+        marker: null,
+        stands: null,
+      }
     };
   }
+
+  handleSearchTagChainCreation = (tags) => {
+    if (tags.length > 0) {
+      this.setState({
+        filters: {
+          ...this.state.filters,
+          tags,
+        }
+      });
+    } else {
+      this.setState({
+        filters: {
+          ...this.state.filters,
+          tags: [],
+        }
+      });
+    }
+  };
+
+  handleMarkerFilterInput = (filterOpts) => {
+    if (filterOpts !== null) {
+      this.setState({
+        filters: {
+          ...this.state.filters,
+          marker: filterOpts,
+        }
+      });
+    } else {
+      this.setState({
+        filters: {
+          ...this.state.filters,
+          marker: null,
+        }
+      });
+    }
+  };
+
+  handleApplyFiltersBtn = () => {
+    if (this.state.filters.tags.length > 0) {
+      let formattedTags = {tag_names: this.state.filters.tags.map(t => t.label)};
+      this.props.filterTestsByTags(formattedTags, this.state.filters);
+    } else {
+      if (this.state.filters.marker !== null) {
+        this.props.applyTestsFilters(this.state.filters);
+      } else {
+        this.props.clearTestFilter();
+      }
+    }
+  };
 
   handleGroupChange(groups){
     this.setState({groups});
@@ -48,14 +113,111 @@ class ChainEditorPage extends React.Component {
     this.setState({show: true});
   }
 
+  clearSearchInputs = (filter) => {
+    this.props.clearTestFilter();
+    this.setState({
+      selectedFilter: filter,
+      filters: {
+        tags: [],
+        marker: null,
+      }
+    });
+  };
+
+  renderSearches = () => {
+    const {onChainSelected} = this.props;
+    const searchOpt = this.props.chainNames.map((test, index) => {
+      return {label: test, value: index}
+    });
+    const searchMarker = this.props.chainMarkers.map((test, index) => {
+      return {label: test, value: index}
+    });
+
+    const searchBarSwitcher = () => {
+      let searches = [];
+      let filters = [...this.state.selectedFilter];
+      let applyFiltersBtn = this.state.selectedFilter.length > 0 ? (
+        <Row>
+          <Button className={'pull-right'} style={{position: 'relative', marginRight: '14px', marginTop: '5px'}}
+                  onClick={this.handleApplyFiltersBtn}>Применить</Button>
+          <div className="clearfix"/>
+        </Row>
+      ) : null;
+      if (filters.length > 0) {
+        while (filters.length > 0) {
+          switch (filters.shift()) {
+            case 'tags': {
+              searches.push(
+                <Select.Creatable
+                  multi
+                  value={this.state.filters.tags}
+                  placeholder={'Фильтрация тестов по тегам...'}
+                  menuStyle={{display: 'none'}}
+                  arrowRenderer={null}
+                  options={[]}
+                  shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
+                  promptTextCreator={name => name}
+                  onChange={this.handleSearchTagChainCreation}
+                />
+              );
+              break;
+            }
+
+            case 'marker': {
+              searches.push(
+                <Select
+                  className='test-filter'
+                  options={searchMarker}
+                  placeholder={'Фильтрация тестов по маркеру...'}
+                  onChange={this.handleMarkerFilterInput}
+                  value={this.state.filters.marker}
+                />
+              );
+              break;
+            }
+
+
+            default:
+              break;
+          }
+
+        }
+      }
+      searches.push(applyFiltersBtn);
+      return searches;
+    };
+
+    return [
+      <SearchBar options={searchOpt} placeholder={'Поиск теста по названию...'}
+                 onOptionClick={onChainSelected}/>,
+      <InputGroup style={{marginBottom: '5px', marginTop: '5px'}}>
+        <InputGroup.Addon>Фильтры:</InputGroup.Addon>
+        <ButtonToolbar>
+          <ButtonGroup>
+            <ToggleButtonGroup type='checkbox' name='searchesSwitcher' value={this.state.selectedFilter}
+                               onChange={searchType => this.clearSearchInputs(searchType)}>
+              <ToggleButton style={{borderRadius: '0'}} value={'tags'}>Тегам</ToggleButton>
+              <ToggleButton value={'marker'}>Маркеру</ToggleButton>
+            </ToggleButtonGroup>
+            {this.state.selectedFilter.length > 0
+              ? <Button bsStyle='danger'
+                        onClick={() => this.clearSearchInputs([])}>Сброс</Button>
+              : null}
+          </ButtonGroup>
+        </ButtonToolbar>
+      </InputGroup>,
+
+      searchBarSwitcher(),
+    ];
+  };
+
+
   render() {
     const {
       chainTemplate, chainTemplateNameChanged, deleteChainTemplate,
       addChainTemplate, updateChainTemplate, notifications,
       chainTemplateMarkerChanged, chainSelected, chainName,
-      onChainSelected, duplicate, chainNames, owner,
-      dataTemplatesNames, selectedGroups,
-    } = this.props;
+      duplicate, owner, dataTemplatesNames, selectedGroups } = this.props;
 
     const confirm = createConfirmation(ConfirmationDialog, 0);
     const notify = createConfirmation(NotifyUser, 0);
@@ -176,19 +338,22 @@ class ChainEditorPage extends React.Component {
         </Col>
       </Row>
     ];
-    const searchOpt = chainNames.map((chain,index) => {
-      return {value:index, label:chain}
+    const searchOpt = this.props.chainNames.map((test, index) => {
+      return {label: test, value: index}
+    });
+    const searchMarker = this.props.chainMarkers.map((test, index) => {
+      return {label: test, value: index}
     });
     return [
       <Header owner={getUserName()}/>,
       <div className='container chain-editor-main'>
         <Row>
           <Col md={3}>
-            <SearchBar
-              options={searchOpt}
-              onOptionClick={onChainSelected}
+            <Toolbar
+              additionalElement={this.renderSearches()}
             />
             <ChainList/>
+
           </Col>
           <Col md={6}>
             <Row>
@@ -211,7 +376,7 @@ class ChainEditorPage extends React.Component {
             </Row>
             <div style={{height: '10px'}}/>
             <Row>
-              <ChainDisplay chainTemplate={chainTemplate}/>
+                <ChainDisplay chainTemplate={chainTemplate}/>
             </Row>
           </Col>
           <Col md={3}>
