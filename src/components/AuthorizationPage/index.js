@@ -27,6 +27,12 @@ class AuthorizationPage extends React.Component {
     }
   }
 
+  handleEnterKeyPress = (event) => {
+    if (event.keyCode === 13){
+      this.HandleLoginButtonCLick();
+    }
+  };
+
   HandleLoginButtonCLick() {
     const {loginPasswordChange, loginButtonClicked} = this.props;
     loginPasswordChange({value: this.state.login, key: "name"});
@@ -37,11 +43,11 @@ class AuthorizationPage extends React.Component {
   render() {
 
     return (
-      <div className="form">
+      <div onKeyDown={this.handleEnterKeyPress} className="form">
           <Modal.Dialog>
             <Modal.Header>
               <Modal.Title>
-                Authorization
+                Авторизация
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -49,30 +55,30 @@ class AuthorizationPage extends React.Component {
               <Form horizontal>
                 <FormGroup controlId="formHorizontalLogin">
                   <Col componentClass={ControlLabel} sm={2}>
-                    Login
+                    Логин
                   </Col>
                   <Col sm={10}>
                     <FormControl className="form-control"
                                  type="text"
                                  value={this.state.login}
                                  onChange={e => this.ChangeLP({value: e.target.value, key: "name"})}
-                                 label="Login"
-                                 placeholder="Enter login"/>
+                                 label="Логин"
+                                 placeholder="Введите логин"/>
                   </Col>
                 </FormGroup>
 
 
                 <FormGroup controlId="formHorizontalPassword">
                   <Col componentClass={ControlLabel} sm={2}>
-                    Password
+                    Пароль
                   </Col>
                   <Col sm={10}>
                     <FormControl className="form-control"
                                  type="password"
                                  value={this.state.password}
                                  onChange={e => this.ChangeLP({value: e.target.value, key: "password"})}
-                                 label="Password"
-                                 placeholder="Enter password"/>
+                                 label="Пароль"
+                                 placeholder="Введите пароль"/>
                   </Col>
                 </FormGroup>
               </Form>
@@ -81,9 +87,9 @@ class AuthorizationPage extends React.Component {
               <Button
                 className="btn btn-default btn-sm"
                 onClick={() => this.HandleLoginButtonCLick()}
-              >Log in</Button>
+              >Войти</Button>
               <Link to={'/registration'}>
-                <Button type="submit" className="btn btn-default btn-sm">Registration</Button>
+                <Button type="submit" className="btn btn-default btn-sm">Регистрация</Button>
               </Link>
             </Modal.Footer>
           </Modal.Dialog>

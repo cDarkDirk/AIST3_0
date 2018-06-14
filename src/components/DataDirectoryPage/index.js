@@ -1,41 +1,35 @@
 import React from 'react'
 import {
-  MenuItem,
-  DropdownButton,
-  Panel,
-  Grid,
-  Label,
   Button,
-  Form,
-  ListGroup,
-  ButtonGroup,
-  Glyphicon,
-  Modal
+  Alert
 } from 'react-bootstrap'
 import BootstrapTable from 'react-bootstrap-table-next';
 import DatePicker from "react-datepicker"
 import Notifications from 'react-notification-system-redux'
-import {filterDirectoryData,updateOrderRerun} from '../../api'
-import {forceLogin, getUserName} from '../../globalFunc';
+import {forceLogin} from '../../globalFunc';
 import Header from "../Header";
 import overlayFactory from 'react-bootstrap-table2-overlay';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import moment from "moment";
-import filterFactory, { textFilter,selectFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, {textFilter, selectFilter} from 'react-bootstrap-table2-filter';
+import Select from 'react-select';
+import './style.css';
 
 import {BACKEND_URL} from "../../constants/endpoints";
 
 class DataDirectoryPage extends React.Component {
 
-  constructor(props,context){
-    super(props,context);
+  constructor(props, context) {
+    super(props, context);
     this.renderGetDataButton = this.renderGetDataButton.bind(this);
+    this.props.fetchBuilderChains();
+    forceLogin();
   }
 
   state = {
     chainIndex: null,
     inputTypeIndex: 0,
-    dateTo: moment(),
+    dateTo: moment({hour: 23, minute: 59, seconds: 59}),
     dateFrom: moment()
   };
   // overlay={ overlayFactory({ spinner: true, background: 'rgba(192,192,192,0.3)' }) }
@@ -85,13 +79,13 @@ class DataDirectoryPage extends React.Component {
     //   align: 'center'
     // }
     //TODO вернуть эти кнопки
-  ]
+  ];
   //Ещё описание таблицы: дефолтные сортировки и т.п.
   defSort = [
     {
       dataField: 'real_start_time',
       order: 'desc'
-    }]
+    }];
 
 
 //Описание форматтеров для таблицы (функции, возвращающие кнопки, элементы и прочая)
@@ -112,15 +106,16 @@ class DataDirectoryPage extends React.Component {
       </span>
     )
   }
+
   renderGetDataButton(cell, row, rowIndex) {
     return (
       <span>
         <Button
-         // onClick={()=>Nope()}
+          // onClick={()=>Nope()}
           bsStyle="success"
           bsSize="medium"
           title="Получение данных по заявке"
-          disabled={row.f_used!="0"}
+          disabled={row.f_used != "0"}
         >Использовать
       </Button>
       </span>
@@ -131,7 +126,7 @@ class DataDirectoryPage extends React.Component {
     return (
       <span>
         <Button
-          onClick={()=>console.log("To update")}
+          onClick={() => console.log("To update")}
           bsStyle="success"
           bsSize="medium"
           title="Перезапуск с последнего теста в цепочке"
@@ -143,6 +138,7 @@ class DataDirectoryPage extends React.Component {
       </span>
     )
   }
+
   //Блок по таблице закончен. TODO - вынести в отдельную зависимость
 
   setFilter = (data) => {
@@ -150,20 +146,56 @@ class DataDirectoryPage extends React.Component {
       ...this.state,
       ...data,
     };
-
     this.setState(filterData, () => {
       this.fetchData()
     });
+    window.location.hash = '#/datadirectory/'+this.props.formBuilderChains[data.chainIndex].name;
   };
 
-  componentWillMount(){
-    forceLogin();
-  }
-  componentDidMount() {
-    this.props.fetchBuilderChains();
-  }
 
-  get(orderID) {}
+  getNewIndex = (chainName, formBuilderChains) => {
+    let idx = null;
+    for (let i = 0; i < formBuilderChains.length; i++) {
+      if (formBuilderChains[i].name === chainName) {
+        idx = i;
+      }
+    }
+    return idx;
+  };
+
+  componentWillUpdate(nextProps, prevProps) {
+    const {formBuilderChains, match: {params: {chainName}}} = nextProps;
+    if (this.state.chainIndex !== null) {
+      if (chainName && formBuilderChains.length > 0 && chainName !== prevProps.chainName) {
+
+        if (formBuilderChains[this.state.chainIndex].name !== chainName) {
+          let idx = this.getNewIndex(chainName,formBuilderChains);
+          if (idx !== null) {
+            const filterData = {
+              ...this.state,
+              ...{chainIndex: idx},
+            };
+            this.setState(filterData, () => {
+              this.fetchData()
+            });
+          }
+        }
+      }
+    } else {
+      if (chainName && formBuilderChains.length > 0 && chainName !== prevProps.chainName) {
+        let idx = this.getNewIndex(chainName,formBuilderChains);
+        if (idx !== null) {
+          const filterData = {
+            ...this.state,
+            ...{chainIndex: idx},
+          };
+          this.setState(filterData, () => {
+            this.fetchData()
+          });
+        }
+      }
+    }
+  }
 
   fetchData() {
     const {formBuilderChains} = this.props;
@@ -184,88 +216,93 @@ class DataDirectoryPage extends React.Component {
   }
 
   changeDateFrom = (dateFrom) => {
-    this.setState({dateFrom}, () => {
-      this.fetchData()
-    })
-  }
+    if (this.state.dateTo.isAfter(dateFrom)) {
+      this.setState({dateFrom}, () => {
+        this.fetchData()
+      })
+    } else {
+      this.props.pushError('Дата в поле "Дата запуска от" не может быть позднее даты в поле "Дата запуска до"');
+    }
+  };
 
   changeDateTo = (dateTo) => {
-    this.setState({dateTo}, () => {
-      this.fetchData()
-    })
-  }
+    if (dateTo.isAfter(this.state.dateFrom)) {
+      this.setState({dateTo}, () => {
+        this.fetchData()
+      })
+    } else {
+      this.props.pushError('Дата в поле "Дата запуска от" не может быть позднее даты в поле "Дата запуска до"');
+    }
+  };
 
   renderFormBody = () => {
-    const {formBuilderChains} = this.props;
-    return (<div>
+    return (<div className={'view-results-table'}>
       <BootstrapTable keyField='id'
-                                 data={this.props.directoryData}
-                                 columns={this.columns}
-                                 defaultSorted={this.defSort}
-                                 pagination={paginationFactory()}
-                                 noDataIndication={ "Нет данных по запросу" }
-                                 filter={ filterFactory() }
-                                 striped
-                                 overlay={overlayFactory()}/>
+                      data={this.props.directoryData}
+                      columns={this.columns}
+                      defaultSorted={this.defSort}
+                      pagination={paginationFactory()}
+                      noDataIndication={"Нет данных по запросу"}
+                      filter={filterFactory()}
+                      striped
+                      overlay={overlayFactory()}/>
       {/*<Button*/}
       {/*onClick={() => this.props.updateOrderRerun("201802211300060499")}*/}
       {/*bsStyle="success"*/}
       {/*bsSize="medium"*/}
       {/*title="Перезапуск с последнего теста в цепочке"*/}
-    {/*>Перезапустить*/}
-    {/*</Button>*/}
+      {/*>Перезапустить*/}
+      {/*</Button>*/}
     </div>);
   };
 
   render() {
     const {formBuilderChains, notifications} = this.props;
     const {chainIndex, dateFrom, dateTo} = this.state;
-    const chainDropDown = [
-      <span>
-        <div>
-      <DropdownButton
-        id='chainSelector'
-        onSelect={(chainIndex) => this.setFilter({chainIndex})}
-        title={chainIndex !== null ? formBuilderChains[chainIndex].name : 'Выберите цепочку...'}
-        bsStyle="btn btn-primary"
-      >
-        {formBuilderChains.map((chain, index) => {
-          return (
-            <MenuItem active={index === chainIndex} key={index} eventKey={index}>
-              {chain.name}
-              &nbsp;
-              {formBuilderChains[index].modified && <Label bsStyle="warning">Modified</Label>}
-            </MenuItem>
-          )
-        })}
-      </DropdownButton>
-        </div>
-        Дата запуска от:
+    const chainsForSelect = formBuilderChains.map((chain, index) => {
+      return {label: chain.name, value: index}
+    });
+
+    const searchParams = (
+      <div className={'search-params'}>
+        <Select
+          key={'selectChainElement'}
+          options={chainsForSelect}
+          wrapperStyle={{position: 'relative', zIndex: '10'}}
+          onChange={(opt) => this.setFilter({chainIndex: opt.value})}
+          clearable={false}
+          value={chainIndex !== null ?
+            {label: formBuilderChains[chainIndex].name, value: chainIndex}
+            : {label: 'Выберите цепочку...', value: 'Выберите цепочку...'}}
+          style={{borderRadius: '4px 4px 4px 4px'}}
+          shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
+          promptTextCreator={name => name}
+        />
+        <span>Дата запуска от:</span>
         <DatePicker onChange={this.changeDateFrom}
                     selected={dateFrom}
                     locale="ru-RU"
                     dateFormat="DD.MM.YYYY"
                     todayButton='Сегодня'
         />
-        Дата запуска до:
+        <span>Дата запуска до:</span>
         <DatePicker onChange={this.changeDateTo}
                     selected={dateTo}
                     locale="ru-RU"
                     dateFormat="DD.MM.YYYY"
                     todayButton='Сегодня'/>
-      </span>
-    ];
+      </div>
+    );
 
     return (
-        <div>
-          <Header owner={getUserName()}/>,
-          <Panel header={chainDropDown} footer={null}>
-          <Grid fluid={true}>
-            {chainIndex !== null && formBuilderChains[chainIndex] && this.renderFormBody()}
-          </Grid>
-        </Panel>
+      <div style={{height: '100%'}}>
+        <Header/>
+        {searchParams}
+        {chainIndex !== null && formBuilderChains[chainIndex]
+          ? this.renderFormBody()
+          : <Alert className={'chain-not-selected-alert'}>Для отображения данных по прогонам необходимо указать
+            цепочку</Alert>}
         <Notifications notifications={notifications}/>
-
       </div>
     )
   }

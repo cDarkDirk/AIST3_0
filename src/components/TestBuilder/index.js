@@ -337,7 +337,10 @@ class TestBuilderPage extends React.Component {
         <Toolbar
           help={this.handleShow}
           redirDisabled={true}
-          onNewEntryAdded={() => addNewTest()}
+          onNewEntryAdded={() => {
+            addNewTest();
+            this.setState({selectedSystem: null});
+          }}
           onDuplicate={duplicateCurrentTest}
           submitDisabled={!(selectedTestIndex !== null
             && this.state.selectedSystem !== null
@@ -346,6 +349,7 @@ class TestBuilderPage extends React.Component {
           onSubmit={this.handleSubmitButtonClick}
           style={{marginLeft: 10}}
           additionalElement={this.renderSearches()}
+          duplicateDisabled={selectedTestIndex === null}
         />
         <div style={{height: '10px'}}/>
       </Row>

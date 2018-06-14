@@ -37,14 +37,14 @@ class RegistrationPage extends React.Component {
           <Modal.Dialog>
             <Modal.Header>
               <Modal.Title>
-                Create account
+                Создать пользователя
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form horizontal>
                 <FormGroup controlId="formHorizontalLogin">
                   <Col componentClass={ControlLabel} sm={2}>
-                    Login
+                    Логин
                   </Col>
                   <Col sm={10}>
                     <FormControl className="form-control"
@@ -57,7 +57,7 @@ class RegistrationPage extends React.Component {
 
                 <FormGroup controlId="formHorizontalPassword">
                   <Col componentClass={ControlLabel} sm={2}>
-                    Password
+                    Пароль
                   </Col>
                   <Col sm={10}>
                     <FormControl className="form-control"
@@ -70,7 +70,7 @@ class RegistrationPage extends React.Component {
 
                 <FormGroup controlId="formHorizontalConfirmPassword">
                   <Col componentClass={ControlLabel} sm={2}>
-                    Confirm password
+                    Подтвердить пароль
                   </Col>
                   <Col sm={10}>
                     <FormControl className="form-control"
@@ -85,7 +85,7 @@ class RegistrationPage extends React.Component {
             <Modal.Footer>
               <Button type="submit" className="btn btn-default btn-sm"
                       onClick={() => this.CreateAccount()}
-              >Sign in</Button>
+              >Создать</Button>
             </Modal.Footer>
           </Modal.Dialog>
         <Notifications notifications={this.props.notifications}/>

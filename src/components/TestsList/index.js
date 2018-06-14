@@ -33,6 +33,7 @@ class TestsList extends React.Component {
       }
     };
   }
+
   componentDidMount() {
     this.props.fetchTests();
     this.props.getTests();
@@ -225,13 +226,13 @@ class TestsList extends React.Component {
     return [
       <SearchBar options={searchOpt} placeholder={'Поиск теста по названию...'}
                  onOptionClick={this.handleTestSelection}/>,
-      <InputGroup  style={{marginBottom: '5px', marginTop: '5px'}} >
+      <InputGroup style={{marginBottom: '5px', marginTop: '5px'}}>
         <InputGroup.Addon>Фильтры:</InputGroup.Addon>
         <ButtonToolbar>
           <ButtonGroup>
             <ToggleButtonGroup type='checkbox' name='searchesSwitcher' value={this.state.selectedFilter}
                                onChange={searchType => this.clearSearchInputs(searchType)}>
-              <ToggleButton style={{borderRadius: '0'}}  value={'tags'}>Тегам</ToggleButton>
+              <ToggleButton style={{borderRadius: '0'}} value={'tags'}>Тегам</ToggleButton>
               <ToggleButton value={'as'}>АС</ToggleButton>
               <ToggleButton value={'stand'}>Контуру</ToggleButton>
             </ToggleButtonGroup>
@@ -258,16 +259,17 @@ class TestsList extends React.Component {
       });
       return !testInChain
     });
-    return(filteredTests.map((test, index) => {
-      return(
+    return (filteredTests.map((test, index) => {
+      return (
         <ListGroupItem className='use-test-button' onClick={() => {
-          this.handleTestSelection( index)
+          this.handleTestSelection(index)
         }} key={index}>
           {test.test_name}
           {/*{testBuilderTests[index].modified && <Label style={{marginLeft: 5}} bsStyle="warning">Modified</Label>}*/}
           {/*{testBuilderTests[index].new && <Label style={{marginLeft: 5}} bsStyle="primary">New</Label>}*/}
-          </ListGroupItem>
-      )}));
+        </ListGroupItem>
+      )
+    }));
 
   };
 
@@ -284,7 +286,7 @@ class TestsList extends React.Component {
     return [
       <ol>
         <Toolbar
-          style={{marginLeft: -40, marginRight:-40}}
+          style={{marginLeft: -40, marginRight: -40}}
           additionalElement={this.renderSearches()}
         />
         <Row>

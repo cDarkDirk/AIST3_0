@@ -65,6 +65,7 @@ import {
   CLEAR_TEST_FILTER,
   FILTERED_TEST_BY_TAGS_FETCH_SUCCEED,
   APPLY_TESTS_FILTERS,
+  GET_VALIDATION_RESULTS,
   TEST_LIST_TESTS_FETCH_SUCCEED,
   TEST_LIST_SELECTED,
   TEST_LIST_AS_SELECTED,
@@ -435,6 +436,12 @@ export const filteredChainByTagsFetchSucceed = (chain_templates, filters) => ({
 export const applyTestsFilters = (filters) => ({
   type: APPLY_TESTS_FILTERS,
   filters,
+});
+
+export const getValidationResults = (chain, index) => ({
+  type: GET_VALIDATION_RESULTS,
+  chain,
+  index,
 });
 
 export const applyChainsFilters = (filters) => ({

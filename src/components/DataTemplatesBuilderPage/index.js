@@ -207,7 +207,7 @@ class DataTemplatesBuilderPage extends React.Component {
                     onClick={() => addNewTemplate()}
                     key={'addNewTemplate'}
                   >
-                    <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new test...
+                    <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new template...
                   </Button>
                   {this.renderTemplatesList()}
                 </Row>

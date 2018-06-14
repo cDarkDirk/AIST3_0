@@ -7,6 +7,7 @@ import {
   getCSVbyOrderID,
   updateOrderRerun
 } from "../api"
+import {error} from "react-notification-system-redux";
 
 
 function mapStateToProps(state) {
@@ -24,6 +25,7 @@ function mapDispatchToProps(dispatch) {
     fetchOrdersByName:(chainName, dateFrom, dateTo) => dispatch (fetchOrdersByName(chainName, dateFrom, dateTo)),
     getCSVbyOrderID: (orderID) => dispatch(getCSVbyOrderID(orderID)),
     updateOrderRerun: (orderID) => dispatch(updateOrderRerun(orderID)),
+    pushError: (msg) => dispatch(error({message: msg})),
   }
 }
 

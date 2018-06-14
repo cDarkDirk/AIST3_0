@@ -22,39 +22,38 @@ class Toolbar extends React.Component {
       link,
       additionalElement,
       onDuplicate,
+      duplicateDisabled,
     } = this.props;
 
     const infoBtn = (
-      <ButtonGroup>
-        <Button bsStyle={'info'} bsSize={'small'} onClick={help}><Glyphicon
-          glyph='glyphicon glyphicon-info-sign'/></Button>
-      </ButtonGroup>
+      <Button bsStyle={'info'} onClick={help}><Glyphicon
+        glyph='glyphicon glyphicon-info-sign'/></Button>
     );
     const addNewBtn = (
-      <Button bsStyle={'primary'} bsSize={'small'} onClick={onNewEntryAdded}>
+      <Button bsStyle={'primary'} onClick={onNewEntryAdded}>
         <Glyphicon glyph='glyphicon glyphicon-plus-sign'/>
       </Button>);
 
     const submitBtn = (
-      <Button bsStyle={'success'} bsSize={'small'} disabled={submitDisabled} onClick={onSubmit}>
+      <Button bsStyle={'success'} disabled={submitDisabled} onClick={onSubmit}>
         <Glyphicon glyph='glyphicon glyphicon-floppy-disk'/>
       </Button>
     );
     const deleteBtn = (
-      <Button bsStyle={'danger'} bsSize={'small'} onClick={onDelete}>
+      <Button bsStyle={'danger'} onClick={onDelete}>
         <Glyphicon glyph='glyphicon glyphicon-trash'/>
       </Button>
     );
     const redirectBtn = [
       <Button
         style={{
-          backgroundColor:'#abee97'
+          backgroundColor: '#abee97',
         }}
         disabled={redirDisabled}
         href={link}>{redirText}</Button>
     ];
     const duplicateBtn = [
-      <Button bsStyle={'primary'} bsSize={'small'} onClick={onDuplicate}><Glyphicon
+      <Button bsStyle={'primary'} onClick={onDuplicate} disabled={duplicateDisabled}><Glyphicon
         glyph={'glyphicon glyphicon-duplicate'}/></Button>
     ];
 
@@ -71,7 +70,9 @@ class Toolbar extends React.Component {
         <Row>
           <Col md={12}>
             <ButtonToolbar>
-              {help && infoBtn}
+              <ButtonGroup>
+                {help && infoBtn}
+              </ButtonGroup>
               <ButtonGroup>
                 {onNewEntryAdded && addNewBtn}
                 {onDuplicate && duplicateBtn}
@@ -86,8 +87,7 @@ class Toolbar extends React.Component {
             </ButtonToolbar>
           </Col>
         </Row>
-        <div style={{height: '10px'}}/>
-        {additionalElement && additionalElement}
+        {additionalElement && [<div style={{height: '10px'}}/>, additionalElement]}
       </div>
     )
   }

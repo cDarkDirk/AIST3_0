@@ -59,7 +59,7 @@ class Launcher extends Component {
     this.setState({selectedTemplates: templates});
   }
 
-  handleGroupsSelection(groups){
+  handleGroupsSelection(groups) {
     this.setState({groups});
   }
 
@@ -116,8 +116,12 @@ class Launcher extends Component {
   fillFormData(index) {
     const {chains} = this.props;
     let formData = {};
-    for (let field of chains[index].fields) {
-      formData[field.paramName] = '';
+    if (chains[index].fields.length > 0) {
+      for (let field of chains[index].fields) {
+        if (field.paramName !== undefined) {
+          formData[field.paramName] = '';
+        }
+      }
     }
     this.setState({
       [chains[index].name]: formData,
@@ -147,7 +151,8 @@ class Launcher extends Component {
               <FormGroup key={chains[this.state.selectedChain].name + field.paramName + index}
                          controlId={field.paramName + index}>
                 <InputGroup key={chains[this.state.selectedChain].name + field.paramName + 'InputGroup' + index}>
-                  <InputGroup.Addon key={chains[this.state.selectedChain].name + field.paramName + 'InputGroupAddon' + index}>{field.label}</InputGroup.Addon>
+                  <InputGroup.Addon
+                    key={chains[this.state.selectedChain].name + field.paramName + 'InputGroupAddon' + index}>{field.label}</InputGroup.Addon>
                   <FormControl key={chains[this.state.selectedChain].name + field.paramName + 'FormControl' + index}
                                value={this.getFieldValueByKey(field.paramName)}
                                type="input"
@@ -166,7 +171,8 @@ class Launcher extends Component {
               <FormGroup key={chains[this.state.selectedChain].name + field.paramName + 'FormGroup' + index}
                          controlId="formHorizontalDropDown">
                 <InputGroup key={chains[this.state.selectedChain].name + field.paramName + 'InputGroup' + index}>
-                  <InputGroup.Addon key={chains[this.state.selectedChain].name + field.paramName + 'InputGroupAddon' + index}>{field.label}</InputGroup.Addon>
+                  <InputGroup.Addon
+                    key={chains[this.state.selectedChain].name + field.paramName + 'InputGroupAddon' + index}>{field.label}</InputGroup.Addon>
                   <FormControl key={chains[this.state.selectedChain].name + field.paramName + 'FormControl' + index}
                                componentClass="select"
                                value={this.getFieldValueByKey(field.paramName)}
@@ -177,7 +183,8 @@ class Launcher extends Component {
                             value={''}>
                       Пусто
                     </option>
-                    {field.dropDownOptions.map((op, idx) => (<option key={chains[this.state.selectedChain].name + op + idx} value={op}>{op}</option>))}
+                    {field.dropDownOptions.map((op, idx) => (
+                      <option key={chains[this.state.selectedChain].name + op + idx} value={op}>{op}</option>))}
                   </FormControl>
                 </InputGroup>
               </FormGroup>
@@ -191,7 +198,8 @@ class Launcher extends Component {
               <FormGroup key={chains[this.state.selectedChain].name + field.paramName + 'FormGroup' + index}
                          controlId={field.paramName + index}>
                 <InputGroup key={chains[this.state.selectedChain].name + field.paramName + 'InputGroup' + index}>
-                  <InputGroup.Addon key={chains[this.state.selectedChain].name + field.paramName + 'InputGroupAddon' + index}>{field.label}</InputGroup.Addon>
+                  <InputGroup.Addon
+                    key={chains[this.state.selectedChain].name + field.paramName + 'InputGroupAddon' + index}>{field.label}</InputGroup.Addon>
                   <FormControl key={chains[this.state.selectedChain].name + field.paramName + 'FormControl' + index}
                                value={this.getFieldValueByKey(field.paramName)}
                                type="input"
@@ -220,9 +228,11 @@ class Launcher extends Component {
 
   render() {
     const {chains} = this.props;
-    let chainsOpts = chains.map((chain, index) => {return {label:chain.name, value: index}});
+    let chainsOpts = chains.map((chain, index) => {
+      return {label: chain.name, value: index}
+    });
     const setTooltip = (id, text) => (
-      <Tooltip key={id.toString()+'Tooltip'} id={id.toString()}>{text}</Tooltip>
+      <Tooltip key={id.toString() + 'Tooltip'} id={id.toString()}>{text}</Tooltip>
     );
     const header = (
       <Row key={'headerRow'}>
@@ -230,12 +240,12 @@ class Launcher extends Component {
           <Select
             key={'selectChainElement'}
             options={chainsOpts}
-            wrapperStyle={{position:'relative', zIndex:'4'}}
+            wrapperStyle={{position: 'relative', zIndex: '4'}}
             onChange={this.onChainSelected}
             clearable={false}
             value={this.state.chain}
-            menuStyle={{maxHeight: '780px', overflow: 'auto'}}
-            style={{borderRadius:'4px 4px 4px 4px'}}
+            menuStyle={{overflowX: 'hidden'}}
+            style={{borderRadius: '4px 4px 4px 4px'}}
             shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
             promptTextCreator={name => name}
           />
@@ -256,7 +266,8 @@ class Launcher extends Component {
               selLabel={this.state.standIndex !== null ? this.props.stands[this.state.standIndex].code : 'Пусто'}
             />
             &nbsp;*/}
-            <Button key={'LaunchButton'} bsStyle='success' /*disabled={this.state.standIndex === null}*/ onClick={this.launch}>
+            <Button key={'LaunchButton'} bsStyle='success' /*disabled={this.state.standIndex === null}*/
+                    onClick={this.launch}>
               <Glyphicon key={'launchGlyph'} glyph='glyphicon glyphicon-play'/>
             </Button>
           </Col>] : null}
@@ -267,7 +278,7 @@ class Launcher extends Component {
       if (this.props.orderId !== null) {
         return (
           <Alert onDismiss={this.props.clearIdOrderAlert} key={'orderCreatedAlert'} bsStyle="success">
-            {this.props.orderId}
+            <a href={'#/datadirectory/'+this.props.chains[this.state.selectedChain].name} target={'_blank'}>{this.props.orderId}</a>
           </Alert>)
       }
       return null;
@@ -357,7 +368,8 @@ class Launcher extends Component {
             </Panel> : null}
           {(this.state.selectedChain !== null && this.state.formReady)
             ? chains[this.state.selectedChain].fields.length > 0 ? this.renderChainForm()
-              : <Alert key={'CreateFormFirstAlert'} bsStyle="info">Для запуска теста по этой цепочке необходимо сначала создать форму</Alert>
+              : <Alert key={'CreateFormFirstAlert'} bsStyle="info">Для запуска теста по этой цепочке необходимо сначала
+                создать форму</Alert>
             : <Alert key={'SelectChainFirst'} bsStyle="warning">Ни одна цепочка не выбрана!</Alert>}
         </Panel>
         <Notifications notifications={this.props.notifications}/>

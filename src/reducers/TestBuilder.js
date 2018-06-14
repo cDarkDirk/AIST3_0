@@ -21,6 +21,7 @@ const initialState = {
   systems: [],
   stands: [],
   testsOrigin: [],
+  testNamesOrigin: [],
 };
 
 const MODULE_MAIN = '#/testbuilder/';
@@ -70,6 +71,7 @@ const testBuilder = (state = initialState, action) => {
         testNamesForDropdown: testNamesForDropdown,
         selectedTestIndex: null,
         testsOrigin: adaptedTests,
+        testNamesOrigin: testNamesForDropdown,
       }
     }
 
@@ -81,13 +83,18 @@ const testBuilder = (state = initialState, action) => {
     }
 
     case TEST_SELECTED: {
-      window.location.hash = MODULE_MAIN + state.testBuilderTests[action.payload].test_name;
+      window.location.hash = MODULE_MAIN + (state.testBuilderTests[action.payload].test_name === ''
+        ? state.testNamesForDropdown[action.payload].test_name
+        : state.testBuilderTests[action.payload].test_name);
       return {
         ...state,
         selectedTestIndex: action.payload,
       }
     }
     case ADD_NEW_TEST: {
+      let nameCounter = 0;
+      let newTestName = {};
+      let testNamesForDropdown = [...state.testNamesForDropdown];
       const newTestEntry = {
         "test_name": "",
         "job_trigger":
@@ -103,16 +110,31 @@ const testBuilder = (state = initialState, action) => {
         'new': true,
         'modified': false
       };
-      const testNamesForDropdown = [{
-        test_name: "newTest",
-      },
+      testNamesForDropdown.map(test => {
+        if (test.test_name.indexOf('newTest') >= 0) {
+          nameCounter++;
+        }
+      });
+      if (nameCounter > 0) {
+        newTestName = {
+          test_name: "newTest" + nameCounter.toString(),
+        };
+      } else {
+        newTestName = {
+          test_name: "newTest",
+        };
+      }
+      testNamesForDropdown = [
+        newTestName,
         ...state.testNamesForDropdown,
       ];
+      window.location.hash = MODULE_MAIN + newTestName.test_name;
       return {
         ...state,
         selectedTestIndex: 0,
         testBuilderTests: [newTestEntry, ...state.testBuilderTests],
         testsOrigin: [newTestEntry, ...state.testsOrigin],
+        testNamesOrigin: [newTestName, ...state.testNamesOrigin],
         testNamesForDropdown,
       }
     }
@@ -132,6 +154,7 @@ const testBuilder = (state = initialState, action) => {
     }
     case TEST_BUILDER_FORM_INPUT_CHANGED: {
       const testBuilderTests = [...state.testBuilderTests];
+
       switch (action.payload.paramName) {
         case 'test_name': {
           testBuilderTests[state.selectedTestIndex].test_name = action.payload.paramValue;
@@ -218,13 +241,26 @@ const testBuilder = (state = initialState, action) => {
 
     case DUPLICATE_CURRENT_TEST: {
       const dupTest = {...state.testBuilderTests[state.selectedTestIndex]};
-      dupTest.test_name += ' Clone';
+      const oldTests = [...state.testBuilderTests];
+      dupTest.test_name += 'Clone';
       dupTest.new = true;
       dupTest.modified = false;
+      let nameCounter = 0;
+      oldTests.map(template => {
+        if (template.test_name.indexOf(dupTest.test_name) >= 0) {
+          nameCounter++;
+        }
+      });
+      if (nameCounter > 0) {
+        dupTest.test_name += nameCounter.toString();
+      }
       const testNamesForDropdown = [{test_name: dupTest.test_name}, ...state.testNamesForDropdown];
       const testBuilderTests = [dupTest, ...state.testBuilderTests];
       const testsOrigin = [dupTest, ...state.testsOrigin];
-      window.location.hash = MODULE_MAIN + state.testBuilderTests[0].test_name;
+      const testNamesOrigin = [{test_name: dupTest.test_name}, ...state.testNamesOrigin];
+      window.location.hash = MODULE_MAIN + (testBuilderTests[0].test_name === ''
+        ? testNamesForDropdown[0].test_name
+        : testBuilderTests[0].test_name);
       let selectedTestIndex = 0;
       return {
         ...state,
@@ -232,6 +268,7 @@ const testBuilder = (state = initialState, action) => {
         testNamesForDropdown,
         selectedTestIndex,
         testsOrigin,
+        testNamesOrigin,
       }
     }
 
@@ -247,12 +284,7 @@ const testBuilder = (state = initialState, action) => {
 
     case CLEAR_TEST_FILTER: {
       const testBuilderTests = [...state.testsOrigin];
-      const testNamesForDropdown = [...state.testsOrigin].map((test) => {
-        return {
-          test_name: test.test_name,
-          test_id: test.test_id,
-        }
-      });
+      const testNamesForDropdown = [...state.testNamesOrigin];
       return {
         ...state,
         testBuilderTests,

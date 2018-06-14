@@ -14,7 +14,6 @@ export default ({idx, name, description, connectDragSource, isDragging, canClose
             name='times'/></Button>
           : <p/>}
         <p className='heading'>{name}</p>
-        <p>{description}</p>
       </div>
       {showArrow ? <div className='arrow'>▼</div> : null}
     </li>

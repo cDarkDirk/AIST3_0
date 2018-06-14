@@ -19,14 +19,6 @@ class Header extends React.Component {
     window.location.hash = '#/HomePage';
   }
 
-  bla = () => {
-    const f = (
-      <ButtonGroup className='group-button'>
-        <Button onClick={Header.getPersonal}>Личный кабинет</Button>
-        <Button onClick={Header.logOut}>Выход</Button>
-      </ButtonGroup>)
-  };
-
   render() {
     return (
       <div className='header'>

@@ -12,6 +12,6 @@
   position: relative;
 }
 
-.Select-input input[fixCaret] {
+.Select-input input[fixcaret="fixcaret"] {
   margin-left: 0;
 }

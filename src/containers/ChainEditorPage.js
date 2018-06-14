@@ -16,7 +16,6 @@ import {
   duplicateCurrentChain,
   addDTToChain,
   addGroupToChain,
-  handleGroupChange,
   applyChainsFilters,
   clearChainFilter,
   filteredChainByTagsFetchSucceed,

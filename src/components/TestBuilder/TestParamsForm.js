@@ -119,11 +119,11 @@ class TestParamsForm extends Component {
                       multi={true}
                       options={[]}
                       arrowRenderer={null}
-                      menuRenderer={null}
+                      menuRenderer={() => null}
                       autosize={false}
                       menuStyle={{display:'none'}}
                       placeholder='Введите имя тега...'
-                      inputProps={{fixCaret: 'fixCaret'}}
+                      inputProps={{fixcaret: 'fixcaret'}}
                       shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
                       promptTextCreator={name => name}
                       onChange={(values) => this.props.handleTagInputChange(values, 'static')}
@@ -145,7 +145,7 @@ class TestParamsForm extends Component {
                       arrowRenderer={null}
                       placeholder='Введите имя тега...'
                       autosize={false}
-                      inputProps={{fixCaret: 'fixCaret'}}
+                      inputProps={{fixcaret: 'fixcaret'}}
                       shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
                       promptTextCreator={name => name}
                       onChange={(values) => this.props.handleTagInputChange(values, 'dynamic')}

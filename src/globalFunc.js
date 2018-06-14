@@ -40,6 +40,11 @@ export function getUserName() {
 export function getToken(){
   return cookies.get('logedInUserToken');
 }
+
 export const setTooltip = (id, text) => (
   <Tooltip key={id.toString()+'Tooltip'} id={id.toString()}>{text}</Tooltip>
 );
+
+export const isObjectEmpty = (obj) => {
+  return Object.keys(obj).length === 0;
+};
