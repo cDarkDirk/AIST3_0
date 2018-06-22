@@ -138,8 +138,7 @@ class Launcher extends Component {
       launchParams['start_time'] = this.state.startDate.format('YYYY.MM.DD HH:mm:00');
     launchParams['templateNames'] = this.state.selectedTemplates.map(t => t.value);
     launchParams['groups'] = this.state.groups.map(g => g.label);
-    let formBody1 = chains[this.state.selectedChain].fields.map(fields => fields.regEx);
-    launchParams['regEx'] = formBody1;
+    launchParams['regEx'] =  chains[this.state.selectedChain].fields.map(fields => fields.regEx);
     submitFormTemplate(launchParams);
   }
 
