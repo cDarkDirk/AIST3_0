@@ -298,75 +298,75 @@ class Launcher extends Component {
         {orderCreatedAlert()}
         <Panel header={header} bsStyle={'info'} className={'main-panel'}>
           {this.state.selectedChain !== null
-        && chains[this.state.selectedChain].fields.length > 0 ?
-          <Panel key={'additionalParamsPanel'} bsStyle='info' header={'Параметры запуска'}>
-            <Col md={2} key={'FirstColumnKey'}>
-              <OverlayTrigger
-                key={'launchTimeOverlay'}
-                placement="top"
-                overlay={setTooltip('Date', 'Задайте дату запуска заявки')}
-              >
-                <div className={'form-date-picker'} key={'launchTimeDatepickerStyleDiv'}>
-                  <DatePicker
-                    key={'launchTimeDatepicker'}
-                    locale="ru-RU"
-                    dateFormat="DD.MM.YYYY HH:mm"
-                    todayButton='Сегодня'
-                    showTimeSelect
-                    placeholderText='Время запуска'
-                    timeFormat="HH:mm"
-                    timeIntervals={10}
-                    selected={this.state.startDate}
-                    onChange={this.handleDateChange}
-                  />
-                </div>
-              </OverlayTrigger>
-            </Col>
-            <Col md={6} key={'SecondColumnKey'}>
-              <OverlayTrigger
-                key={'launchDataTemplateSelectorOverlay'}
-                placement="top"
-                overlay={setTooltip('templates', 'Задайте шаблон данных')}
-              >
-                <div key={'additionalDiv'}>
-                  <Select.Creatable
-                    id={'launchDataTemplateSelectorSelect'}
-                    key={'launchDataTemplateSelector'}
-                    wrapperStyle={{zIndex: '3', position: 'relative'}}
-                    multi={true}
-                    placeholder='Задайте шаблон данных'
-                    options={this.state.selectedChain !== null ? chains[this.state.selectedChain].templates : []}
-                    onChange={this.dataTemplateSelected}
-                    value={this.state.selectedTemplates}
-                    shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
-                    promptTextCreator={name => name}
-                  />
-                </div>
-              </OverlayTrigger>
-            </Col>
-            <Col md={4} key={'ThirdColumnKey'}>
-              <OverlayTrigger
-                key={'launchGroupSelectorOverlay'}
-                placement="top"
-                overlay={setTooltip('groups', 'Выберите группы для доступа к данным')}
-              >
-                <div key={'additionalDivOne'}>
-                  <Select.Creatable
-                    key={'launchGroupSelector'}
-                    id={'launchGroupSelectorSelect'}
-                    wrapperStyle={{zIndex: '3', position: 'relative'}}
-                    multi={true}
-                    placeholder='Выберите группы для доступа к данным'
-                    options={this.state.selectedChain !== null ? selectGroups : []}
-                    onChange={this.handleGroupsSelection}
-                    value={this.state.groups}
-                    shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
-                    promptTextCreator={name => name}
-                  />
-                </div>
-              </OverlayTrigger>
-            </Col>
-          </Panel> : null}
+          && chains[this.state.selectedChain].fields.length > 0 ?
+            <Panel key={'additionalParamsPanel'} bsStyle='info' header={'Параметры запуска'}>
+              <Col md={2} key={'FirstColumnKey'}>
+                <OverlayTrigger
+                  key={'launchTimeOverlay'}
+                  placement="top"
+                  overlay={setTooltip('Date', 'Задайте дату запуска заявки')}
+                >
+                  <div className={'form-date-picker'} key={'launchTimeDatepickerStyleDiv'}>
+                    <DatePicker
+                      key={'launchTimeDatepicker'}
+                      locale="ru-RU"
+                      dateFormat="DD.MM.YYYY HH:mm"
+                      todayButton='Сегодня'
+                      showTimeSelect
+                      placeholderText='Время запуска'
+                      timeFormat="HH:mm"
+                      timeIntervals={10}
+                      selected={this.state.startDate}
+                      onChange={this.handleDateChange}
+                    />
+                  </div>
+                </OverlayTrigger>
+              </Col>
+              <Col md={6} key={'SecondColumnKey'}>
+                <OverlayTrigger
+                  key={'launchDataTemplateSelectorOverlay'}
+                  placement="top"
+                  overlay={setTooltip('templates', 'Задайте шаблон данных')}
+                >
+                  <div key={'additionalDiv'}>
+                    <Select.Creatable
+                      id={'launchDataTemplateSelectorSelect'}
+                      key={'launchDataTemplateSelector'}
+                      wrapperStyle={{zIndex: '3', position: 'relative'}}
+                      multi={true}
+                      placeholder='Задайте шаблон данных'
+                      options={this.state.selectedChain !== null ? chains[this.state.selectedChain].templates : []}
+                      onChange={this.dataTemplateSelected}
+                      value={this.state.selectedTemplates}
+                      shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
+                      promptTextCreator={name => name}
+                    />
+                  </div>
+                </OverlayTrigger>
+              </Col>
+              <Col md={4} key={'ThirdColumnKey'}>
+                <OverlayTrigger
+                  key={'launchGroupSelectorOverlay'}
+                  placement="top"
+                  overlay={setTooltip('groups', 'Выберите группы для доступа к данным')}
+                >
+                  <div key={'additionalDivOne'}>
+                    <Select.Creatable
+                      key={'launchGroupSelector'}
+                      id={'launchGroupSelectorSelect'}
+                      wrapperStyle={{zIndex: '3', position: 'relative'}}
+                      multi={true}
+                      placeholder='Выберите группы для доступа к данным'
+                      options={this.state.selectedChain !== null ? selectGroups : []}
+                      onChange={this.handleGroupsSelection}
+                      value={this.state.groups}
+                      shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
+                      promptTextCreator={name => name}
+                    />
+                  </div>
+                </OverlayTrigger>
+              </Col>
+            </Panel> : null}
           {(this.state.selectedChain !== null && this.state.formReady)
             ? chains[this.state.selectedChain].fields.length > 0 ? this.renderChainForm()
               : <Alert key={'CreateFormFirstAlert'} bsStyle="info">Для запуска теста по этой цепочке необходимо сначала
