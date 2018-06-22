@@ -566,6 +566,17 @@ export const filterDirectoryData = (filterData) => (dispatch) => {
  * creates new order
  */
 export const submitFormTemplate = (params) => (dispatch) => {
+  let values = JSON.parse(JSON.stringify(params.data));
+  let regEx = JSON.parse(JSON.stringify(params.regEx));
+
+  for (var i=0; i < Object.values(params.data).length; i++) {
+    if ((regEx[i] !== "") && (b[i] !== null)) {
+      if (!new RegExp(regEx[i]).test(values[i])){
+        dispatch(error({message: "Error: Validation is not correct"}));
+        return;
+      }
+    }
+  }
 
   const url = `${BACKEND_URL}/orders`;
   const header = {headers: {SessionID: getToken()}};
