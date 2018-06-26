@@ -570,7 +570,7 @@ export const submitFormTemplate = (params) => (dispatch) => {
   let regEx = JSON.parse(JSON.stringify(params.regEx));
 
   for (var i=0; i < Object.values(params.data).length; i++) {
-    if ((regEx[i] !== "") && (b[i] !== null)) {
+    if ((regEx[i] !== "") && (values[i] !== null)) {
       if (!new RegExp(regEx[i]).test(values[i])){
         dispatch(error({message: "Error: Validation is not correct"}));
         return;
