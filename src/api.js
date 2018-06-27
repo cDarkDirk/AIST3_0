@@ -566,12 +566,12 @@ export const filterDirectoryData = (filterData) => (dispatch) => {
  * creates new order
  */
 export const submitFormTemplate = (params) => (dispatch) => {
-  let values = JSON.parse(JSON.stringify(params.data));
-  let regEx = JSON.parse(JSON.stringify(params.regEx));
+  let values = Object.values(params.data);
+  let regEx = params.regEx;
 
   for (var i=0; i < Object.values(params.data).length; i++) {
-    if ((regEx[i] !== "") && (values[i] !== null)) {
-      if (!new RegExp(regEx[i]).test(values[i])){
+    if ((regEx[i] !== "") && regEx[i] !== null && (values[i] !== null)) {
+      if (!new RegExp(eval(regEx[i])).test(values[i])){
         dispatch(error({message: "Error: Validation is not correct"}));
         return;
       }
