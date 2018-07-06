@@ -346,6 +346,18 @@ export const validateForm = (chainName, chain, idx) => (dispatch) => {
     for (let field of chain.fields) {
       let validation = [];
       delete field.validation;
+      var re = require( 'regex-regex' );
+      for (var i = 0; i< Object.values(chain.fields).length; i++){
+        let mas = chain.fields[i];
+        for (var j = 0; j< Object.keys(mas).length; j++){
+          if (Object.keys(mas)[j] === "regEx"){
+           if (re.test(Object.values(mas)[j]) === false){
+             dispatch(error({message: "Регулярное выражение для поля с именем " +  mas.label + " некорректно!"}));
+             return;
+           }
+          }
+        }
+      }
       if (tempArr.indexOf(field.paramName) !== -1 && field.paramName !== '') {
         validation.push({
           errorOn: 'paramName',

@@ -41,6 +41,7 @@
     "reactstrap": "^5.0.0-beta",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "regex-regex": "^1.0.0",
     "tomcat-deploy": "^1.0.2",
     "universal-cookie": "^2.1.2"
   },
