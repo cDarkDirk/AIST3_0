@@ -352,9 +352,17 @@ export const validateForm = (chainName, chain, idx) => (dispatch) => {
         for (var j = 0; j< Object.keys(mas).length; j++){
           if (Object.keys(mas)[j] === "regEx"){
            if (re.test(Object.values(mas)[j]) === false){
-             dispatch(error({message: "Регулярное выражение для поля с именем " +  mas.label + " некорректно!"}));
-             return;
+             validation.push({
+               errorOn: 'label',
+               state: 'error',
+               message: 'Регулярное выражение для поля с именем ' +  mas.label + ' некорректно!',
+             });
+             result = false;
+             break;
            }
+          }
+          if (!result){
+            break;
           }
         }
       }
@@ -584,7 +592,7 @@ export const submitFormTemplate = (params) => (dispatch) => {
   for (var i=0; i < Object.values(params.data).length; i++) {
     if ((regEx[i] !== "") && regEx[i] !== null && (values[i] !== null)) {
       if (!new RegExp(eval(regEx[i])).test(values[i])){
-        dispatch(error({message: "Error: Validation is not correct"}));
+        dispatch(error({message: "Ошибка: регулярное выражение некорректно!"}));
         return;
       }
     }
