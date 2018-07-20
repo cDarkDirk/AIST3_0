@@ -133,6 +133,7 @@ class DropdownRow extends React.Component {
                 style={{borderRadius: '0 4px 4px 0'}}
                 shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
                 promptTextCreator={name => name}
+                noResultsText={'Результаты не найдены'}
               />
             </InputGroup>
           </Col>

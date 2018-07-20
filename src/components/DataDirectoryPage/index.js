@@ -16,6 +16,7 @@ import Select from 'react-select';
 import './style.css';
 
 import {BACKEND_URL} from "../../constants/endpoints";
+import "moment/locale/ru"
 
 class DataDirectoryPage extends React.Component {
 
@@ -40,30 +41,40 @@ class DataDirectoryPage extends React.Component {
       text: 'ID заявки:',
       formatter: this.renderOrderDetails,
       sort: true,
-      filter: textFilter()
+      filter: textFilter({
+        placeholder: 'Поиск'
+      })
     }, {
       dataField: 'chain_name',
       text: 'Имя цепочки:',
       sort: true,
-      filter: textFilter()
+      filter: textFilter({
+        placeholder: 'Поиск'
+      })
     }, {
       dataField: 'marker',
       text: 'Маркер данных:',
       sort: true,
-      filter: textFilter()
+      filter: textFilter({
+        placeholder: 'Поиск'
+      })
 
     }, {
       dataField: 'real_start_time',
       text: 'Время запуска:',
       sort: true,
-      filter: textFilter()
+      filter: textFilter({
+        placeholder: 'Поиск'
+      })
 
     }, {
       dataField: 'displayed_status',
       text: 'Текущий статус:',
       sort: true,
       formatter: this.renderBuildStatusRef,
-      filter: textFilter()
+      filter: textFilter({
+        placeholder: 'Поиск'
+      })
     },
     // {
     //   headerStyle: { position: 'top' },
@@ -257,6 +268,7 @@ class DataDirectoryPage extends React.Component {
   };
 
   render() {
+    moment.locale('ru')
     const {formBuilderChains, notifications} = this.props;
     const {chainIndex, dateFrom, dateTo} = this.state;
     const chainsForSelect = formBuilderChains.map((chain, index) => {
@@ -277,6 +289,7 @@ class DataDirectoryPage extends React.Component {
           style={{borderRadius: '4px 4px 4px 4px'}}
           shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
           promptTextCreator={name => name}
+          noResultsText={'Результаты не найдены'}
         />
         <span>Дата запуска от:</span>
         <DatePicker onChange={this.changeDateFrom}

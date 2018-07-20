@@ -17,6 +17,7 @@ class SearchBar extends React.Component {
             options={options}
             wrapperStyle={{position:'relative', zIndex:'5'}}
             placeholder={placeholder}
+            noResultsText={'Результаты не найдены'}
             onChange={(value) => onOptionClick(value.value)}
             style={{borderRadius:'0 4px 4px 0',position:'relative', zIndex:'5'}}
             {...props}
