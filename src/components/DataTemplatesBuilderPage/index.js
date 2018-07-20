@@ -62,11 +62,11 @@ class DataTemplatesBuilderPage extends React.Component {
       <Form>
         <ListGroupItem bsStyle="success" style={{maxHeight: '800px', overflow: 'auto'}}>
           <FormGroup>
-            <Panel header={'Template values:'}>
+            <Panel header={'Шаблон:'}>
               <Row>
                 <Col md={12}>
                   <InputGroup>
-                    <InputGroup.Addon>Template name</InputGroup.Addon>
+                    <InputGroup.Addon>Название</InputGroup.Addon>
                     <FormControl value={dataTemplates[selectedTemplateIndex].name}
                                  onChange={(event) => templateNameChanged(event.target.value)}
                                  type="text"/>
@@ -79,7 +79,7 @@ class DataTemplatesBuilderPage extends React.Component {
                   <Row>
                     <Col md={6}>
                       <InputGroup>
-                        <InputGroup.Addon>Parameter key</InputGroup.Addon>
+                        <InputGroup.Addon>Ключ</InputGroup.Addon>
                         <FormControl value={entry.key}
                                      onChange={(val) => onDataTemplatesInputChange({
                                        name: 'key',
@@ -91,7 +91,7 @@ class DataTemplatesBuilderPage extends React.Component {
                     </Col>
                     <Col md={6}>
                       <InputGroup>
-                        <InputGroup.Addon>Parameter value</InputGroup.Addon>
+                        <InputGroup.Addon>Значение</InputGroup.Addon>
                         <FormControl value={entry.value}
                                      onChange={(val) => onDataTemplatesInputChange({
                                        name: 'value',
@@ -109,7 +109,7 @@ class DataTemplatesBuilderPage extends React.Component {
                 bsStyle="primary"
                 onClick={() => addNewParam()}
               >
-                <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new parameter...
+                <Glyphicon glyph='glyphicon glyphicon-plus'/> Добавить новый параметр...
               </Button>
             </Panel>
           </FormGroup>
@@ -136,8 +136,8 @@ class DataTemplatesBuilderPage extends React.Component {
         {template}
         &nbsp;
         &nbsp;
-        {dataTemplates[index].modified && <Label bsStyle="warning">Modified</Label>}
-        {dataTemplates[index].new && <Label bsStyle="primary">New</Label>}
+        {dataTemplates[index].modified && <Label bsStyle="warning">Изменен</Label>}
+        {dataTemplates[index].new && <Label bsStyle="primary">Создан</Label>}
       </ListGroupItem>
     ));
   }
@@ -163,22 +163,22 @@ class DataTemplatesBuilderPage extends React.Component {
             })
           }}
         >
-          Submit
+          Отправить
         </Button>,
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title><strong>Конструктор тестов</strong></Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>Чтобы редактировать тест, необходимо:</p>
-            <li type="square">Выбрать тест из списка слева</li>
-            <li type="square">Заполнить необходимые параметры теста в форме справа</li>
-            <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Submit</li>
+            <p>Чтобы редактировать шаблон, необходимо:</p>
+            <li type="square">Выбрать шаблон из списка слева</li>
+            <li type="square">Заполнить необходимые параметры шаблона в форме справа</li>
+            <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Отправить</li>
             <br/>
-            <p>Чтобы создать тест, необходимо:</p>
-            <li type="square">Нажать кнопку Add new test</li>
-            <li type="square">Заполнить необходимые параметры теста в форме справа</li>
-            <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Submit</li>
+            <p>Чтобы создать новый параметр, необходимо:</p>
+            <li type="square">Нажать кнопку Добавить новый параметр</li>
+            <li type="square">Заполнить необходимые параметры в форме справа</li>
+            <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Отправить</li>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleClose}>Закрыть</Button>
@@ -198,7 +198,7 @@ class DataTemplatesBuilderPage extends React.Component {
             <Row key={'bla'}>
               <Col md={3}>
                 <Row>
-                  <SearchBar options={searchOpt} onOptionClick={onTemplateSelected}/>
+                  <SearchBar options={searchOpt} onOptionClick={onTemplateSelected} placeholder={'Поиск...'}/>
                 </Row>
                 <Row>
                   <Button
@@ -207,7 +207,7 @@ class DataTemplatesBuilderPage extends React.Component {
                     onClick={() => addNewTemplate()}
                     key={'addNewTemplate'}
                   >
-                    <Glyphicon glyph='glyphicon glyphicon-plus'/> Add new template...
+                    <Glyphicon glyph='glyphicon glyphicon-plus'/> Добавить новый шаблон...
                   </Button>
                   {this.renderTemplatesList()}
                 </Row>

@@ -248,9 +248,10 @@ class Launcher extends Component {
             style={{borderRadius: '4px 4px 4px 4px'}}
             shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
             promptTextCreator={name => name}
+            noResultsText={'Результаты не найдены'}
           />
         </Col>
-        <Col md={5} key={'column-placeholder'}/>
+        <Col md={4} key={'column-placeholder'}/>
         {this.state.selectedChain !== null
         && chains[this.state.selectedChain].fields.length > 0 ? [
           <Col md={1} key={'StandsSelectorColumn'}>
@@ -266,9 +267,8 @@ class Launcher extends Component {
               selLabel={this.state.standIndex !== null ? this.props.stands[this.state.standIndex].code : 'Пусто'}
             />
             &nbsp;*/}
-            <Button key={'LaunchButton'} bsStyle='success' /*disabled={this.state.standIndex === null}*/
-                    onClick={this.launch}>
-              <Glyphicon key={'launchGlyph'} glyph='glyphicon glyphicon-play'/>
+            <Button style={{color: '#FFF', width: '11em', fontWeight:'bold'}} key={'LaunchButton'} bsStyle='success' /*disabled={this.state.standIndex === null}*/
+                    onClick={this.launch}>Запуск <Glyphicon key={'launchGlyph'} glyph='glyphicon glyphicon-play'/>
             </Button>
           </Col>] : null}
       </Row>
@@ -339,6 +339,7 @@ class Launcher extends Component {
                       value={this.state.selectedTemplates}
                       shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
                       promptTextCreator={name => name}
+                      noResultsText={'Результаты не найдены'}
                     />
                   </div>
                 </OverlayTrigger>
@@ -361,6 +362,7 @@ class Launcher extends Component {
                       value={this.state.groups}
                       shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
                       promptTextCreator={name => name}
+                      noResultsText={'Результаты не найдены'}
                     />
                   </div>
                 </OverlayTrigger>

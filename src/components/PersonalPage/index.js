@@ -113,7 +113,7 @@ class PersonalPage extends Component {
                   tooltip={setTooltip('groupSelect', 'Выберите группу из выпадающего списка')}
                   onSelect={this.onGroupSelected}
                   selectedIndex={this.state.selectedGroup}
-                  selLabel={this.state.selectedGroup !== null ? formBuilderGroups[this.state.selectedGroup].name : 'Select one...'}
+                  selLabel={this.state.selectedGroup !== null ? formBuilderGroups[this.state.selectedGroup].name : 'Выберите...'}
                 />
               </Col>
               <Col md={6}>
@@ -130,6 +130,7 @@ class PersonalPage extends Component {
                         onChange={this.dataMembersSelected}
                         value={this.state.selectedMembers}
                         placeholder="Выберите необходимых пользователей"
+                        noResultsText={'Результаты не найдены'}
                       />
                     </div>
                   </OverlayTrigger>

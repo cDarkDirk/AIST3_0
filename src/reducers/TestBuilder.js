@@ -63,6 +63,15 @@ const testBuilder = (state = initialState, action) => {
             return {label: s, value: index}
           });
         }
+        //TODO: убрать после доработки бэка
+        if (current.job_trigger.login) {
+          current.job_trigger.password = current.job_trigger.passOrToken;
+          current.job_trigger.token = '';
+        } else {
+          current.job_trigger.token = current.job_trigger.passOrToken;
+          current.job_trigger.password = '';
+          current.job_trigger.login = '';
+        }
         return current;
       });
       return {
@@ -103,6 +112,9 @@ const testBuilder = (state = initialState, action) => {
             "login": "",
             "params": {},
             "jobName": "",
+            "job_url": "",
+            "password": "",
+            "token": "",
             "passOrToken": ""
           },
         "tag_names": {"static": [], "dynamic": []},
@@ -114,6 +126,7 @@ const testBuilder = (state = initialState, action) => {
         if (test.test_name.indexOf('newTest') >= 0) {
           nameCounter++;
         }
+        return test;
       });
       if (nameCounter > 0) {
         newTestName = {
@@ -165,35 +178,8 @@ const testBuilder = (state = initialState, action) => {
             testBuilderTests,
           }
         }
-        case 'uri': {
-          testBuilderTests[state.selectedTestIndex].job_trigger['uri'] = action.payload.paramValue;
-          const newTest = testBuilderTests[state.selectedTestIndex].new;
-          testBuilderTests[state.selectedTestIndex].modified = !newTest;
-          return {
-            ...state,
-            testBuilderTests,
-          }
-        }
-        case 'login': {
-          testBuilderTests[state.selectedTestIndex].job_trigger['login'] = action.payload.paramValue;
-          const newTest = testBuilderTests[state.selectedTestIndex].new;
-          testBuilderTests[state.selectedTestIndex].modified = !newTest;
-          return {
-            ...state,
-            testBuilderTests,
-          }
-        }
-        case 'job_name': {
-          testBuilderTests[state.selectedTestIndex].job_trigger['jobName'] = action.payload.paramValue;
-          const newTest = testBuilderTests[state.selectedTestIndex].new;
-          testBuilderTests[state.selectedTestIndex].modified = !newTest;
-          return {
-            ...state,
-            testBuilderTests,
-          }
-        }
-        case 'passOrToken': {
-          testBuilderTests[state.selectedTestIndex].job_trigger['passOrToken'] = action.payload.paramValue;
+        case 'job_trigger': {
+          testBuilderTests[state.selectedTestIndex].job_trigger[action.payload.paramValue.key] = action.payload.paramValue.value;
           const newTest = testBuilderTests[state.selectedTestIndex].new;
           testBuilderTests[state.selectedTestIndex].modified = !newTest;
           return {

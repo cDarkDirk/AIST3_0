@@ -280,6 +280,7 @@ class FormBuilderPage extends Component {
             style={{borderRadius: '4px 4px 4px 4px'}}
             shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
             promptTextCreator={name => name}
+            noResultsText={'Результаты не найдены'}
             optionRenderer={(opt) => {
               return (
                 <Row>
@@ -310,7 +311,7 @@ class FormBuilderPage extends Component {
           <li type="square">Выбрать цепочку из выпающего списка вверху слева</li>
           <li type="square">Выбрать тип поля в выпадающем списке снизу слева и нажать кнопку +</li>
           <li type="square">Ввести необходимые для данного поля параметры</li>
-          <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Submit</li>
+          <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Отправить</li>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.handleClose}>Закрыть</Button>
@@ -327,7 +328,7 @@ class FormBuilderPage extends Component {
           !(chainIndex !== null && formBuilderChains[chainIndex].modified)
         }
       >
-        Submit
+        Отправить
       </Button>,
       <div className="clearfix"/>
     ];

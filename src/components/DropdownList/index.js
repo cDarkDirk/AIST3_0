@@ -18,7 +18,7 @@ class DropdownList extends Component {
   render() {
     const {
       id,
-      selLabel = 'Select one...',
+      selLabel = 'Выберите...',
       bsStyle = 'primary',
       options = [],
       labelKey = 'name',

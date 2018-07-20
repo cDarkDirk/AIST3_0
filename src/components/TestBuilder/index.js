@@ -23,6 +23,7 @@ import SearchBar from "../SearchBar";
 import Header from "../Header";
 import {forceLogin, getUserName} from '../../globalFunc';
 import Toolbar from "../toolbar/index";
+import ToolbarEdit from "../toolbarEdit/index";
 import TestParamsForm from "./TestParamsForm";
 import './style.css';
 
@@ -199,7 +200,7 @@ class TestBuilderPage extends React.Component {
       let searches = [];
       let filters = [...this.state.selectedFilter];
       let applyFiltersBtn = this.state.selectedFilter.length > 0 ? (
-        <Row>
+        <Row key={'applyFiltersBtn' + this.props.selectedTestIndex}>
           <Button className={'pull-right'} style={{position: 'relative', marginRight: '14px', marginTop: '5px'}}
                   onClick={this.handleApplyFiltersBtn}>Применить</Button>
           <div className="clearfix"/>
@@ -211,6 +212,7 @@ class TestBuilderPage extends React.Component {
             case 'tags': {
               searches.push(
                 <Select.Creatable
+                  key={'tags' + this.props.selectedTestIndex}
                   multi
                   value={this.state.filters.tags}
                   placeholder={'Фильтрация тестов по тегам...'}
@@ -220,6 +222,7 @@ class TestBuilderPage extends React.Component {
                   shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
                   promptTextCreator={name => name}
                   onChange={this.handleSearchTagCreation}
+                  noResultsText={'Результаты не найдены'}
                 />
               );
               break;
@@ -228,11 +231,13 @@ class TestBuilderPage extends React.Component {
             case 'as': {
               searches.push(
                 <Select
+                  key={'as' + this.props.selectedTestIndex}
                   className='test-filter'
                   options={sysToSearchThrough}
                   placeholder={'Фильтрация тестов по АС...'}
                   onChange={this.handleSysFilterInput}
                   value={this.state.filters.systems}
+                  noResultsText={'Результаты не найдены'}
                 />
               );
               break;
@@ -241,11 +246,13 @@ class TestBuilderPage extends React.Component {
             case 'stand': {
               searches.push(
                 <Select
+                  key={'stand' + this.props.selectedTestIndex}
                   className='test-filter'
                   options={this.props.stands}
                   placeholder={'Фильтрация тестов по контуру...'}
                   onChange={this.handleStandsFilterInput}
                   value={this.state.filters.stands}
+                  noResultsText={'Результаты не найдены'}
                 />
               );
               break;
@@ -294,7 +301,8 @@ class TestBuilderPage extends React.Component {
     } = this.props;
 
     const helpModal = (
-      <Modal show={this.state.show} onHide={this.handleClose}>
+      <Modal key={'helpModal'+selectedTestIndex}
+             show={this.state.show} onHide={this.handleClose}>
         <Modal.Header closeButton>
           <Modal.Title><strong>Конструктор тестов</strong></Modal.Title>
         </Modal.Header>
@@ -332,21 +340,15 @@ class TestBuilderPage extends React.Component {
       </Modal>);
 
     return (
-      <Row>
+      <Row key={'Toolbar'+selectedTestIndex}>
         {helpModal}
         <Toolbar
           help={this.handleShow}
-          redirDisabled={true}
           onNewEntryAdded={() => {
             addNewTest();
             this.setState({selectedSystem: null});
           }}
           onDuplicate={duplicateCurrentTest}
-          submitDisabled={!(selectedTestIndex !== null
-            && this.state.selectedSystem !== null
-            && (testBuilderTests[selectedTestIndex].modified
-              || testBuilderTests[selectedTestIndex].new))}
-          onSubmit={this.handleSubmitButtonClick}
           style={{marginLeft: 10}}
           additionalElement={this.renderSearches()}
           duplicateDisabled={selectedTestIndex === null}
@@ -366,7 +368,7 @@ class TestBuilderPage extends React.Component {
       <ListGroupItem
         onClick={() => this.handleTestSelection(index)}
         active={index === selectedTestIndex}
-        key={index}
+        key={index + (Math.random() * 10000000000).toString()}
       >
         {test.test_name}
         {testBuilderTests[index].modified && <Label style={{marginLeft: 5}} bsStyle="warning">Modified</Label>}
@@ -417,13 +419,25 @@ class TestBuilderPage extends React.Component {
             </Col>
             <Col md={9}>
               {testBuilderTests && selectedTestIndex !== null && (systems.length > 0)
-                ? <TestParamsForm
-                  handleSystemChanges={this.handleSystemChanges}
-                  selectedSystem={this.state.selectedSystem}
-                  handleTagInputChange={this.handleTagInputChange}
-                  handleInputChange={this.handleInputChange}
-                  {...this.props}
-                />
+                ? [<TestParamsForm handleSystemChanges={this.handleSystemChanges}
+                                   selectedSystem={this.state.selectedSystem}
+                                   handleTagInputChange={this.handleTagInputChange}
+                                   handleInputChange={this.handleInputChange}
+                                   key={'CurTestParams'+selectedTestIndex}
+                                   {...this.props}
+                />,
+                  <div style={{height: '10px'}} key={'divSpacer'}/>,
+                  <ToolbarEdit
+                    key={'ToolbarEdit'+selectedTestIndex}
+                    redirDisabled={true}
+                    onSubmit={this.handleSubmitButtonClick}
+                    setVisible={'visible'}
+                    style={{backgroundColor: '#FFF'}}
+                    submitDisabled={!(selectedTestIndex !== null
+                      && this.state.selectedSystem !== null
+                      && (testBuilderTests[selectedTestIndex].modified
+                        || testBuilderTests[selectedTestIndex].new))}
+                  />]
                 : null}
             </Col>
           </Row>

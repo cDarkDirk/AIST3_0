@@ -29,6 +29,7 @@ const TemplateForm = function (props) {
             autosize={false}
             onChange={(value) => props.onTemplateFormInputChange(value, "choosenDataTemplates", props.formName)}
             value={props.choosenDataTemplates}
+            noResultsText={'Результаты не найдены'}
           />
 
 
