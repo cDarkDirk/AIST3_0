@@ -139,6 +139,7 @@ class Launcher extends Component {
     launchParams['templateNames'] = this.state.selectedTemplates.map(t => t.value);
     launchParams['groups'] = this.state.groups.map(g => g.label);
     launchParams['regEx'] =  chains[this.state.selectedChain].fields.map(fields => fields.regEx);
+    launchParams['label'] = chains[this.state.selectedChain].fields.map(fields => fields.label);
     submitFormTemplate(launchParams);
   }
 

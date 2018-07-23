@@ -87,6 +87,7 @@ class FieldPicker extends React.Component {
     const {paramName, label, regEx} = field;
     let labelErrIndex = this.errorIdx(field, 'label');
     let paramErrIndex = this.errorIdx(field, 'paramName');
+    let regExErrIndex = this.errorIdx(field, 'regEx');
     return (
       !this.props.collapseFields &&
       <ListGroupItem key={index} style={{backgroundColor: '#EEE'}}>
@@ -131,11 +132,23 @@ class FieldPicker extends React.Component {
             <Button className="pull-right" style={{marginRight: '1%'}} onClick={this.handleShow}>
               <Glyphicon glyph='glyphicon glyphicon-question-sign'/>
             </Button>
-            <InputGroup>
-              <InputGroup.Addon>Рег. выражение</InputGroup.Addon>
-              <FormControl value={regEx} placeholder='Введите регулярное выражение'
-                           onChange={this.getHandlerInputChange('regEx', index)} type="text"/>
-            </InputGroup>
+            {field.validation && regExErrIndex !== -1 ?
+              <FormGroup validationState={field.validation[regExErrIndex].state}>
+                <InputGroup>
+                  <InputGroup.Addon>Рег. выражение</InputGroup.Addon>
+                  <FormControl value={regEx} placeholder='Введите регулярное выражение'
+                               onChange={this.getHandlerInputChange('regEx', index)} type="text"/>
+                </InputGroup>
+                <HelpBlock>{field.validation[regExErrIndex].message}</HelpBlock>
+              </FormGroup> :
+              <FormGroup>
+                <InputGroup>
+                  <InputGroup.Addon>Рег. выражение</InputGroup.Addon>
+                  <FormControl value={regEx} placeholder='Введите регулярное выражение'
+                               onChange={this.getHandlerInputChange('regEx', index)} type="text"/>
+                </InputGroup>
+              </FormGroup>
+            }
           </Col>
           <Col md={3}>
             {field.validation && paramErrIndex !== -1 ?

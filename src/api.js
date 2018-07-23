@@ -346,22 +346,16 @@ export const validateForm = (chainName, chain, idx) => (dispatch) => {
     for (let field of chain.fields) {
       let validation = [];
       delete field.validation;
-      var re = require( 'regex-regex' );
-      for (var i = 0; i< Object.values(chain.fields).length; i++){
-        let mas = chain.fields[i];
-        for (var j = 0; j< Object.keys(mas).length; j++){
-          if (Object.keys(mas)[j] === "regEx"){
-           if (re.test(Object.values(mas)[j]) === false){
-             validation.push({
-               errorOn: 'label',
-               state: 'error',
-               message: 'Регулярное выражение для поля с именем ' +  mas.label + ' некорректно!',
-             });
-             result = false;
-             break;
-           }
-          }
-          if (!result){
+      let re = require( 'regex-regex' );
+      for (let j = 0; j < Object.keys(field).length; j++) {
+        if (Object.keys(field)[j] === "regEx") {
+          if (re.test(Object.values(field)[j]) === false) {
+            validation.push({
+              errorOn: 'regEx',
+              state: 'error',
+              message: 'Регулярное выражение для поля с именем ' + field.label + ' некорректно!',
+            });
+            result = false;
             break;
           }
         }
@@ -383,6 +377,7 @@ export const validateForm = (chainName, chain, idx) => (dispatch) => {
             message: 'Имя поля не может быть пустым',
           });
           result = false;
+          console.log("Validation label - ", validation);
         }
         if (field.paramName === ''){
           console.log('paramName',field.paramName);
@@ -587,12 +582,13 @@ export const filterDirectoryData = (filterData) => (dispatch) => {
  */
 export const submitFormTemplate = (params) => (dispatch) => {
   let values = Object.values(params.data);
+  let keys = params.label;
   let regEx = params.regEx;
 
   for (var i=0; i < Object.values(params.data).length; i++) {
     if ((regEx[i] !== "") && regEx[i] !== null && (values[i] !== null)) {
       if (!new RegExp(eval(regEx[i])).test(values[i])){
-        dispatch(error({message: "Ошибка: регулярное выражение некорректно!"}));
+        dispatch(error({message: "Ошибка: регулярное выражение для поля " + keys[i] + " некорректно!"}));
         return;
       }
     }
