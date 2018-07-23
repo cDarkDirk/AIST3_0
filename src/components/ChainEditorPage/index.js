@@ -1,21 +1,24 @@
 import React from 'react'
 import ChainDisplay from '../../containers/ChainDisplay'
 import ChainList from "../../containers/ChainList"
-import {Row,
+import {
+  Button,
+  ButtonGroup,
+  ButtonToolbar,
   Col,
-  Modal,
+  FormControl,
   FormGroup,
   InputGroup,
-  FormControl,
-  Button,
-  ButtonToolbar,
-  ToggleButtonGroup,
+  Modal,
+  Row,
   ToggleButton,
-  ButtonGroup,} from "react-bootstrap"
+  ToggleButtonGroup,
+} from "react-bootstrap"
 import TestsList from "../../containers/TestsList"
 import Notifications from 'react-notification-system-redux'
 import './style.css'
 import Toolbar from "../toolbar"
+import ToolbarEdit from "../toolbarEdit"
 import {createConfirmation} from "react-confirm"
 import ConfirmationDialog from "../ConfirmationDialog"
 import SearchBar from "../SearchBar"
@@ -34,6 +37,7 @@ class ChainEditorPage extends React.Component {
     this.handleGroupChange = this.handleGroupChange.bind(this);
     this.props.fetchChainTemplates();
     this.props.getAllDataTemplates();
+    this.checkAvailableStand = this.checkAvailableStand.bind(this);
 
     this.state = {
       groups: [],
@@ -43,7 +47,8 @@ class ChainEditorPage extends React.Component {
         tags: [],
         marker: null,
         stands: null,
-      }
+      },
+      isAvailableStand: true,
     };
   }
 
@@ -96,12 +101,12 @@ class ChainEditorPage extends React.Component {
     }
   };
 
-  handleGroupChange(groups){
+  handleGroupChange(groups) {
     this.setState({groups});
     this.props.addGroupToChain(groups);
   }
 
-  componentWillMount(){
+  componentWillMount() {
     forceLogin();
   }
 
@@ -151,13 +156,14 @@ class ChainEditorPage extends React.Component {
                 <Select.Creatable
                   multi
                   value={this.state.filters.tags}
-                  placeholder={'Фильтрация тестов по тегам...'}
+                  placeholder={'Фильтрация цепочки по тегам...'}
                   menuStyle={{display: 'none'}}
                   arrowRenderer={null}
                   options={[]}
                   shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
                   promptTextCreator={name => name}
                   onChange={this.handleSearchTagChainCreation}
+                  noResultsText={'Результаты не найдены'}
                 />
               );
               break;
@@ -168,9 +174,10 @@ class ChainEditorPage extends React.Component {
                 <Select
                   className='test-filter'
                   options={searchMarker}
-                  placeholder={'Фильтрация тестов по маркеру...'}
+                  placeholder={'Фильтрация цепочки по маркеру...'}
                   onChange={this.handleMarkerFilterInput}
                   value={this.state.filters.marker}
+                  noResultsText={'Результаты не найдены'}
                 />
               );
               break;
@@ -188,7 +195,7 @@ class ChainEditorPage extends React.Component {
     };
 
     return [
-      <SearchBar options={searchOpt} placeholder={'Поиск теста по названию...'}
+      <SearchBar options={searchOpt} placeholder={'Поиск цепочки по названию...'}
                  onOptionClick={onChainSelected}/>,
       <InputGroup style={{marginBottom: '5px', marginTop: '5px'}}>
         <InputGroup.Addon>Фильтры:</InputGroup.Addon>
@@ -211,13 +218,22 @@ class ChainEditorPage extends React.Component {
     ];
   };
 
+  checkAvailableStand(isAvailable) {
+    isAvailable ? this.setState({isAvailableStand: true}) : this.setState({isAvailableStand: false})
+  }
+
+  submitChainTemplate(chainTemplate) {
+    const message = 'У выбранных тестов нет совпадающих стендов, на которых они могут быть запущены'
+    this.state.isAvailableStand ? this.props.updateChainTemplate(chainTemplate) : alert(message)
+  }
 
   render() {
     const {
       chainTemplate, chainTemplateNameChanged, deleteChainTemplate,
       addChainTemplate, updateChainTemplate, notifications,
       chainTemplateMarkerChanged, chainSelected, chainName,
-      duplicate, owner, dataTemplatesNames, selectedGroups } = this.props;
+      duplicate, owner, dataTemplatesNames, selectedGroups
+    } = this.props;
 
     const confirm = createConfirmation(ConfirmationDialog, 0);
     const notify = createConfirmation(NotifyUser, 0);
@@ -230,7 +246,8 @@ class ChainEditorPage extends React.Component {
       }
       else {
         notify({confirmation: `You can't delete ${chainTemplate.name}, because ${chainTemplate.name} created by another user!`}).then(
-          () => {})
+          () => {
+          })
       }
     };
     const modalTooltip = (
@@ -250,7 +267,7 @@ class ChainEditorPage extends React.Component {
           <li type="square">После того, как все изменения внесены, необходимо нажать кнопку Submit</li>
           <br/>
           <p>
-            Чтобы создать новую чепочку, необходимо:
+            Чтобы создать новую цепочку, необходимо:
           </p>
           <li type="square">Нажать кнопку Add new chain template</li>
           <li type="square">Выбрать необходимые тесты справа</li>
@@ -276,11 +293,11 @@ class ChainEditorPage extends React.Component {
         <Col md={12}>
           <FormGroup>
             <InputGroup>
-              <InputGroup.Addon>Name</InputGroup.Addon>
+              <InputGroup.Addon>Название</InputGroup.Addon>
               <FormControl
                 type="text"
                 value={chainTemplate.name}
-                placeholder="Chain Name"
+                placeholder="Название цепочки"
                 onChange={e => chainTemplateNameChanged(e.target.value)}/>
             </InputGroup>
           </FormGroup>
@@ -290,11 +307,11 @@ class ChainEditorPage extends React.Component {
         <Col md={12}>
           <FormGroup>
             <InputGroup>
-              <InputGroup.Addon>Marker</InputGroup.Addon>
+              <InputGroup.Addon>Маркер</InputGroup.Addon>
               <FormControl
                 type="text"
                 value={chainTemplate.marker}
-                placeholder="Marker"
+                placeholder="Маркер"
                 onChange={e => chainTemplateMarkerChanged(e.target.value)}/>
             </InputGroup>
           </FormGroup>
@@ -304,15 +321,17 @@ class ChainEditorPage extends React.Component {
         <Col md={12}>
           <FormGroup>
             <InputGroup>
-              <InputGroup.Addon>Data templates</InputGroup.Addon>
+              <InputGroup.Addon>Шаблоны</InputGroup.Addon>
               <Select.Creatable
                 multi={true}
                 options={options}
                 onChange={dt => this.props.addDTToChain(dt)}
                 value={chainTemplate.templates}
+                placeholder="Выберите"
                 id={"balla2"}
                 shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
                 promptTextCreator={name => name}
+                noResultsText={'Результаты не найдены'}
               />
             </InputGroup>
           </FormGroup>
@@ -322,16 +341,17 @@ class ChainEditorPage extends React.Component {
         <Col md={12}>
           <FormGroup>
             <InputGroup>
-              <InputGroup.Addon>Group</InputGroup.Addon>
+              <InputGroup.Addon>Группы</InputGroup.Addon>
               <Select.Creatable
                 multi={true}
                 options={groups}
                 onChange = {this.handleGroupChange}
                 value = {chainTemplate.groups}
-                placeholder="Select"
+                placeholder="Выберите"
                 id={"balla"}
                 shouldKeyDownEventCreateNewOption={key => key.keyCode = !188}
                 promptTextCreator={name => name}
+                noResultsText={'Результаты не найдены'}
               />
             </InputGroup>
           </FormGroup>
@@ -346,38 +366,50 @@ class ChainEditorPage extends React.Component {
     });
     return [
       <Header owner={getUserName()}/>,
-      <div className='container chain-editor-main'>
+      <div className='chain-editor-main'>
         <Row>
-          <Col md={3}>
+          <Col md={4}>
             <Toolbar
               additionalElement={this.renderSearches()}
             />
             <ChainList/>
-
           </Col>
-          <Col md={6}>
+          <Col md={5}>
             <Row>
               <Col md={12}>
                 <Toolbar
                   onNewEntryAdded={() => addChainTemplate(owner)}
                   help={this.handleShow}
-                  onSubmit={() => updateChainTemplate({name: chainName, value: chainTemplate,})}
-                  chainName={chainName}
-                  chainTemplate={chainTemplate}
-                  submitDisabled={!(chainTemplate.modified || chainTemplate.new)}
-                  link={'#/formbuilder/' + chainSelected}
-                  redirText={'Редактировать форму'}
-                  redirDisabled={this.props.chainSelected === null}
                   onDuplicate={() => duplicate()}
-                  additionalElement={this.props.chainSelected !== null ? chainParamsInput : null}
                   duplicateDisabled={this.props.chainSelected === null}
+                  additionalElement={this.props.chainSelected !== null ? chainParamsInput : null}
                 />
                 {modalTooltip}
               </Col>
             </Row>
+            <Row>
+              <Col md={12}>
+                <ToolbarEdit
+                  onSubmit={() => this.submitChainTemplate({name: chainName, value: chainTemplate,})}
+                  chainName={chainName}
+                  chainTemplate={chainTemplate}
+                  style={{
+                    backgroundColor: '#EEE',
+                    boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)',
+                    border: '1px solid #CCC',
+                    borderRadius: 3,
+                  }}
+                  submitDisabled={!(chainTemplate.modified || chainTemplate.new)}
+                  link={'#/formbuilder/' + chainSelected}
+                  setVisible={this.props.chainSelected !== null ? 'visible' : 'hidden'}
+                  redirDisabled={false}
+                />
+              </Col>
+            </Row>
             <div style={{height: '10px'}}/>
             <Row>
-                <ChainDisplay chainTemplate={chainTemplate}/>
+              <ChainDisplay chainTemplate={chainTemplate}
+                            checkStands={this.checkAvailableStand}/>
             </Row>
           </Col>
           <Col md={3}>

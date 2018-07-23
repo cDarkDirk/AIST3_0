@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Button,
-  ButtonGroup,
-  ButtonToolbar,
-  Col,
-  Glyphicon,
-  Row,
-} from "react-bootstrap";
+import {Button, ButtonGroup, ButtonToolbar, Col, Glyphicon, Row,} from "react-bootstrap";
 
 class Toolbar extends React.Component {
   render() {
@@ -14,51 +7,36 @@ class Toolbar extends React.Component {
       onNewEntryAdded,
       onDelete,
       help,
-      onSubmit,
-      submitDisabled,
       style,
-      redirText,
-      redirDisabled,
-      link,
-      additionalElement,
       onDuplicate,
       duplicateDisabled,
+      additionalElement,
     } = this.props;
 
     const infoBtn = (
-      <Button bsStyle={'info'} onClick={help}><Glyphicon
+      <Button key={'infoBtn'} bsStyle={'info'} onClick={help}><Glyphicon
         glyph='glyphicon glyphicon-info-sign'/></Button>
     );
     const addNewBtn = (
-      <Button bsStyle={'primary'} onClick={onNewEntryAdded}>
-        <Glyphicon glyph='glyphicon glyphicon-plus-sign'/>
+      <Button key={'addNewBtn'} bsStyle={'primary'} onClick={onNewEntryAdded}>
+        <Glyphicon glyph='glyphicon glyphicon-plus-sign'/> Создать
       </Button>);
 
-    const submitBtn = (
-      <Button bsStyle={'success'} disabled={submitDisabled} onClick={onSubmit}>
-        <Glyphicon glyph='glyphicon glyphicon-floppy-disk'/>
-      </Button>
-    );
     const deleteBtn = (
-      <Button bsStyle={'danger'} onClick={onDelete}>
-        <Glyphicon glyph='glyphicon glyphicon-trash'/>
+      <Button key={'deleteBtn'} bsStyle={'danger'} onClick={onDelete}>
+        <Glyphicon glyph='glyphicon glyphicon-trash'/> Удалить
       </Button>
     );
-    const redirectBtn = [
-      <Button
-        style={{
-          backgroundColor: '#abee97',
-        }}
-        disabled={redirDisabled}
-        href={link}>{redirText}</Button>
-    ];
     const duplicateBtn = [
-      <Button bsStyle={'primary'} onClick={onDuplicate} disabled={duplicateDisabled}><Glyphicon
-        glyph={'glyphicon glyphicon-duplicate'}/></Button>
+      <Button key={'duplicateBtn'}
+              bsStyle={'primary'} onClick={onDuplicate} disabled={duplicateDisabled}><Glyphicon
+        glyph={'glyphicon glyphicon-duplicate'}/> Клонировать</Button>
     ];
 
     return (
-      <div style={{
+      <div
+        key={'container'}
+        style={{
         ...style,
         position: 'relative',
         backgroundColor: '#EEE',
@@ -71,23 +49,24 @@ class Toolbar extends React.Component {
           <Col md={12}>
             <ButtonToolbar>
               <ButtonGroup>
-                {help && infoBtn}
+                {onNewEntryAdded && addNewBtn}
               </ButtonGroup>
               <ButtonGroup>
-                {onNewEntryAdded && addNewBtn}
                 {onDuplicate && duplicateBtn}
-                {onSubmit && submitBtn}
               </ButtonGroup>
               <ButtonGroup>
                 {onDelete && deleteBtn}
               </ButtonGroup>
-              <ButtonGroup className='pull-right'>
-                {link && redirectBtn}
+              <ButtonGroup style={{
+                position: 'relative',
+                float: 'right',
+              }}>
+                {help && infoBtn}
               </ButtonGroup>
             </ButtonToolbar>
           </Col>
         </Row>
-        {additionalElement && [<div style={{height: '10px'}}/>, additionalElement]}
+        {additionalElement && [<div key={'spacer'} style={{height: '10px'}}/>, additionalElement]}
       </div>
     )
   }

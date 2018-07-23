@@ -78,7 +78,7 @@ const dataTemplatesBuilderReducer = (state = initialState, action) => {
 
     case NEW_DATA_TEMPLATE_ADDED: {
       const newEntry = {
-        name: 'new template',
+        name: Math.round(Math.random()*10000000000).toString(),
         data: [],
         modified: false,
         new: true,
@@ -93,7 +93,7 @@ const dataTemplatesBuilderReducer = (state = initialState, action) => {
 
     case NEW_DATA_TEMPLATE_PARAM_ADDED: {
       const dataTemplates = [...state.dataTemplates];
-      const newEntry = {key: 'key', value: 'value'};
+      const newEntry = {key: '', value: ''};
       dataTemplates[state.selectedTemplateIndex].data.push(newEntry);
       if (!dataTemplates[state.selectedTemplateIndex].new){
         dataTemplates[state.selectedTemplateIndex].modified = true;

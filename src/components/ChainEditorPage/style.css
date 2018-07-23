@@ -3,6 +3,7 @@
 }
 
 .chain-editor-main {
-  margin-top: 1%;
+  max-width: 95%;
   position: relative;
+  margin: 1% 0 1% 1%;
 }
