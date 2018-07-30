@@ -174,7 +174,7 @@ class FieldPicker extends React.Component {
               <Glyphicon glyph='glyphicon glyphicon-remove'/>
             </Button>
           </Col>
-        </Row>,
+        </Row>
         <Modal show={this.state.show1} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title><strong>Конструктор регулярного выражения</strong></Modal.Title>
