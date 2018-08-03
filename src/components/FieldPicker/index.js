@@ -10,10 +10,27 @@ import {
   Glyphicon,
   HelpBlock,
   Label,
+  Modal,
 } from "react-bootstrap"
 import DropdownRow from "./DropdownRow"
 
 class FieldPicker extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.state = {
+      show1: false
+    };
+  }
+
+  handleClose() {
+    this.setState({show1: false});
+  }
+
+  handleShow() {
+    this.setState({show1: true});
+  }
 
   getHandlerInputChange(name, index) {
     return (event) => {
@@ -70,6 +87,7 @@ class FieldPicker extends React.Component {
     const {paramName, label, regEx} = field;
     let labelErrIndex = this.errorIdx(field, 'label');
     let paramErrIndex = this.errorIdx(field, 'paramName');
+    let regExErrIndex = this.errorIdx(field, 'regEx');
     return (
       !this.props.collapseFields &&
       <ListGroupItem key={index} style={{backgroundColor: '#EEE'}}>
@@ -90,7 +108,7 @@ class FieldPicker extends React.Component {
               {this.crunchLocalization(field.type)}
             </Label>
           </Col>
-          <Col md={4} style={{display: 'table-cell', verticalAlign: 'middle', textAlign: 'center'}}>
+          <Col md={3} style={{display: 'table-cell', verticalAlign: 'middle', textAlign: 'center'}}>
             {field.validation && labelErrIndex !== -1 ?
               <FormGroup validationState={field.validation[labelErrIndex].state}>
                 <InputGroup>
@@ -109,12 +127,28 @@ class FieldPicker extends React.Component {
               </FormGroup>
             }
           </Col>
-          <Col md={3}>
-            <InputGroup>
-              <InputGroup.Addon>Регулярное выражение</InputGroup.Addon>
-              <FormControl value={regEx} placeholder='Введите регулярное выражение'
-                           onChange={this.getHandlerInputChange('regEx', index)} type="text"/>
-            </InputGroup>
+
+          <Col md={4}>
+            <Button className="pull-right" style={{marginRight: '1%'}} onClick={this.handleShow}>
+              <Glyphicon glyph='glyphicon glyphicon-question-sign'/>
+            </Button>
+            {field.validation && regExErrIndex !== -1 ?
+              <FormGroup validationState={field.validation[regExErrIndex].state}>
+                <InputGroup>
+                  <InputGroup.Addon>Рег. выражение</InputGroup.Addon>
+                  <FormControl value={regEx} placeholder='Введите регулярное выражение'
+                               onChange={this.getHandlerInputChange('regEx', index)} type="text"/>
+                </InputGroup>
+                <HelpBlock>{field.validation[regExErrIndex].message}</HelpBlock>
+              </FormGroup> :
+              <FormGroup>
+                <InputGroup>
+                  <InputGroup.Addon>Рег. выражение</InputGroup.Addon>
+                  <FormControl value={regEx} placeholder='Введите регулярное выражение'
+                               onChange={this.getHandlerInputChange('regEx', index)} type="text"/>
+                </InputGroup>
+              </FormGroup>
+            }
           </Col>
           <Col md={3}>
             {field.validation && paramErrIndex !== -1 ?
@@ -141,6 +175,36 @@ class FieldPicker extends React.Component {
             </Button>
           </Col>
         </Row>
+        <Modal show={this.state.show1} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title><strong>Конструктор регулярного выражения</strong></Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Чтобы корректно задать регулярное выражение, необходимо:</p>
+            <li type="square">Первым символом в строке должен быть / </li>
+            <li type="square">В конце строки должен быть символ /, однако после него допустимы некоторые встроенные сокращения</li>
+            <p> </p>
+            <p>У регулярных выражений есть свои встроенные сокращения:</p>
+            <li type="square">\d Любая цифра</li>
+            <li type="square">\w Алфавитно-цифровой символ</li>
+            <li type="square">\s Пробельный символ (пробел, табуляция, перевод строки, и т.п.)</li>
+            <li type="square">\D не цифра</li>
+            <li type="square">\W не алфавитно-цифровой символ</li>
+            <li type="square">\S не пробельный символ</li>
+            <li type="square">. любой символ, кроме перевода строки</li>
+            <p> </p>
+            <p>Наиболее распространенные примеры регулярных выражений:</p>
+            <li type="square">Почта - /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]&#123;2,4&#125;/igm</li>
+            <li type="square">ИНН - /^\d&#123;10&#125;&amp;/</li>
+            <li type="square">Номер телефона - /^\d&#123;1&#125;-\d&#123;3&#125;-\d&#123;7&#125;&amp;/</li>
+            <li type="square">ФИО - /^[a-zA-Zа-яёА-ЯЁ\s\-]+$/</li>
+            <p> </p>
+            <p>Для проверки корректности своих регулярных выражений можно использовать сайт https://regex101.com/</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.handleClose}>Закрыть</Button>
+          </Modal.Footer>
+        </Modal>
       </ListGroupItem>
     );
   }

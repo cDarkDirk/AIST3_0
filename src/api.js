@@ -346,6 +346,20 @@ export const validateForm = (chainName, chain, idx) => (dispatch) => {
     for (let field of chain.fields) {
       let validation = [];
       delete field.validation;
+      let re = require( 'regex-regex' );
+      for (let j = 0; j < Object.keys(field).length; j++) {
+        if (Object.keys(field)[j] === "regEx" && Object.values(field)[j].length > 0 ) {
+          if (re.test(Object.values(field)[j]) === false) {
+            validation.push({
+              errorOn: 'regEx',
+              state: 'error',
+              message: 'Регулярное выражение для поля с именем ' + field.label + ' некорректно!',
+            });
+            result = false;
+            break;
+          }
+        }
+      }
       if (tempArr.indexOf(field.paramName) !== -1 && field.paramName !== '') {
         validation.push({
           errorOn: 'paramName',
@@ -572,6 +586,18 @@ export const filterDirectoryData = (filterData) => (dispatch) => {
  * creates new order
  */
 export const submitFormTemplate = (params) => (dispatch) => {
+  let values = Object.values(params.data);
+  let keys = params.label;
+  let regEx = params.regEx;
+
+  for (var i=0; i < Object.values(params.data).length; i++) {
+    if ((regEx[i] !== "") && regEx[i] !== null && (values[i] !== null) && (values[i] !== "")) {
+      if (!new RegExp(eval(regEx[i])).test(values[i])){
+        dispatch(error({message: "Ошибка: регулярное выражение для поля " + keys[i] + " некорректно!"}));
+        return;
+      }
+    }
+  }
 
   const url = `${BACKEND_URL}/orders`;
   const header = {headers: {SessionID: getToken()}};
