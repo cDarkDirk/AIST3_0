@@ -348,7 +348,7 @@ export const validateForm = (chainName, chain, idx) => (dispatch) => {
       delete field.validation;
       let re = require( 'regex-regex' );
       for (let j = 0; j < Object.keys(field).length; j++) {
-        if (Object.keys(field)[j] === "regEx") {
+        if (Object.keys(field)[j] === "regEx" && Object.values(field)[j].length > 0 ) {
           if (re.test(Object.values(field)[j]) === false) {
             validation.push({
               errorOn: 'regEx',
@@ -591,7 +591,7 @@ export const submitFormTemplate = (params) => (dispatch) => {
   let regEx = params.regEx;
 
   for (var i=0; i < Object.values(params.data).length; i++) {
-    if ((regEx[i] !== "") && regEx[i] !== null && (values[i] !== null)) {
+    if ((regEx[i] !== "") && regEx[i] !== null && (values[i] !== null) && (values[i] !== "")) {
       if (!new RegExp(eval(regEx[i])).test(values[i])){
         dispatch(error({message: "Ошибка: регулярное выражение для поля " + keys[i] + " некорректно!"}));
         return;
